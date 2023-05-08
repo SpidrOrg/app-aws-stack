@@ -8,10 +8,9 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - echo $clientonboardingconfig
       - cd infra_c
       - npm ci
       - node scanClientsTable.js
-      - echo $clientonboardingconfig
       - npm i -g cdk
+      - cdk bootstrap
       - cdk deploy --all --require-approval=never
