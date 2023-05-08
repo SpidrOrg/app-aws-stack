@@ -2,16 +2,16 @@ version: 0.2
 
 env:
   parameter-store:
-    cdkClientOnboardingConfig: "cdkClientOnboardingConfig"
+    clientonboardingconfig: "clientonboardingconfig"
 
 phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - echo $cdkClientOnboardingConfig
+      - echo $clientonboardingconfig
       - cd infra_c
       - npm ci
       - node scanClientsTable.js
-      - echo $cdkClientOnboardingConfig
+      - echo $clientonboardingconfig
       - npm i -g cdk
       - cdk deploy --all --require-approval=never

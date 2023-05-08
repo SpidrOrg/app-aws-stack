@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 console.log("process.env.cdkClientOnboardingConfig", process.env.cdkClientOnboardingConfig)
-const cdkConfig = JSON.parse(process.env.cdkClientOnboardingConfig);
+const cdkConfig = JSON.parse(process.env.clientonboardingconfig);
 console.log("cdkConfig", cdkConfig, JSON.stringify(cdkConfig), cdkConfig.awsAccount)
 //
 // const cdkConfig = {
