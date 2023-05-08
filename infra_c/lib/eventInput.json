@@ -1,0 +1,89 @@
+{
+  "id": {
+    "N": "2117584738"
+  },
+  "address": {
+    "S": "India"
+  },
+  "adminEmail": {
+    "S": "admin@rndcorp.com"
+  },
+  "applicationDatabaseSchema": {
+    "S": "'{\"client_actual\":{\"filePath\":\"tranform-data/client_actual\",\"schema\":[{\"Name\":\"ts\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"net_qty\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"net_gsv\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"unique_items\",\"Type\":\"int\",\"Comment\":\"\"},{\"Name\":\"retailer\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"net_qty_py\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"dt_year\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_month\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"net_gsv_py\",\"Type\":\"double\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"client_forecast\":{\"filePath\":\"tranform-data/client_forecast\",\"schema\":[{\"Name\":\"ts\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"comparison_version\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_of_forecast_making\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"forecast_start_dt\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"forecast_end_dt\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"min_lag\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"max_lag\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"actual demand – net (qty)\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"demand forecast (qty)\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"actual demand – net (gsv)\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"demand forecast (gsv)\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"mnth_cnt\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"model\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"retailer\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"key_demand_drivers\":{\"filePath\":\"prediction-data/key_demand_drivers\",\"schema\":[{\"Name\":\"model\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"feature_name\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"feature_importance\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"horizon\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"SeparatorChar\":\",\"}},\"market_sensing\":{\"filePath\":\"prediction-data/market_sensing\",\"schema\":[{\"Name\":\"ms_time_horizon\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"geography\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"model\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_y_start\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_y_end\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"period_type\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_x\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"actual_volume\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"actual_growth\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"predicted_volume\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"predicted_growth\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"retailer\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"full_quarter\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"dt_y\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"month\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"monthly_share\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"pct_mnth_allocation\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"predicted_monthly_volume\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"split1\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"estimated_share\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"allocated_predicted_monthly_volume\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"actual_share\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"actual_allocated_volume_share\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"split1_final\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"client_market_share\":{\"filePath\":\"tranform-data/client_market_share\",\"schema\":[{\"Name\":\"ts\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"monthly_date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"year\",\"Type\":\"int\",\"Comment\":\"\"},{\"Name\":\"month\",\"Type\":\"int\",\"Comment\":\"\"},{\"Name\":\"quarter\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"hh_monthly_spend\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"monthly_weight\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"qtrly_market_share\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"monthly_pos_sales\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"qtrly_pos_sales\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"total_qtrly_market_size\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"scaledown_total_monthly_market_size\",\"Type\":\"double\",\"Comment\":\"\"},{\"Name\":\"monthly_market_share\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"total_monthly_market_size\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category join\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"scaling factor calc\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"scaling factor\",\"Type\":\"float\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"client_price_per_unit\":{\"filePath\":\"tranform-data/client_price_per_unit\",\"schema\":[{\"Name\":\"ts\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"gsv_per_unit\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"retail_markup_coeff\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"retail_price\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"retailer\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"market_sensing_refresh_dates\":{\"filePath\":\"prediction-data/market_sensing_refresh_dates\",\"schema\":[{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"SeparatorChar\":\",\"}},\"time_horizon_mapping\":{\"filePath\":\"prediction-data/mapping/time_horizon_mapping\",\"schema\":[{\"Name\":\"ms_time_horizon\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"client_time_horizon\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"forecast_model_mappings\":{\"filePath\":\"prediction-data/mapping/forecast_model_mappings\",\"schema\":[{\"Name\":\"ms_model\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"client_model\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}},\"snp_client_review\":{\"filePath\":\"client_review\",\"schema\":[{\"Name\":\"id\",\"Type\":\"int\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"user_id\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"user_name\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"user_display_name\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"action\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"comment\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"as_on\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"period_start_date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"period_end_date\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"customer\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"by_value_by_volume\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"forecast_period_type\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\"|\"}},\"market_sensing_model_accuracy\":{\"filePath\":\"prediction-data/market_sensing_model_accuracy\",\"schema\":[{\"Name\":\"model\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"rolling_test_mape\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"cv_mape\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"rolling_test_accuracy\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"cv_accuracy\",\"Type\":\"float\",\"Comment\":\"\"},{\"Name\":\"horizon\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"category\",\"Type\":\"string\",\"Comment\":\"\"},{\"Name\":\"date\",\"Type\":\"string\",\"Comment\":\"\"}],\"Serde parameters\":{\"Skip.header.line.count\":1,\"SeparatorChar\":\",\"}}}'"
+  },
+  "assetsPath": {
+    "S": "s3 path"
+  },
+  "choosenModel": {
+    "S": "svr"
+  },
+  "clientBucketFolders": {
+    "SS": [
+      "athena_results",
+      "client-raw-data",
+      "client-transformed-data",
+      "client_review",
+      "cloudwatch_logs",
+      "external-data",
+      "prediction-data",
+      "prediction-data/key_demand_drivers",
+      "prediction-data/mapping/forecast_model_mappings",
+      "prediction-data/mapping/time_horizon_mapping",
+      "prediction-data/market_sensing",
+      "prediction-data/market_sensing_model_accuracy",
+      "prediction-data/market_sensing_refresh_dates",
+      "tranform-data/client_actual",
+      "tranform-data/client_forecast",
+      "tranform-data/client_market_share",
+      "tranform-data/client_price_per_unit"
+    ]
+  },
+  "configPath": {
+    "S": "s3 path"
+  },
+  "dataLookbackMonths": {
+    "N": "60"
+  },
+  "devAdminEmail": {
+    "S": "vishal.daga@xebia.com"
+  },
+  "frequency": {
+    "N": "30"
+  },
+  "host": {
+    "S": "rndcorp"
+  },
+  "name": {
+    "S": "RND Corporation"
+  },
+  "orgId": {
+    "S": "7112574756"
+  },
+  "phone": {
+    "S": "1-111-1111"
+  },
+  "processedDataPath": {
+    "S": "/2117584738/data/processed"
+  },
+  "qaAdminEmail": {
+    "S": "vishal.daga@xebia.com"
+  },
+  "queryResultsDumpPath": {
+    "S": "/2117584738/athenaResults"
+  },
+  "selectedDataSources": {
+    "SS": [
+      "Covid",
+      "Federal reserve data",
+      "Google Trends",
+      "IHS",
+      "Meteostat",
+      "Moodys",
+      "SimilarWeb",
+      "Yahoo Finance"
+    ]
+  },
+  "uiBundlePath": {
+    "S": "/2117584738/dashboard"
+  }
+}

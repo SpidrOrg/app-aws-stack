@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - cd infra
+      - cd infra_c
       - npm ci
       - node scanClientsTable.js
       - npm i -g cdk

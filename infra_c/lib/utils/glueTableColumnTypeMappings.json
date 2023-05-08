@@ -1,0 +1,13 @@
+{
+  "bigint": "BIG_INT",
+  "binary": "BINARY",
+  "boolean": "BOOLEAN",
+  "date": "DATE",
+  "double": "DOUBLE",
+  "float": "FLOAT",
+  "int": "INTEGER",
+  "smallint": "SMALL_INT",
+  "string": "STRING",
+  "timestamp": "TIMESTAMP",
+  "tinyint": "TINY_INT"
+}
