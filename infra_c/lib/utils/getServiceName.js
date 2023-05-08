@@ -1,4 +1,4 @@
-const MODULE_PREFIX = "visd";
+const MODULE_PREFIX = "";
 const PREFIX = 'krny';
 const PREFIX1 = 'spi'
 
