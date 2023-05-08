@@ -5,7 +5,7 @@ const krnySnpApplicationStack = require('../lib/krny-snp-application-stack');
 const fs = require("fs");
 const path = require("path");
 
-let envVal = process.env.cdkClientOnboardingConfig;
+let envVal = process.env.clientonboardingconfig;
 envVal = envVal.replaceAll("'", "");
 console.log("process.env.cdkClientOnboardingConfig", envVal)
 const cdkConfig = JSON.parse(envVal);
