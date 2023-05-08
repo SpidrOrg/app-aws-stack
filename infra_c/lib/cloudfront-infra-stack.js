@@ -27,7 +27,7 @@ class CloudfrontInfraStack extends Stack {
       includeBody: false,
     };
 
-    const oia = new cloudfront.OriginAccessIdentity(this, 'cfS3DashboardsOIA', {
+    const oia = new cloudfront.OriginAccessIdentity(this, 'cloudfrontS3DashboardsOIA', {
       comment: "Created by CDK"
     });
     dashboardsBucket.grantRead(oia);
