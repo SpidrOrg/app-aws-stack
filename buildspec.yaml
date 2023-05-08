@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   parameter-store:
-    clientToOnboardConfig: "clientToOnboardConfig"
+    cdkClientOnboardingConfig: "cdkClientOnboardingConfig"
 
 phases:
   build:
