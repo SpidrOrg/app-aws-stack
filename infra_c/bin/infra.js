@@ -5,8 +5,10 @@ const krnySnpApplicationStack = require('../lib/krny-snp-application-stack');
 const fs = require("fs");
 const path = require("path");
 
-console.log("process.env.cdkClientOnboardingConfig", process.env.cdkClientOnboardingConfig)
-const cdkConfig = JSON.parse(process.env.clientonboardingconfig);
+let envVal = process.env.cdkClientOnboardingConfig;
+envVal = envVal.replaceAll("'", "");
+console.log("process.env.cdkClientOnboardingConfig", envVal)
+const cdkConfig = JSON.parse(envVal);
 console.log("cdkConfig", cdkConfig, JSON.stringify(cdkConfig), cdkConfig.awsAccount)
 //
 // const cdkConfig = {
