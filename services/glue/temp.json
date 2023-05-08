@@ -1,0 +1,587 @@
+{
+  "client_forecast": {
+    "filePath": "s3://krny-spi-2117584738-dev/tranform-data/client_forecast/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "comparison_version",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_of_forecast_making",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_start_dt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_end_dt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "min_lag",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "max_lag",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual demand – net (qty)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "demand forecast (qty)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual demand – net (gsv)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "demand forecast (gsv)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "mnth_cnt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "client_market_share": {
+    "filePath": "s3://krny-spi-2117584738-dev/tranform-data/client_market_share/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "year",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "month",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "quarter",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "hh_monthly_spend",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_weight",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "qtrly_market_share",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_pos_sales",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "qtrly_pos_sales",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "total_qtrly_market_size",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "scaledown_total_monthly_market_size",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_market_share",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "total_monthly_market_size",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category join",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "scaling factor calc",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "scaling factor",
+        "Type": "float",
+        "Comment": ""
+      }
+    ]
+  },
+  "client_price_per_unit": {
+    "filePath": "s3://krny-spi-2117584738-dev/tranform-data/client_price_per_unit/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "gsv_per_unit",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retail_markup_coeff",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retail_price",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "mappings": {
+    "filePath": "s3://krny-spi-2117584738-dev/prediction-data/mapping/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ms_model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "client_model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_time_horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "client_time_horizon",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "key_demand_drivers": {
+    "filePath": "s3://krny-spi-2117584738-dev/prediction-data/key_demand_drivers/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "feature_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "feature_importance",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "market_sensing": {
+    "filePath": "s3://krny-spi-2117584738-dev/prediction-data/market_sensing/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "idx",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_time_horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "geography",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y_start",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y_end",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_type",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_x",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_growth",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_growth",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "full_quarter",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_share",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "pct_mnth_allocation",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_monthly_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "split1",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "estimated_share",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "allocated_predicted_monthly_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_share",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_allocated_volume_share",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "split1_final",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "market_sensing_model_accuracy": {
+    "filePath": "s3://krny-spi-2117584738-dev/prediction-data/model_accuracy/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "rolling_test_mape",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "cv_mape",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "rolling_test_accuracy",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "cv_accuracy",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "market_sensing_refresh_dates": {
+    "filePath": "s3://krny-spi-2117584738-dev/prediction-data/market_sensing_refresh_dates/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "model_execution_date",
+        "Type": "string",
+        "Comment": "yyyy-mm-dd exact date"
+      },
+      {
+        "Name": "refresh_date",
+        "Type": "string",
+        "Comment": "yyyy-mm-dd start of month"
+      }
+    ]
+  },
+  "snp_client_review": {
+    "filePath": "s3://krny-spi-2117584738-dev/client_review/",
+    "serdeParameters": {
+      "separatorChar": "|"
+    },
+    "columns": [
+      {
+        "Name": "id",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_id",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_display_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "action",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "comment",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "as_on",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_start_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_end_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "customer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "by_value_by_volume",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_period_type",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  }
+}

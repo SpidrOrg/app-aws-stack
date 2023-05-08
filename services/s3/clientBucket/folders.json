@@ -1,0 +1,28 @@
+{
+  "athena_results": {},
+  "client_review": {},
+  "client_raw_data": {
+    "client_actual": {},
+    "client_forecast": {},
+    "client_market_share": {},
+    "client_price_per_unit": {},
+    "variable_treatment": {},
+    "mlops": {}
+  },
+  "client_transformed_data": {
+    "client_actual": {},
+    "client_forecast": {},
+    "client_market_share": {},
+    "client_price_per_unit": {},
+    "variable_treatment": {},
+    "mlops": {}
+  },
+  "cloudwatch_logs": {},
+  "external_data": {},
+  "transform_data": {},
+  "prediction_data": {
+    "key_demand_drivers": {},
+    "model_accuracy": {},
+    "market_sensing": {}
+  }
+}

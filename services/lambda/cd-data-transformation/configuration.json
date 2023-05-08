@@ -1,0 +1,16 @@
+{
+  "runtime": "NODEJS_18_X",
+  "architecture": "x86_64",
+  "configuration": {
+    "iamRole": "client-data-transformation-lambda-service-role",
+    "timeout": 900
+  },
+  "environment": {
+    "awsAccountId": ":123456789012:",
+    "region": "us-east-1"
+  },
+  "layers": [{
+    "name": "dd-krny-snp-lambda-essentials-node18x",
+    "version": 3
+  }]
+}

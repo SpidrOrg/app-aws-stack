@@ -1,0 +1,30 @@
+{
+  "policies": [
+    "client-data-transformation-execution-policy"
+  ],
+  "description": "",
+  "trustRelationship": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:role/client-data-transformation-lambda-service-role"
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:role/client-data-transformation-lambda-service-role"
+        },
+        "Action": "sts:TagSession",
+        "Condition": {
+          "StringLike": {
+            "aws:RequestTag/BucketName": "*"
+          }
+        }
+      }
+    ]
+  }
+}

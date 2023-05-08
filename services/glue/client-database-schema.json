@@ -1,0 +1,834 @@
+{
+  "client_actual": {
+    "prefix": "client_transformed_data/client_actual/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "net_qty",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "net_gsv",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "unique_items",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "net_qty_py",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_year",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "net_gsv_py",
+        "Type": "double",
+        "Comment": ""
+      }
+    ]
+  },
+  "client_forecast": {
+    "prefix": "client_transformed_data/client_forecast/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "comparison_version",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_of_forecast_making",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_start_dt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_end_dt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "min_lag",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "max_lag",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual demand – net (qty)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "demand forecast (qty)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual demand – net (gsv)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "demand forecast (gsv)",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "mnth_cnt",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "time_horizon_mapping",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model_mapping",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "client_market_share": {
+    "prefix": "client_transformed_data/client_market_share/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "year",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "month",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "quarter",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "hh_monthly_spend",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_weight",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "qtrly_market_share",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_pos_sales",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "qtrly_pos_sales",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "total_qtrly_market_size",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "scaledown_total_monthly_market_size",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_market_share",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "total_monthly_market_size",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category join",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "scaling factor calc",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "scaling factor",
+        "Type": "float",
+        "Comment": ""
+      }
+    ]
+  },
+  "client_price_per_unit": {
+    "prefix": "client_transformed_data/client_price_per_unit/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "ts",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "gsv_per_unit",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retail_markup_coeff",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retail_price",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_out_key_demand_drivers": {
+    "prefix": "prediction_data/key_demand_drivers/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "feature_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "description",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "feature_importance",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_out_market_sensing": {
+    "prefix": "prediction_data/market_sensing/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "idx",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_time_horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "geography",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y_start",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y_end",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_type",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_x",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_growth",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_growth",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "full_quarter",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dt_y",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_share",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "pct_mnth_allocation",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "predicted_monthly_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "split1",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "estimated_share",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "allocated_predicted_monthly_volume",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_share",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_allocated_volume_share",
+        "Type": "double",
+        "Comment": ""
+      },
+      {
+        "Name": "split1_final",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_out_model_accuracy": {
+    "prefix": "prediction_data/model_accuracy/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "rolling_test_mape",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "cv_mape",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "rolling_test_accuracy",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "cv_accuracy",
+        "Type": "float",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_out_variable_treatment": {
+    "prefix": "client_transformed_data/variable_treatment/",
+    "serdeParameters": {
+      "separatorChar": "|",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "columns",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "series_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "original_name_in_db",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "measurement",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dataset",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "used_for",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_in_htas_ope_allocation": {
+    "prefix": "client_transformed_data/mlops/htas_ope_allocation/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "metric",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "product and category (grouped)",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level0",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level1",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level2",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level3",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "splitby",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "% of spend",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_in_powertools_pta_allocation": {
+    "prefix": "client_transformed_data/mlops/powertools_pta_allocation/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "metric",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "product and category (grouped)",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level0",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level1",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level2",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "level3",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "splitby",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "monthly_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "% of spend",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "ms_in_y_data": {
+    "prefix": "client_transformed_data/mlops/y_data/",
+    "serdeParameters": {
+      "separatorChar": ",",
+      "skip.header.line.count": 1
+    },
+    "columns": [
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_horizon",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "final_monthly_market_size",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_start_month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_end_month",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_volume",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_volume(-12)",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_12m_abs_difference",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "y_12m_pct_growth",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "iteration",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "snp_client_review": {
+    "prefix": "client_review/",
+    "serdeParameters": {
+      "separatorChar": "|"
+    },
+    "columns": [
+      {
+        "Name": "id",
+        "Type": "int",
+        "Comment": ""
+      },
+      {
+        "Name": "date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_id",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "user_display_name",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "action",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "comment",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "as_on",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_start_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "period_end_date",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "customer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "by_value_by_volume",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "forecast_period_type",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  }
+}

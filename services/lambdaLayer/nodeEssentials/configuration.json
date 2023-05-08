@@ -1,0 +1,5 @@
+{
+  "compatibleRuntimes": ["NODEJS_18_X"],
+  "description": "lodash, date-fns, millify, and specifics to kearny aws platform dashboards",
+  "name": "dd-krny-snp-lambda-essentials-node18x"
+}

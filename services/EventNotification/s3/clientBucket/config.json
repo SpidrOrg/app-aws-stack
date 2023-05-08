@@ -1,0 +1,12 @@
+{
+  "clientDataTransformation": {
+    "eventType": "OBJECT_CREATED",
+    "notify": {
+      "lambda": "cd-data-transformation"
+    },
+    "filters": {
+      "prefix": "client-raw-data/",
+      "suffix": ".csv"
+    }
+  }
+}

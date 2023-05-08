@@ -1,0 +1,12 @@
+{
+  "runtime": "NODEJS_18_X",
+  "architecture": "X86_64",
+  "configuration": {
+    "iamRole": "cloudfront-edge-service-role",
+    "timeout": 15,
+    "environment": {
+      "awsAccount": ":123456789012:"
+    }
+  },
+  "layers": []
+}

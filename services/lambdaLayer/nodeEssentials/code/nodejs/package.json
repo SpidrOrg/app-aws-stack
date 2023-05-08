@@ -1,0 +1,20 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-athena": "^3.312.0",
+    "@aws-sdk/client-s3": "^3.312.0",
+    "@aws-sdk/client-sts": "^3.312.0",
+    "date-fns": "^2.29.3",
+    "lodash": "^4.17.21",
+    "millify": "^6.1.0"
+  }
+}

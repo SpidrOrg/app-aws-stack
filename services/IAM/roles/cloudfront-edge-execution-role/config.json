@@ -1,0 +1,40 @@
+{
+  "policies": [
+    "cloudfront-edge-execution-parameterized-policy"
+  ],
+  "description": "Allows to retrieve tenant ID for the specific host with dynamoddb item level control. Additional permission for cloudwatch logs and KMS",
+  "trustRelationship": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": [
+            "lambda.amazonaws.com",
+            "edgelambda.amazonaws.com"
+          ]
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:role/cloudfront-edge-service-role"
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::123456789012:role/cloudfront-edge-service-role"
+        },
+        "Action": "sts:TagSession",
+        "Condition": {
+          "StringLike": {
+            "aws:RequestTag/HostName": "*"
+          }
+        }
+      }
+    ]
+  }
+}

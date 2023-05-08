@@ -1,0 +1,15 @@
+version: 0.2
+
+env:
+  parameter-store:
+    clientToOnboardConfig: "clientToOnboardConfig"
+
+phases:
+  build:
+    commands:
+      - cd "$CODEBUILD_SRC_DIR"
+      - cd infra
+      - npm ci
+      - node scanClientsTable.js
+      - npm i -g cdk
+      - cdk deploy --all --require-approval=never

@@ -1,0 +1,91 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:Query"
+      ],
+      "Resource": "arn:aws:dynamodb:us-east-1:123456789012:table/sensing-solution-tenant",
+      "Condition": {
+        "ForAllValues:StringEquals": {
+          "dynamodb:LeadingKeys": "${aws:PrincipalTag/TenantID}"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "glue:GetDatabase",
+        "glue:GetDatabases",
+        "glue:GetTable",
+        "glue:GetTables"
+      ],
+      "Resource": [
+        "arn:aws:glue:us-east-1:123456789012:catalog",
+        "arn:aws:glue:us-east-1:123456789012:database/${aws:PrincipalTag/TenantID}-database${aws:PrincipalTag/EnvSuffix}",
+        "arn:aws:glue:us-east-1:123456789012:table/${aws:PrincipalTag/TenantID}-database${aws:PrincipalTag/EnvSuffix}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "lakeformation:*",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "Athena:StartQueryExecution",
+        "Athena:GetQueryExecution",
+        "Athena:GetQueryResults"
+      ],
+      "Resource": [
+        "arn:aws:athena:us-east-1:123456789012:workgroup/${aws:PrincipalTag/TenantID}-athena-workgroup${aws:PrincipalTag/EnvSuffix}"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::krny-spi-codebase${aws:PrincipalTag/EnvSuffix}/dashboards/${aws:PrincipalTag/TenantID}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::krny-spi-${aws:PrincipalTag/TenantID}${aws:PrincipalTag/EnvSuffix}/client_review/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:ListBucketMultipartUploads",
+        "s3:AbortMultipartUpload",
+        "s3:PutObject",
+        "s3:ListMultipartUploadParts"
+      ],
+      "Resource": [
+        "arn:aws:s3:::krny-spi-${aws:PrincipalTag/TenantID}${aws:PrincipalTag/EnvSuffix}",
+        "arn:aws:s3:::krny-spi-${aws:PrincipalTag/TenantID}${aws:PrincipalTag/EnvSuffix}/athena_results/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::krny-spi-${aws:PrincipalTag/TenantID}${aws:PrincipalTag/EnvSuffix}/*"
+      ]
+    }
+  ]
+}
