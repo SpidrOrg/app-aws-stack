@@ -7,9 +7,7 @@ const path = require("path");
 
 let envVal = process.env.clientonboardingconfig;
 envVal = envVal.replaceAll("'", "");
-console.log("process.env.cdkClientOnboardingConfig", envVal)
 const cdkConfig = JSON.parse(`${envVal}`);
-console.log("cdkConfig", cdkConfig, JSON.stringify(cdkConfig), cdkConfig.awsAccount)
 //
 // const cdkConfig = {
 //   "awsAccount": "932399466203",
