@@ -2,7 +2,7 @@ import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
 import {STSClient} from "@aws-sdk/client-sts";
 import {AssumeRoleCommand} from "@aws-sdk/client-sts";
 
-const REGION = "us-east-2";
+const REGION = "us-east-1";
 
 const ACCOUNT_ID = ":123456789012:";
 const EXECUTION_ROLE_NAME = 'cloudfront-edge-execution-role';

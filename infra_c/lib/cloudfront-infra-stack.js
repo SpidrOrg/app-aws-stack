@@ -38,6 +38,13 @@ class CloudfrontInfraStack extends Stack {
       headerBehavior: cloudfront.OriginRequestHeaderBehavior.allowList("Host"),
     })
 
+    const cachePolicy = new cloudfront.CachePolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
+      cachePolicyName: 'webappCdnDistributionCachePolicy',
+      comment: 'Dashboards Buckets Access - Created by CDK',
+      headerBehavior: cloudfront.CacheHeaderBehavior.allowList("Host"),
+    })
+
+
     const cf = new cloudfront.Distribution(this, `webappCdnDistribution`, {
       comment: `SNP Dashboards - Managed by CDK`,
       defaultRootObject: "index.html",
@@ -50,6 +57,7 @@ class CloudfrontInfraStack extends Stack {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         originRequestPolicy: originRequestPolicy,
+        cachePolicy: cachePolicy,
         edgeLambdas: [lambdaFunctionAssociation]
       },
       domainNames: [domain, ...allEntities.map(v => `${v.host}.${domain}`)],
