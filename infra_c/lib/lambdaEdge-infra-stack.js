@@ -19,7 +19,7 @@ class LambdaEdgeInfraStack extends Stack {
       config = config.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
       const configP = JSON.parse(config);
 
-      const lambdaCodeFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs");
+      const lambdaCodeFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.js");
       let lambdacode = fs.readFileSync(lambdaCodeFilePath, "utf-8");
       lambdacode = lambdacode.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
 
