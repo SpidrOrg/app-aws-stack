@@ -38,7 +38,7 @@ class CloudfrontInfraStack extends Stack {
       headerBehavior: cloudfront.OriginRequestHeaderBehavior.allowList("Host"),
     })
 
-    const cachePolicy = new cloudfront.CachePolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
+    const cachePolicy = new cloudfront.CachePolicy(this, 'webappCdnDistributionCachePolicy', {
       cachePolicyName: 'webappCdnDistributionCachePolicy',
       comment: 'Dashboards Buckets Access - Created by CDK',
       headerBehavior: cloudfront.CacheHeaderBehavior.allowList("Host"),
