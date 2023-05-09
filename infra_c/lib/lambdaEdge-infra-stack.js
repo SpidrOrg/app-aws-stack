@@ -19,10 +19,10 @@ class LambdaEdgeInfraStack extends Stack {
       config = config.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
       const configP = JSON.parse(config);
 
-      const lambdaCodeFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.js");
+      const lambdaCodeFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs");
       let lambdacode = fs.readFileSync(lambdaCodeFilePath, "utf-8");
       lambdacode = lambdacode.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
-
+      fs.writeFileSync(path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs"), lambdacode)
       const iamRoleName = Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
 
       const lambdaEdgeFunction = new lambda.Function(this, `${lambdaEdgeFolder}`, {
@@ -31,7 +31,7 @@ class LambdaEdgeInfraStack extends Stack {
         timeout: Duration.seconds(configP.configuration.timeout),
         role: iam.Role.fromRoleName(this, `lambdaEdgeRole${lambdaEdgeFolder}`, iamRoleName),
         handler: 'index.handler',
-        code: lambda.Code.fromInline(lambdacode),
+        code: lambda.Code.fromAsset(path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code")),
       });
 
       const versionHash = crypto.createHash('md5').update(`${config}${lambdacode}`).digest('hex');

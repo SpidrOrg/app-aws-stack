@@ -1,6 +1,6 @@
-const {DynamoDBClient, QueryCommand} = require("@aws-sdk/client-dynamodb");
-const {STSClient} = require("@aws-sdk/client-sts");
-const {AssumeRoleCommand} = require("@aws-sdk/client-sts");
+import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
+import {STSClient} from "@aws-sdk/client-sts";
+import {AssumeRoleCommand} from "@aws-sdk/client-sts";
 
 const REGION = "us-east-1";
 
@@ -46,7 +46,7 @@ const getDTableHostName = (hostWithDomainName)=>{
   return null;
 }
 
-exports.handler = async (event) => {
+export const handler = async(event) => {
   try {
     console.log("event", event);
     console.log("event stringify", JSON.stringify(event), "event stringify")
