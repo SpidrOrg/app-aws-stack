@@ -25,7 +25,7 @@ class LambdaEdgeInfraStack extends Stack {
 
       const iamRoleName = Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
 
-      const lambdaEdgeFunction = new lambda.Function(this, `${lambdaEdgeFolder}`, {
+      const lambdaEdgeFunction = new lambda.Function(this, `${lambdaEdgeFolder}_f1`, {
         runtime: lambda.Runtime[configP.runtime],
         architecture: lambda.Architecture[configP.architecture],
         timeout: Duration.seconds(configP.configuration.timeout),
