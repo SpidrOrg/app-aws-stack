@@ -79,7 +79,7 @@ class ApiGatewayInfraStack extends Stack {
           allowHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key'],
           allowMethods: ['OPTIONS', 'GET', 'POST'],
           allowCredentials: true,
-          allowOrigins: ['*'],
+          allowOrigins: apigateway.Cors.ALL_ORIGINS,
         });
       })
     });
