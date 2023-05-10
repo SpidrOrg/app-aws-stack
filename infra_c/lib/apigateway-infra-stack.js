@@ -19,6 +19,17 @@ class ApiGatewayInfraStack extends Stack {
       deployOptions: {
         stageName: envName,
       },
+      defaultCorsPreflightOptions: {
+        allowHeaders: [
+          'Content-Type',
+          'X-Amz-Date',
+          'Authorization',
+          'X-Api-Key',
+        ],
+        allowMethods: ['OPTIONS', 'GET', 'POST'],
+        allowCredentials: true,
+        allowOrigins: ['*'],
+      },
     });
 
     new CfnOutput(this, `apiGatewayRootUrl`, {
@@ -74,11 +85,10 @@ class ApiGatewayInfraStack extends Stack {
               authorizationScopes: [`tenant/${clientId}`]
             }
           );
-
-          resource.addCorsPreflight({
-            allowOrigins: apigateway.Cors.ALL_ORIGINS,
-            allowMethods: apigateway.Cors.ALL_METHODS,
-          })
+        })
+        resource.addCorsPreflight({
+          allowOrigins: apigateway.Cors.ALL_ORIGINS,
+          allowMethods: apigateway.Cors.ALL_METHODS,
         })
       })
     });
