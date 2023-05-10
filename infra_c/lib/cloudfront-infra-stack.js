@@ -28,24 +28,8 @@ class CloudfrontInfraStack extends Stack {
       includeBody: false,
     };
 
-    const oia = new cloudfront.OriginAccessIdentity(this, 'cloudfrontS3DashboardsOIA', {
-      comment: "Created by CDK"
-    });
-
-    const cfnBucketPolicy = new s3.CfnBucketPolicy(this, 'cloudfrontS3DashboardsOIABucketPolicy', {
-      bucket: dashboardsBucket,
-      policyDocument: new iam.PolicyDocument({
-        statements:[new iam.PolicyStatement({
-          resources: [
-            dashboardsBucket.arnForObjects("*")
-          ],
-          actions: ["s3:GetObject"],
-          principals: [oia.grantPrincipal]
-        })]
-      }).toString(),
-    });
-    cfnBucketPolicy.node.addDependency(oia);
-    // dashboardsBucket.grantRead(oia);
+    const oiaId = Fn.importValue('dashboardsBucketRefOia');
+    const oia = cloudfront.OriginAccessIdentity.fromOriginAccessIdentityId(this, 'cloudfrontS3DashboardsOIA', oiaId)
 
     const originRequestPolicy = new cloudfront.OriginRequestPolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
       originRequestPolicyName: 'webappCdnDistributionOriginRequestPolicy',
@@ -58,7 +42,6 @@ class CloudfrontInfraStack extends Stack {
       comment: 'Dashboards Buckets Access - Created by CDK',
       headerBehavior: cloudfront.CacheHeaderBehavior.allowList("Host"),
     })
-
 
     const cf = new cloudfront.Distribution(this, `webappCdnDistribution`, {
       comment: `SNP Dashboards - Managed by CDK`,

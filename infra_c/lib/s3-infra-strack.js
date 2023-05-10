@@ -7,6 +7,7 @@ const clientBucketNotificationConfig = require("../../services/EventNotification
 const lambda = require("aws-cdk-lib/aws-lambda");
 const iam = require("aws-cdk-lib/aws-iam");
 const s3n = require("aws-cdk-lib/aws-s3-notifications");
+const cloudfront = require("aws-cdk-lib/aws-cloudfront");
 
 class S3InfraStack extends Stack {
   constructor(scope, id, props) {
@@ -19,11 +20,29 @@ class S3InfraStack extends Stack {
       removalPolicy: RemovalPolicy.RETAIN
     });
 
+    const oia = new cloudfront.OriginAccessIdentity(this, 'cloudfrontS3DashboardsOIA', {
+      comment: "Created by CDK"
+    });
+    dashboardsBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        resources: [
+          dashboardsBucket.arnForObjects("*")
+        ],
+        actions: ["s3:GetObject"],
+        principals: [oia.grantPrincipal]
+      })
+    );
+
     //// Export Dashboard bucket name
     new CfnOutput(this, 'dashboardsBucketRef', {
       value: dashboardsBucket.bucketArn,
       description: 'The ARN of the Dashboards s3 bucket',
       exportName: 'dashboardsBucketARN',
+    });
+    new CfnOutput(this, 'dashboardsBucketRefOia', {
+      value: oia.originAccessIdentityId,
+      description: 'The ARN of the Dashboards s3 bucket',
+      exportName: 'dashboardsBucketRefOia',
     });
 
     const {allEntities = []} = props;
