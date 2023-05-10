@@ -82,13 +82,6 @@ class ApiGatewayInfraStack extends Stack {
             }
           )
         })
-
-        new CfnOutput(this, `apiGateway${clientId}${resourceName}resourceId`, {
-          value: resource.resourceId,
-          description: `The ID of the resource.`,
-          exportName: `apiGateway${clientId}${resourceName}resourceId`,
-        });
-
       })
     })
   }
