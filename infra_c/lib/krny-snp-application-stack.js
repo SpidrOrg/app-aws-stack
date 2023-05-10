@@ -65,6 +65,13 @@ class krnySnpApplicationStack extends Stack {
     apiGatewayInfraStack.addDependency(lambdaInfraStack);
     apiGatewayInfraStack.addDependency(cognitoInfraStack);
 
+    // // Configure Upload Default Dashboard Bundler
+    // const uiBundleStack = new UiBundleStack(this, 'UiBundleStack', stackProps);
+    // uiBundleStack.addDependency(lambdaInfraStack);
+    // uiBundleStack.addDependency(s3InfraStack);
+    // uiBundleStack.addDependency(cognitoInfraStack);
+    // uiBundleStack.addDependency(apiGatewayInfraStack);
+    // uiBundleStack.addDependency(cloudfrontInfraStack);
   }
 }
 
