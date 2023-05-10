@@ -2,6 +2,7 @@ const {Stack, Fn, CfnOutput} = require("aws-cdk-lib");
 const apigateway = require("aws-cdk-lib/aws-apigateway");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const lambda = require('aws-cdk-lib/aws-lambda');
+const iam = require('aws-cdk-lib/aws-iam');
 const apiGatewayResourcesConfig = require("../../services/APIGateway/resourceConfig.json");
 const path = require("path");
 const fs = require("fs");
@@ -33,7 +34,15 @@ class ApiGatewayInfraStack extends Stack {
     });
 
 
-
+    const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
+    const lambdaFolders = fs.readdirSync(pathToLambdaFolder);
+    lambdaFolders.forEach(lambdaFolder => {
+      const fn = lambda.Function.fromFunctionName(lambdaFolder);
+      fn.addPermission('PermitAPIGInvocation', {
+        principal: new iam.ServicePrincipal('apigateway.amazonaws.com'),
+        sourceArn: api.arnForExecuteApi('*')
+      })
+    })
 
     allEntities.forEach(entity =>{
       const clientId = entity.id;
@@ -71,8 +80,8 @@ class ApiGatewayInfraStack extends Stack {
                 {
                   statusCode: "200",
                   responseTemplates: {
-                    'application/json': "Empty"
-                  },
+                    "application/json": {}
+                  }
                 },
               ],
             }),
@@ -82,39 +91,39 @@ class ApiGatewayInfraStack extends Stack {
               authorizationScopes: [`tenant/${clientId}`]
             }
           );
-        })
+        });
 
-        // resource.addMethod('OPTIONS', new apigateway.MockIntegration({
-        //   integrationResponses: [{
-        //     statusCode: '200',
-        //     responseParameters: {
-        //       'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-        //       'method.response.header.Access-Control-Allow-Origin': "'*'",
-        //       'method.response.header.Access-Control-Allow-Credentials': "'false'",
-        //       'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'",
-        //     },
-        //   }],
-        //   passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
-        //   requestTemplates: {
-        //     "application/json": "{\"statusCode\": 200}"
-        //   },
-        // }), {
-        //   methodResponses: [{
-        //     statusCode: '200',
-        //     responseParameters: {
-        //       'method.response.header.Access-Control-Allow-Headers': true,
-        //       'method.response.header.Access-Control-Allow-Methods': true,
-        //       'method.response.header.Access-Control-Allow-Credentials': true,
-        //       'method.response.header.Access-Control-Allow-Origin': true,
-        //     },
-        //   }]
-        // })
-        // resource.addCorsPreflight({
-        //   allowHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key'],
-        //   allowMethods: ['OPTIONS', 'GET', 'POST'],
-        //   allowCredentials: true,
-        //   allowOrigins: apigateway.Cors.ALL_ORIGINS,
-        // });
+        resource.addMethod('OPTIONS', new apigateway.MockIntegration({
+          integrationResponses: [{
+            statusCode: '200',
+            responseParameters: {
+              'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+              'method.response.header.Access-Control-Allow-Origin': "'*'",
+              'method.response.header.Access-Control-Allow-Credentials': "'false'",
+              'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'",
+            },
+          }],
+          passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+          requestTemplates: {
+            "application/json": "{\"statusCode\": 200}"
+          },
+        }), {
+          methodResponses: [{
+            statusCode: '200',
+            responseParameters: {
+              'method.response.header.Access-Control-Allow-Headers': true,
+              'method.response.header.Access-Control-Allow-Methods': true,
+              'method.response.header.Access-Control-Allow-Credentials': true,
+              'method.response.header.Access-Control-Allow-Origin': true,
+            },
+          }]
+        })
+        resource.addCorsPreflight({
+          allowHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key'],
+          allowMethods: ['OPTIONS', 'GET', 'POST'],
+          allowCredentials: true,
+          allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        });
       })
     });
 
