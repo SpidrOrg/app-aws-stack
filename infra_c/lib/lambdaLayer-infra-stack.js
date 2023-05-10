@@ -17,7 +17,7 @@ class LambdaLayerInfraStack extends Stack {
 
       // Create lambda layer
       const lambdaLayer = new lambda.LayerVersion(this, `${config.name}`, {
-        layerVersionName: `${config.name}`,
+        layerVersionName: `${config.name}_rev1`,
         description: `${config.description}`,
         compatibleRuntimes: config.compatibleRuntimes.map(runtimeName => {
           return lambda.Runtime[runtimeName]

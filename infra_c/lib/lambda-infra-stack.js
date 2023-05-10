@@ -30,7 +30,7 @@ class LambdaInfraStack extends Stack {
         timeout: Duration.seconds(config.configuration.timeout),
         layers: config.layers.map(layerConfig =>{
           const lambdaLayerARN = Fn.importValue(`lambdaLayerARN${layerConfig.name}ref1`);
-          return lambda.LayerVersion.fromLayerVersionArn(this, `lambdaFunctionLayer${lambdaFolder}`, lambdaLayerARN);
+          return lambda.LayerVersion.fromLayerVersionArn(this, `lambdaFunctionLayer${lambdaFolder}rev1`, lambdaLayerARN);
         })
       });
 
