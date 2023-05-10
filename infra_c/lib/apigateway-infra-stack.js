@@ -78,10 +78,7 @@ class ApiGatewayInfraStack extends Stack {
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
               integrationResponses: [
                 {
-                  statusCode: "200",
-                  responseTemplates: {
-                    "application/json": {}
-                  }
+                  statusCode: "200"
                 },
               ],
             }),
