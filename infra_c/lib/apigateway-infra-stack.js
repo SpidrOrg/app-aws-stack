@@ -117,8 +117,8 @@ class ApiGatewayInfraStack extends Stack {
 
       const idpConfigFilePath = path.join(pathToDefaultDashboardBundle, "idpConfig.js");
       let idpConfig = fs.readFileSync(idpConfigFilePath, "utf-8");
-      idpConfig = idpConfig.replaceAll(POOLID_PALCEHOLDER, `${cognitoUserPoolId}`);
-      idpConfig = idpConfig.replaceAll(POOLWEBCLIENTID_PALCEHOLDER, `${cognitoUserPoolWebClient}`);
+      idpConfig = idpConfig.replaceAll(POOLID_PALCEHOLDER, `${cognitoUserPoolId.toString()}`);
+      idpConfig = idpConfig.replaceAll(POOLWEBCLIENTID_PALCEHOLDER, `${cognitoUserPoolWebClient.toString()}`);
       idpConfig = idpConfig.replaceAll(POOLOAUTHDOMAIN_PALCEHOLDER, `${cognitoUserPoolDomain}`);
       idpConfig = idpConfig.replaceAll(POOLREDIRECTSIGNIN_PALCEHOLDER, `${cognitoUserPoolRedirectSignInPublicUrl}`);
       idpConfig = idpConfig.replaceAll(POOLREDIRECTSIGNOUT_PALCEHOLDER, `${cognitoUserPoolRedirectSignOutPublicUrl}`);

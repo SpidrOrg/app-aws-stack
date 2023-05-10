@@ -3,13 +3,13 @@ const idpData = {
   identityPoolId: "",
   userPoolId: ":POOLID:",
   userPoolWebClientId: ":POOLWEBCLIENTID:",
-  oauthDomain: "POOLOAUTHDOMAIN",
-  redirectSignIn: "POOLREDIRECTSIGNIN",
-  redirectSignOut: "POOLREDIRECTSIGNOUT",
-  apiPrefix: "APIPREFIX",
-  stage: "APISTAGE",
-  clientId: "CLIENTID",
-  clientDisplayName: "CLIENTDISPLAYNAME",
+  oauthDomain: ":POOLOAUTHDOMAIN:",
+  redirectSignIn: ":POOLREDIRECTSIGNIN:",
+  redirectSignOut: ":POOLREDIRECTSIGNOUT:",
+  apiPrefix: ":APIPREFIX:",
+  stage: ":APISTAGE:",
+  clientId: ":CLIENTID:",
+  clientDisplayName: ":CLIENTDISPLAYNAME:",
   colorTheme: "teal"
 };
 export {

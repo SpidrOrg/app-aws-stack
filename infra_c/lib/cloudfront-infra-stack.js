@@ -6,6 +6,7 @@ const s3 = require("aws-cdk-lib/aws-s3");
 const cloudfrontOrigins = require("aws-cdk-lib/aws-cloudfront-origins");
 const cr = require("aws-cdk-lib/custom-resources");
 const iam = require('aws-cdk-lib/aws-iam');
+const {CfnBucketPolicy} = require("aws-cdk-lib/aws-s3");
 
 class CloudfrontInfraStack extends Stack {
   constructor(scope, id, props) {
@@ -30,6 +31,19 @@ class CloudfrontInfraStack extends Stack {
     const oia = new cloudfront.OriginAccessIdentity(this, 'cloudfrontS3DashboardsOIA', {
       comment: "Created by CDK"
     });
+
+
+    // new CfnBucketPolicy(this, 'addOiaAccess', {
+    //   bucket: dashboardsBucket,
+    //   policyDocument: new iam.PolicyDocument({
+    //     statements: new iam.PolicyStatement({
+    //       effect: "Allow",
+    //       actions: ["s3:GetObject"],
+    //       resources: [dashboardsBucket.arnForObjects("*")],
+    //       principals: [oia.grantPrincipal]
+    //     })
+    //   })
+    // })
     dashboardsBucket.grantRead(oia);
 
     const originRequestPolicy = new cloudfront.OriginRequestPolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
