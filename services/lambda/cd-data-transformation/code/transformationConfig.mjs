@@ -125,5 +125,23 @@ export default {
         return dateFns.format(dateP, DB_DATE_FORMAT);
       }
     },{},{},{},{}]
+  },
+  ydata: {
+    rawFileKey: () => `${RAW_FOLDER}/y_data.csv`,
+    transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/y_data/y_data.csv`,
+    primaryKeyIndexes: [],
+    lineTransformationConfig: []
+  },
+  htas_ope_allocation_split_sanitized: {
+    rawFileKey: () => `${RAW_FOLDER}/htas_ope_allocation_split_sanitized.csv`,
+    transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/htas_ope_allocation/htas_ope_allocation_split_sanitized.csv`,
+    primaryKeyIndexes: [],
+    lineTransformationConfig: []
+  },
+  powertools_pta_allocation: {
+    rawFileKey: () => `${RAW_FOLDER}/powertools_pta_allocation_split_sanitized.csv`,
+    transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/powertools_pta_allocation/powertools_pta_allocation_split_sanitized.csv`,
+    primaryKeyIndexes: [],
+    lineTransformationConfig: []
   }
 }

@@ -76,6 +76,10 @@ export const handler = async (event) => {
     // Read file from S3 entirely
     const lhsFileContents = await readFileAsString(s3Client, s3bucket, rawFKey);
 
+    if (_.isEmpty(lineTransformationConfig)){
+      await writeFileToS3(s3Client, s3bucket, transformFKey, lhsFileContents);
+      return
+    }
     // Transform file
     let transformedLHSFileContents = transformer(lhsFileContents, lineTransformationConfig, addColumns);
 
