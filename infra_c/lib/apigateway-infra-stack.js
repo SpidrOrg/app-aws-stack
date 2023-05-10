@@ -19,17 +19,6 @@ class ApiGatewayInfraStack extends Stack {
       deployOptions: {
         stageName: envName,
       },
-      defaultCorsPreflightOptions: {
-        allowHeaders: [
-          'Content-Type',
-          'X-Amz-Date',
-          'Authorization',
-          'X-Api-Key',
-        ],
-        allowMethods: ['OPTIONS', 'GET', 'POST'],
-        allowCredentials: true,
-        allowOrigins: ['*'],
-      },
     });
 
     new CfnOutput(this, `apiGatewayRootUrl`, {
