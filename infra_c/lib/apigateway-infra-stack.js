@@ -38,11 +38,12 @@ class ApiGatewayInfraStack extends Stack {
     const lambdaFolders = fs.readdirSync(pathToLambdaFolder);
     lambdaFolders.forEach(lambdaFolder => {
       const fnArn = Fn.importValue(`lambdaARN${lambdaFolder}`);
-      const fn = lambda.Function.fromFunctionArn(this, `PermitAPIGInvocation${lambdaFolder}refarn`, fnArn);
-      fn.addPermission(`PermitAPIGInvocation${lambdaFolder}`, {
-        principal: new iam.ServicePrincipal('apigateway.amazonaws.com'),
+      new lambda.CfnPermission(this, `PermitAPIGInvocation${lambdaFolder}refarn`, {
+        action: 'lambda:InvokeFunction',
+        functionName: fnArn,
+        principal: 'apigateway.amazonaws.com',
         sourceArn: api.arnForExecuteApi('*')
-      })
+      });
     })
 
     allEntities.forEach(entity =>{
