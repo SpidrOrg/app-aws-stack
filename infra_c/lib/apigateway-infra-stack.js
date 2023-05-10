@@ -85,7 +85,8 @@ class ApiGatewayInfraStack extends Stack {
               authorizationScopes: [`tenant/${clientId}`]
             }
           );
-          method.node.defaultChild.addCorsPreflight({
+
+          resource.addCorsPreflight({
             allowOrigins: apigateway.Cors.ALL_ORIGINS,
             allowMethods: apigateway.Cors.ALL_METHODS,
           })
