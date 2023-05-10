@@ -81,6 +81,8 @@ class CognitoInfraStack extends Stack {
       })
 
       // Cognito user pool web client
+      const POOL_CALLBACK_URL_PUBLIC = `https://${host}.${domain}`;
+      const POOL_LOGOUT_URL_PUBLIC = `https://${host}.${domain}`;
       const userPoolClient = new cognito.UserPoolClient(this, `userpool${clientId}client`, {
         userPool,
         userPoolClientName: "web-client",
@@ -89,8 +91,8 @@ class CognitoInfraStack extends Stack {
           userSrp: true,
         },
         oAuth: {
-          callbackUrls: [`https://${host}.${domain}`, `http://localhost:${localhostPortMappingByEnv(envName)}`],
-          logoutUrls: [`https://${host}.${domain}`, `http://localhost:${localhostPortMappingByEnv(envName)}`],
+          callbackUrls: [POOL_CALLBACK_URL_PUBLIC, `http://localhost:${localhostPortMappingByEnv(envName)}`],
+          logoutUrls: [POOL_LOGOUT_URL_PUBLIC, `http://localhost:${localhostPortMappingByEnv(envName)}`],
           scopes: [cognito.OAuthScope.EMAIL, cognito.OAuthScope.OPENID, cognito.OAuthScope.PROFILE, cognito.OAuthScope.resourceServer(userPoolResourceServer, userPoolResourceServerTenantScope)],
         },
         supportedIdentityProviders: [
@@ -148,6 +150,17 @@ class CognitoInfraStack extends Stack {
         value: userPoolDomain.domainName,
         description: `Domain`,
         exportName: `userpool${clientId}ResourceIdsDomain`,
+      });
+      //// Other exports
+      new CfnOutput(this, `userpool${clientId}redirectSignIn`, {
+        value: POOL_CALLBACK_URL_PUBLIC,
+        description: `UserPool Redirect SignIn`,
+        exportName: `userpool${clientId}redirectSignIn`,
+      });
+      new CfnOutput(this, `userpool${clientId}redirectSignOut`, {
+        value: POOL_LOGOUT_URL_PUBLIC,
+        description: `UserPool Redirect SignOut`,
+        exportName: `userpool${clientId}redirectSignOut`,
       });
     })
   }

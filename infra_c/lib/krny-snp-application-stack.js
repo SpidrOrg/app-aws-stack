@@ -10,6 +10,8 @@ const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");
+const {UiBundleStack} = require("./ui-bundle-stack");
+
 
 class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
@@ -30,7 +32,7 @@ class krnySnpApplicationStack extends Stack {
     lambdaInfraStack.addDependency(iamInfraStack);
     lambdaInfraStack.addDependency(lambdaLayerInfraStack);
 
-    // S3 Buckets
+    // S3 Buckets and S3 Client Bucket Event Notification
     const s3InfraStack = new S3InfraStack(this, 'S3InfraStack', stackProps);
     s3InfraStack.addDependency(lambdaInfraStack);
 
@@ -65,10 +67,13 @@ class krnySnpApplicationStack extends Stack {
     apiGatewayInfraStack.addDependency(lambdaInfraStack);
     apiGatewayInfraStack.addDependency(cognitoInfraStack);
 
-    // S3 Client Bucket Event Notification
-    // const s3EventNotificationStack = new S3EventNotificationStack(this, 'S3EventNotificationStack', stackProps);
-    // s3EventNotificationStack.addDependency(lambdaInfraStack);
-    // s3EventNotificationStack.addDependency(s3InfraStack);
+    // Configure Upload Default Dashboard Bundler
+    const uiBundleStack = new UiBundleStack(this, 'UiBundleStack', stackProps);
+    uiBundleStack.addDependency(lambdaInfraStack);
+    uiBundleStack.addDependency(s3InfraStack);
+    uiBundleStack.addDependency(cognitoInfraStack);
+    uiBundleStack.addDependency(apiGatewayInfraStack);
+    uiBundleStack.addDependency(cloudfrontInfraStack);
   }
 }
 

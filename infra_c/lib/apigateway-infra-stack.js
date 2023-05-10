@@ -1,4 +1,4 @@
-const {Stack, Fn} = require("aws-cdk-lib");
+const {Stack, Fn, CfnOutput} = require("aws-cdk-lib");
 const apigateway = require("aws-cdk-lib/aws-apigateway");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const lambda = require('aws-cdk-lib/aws-lambda');
@@ -27,6 +27,19 @@ class ApiGatewayInfraStack extends Stack {
         allowOrigins: ['*'],
       },
     });
+
+    new CfnOutput(this, `apiGatewayRootUrl`, {
+      value: api.url,
+      description: `The deployed root URL of this REST API.`,
+      exportName: `apiGatewayRootUrl`,
+    });
+    new CfnOutput(this, `apiGatewayBaseDeploymentStage`, {
+      value: api.deploymentStage,
+      description: `API Gateway stage that points to the latest deployment.`,
+      exportName: `apiGatewayBaseDeploymentStage`,
+    });
+
+
 
 
     allEntities.forEach(entity =>{
@@ -69,6 +82,17 @@ class ApiGatewayInfraStack extends Stack {
             }
           )
         })
+
+        new CfnOutput(this, `apiGateway${clientId}ResourcePath`, {
+          value: resource.path,
+          description: `API Gateway stage that points to the latest deployment.`,
+          exportName: `apiGateway${clientId}ResourcePath`,
+        });
+        new CfnOutput(this, `apiGateway${clientId}resourceId`, {
+          value: resource.resourceId,
+          description: `The ID of the resource.`,
+          exportName: `apiGateway${clientId}resourceId`,
+        });
 
       })
     })
