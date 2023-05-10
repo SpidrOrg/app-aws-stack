@@ -32,4 +32,4 @@ const props = {
 
 const appStack = new krnySnpApplicationStack(app, 'krny-snp-application-stack', props);
 const uiStack = new krnySnpUIStack(app, 'krny-snp-ui-stack', props);
-uiStack.addDependency(appStack);
+appStack.addDependency(uiStack);
