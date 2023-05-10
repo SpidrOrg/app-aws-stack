@@ -86,12 +86,12 @@ class ApiGatewayInfraStack extends Stack {
         new CfnOutput(this, `apiGateway${clientId}${resourceName}ResourcePath`, {
           value: resource.path,
           description: `API Gateway stage that points to the latest deployment.`,
-          exportName: `apiGateway${clientId}ResourcePath`,
+          exportName: `apiGateway${clientId}${resourceName}ResourcePath`,
         });
         new CfnOutput(this, `apiGateway${clientId}${resourceName}resourceId`, {
           value: resource.resourceId,
           description: `The ID of the resource.`,
-          exportName: `apiGateway${clientId}resourceId`,
+          exportName: `apiGateway${clientId}${resourceName}resourceId`,
         });
 
       })
