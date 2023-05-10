@@ -36,12 +36,12 @@ class CloudfrontInfraStack extends Stack {
     new CfnBucketPolicy(this, 'addOiaAccess', {
       bucket: dashboardsBucket,
       policyDocument: new iam.PolicyDocument({
-        statements: new iam.PolicyStatement({
+        statements: [new iam.PolicyStatement({
           effect: "Allow",
           actions: ["s3:GetObject"],
           resources: [dashboardsBucket.arnForObjects("*")],
           principals: [oia.grantPrincipal]
-        })
+        })]
       })
     })
     dashboardsBucket.grantRead(oia);
