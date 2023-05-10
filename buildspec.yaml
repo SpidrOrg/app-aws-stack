@@ -14,4 +14,4 @@ phases:
       - npm i -g cdk
       - cdk bootstrap
       - cdk destroy krny-snp-ui-stack --force
-      - cdk destroy --all --force
+      - cdk destroy krny-snp-application-stack --force
