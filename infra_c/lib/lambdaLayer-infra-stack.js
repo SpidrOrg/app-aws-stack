@@ -17,7 +17,7 @@ class LambdaLayerInfraStack extends Stack {
 
       // Create lambda layer
       const lambdaLayer = new lambda.LayerVersion(this, `${config.name}`, {
-        layerVersionName: `${config.name}_rev1`,
+        layerVersionName: `${config.name}`,
         description: `${config.description}`,
         compatibleRuntimes: config.compatibleRuntimes.map(runtimeName => {
           return lambda.Runtime[runtimeName]
@@ -26,10 +26,10 @@ class LambdaLayerInfraStack extends Stack {
       });
 
       // Export Layer Version ARN
-      new CfnOutput(this, `lambdaLayer${config.name}ARNRef1`, {
+      new CfnOutput(this, `lambdaLayer${config.name}ARNRef`, {
         value: lambdaLayer.layerVersionArn,
         description: `lambdaLayer ARN Reference : ${config.name}`,
-        exportName: `lambdaLayerARN${config.name}ref1`,
+        exportName: `lambdaLayerARN${config.name}`,
       });
     })
   }
