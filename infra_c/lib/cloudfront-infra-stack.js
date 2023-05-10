@@ -42,7 +42,7 @@ class CloudfrontInfraStack extends Stack {
           actions: ["s3:GetObject"],
           principals: [oia.grantPrincipal]
         })]
-      }),
+      }).toString(),
     });
     cfnBucketPolicy.node.addDependency(oia);
     // dashboardsBucket.grantRead(oia);
