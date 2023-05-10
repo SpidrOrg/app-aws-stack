@@ -1,6 +1,6 @@
 const {Stack, Fn} = require("aws-cdk-lib");
 const glueAlpha = require("@aws-cdk/aws-glue-alpha");
-const clientDatabaseSchema = require('../../services/glue/client-database-schema.json');
+const clientDatabaseSchema = require('../../services/glue/client-database-schema_b.json');
 const glueTableColumnTypeMappings = require('./utils/glueTableColumnTypeMappings.json');
 const s3 = require("aws-cdk-lib/aws-s3");
 
