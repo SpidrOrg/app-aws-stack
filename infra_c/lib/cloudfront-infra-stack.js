@@ -32,15 +32,19 @@ class CloudfrontInfraStack extends Stack {
       comment: "Created by CDK"
     });
 
-    dashboardsBucket.addToResourcePolicy(
-      new iam.PolicyStatement({
-        resources: [
-          dashboardsBucket.arnForObjects("*")
-        ],
-        actions: ["s3:GetObject"],
-        principals: [oia.grantPrincipal]
-      })
-    );
+    const cfnBucketPolicy = new s3.CfnBucketPolicy(this, 'cloudfrontS3DashboardsOIABucketPolicy', {
+      bucket: dashboardsBucket,
+      policyDocument: new iam.PolicyDocument({
+        statements:[new iam.PolicyStatement({
+          resources: [
+            dashboardsBucket.arnForObjects("*")
+          ],
+          actions: ["s3:GetObject"],
+          principals: [oia.grantPrincipal]
+        })]
+      }),
+    });
+    cfnBucketPolicy.node.addDependency(oia);
     // dashboardsBucket.grantRead(oia);
 
     const originRequestPolicy = new cloudfront.OriginRequestPolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
