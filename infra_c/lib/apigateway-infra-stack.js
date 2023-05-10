@@ -75,12 +75,12 @@ class ApiGatewayInfraStack extends Stack {
             }
           );
         })
-        resource.addCorsPreflight({
-          allowHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key'],
-          allowMethods: ['OPTIONS', 'GET', 'POST'],
-          allowCredentials: true,
-          allowOrigins: apigateway.Cors.ALL_ORIGINS,
-        });
+        // resource.addCorsPreflight({
+        //   allowHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key'],
+        //   allowMethods: ['OPTIONS', 'GET', 'POST'],
+        //   allowCredentials: true,
+        //   allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        // });
       })
     });
 
