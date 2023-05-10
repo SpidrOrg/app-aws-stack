@@ -70,7 +70,7 @@ class ApiGatewayInfraStack extends Stack {
 
           const lambdaArn = Fn.importValue(`lambdaARN${integerationConfig.lambda}`);
           const backendLamdba = lambda.Function.fromFunctionArn(this, `backendLamdba${clientId}${resourceName}${methodName}`, lambdaArn);
-          resource.addMethod(
+          const method = resource.addMethod(
             methodName,
             new apigateway.LambdaIntegration(backendLamdba, {
               proxy: integerationConfig.proxy ?? false,
@@ -84,7 +84,11 @@ class ApiGatewayInfraStack extends Stack {
               authorizationType: apigateway.AuthorizationType.COGNITO,
               authorizationScopes: [`tenant/${clientId}`]
             }
-          )
+          );
+          method.node.defaultChild.addCorsPreflight({
+            allowOrigins: apigateway.Cors.ALL_ORIGINS,
+            allowMethods: apigateway.Cors.ALL_METHODS,
+          })
         })
       })
     });
