@@ -8,7 +8,7 @@ const path = require("path");
 let envVal = process.env.clientonboardingconfig;
 envVal = envVal.replaceAll("'", "");
 const cdkConfig = JSON.parse(`${envVal}`);
-//
+
 // const cdkConfig = {
 //   "awsAccount": "932399466203",
 //   "region": "us-east-1",
