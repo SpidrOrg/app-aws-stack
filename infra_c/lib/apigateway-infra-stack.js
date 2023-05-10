@@ -34,7 +34,7 @@ class ApiGatewayInfraStack extends Stack {
       exportName: `apiGatewayRootUrl`,
     });
     new CfnOutput(this, `apiGatewayBaseDeploymentStage`, {
-      value: api.deploymentStage,
+      value: api.deploymentStage.stageName,
       description: `API Gateway stage that points to the latest deployment.`,
       exportName: `apiGatewayBaseDeploymentStage`,
     });
@@ -83,12 +83,12 @@ class ApiGatewayInfraStack extends Stack {
           )
         })
 
-        new CfnOutput(this, `apiGateway${clientId}ResourcePath`, {
+        new CfnOutput(this, `apiGateway${clientId}${resourceName}ResourcePath`, {
           value: resource.path,
           description: `API Gateway stage that points to the latest deployment.`,
           exportName: `apiGateway${clientId}ResourcePath`,
         });
-        new CfnOutput(this, `apiGateway${clientId}resourceId`, {
+        new CfnOutput(this, `apiGateway${clientId}${resourceName}resourceId`, {
           value: resource.resourceId,
           description: `The ID of the resource.`,
           exportName: `apiGateway${clientId}resourceId`,
