@@ -66,7 +66,12 @@ class ApiGatewayInfraStack extends Stack {
               requestTemplates: {
                 "application/json": JSON.stringify(integerationConfig.mappingTemplate)
               },
-              passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES
+              passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
+              integrationResponses: [
+                {
+                  statusCode: "200", // the simplest format. We can customize it.
+                },
+              ],
             }),
             {
               authorizer: apiGatewayLambdaAuthorizer,
