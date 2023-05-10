@@ -37,7 +37,8 @@ class ApiGatewayInfraStack extends Stack {
     const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
     const lambdaFolders = fs.readdirSync(pathToLambdaFolder);
     lambdaFolders.forEach(lambdaFolder => {
-      const fn = lambda.Function.fromFunctionArn(this, `PermitAPIGInvocation${lambdaFolder}refarn`, `lambdaARN${lambdaFolder}`);
+      const fnArn = Fn.importValue(`lambdaARN${lambdaFolder}`);
+      const fn = lambda.Function.fromFunctionArn(this, `PermitAPIGInvocation${lambdaFolder}refarn`, fnArn);
       fn.addPermission(`PermitAPIGInvocation${lambdaFolder}`, {
         principal: new iam.ServicePrincipal('apigateway.amazonaws.com'),
         sourceArn: api.arnForExecuteApi('*')
