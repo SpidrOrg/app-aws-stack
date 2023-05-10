@@ -10,8 +10,6 @@ const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");
-const {UiBundleStack} = require("./ui-bundle-stack");
-
 
 class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
@@ -67,13 +65,6 @@ class krnySnpApplicationStack extends Stack {
     apiGatewayInfraStack.addDependency(lambdaInfraStack);
     apiGatewayInfraStack.addDependency(cognitoInfraStack);
 
-    // Configure Upload Default Dashboard Bundler
-    const uiBundleStack = new UiBundleStack(this, 'UiBundleStack', stackProps);
-    uiBundleStack.addDependency(lambdaInfraStack);
-    uiBundleStack.addDependency(s3InfraStack);
-    uiBundleStack.addDependency(cognitoInfraStack);
-    uiBundleStack.addDependency(apiGatewayInfraStack);
-    uiBundleStack.addDependency(cloudfrontInfraStack);
   }
 }
 

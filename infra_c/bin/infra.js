@@ -2,6 +2,7 @@
 
 const cdk = require('aws-cdk-lib');
 const krnySnpApplicationStack = require('../lib/krny-snp-application-stack');
+const krnySnpUIStack = require('../lib/krny-snp-ui-stack');
 const fs = require("fs");
 const path = require("path");
 
@@ -29,4 +30,6 @@ const props = {
   clientsToOnboardConfigs
 }
 
-new krnySnpApplicationStack(app, 'krny-snp-application-stack', props);
+const appStack = new krnySnpApplicationStack(app, 'krny-snp-application-stack', props);
+const uiStack = new krnySnpUIStack(app, 'krny-snp-ui-stack', props);
+uiStack.addDependency(appStack);
