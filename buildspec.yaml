@@ -13,5 +13,4 @@ phases:
       - node scanClientsTable.js
       - npm i -g cdk
       - cdk bootstrap
-      - cdk destroy krny-snp-ui-stack --force
-      - cdk destroy krny-snp-application-stack --force
+      - cdk deploy --all --require-approval=never
