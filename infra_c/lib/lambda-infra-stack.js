@@ -28,10 +28,10 @@ class LambdaInfraStack extends Stack {
         role: iam.Role.fromRoleName(this, `lambdaRole${lambdaFolder}`, lambdaRoleName),
         environment: config.environment,
         timeout: Duration.seconds(config.configuration.timeout),
-        // layers: config.layers.map(layerConfig =>{
-        //   const lambdaLayerARN = Fn.importValue(`lambdaLayerARN${layerConfig.name}`);
-        //   return lambda.LayerVersion.fromLayerVersionArn(this, `lambdaFunctionLayer${lambdaFolder}`, lambdaLayerARN);
-        // })
+        layers: config.layers.map(layerConfig =>{
+          const lambdaLayerARN = Fn.importValue(`lambdaLayerARN${layerConfig.name}`);
+          return lambda.LayerVersion.fromLayerVersionArn(this, `lambdaFunctionLayer${lambdaFolder}`, lambdaLayerARN);
+        })
       });
 
       // Export Lambda (latest) ARN
