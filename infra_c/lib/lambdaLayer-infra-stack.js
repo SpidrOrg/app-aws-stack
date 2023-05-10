@@ -26,10 +26,10 @@ class LambdaLayerInfraStack extends Stack {
       });
 
       // Export Layer Version ARN
-      new CfnOutput(this, `lambdaLayer${config.name}ARNRef`, {
+      new CfnOutput(this, `lambdaLayer${config.name}ARNRef1`, {
         value: lambdaLayer.layerVersionArn,
         description: `lambdaLayer ARN Reference : ${config.name}`,
-        exportName: `lambdaLayerARN${config.name}`,
+        exportName: `lambdaLayerARN${config.name}ref1`,
       });
     })
   }
