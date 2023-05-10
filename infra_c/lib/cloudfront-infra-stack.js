@@ -37,7 +37,7 @@ class CloudfrontInfraStack extends Stack {
         resources: [
           dashboardsBucket.arnForObjects("*")
         ],
-        actions: ["s3:List*", "s3:Get*"],
+        actions: ["s3:GetObject"],
         principals: [oia.grantPrincipal]
       })
     );
