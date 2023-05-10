@@ -37,7 +37,7 @@ class ApiGatewayInfraStack extends Stack {
     const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
     const lambdaFolders = fs.readdirSync(pathToLambdaFolder);
     lambdaFolders.forEach(lambdaFolder => {
-      const fn = lambda.Function.fromFunctionArn(`lambdaARN${lambdaFolder}`);
+      const fn = lambda.Function.fromFunctionArn(this, `PermitAPIGInvocation${lambdaFolder}refarn`, `lambdaARN${lambdaFolder}`);
       fn.addPermission(`PermitAPIGInvocation${lambdaFolder}`, {
         principal: new iam.ServicePrincipal('apigateway.amazonaws.com'),
         sourceArn: api.arnForExecuteApi('*')
@@ -78,7 +78,10 @@ class ApiGatewayInfraStack extends Stack {
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
               integrationResponses: [
                 {
-                  statusCode: "200"
+                  statusCode: "200",
+                  responseTemplates: {
+
+                  }
                 },
               ],
             }),
