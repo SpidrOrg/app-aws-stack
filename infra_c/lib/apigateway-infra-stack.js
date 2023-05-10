@@ -82,7 +82,7 @@ class ApiGatewayInfraStack extends Stack {
                 {
                   statusCode: "200",
                   responseTemplates: {
-                    "application/json": apigateway.Model.EMPTY_MODEL.modelId
+                    "application/json": '{}',
                   }
                 },
               ],
