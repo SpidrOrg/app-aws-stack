@@ -82,7 +82,7 @@ class ApiGatewayInfraStack extends Stack {
                 {
                   statusCode: "200",
                   responseParameters: {
-                    'Access-Control-Allow-Origin': "'*'"
+                    'method.response.header.Access-Control-Allow-Origin': "'*'"
                   }
                 },
               ],
