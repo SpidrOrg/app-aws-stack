@@ -17,6 +17,14 @@ const cdkConfig = JSON.parse(`${envVal}`);
 //   "domain": "trial.dev.testvisd.online",
 // }
 
+// const cdkConfig = {
+//   "awsAccount": "396112814485",
+//   "region": "us-east-1",
+//   "envName": "uat",
+//   "certificateArn": "arn:aws:acm:us-east-1:396112814485:certificate/65a019d1-066a-4d48-8677-0eff3581064f",
+//   "domain": "testvisd.online"
+// }
+
 const scannedClientTable = fs.readFileSync(path.join(__dirname, './scannedClientTable.json'), "utf-8")
 const clientsToOnboardConfigs = JSON.parse(scannedClientTable);
 

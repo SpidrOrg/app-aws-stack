@@ -49,12 +49,12 @@ class krnySnpApplicationStack extends Stack {
     route53InfraStack.addDependency(cloudfrontInfraStack);
 
     // // Glue Database and Tables
-    const glueInfraStack = new GlueInfraStack(this, 'GlueInfraStack', stackProps);
-    glueInfraStack.addDependency(s3InfraStack);
+    // const glueInfraStack = new GlueInfraStack(this, 'GlueInfraStack', stackProps);
+    // glueInfraStack.addDependency(s3InfraStack);
     //
     // // Athena Workgroup
-    const athenaInfraStack = new AthenaInfraStack(this, 'AthenaInfraStack', stackProps);
-    athenaInfraStack.addDependency(s3InfraStack);
+    // const athenaInfraStack = new AthenaInfraStack(this, 'AthenaInfraStack', stackProps);
+    // athenaInfraStack.addDependency(s3InfraStack);
     //
     // // Cognito UserPool
     const cognitoInfraStack = new CognitoInfraStack(this, 'CognitoInfraStack', stackProps);

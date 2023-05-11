@@ -7,7 +7,9 @@
   "scripts": {
     "build": "echo \"The build step is not required when using JavaScript!\" && exit 0",
     "cdk": "cdk",
-    "test": "jest"
+    "test": "jest",
+    "cdk-deploy": "node scanClientsTable.js",
+    "cdk-synth": "npx aws-cdk synth --profile uatsnp"
   },
   "devDependencies": {
     "aws-cdk": "2.77.0",
