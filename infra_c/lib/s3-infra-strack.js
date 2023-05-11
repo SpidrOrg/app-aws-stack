@@ -64,18 +64,18 @@ class S3InfraStack extends Stack {
         const clientDataTransformationLambdaARN = Fn.importValue(`lambdaARN${clientDataTransformationLambdaName}`);
         const clientDataTransformationLambda = lambda.Function.fromFunctionArn(this, `client${clientId}S3BucketNotification${notificationName}lambda`, clientDataTransformationLambdaARN);
 
-        const cfnPermission = new lambda.CfnPermission(this, `client${clientId}S3BucketNotification${notificationName}lambdaResourcePermission`, {
-          action: "lambda:InvokeFunction",
-          principal: "s3.amazonaws.com",
-          functionName: clientDataTransformationLambdaName,
-          sourceArn: clientBucket.bucketArn
-        });
-
-        clientBucket.addEventNotification(
-          s3.EventType[notificationConfig.eventType],
-          new s3n.LambdaDestination(clientDataTransformationLambda),
-          notificationConfig.filters
-        )
+        // const cfnPermission = new lambda.CfnPermission(this, `client${clientId}S3BucketNotification${notificationName}lambdaResourcePermission`, {
+        //   action: "lambda:InvokeFunction",
+        //   principal: "s3.amazonaws.com",
+        //   functionName: clientDataTransformationLambdaName,
+        //   sourceArn: clientBucket.bucketArn
+        // });
+        //
+        // clientBucket.addEventNotification(
+        //   s3.EventType[notificationConfig.eventType],
+        //   new s3n.LambdaDestination(clientDataTransformationLambda),
+        //   notificationConfig.filters
+        // )
       })
       //// Export Client bucket name
       new CfnOutput(this, `clientBucket${clientId}Ref`, {
