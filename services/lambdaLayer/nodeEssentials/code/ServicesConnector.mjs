@@ -21,6 +21,8 @@ const PROD_LOCALHOST_PORT = "3111";
 
 function getenvSuffixFromOriginUrl(originUrl){
   let envName = ENVIRONMENTS.UAT;
+  envName = `-${envName}`
+  return envName;
   // const originUrlParsed = url.parse(originUrl);
   // const hostName = _.get(originUrlParsed, "host");
   // let env;
@@ -49,10 +51,10 @@ function getenvSuffixFromOriginUrl(originUrl){
   // } else {
   //   envName = ENVIRONMENTS.PROD
   // }
-  if (envName){
-    envName = `-${envName}`
-  }
-  return envName;
+  // if (envName){
+  //   envName = `-${envName}`
+  // }
+  // return envName;
 }
 
 export default class ServicesConnector{
