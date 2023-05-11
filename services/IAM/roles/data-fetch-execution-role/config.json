@@ -21,7 +21,7 @@
         "Condition": {
           "StringLike": {
             "aws:RequestTag/TenantID": "*",
-            "aws:RequestTag/EnvPrefix": "*"
+            "aws:RequestTag/EnvSuffix": "*"
           }
         }
       }
