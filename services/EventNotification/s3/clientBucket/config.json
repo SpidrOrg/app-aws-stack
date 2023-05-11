@@ -5,7 +5,7 @@
       "lambda": "cd-data-transformation"
     },
     "filters": {
-      "prefix": "client-raw-data/",
+      "prefix": "client_raw_data/",
       "suffix": ".csv"
     }
   }
