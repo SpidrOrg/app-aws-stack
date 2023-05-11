@@ -78,14 +78,12 @@ class ApiGatewayInfraStack extends Stack {
                 "application/json": JSON.stringify(integerationConfig.mappingTemplate)
               },
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
-              integrationResponses: [
-                {
+              integrationResponses: [{
                   statusCode: "200",
                   responseParameters: {
-                    'method.response.header.Access-Control-Allow-Origin': "'*'"
+                    'method.response.header.Access-Control-Allow-Origin': "'*'",
                   }
-                },
-              ],
+              }],
             }),
             {
               authorizer: apiGatewayLambdaAuthorizer,
@@ -93,6 +91,9 @@ class ApiGatewayInfraStack extends Stack {
               authorizationScopes: [`tenant/${clientId}`],
               methodResponses:[{
                 statusCode: "200",
+                responseParameters: {
+                  'method.response.header.Access-Control-Allow-Origin': true,
+                },
                 responseModels: {
                   "application/json": apigateway.Model.EMPTY_MODEL
                 }
