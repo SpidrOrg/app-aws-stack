@@ -80,17 +80,20 @@ class ApiGatewayInfraStack extends Stack {
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
               integrationResponses: [
                 {
-                  statusCode: "200",
-                  responseTemplates: {
-                    "application/json": '{}',
-                  }
+                  statusCode: "200"
                 },
               ],
             }),
             {
               authorizer: apiGatewayLambdaAuthorizer,
               authorizationType: apigateway.AuthorizationType.COGNITO,
-              authorizationScopes: [`tenant/${clientId}`]
+              authorizationScopes: [`tenant/${clientId}`],
+              methodResponses:[{
+                statusCode: "200",
+                responseModels: {
+                  "application/json": apigateway.Model.EMPTY_MODEL
+                }
+              }]
             }
           );
         });
@@ -118,6 +121,9 @@ class ApiGatewayInfraStack extends Stack {
               'method.response.header.Access-Control-Allow-Credentials': true,
               'method.response.header.Access-Control-Allow-Origin': true,
             },
+            responseModels: {
+              "application/json": apigateway.Model.EMPTY_MODEL
+            }
           }]
         })
         // resource.addCorsPreflight({
