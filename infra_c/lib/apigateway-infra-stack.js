@@ -62,11 +62,7 @@ class ApiGatewayInfraStack extends Stack {
       // Add Resources
       Object.keys(apiGatewayResourcesConfig).forEach(resourceName => {
         const resourceConfig = apiGatewayResourcesConfig[resourceName];
-        const resource = rootResource.addResource(resourceName, {
-          defaultCorsPreflightOptions: {
-            allowOrigins: apigateway.Cors.ALL_ORIGINS
-          }
-        });
+        const resource = rootResource.addResource(resourceName);
 
         Object.keys(resourceConfig).forEach(methodName => {
           const methodConfig = resourceConfig[methodName];
