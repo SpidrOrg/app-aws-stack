@@ -20,7 +20,7 @@ const UAT_LOCALHOST_PORT = "3011";
 const PROD_LOCALHOST_PORT = "3111";
 
 function getenvSuffixFromOriginUrl(originUrl){
-  return ENVIRONMENTS.UAT;
+  let envName = ENVIRONMENTS.UAT;
   // const originUrlParsed = url.parse(originUrl);
   // const hostName = _.get(originUrlParsed, "host");
   // let env;
@@ -49,10 +49,10 @@ function getenvSuffixFromOriginUrl(originUrl){
   // } else {
   //   envName = ENVIRONMENTS.PROD
   // }
-  // if (envName){
-  //   envName = `-${envName}`
-  // }
-  // return envName;
+  if (envName){
+    envName = `-${envName}`
+  }
+  return envName;
 }
 
 export default class ServicesConnector{
