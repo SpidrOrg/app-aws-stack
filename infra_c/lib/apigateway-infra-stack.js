@@ -62,7 +62,11 @@ class ApiGatewayInfraStack extends Stack {
       // Add Resources
       Object.keys(apiGatewayResourcesConfig).forEach(resourceName => {
         const resourceConfig = apiGatewayResourcesConfig[resourceName];
-        const resource = rootResource.addResource(resourceName);
+        const resource = rootResource.addResource(resourceName, {
+          defaultCorsPreflightOptions: {
+            allowOrigins: apigateway.Cors.ALL_ORIGINS
+          }
+        });
 
         Object.keys(resourceConfig).forEach(methodName => {
           const methodConfig = resourceConfig[methodName];
@@ -80,7 +84,10 @@ class ApiGatewayInfraStack extends Stack {
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
               integrationResponses: [
                 {
-                  statusCode: "200"
+                  statusCode: "200",
+                  responseParameters: {
+                    'Access-Control-Allow-Origin': "'*'"
+                  }
                 },
               ],
             }),
@@ -102,13 +109,12 @@ class ApiGatewayInfraStack extends Stack {
           integrationResponses: [{
             statusCode: '200',
             responseParameters: {
-              'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+              'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
               'method.response.header.Access-Control-Allow-Origin': "'*'",
-              'method.response.header.Access-Control-Allow-Credentials': "'false'",
-              'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'",
+              'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,POST'",
             },
           }],
-          passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+          passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_MATCH,
           requestTemplates: {
             "application/json": "{\"statusCode\": 200}"
           },
