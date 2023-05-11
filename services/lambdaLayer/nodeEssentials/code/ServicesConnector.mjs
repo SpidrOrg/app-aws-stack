@@ -20,38 +20,39 @@ const UAT_LOCALHOST_PORT = "3011";
 const PROD_LOCALHOST_PORT = "3111";
 
 function getenvSuffixFromOriginUrl(originUrl){
-  const originUrlParsed = url.parse(originUrl);
-  const hostName = _.get(originUrlParsed, "host");
-  let env;
-  if (_.startsWith(hostName, "localhost")){
-    if (`${hostName}`.indexOf(DEV_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.DEV
-    } else if (`${hostName}`.indexOf(QA_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.QA
-    } else if (`${hostName}`.indexOf(UAT_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.UAT
-    } else if (`${hostName}`.indexOf(PROD_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.PROD
-    } else {
-      env = ENVIRONMENTS.DEV
-    }
-  } else {
-    env = _.get(_.split(hostName, "-"), "[0]");
-  }
-  let envName = "";
-  if (env === ENVIRONMENTS.DEV){
-    envName = ENVIRONMENTS.DEV
-  } else if (env === ENVIRONMENTS.QA){
-    envName = ENVIRONMENTS.QA
-  } else if (env === ENVIRONMENTS.UAT){
-    envName = ENVIRONMENTS.UAT
-  } else {
-    envName = ENVIRONMENTS.PROD
-  }
-  if (envName){
-    envName = `-${envName}`
-  }
-  return envName;
+  return ENVIRONMENTS.UAT;
+  // const originUrlParsed = url.parse(originUrl);
+  // const hostName = _.get(originUrlParsed, "host");
+  // let env;
+  // if (_.startsWith(hostName, "localhost")){
+  //   if (`${hostName}`.indexOf(DEV_LOCALHOST_PORT) !== -1){
+  //     env = ENVIRONMENTS.DEV
+  //   } else if (`${hostName}`.indexOf(QA_LOCALHOST_PORT) !== -1){
+  //     env = ENVIRONMENTS.QA
+  //   } else if (`${hostName}`.indexOf(UAT_LOCALHOST_PORT) !== -1){
+  //     env = ENVIRONMENTS.UAT
+  //   } else if (`${hostName}`.indexOf(PROD_LOCALHOST_PORT) !== -1){
+  //     env = ENVIRONMENTS.PROD
+  //   } else {
+  //     env = ENVIRONMENTS.DEV
+  //   }
+  // } else {
+  //   env = _.get(_.split(hostName, "-"), "[0]");
+  // }
+  // let envName = "";
+  // if (env === ENVIRONMENTS.DEV){
+  //   envName = ENVIRONMENTS.DEV
+  // } else if (env === ENVIRONMENTS.QA){
+  //   envName = ENVIRONMENTS.QA
+  // } else if (env === ENVIRONMENTS.UAT){
+  //   envName = ENVIRONMENTS.UAT
+  // } else {
+  //   envName = ENVIRONMENTS.PROD
+  // }
+  // if (envName){
+  //   envName = `-${envName}`
+  // }
+  // return envName;
 }
 
 export default class ServicesConnector{
