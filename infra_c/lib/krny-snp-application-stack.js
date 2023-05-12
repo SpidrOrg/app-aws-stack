@@ -16,6 +16,8 @@ class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
+    const awsAccountId = Stack.of(this).account;
+    const awsRegion = Stack.of(this).region;
     const {envName, certificateArn, domain} = accountConfig[awsAccountId][awsRegion];
 
     const allEntities = props.clientsToOnboardConfigs || [];
