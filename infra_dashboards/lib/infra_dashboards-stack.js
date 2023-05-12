@@ -76,6 +76,7 @@ class InfraDashboardsStack extends Stack {
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTID_PALCEHOLDER, clientId);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTDISPLAYNAME_PALCEHOLDER, clientName);
 
+      console.log(`wiriting - ${iter} idpConfigTemplateContents: `, idpConfigTemplateContents)
       fs.writeFileSync(`${sourcePath}/idpConfig.js`, idpConfigTemplateContents)
 
       new s3deploy.BucketDeployment(this, `infraDashboards-create-bucket-folders${clientId}`, {
