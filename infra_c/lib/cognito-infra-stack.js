@@ -67,7 +67,7 @@ class CognitoInfraStack extends Stack {
         removalPolicy: RemovalPolicy.DESTROY,
         userInvitation: {
           emailSubject: "Kearney's Sensing & Pivot Solution",
-          emailBody: `<div style="background-color:#f6f6f6; padding:16px; width: 100%; height: 100%; border:1px solid; font-style:oblique;font-size:21px"><br /> Greetings, <br/><br/> Your account has been created. <br/><br/> Username: {username} <br /> Temporary password: <b> {####}</b> <br/> <br/> Application URL: <b><a href="https://${host}.${envName}.${domain}">https://${host}.${envName}.${domain}</b> <br /> <br /> </div>`,
+          emailBody: `<div style="background-color:#f6f6f6; padding:16px; width: 100%; height: 100%; border:1px solid; font-style:oblique;font-size:21px"><br /> Greetings, <br/><br/> Your account has been created. <br/><br/> Username: {username} <br /> Temporary password: <span style="color: purple"><b> {####}</b></span> <br/> <br/> Application URL: <b><a href="https://${host}.${domain}">https://${host}.${domain}</b> <br /> <br /> </div>`,
           smsMessage: 'Your username is {username} and temporary password is {####}.',
         }
       });
