@@ -58,7 +58,8 @@ class InfraDashboardsStack extends Stack {
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(REGION_PALCEHOLDER, awsRegion);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLID_PALCEHOLDER, cognitoExports[`Export${getExportName('userPoolId', {clientId})}`]);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLWEBCLIENTID_PALCEHOLDER, cognitoExports[`Export${getExportName('userPoolClient', {clientId})}`]);
-      idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLOAUTHDOMAIN_PALCEHOLDER, cognitoExports[`Export${getExportName('userPoolDomain', {clientId})}`]);
+      const oauthDomainFQDN = `${cognitoExports[`Export${getExportName('userPoolDomain', {clientId})}`]}.auth.us-east-1.amazoncognito.com`;
+      idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLOAUTHDOMAIN_PALCEHOLDER, oauthDomainFQDN);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLREDIRECTSIGNIN_PALCEHOLDER, clientWebAppFQDN);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(POOLREDIRECTSIGNOUT_PALCEHOLDER, clientWebAppFQDN);
 
