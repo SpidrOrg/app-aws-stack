@@ -5,6 +5,7 @@ const lambda = require('aws-cdk-lib/aws-lambda');
 const apiGatewayResourcesConfig = require("../../services/APIGateway/resourceConfig.json");
 const path = require("path");
 const fs = require("fs");
+const {getExportName} = require("./utils/stackExportsName");
 
 class ApiGatewayInfraStack extends Stack {
   constructor(scope, id, props) {
@@ -33,8 +34,15 @@ class ApiGatewayInfraStack extends Stack {
     //   exportName: `gatewayRootUrl`,
     // });
 
-    this.exportValue(api.deploymentStage.stageName);
-    this.stackExports['gatewayBaseDeploymentStage'] = api.deploymentStage.stageName;
+    this.exportValue(api.deploymentStage.stageName, {
+      name: getExportName('apiGatewayDeploymentStage')
+    });
+    this.stackExports[getExportName('apiGatewayDeploymentStage')] = api.deploymentStage.stageName;
+
+    this.exportValue(api.restApiId, {
+      name: getExportName('apiGatewayRestApiId')
+    });
+    this.stackExports[getExportName('apiGatewayRestApiId')] = api.restApiId;
     // new CfnOutput(this, `gatewayBaseDeploymentStage`, {
     //   value: api.deploymentStage.stageName,
     //   description: `API Gateway stage that points to the latest deployment.`,
@@ -57,9 +65,14 @@ class ApiGatewayInfraStack extends Stack {
       const clientId = entity.id;
 
       // Add Root Resource
-      const rootResource = api.root.addResource(`${envName}${clientId}`);
+      const rootResource = api.root.addResource(`${clientId}`);
 
-      const cognitoUserPoolId =  cognitoInfraStack[`userpool${clientId}ResourceIdsUserPoolId`]; //Fn.importValue(`userpool${clientId}ResourceIdsUserPoolId`);
+      this.exportValue(rootResource.path, {
+        name: getExportName('apiGatewayRootResourcePath', {clientId})
+      });
+      this.stackExports[getExportName('apiGatewayRootResourcePath', {clientId})] = rootResource.path;
+
+      const cognitoUserPoolId =  cognitoInfraStack[getExportName('userPoolId', {clientId})]; //Fn.importValue(`userpool${clientId}ResourceIdsUserPoolId`);
       const userPool = cognito.UserPool.fromUserPoolId(this, `apiGateway${clientId}CogAuthorizerRef`, cognitoUserPoolId);
 
       const apiGatewayLambdaAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(this, `apiGateway${clientId}CogAuthorizer`, {

@@ -13,10 +13,10 @@ class S3InfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
     this.stackExports = {}
-    const {lambdaInfraStack} = props;
+    const {lambdaInfraStack, envName} = props;
 
     // Create Dashboards S3 Bucket if not exists
-    const dashboardsBucketName = getServiceNames.getDashboardsBucketName(props.envName)
+    const dashboardsBucketName = getServiceNames.getDashboardsBucketName(envName)
     const dashboardsBucket = new s3.Bucket(this, 'dashboards-bucket', {
       bucketName: dashboardsBucketName,
       removalPolicy: RemovalPolicy.RETAIN
@@ -91,6 +91,7 @@ class S3InfraStack extends Stack {
       //   description: `The ARN of the Client s3 bucket`,
       //   exportName: `clientBucketRef${clientId}`,
       // });
+
       //// Create Client Bucket folders
       new s3deploy.BucketDeployment(this, `client-bucket-folders-${clientBucketName}`, {
         sources: [s3deploy.Source.asset(path.join(__dirname, '../../services/s3/clientBucket/folderStructure'))],

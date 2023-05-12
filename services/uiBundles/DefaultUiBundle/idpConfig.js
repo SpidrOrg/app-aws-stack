@@ -1,5 +1,5 @@
 const idpData = {
-  region: "us-east-1",
+  region: ":REGION:",
   identityPoolId: "",
   userPoolId: ":POOLID:",
   userPoolWebClientId: ":POOLWEBCLIENTID:",

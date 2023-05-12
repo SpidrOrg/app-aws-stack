@@ -1,6 +1,7 @@
 const { Stack, RemovalPolicy, Duration } = require("aws-cdk-lib");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const constants = require("./constants");
+const {getExportName} = require("./utils/stackExportsName");
 
 const localhostPortMappingByEnv = (env)=>{
   switch (env){
@@ -143,24 +144,31 @@ class CognitoInfraStack extends Stack {
       cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolUser)
 
       //// Export Cognito IDs
-      this.exportValue(userPool.userPoolId);
-      this.stackExports[`userpool${clientId}ResourceIdsUserPoolId`] = userPool.userPoolId;
+      console.log("getExportName('userPoolId', {clientId})", getExportName('userPoolId', {clientId}))
+      this.exportValue(userPool.userPoolId, {
+        name: getExportName('userPoolId', {clientId})
+      });
+      this.stackExports[getExportName('userPoolId', {clientId})] = userPool.userPoolId;
       // new CfnOutput(this, `userpool${clientId}ResourceIdsUserPoolId`, {
       //   value: userPool.userPoolId,
       //   description: `User Pool ID`,
       //   exportName: `userpool${clientId}ResourceIdsUserPoolId`,
       // });
 
-      this.exportValue(userPoolClient.userPoolClientId);
-      this.stackExports[`userpool${clientId}ResourceIdsClientId`] = userPoolClient.userPoolClientId;
+      this.exportValue(userPoolClient.userPoolClientId, {
+        name: getExportName('userPoolClient', {clientId})
+      });
+      this.stackExports[getExportName('userPoolClient', {clientId})] = userPoolClient.userPoolClientId;
       // new CfnOutput(this, `userpool${clientId}ResourceIdsClientId`, {
       //   value: userPoolClient.userPoolClientId,
       //   description: `Web Client ID`,
       //   exportName: `userpool${clientId}ResourceIdsClientId`,
       // });
 
-      this.exportValue(userPoolDomain.domainName);
-      this.stackExports[`userpool${clientId}ResourceIdsDomain`] = userPoolDomain.domainName;
+      this.exportValue(userPoolDomain.domainName, {
+        name: getExportName('userPoolDomain', {clientId})
+      });
+      this.stackExports[getExportName('userPoolDomain', {clientId})] = userPoolDomain.domainName;
       // new CfnOutput(this, `userpool${clientId}ResourceIdsDomain`, {
       //   value: userPoolDomain.domainName,
       //   description: `Domain`,

@@ -11,6 +11,9 @@ phases:
       - cd infra_c
       - npm ci
       - node scanClientsTable.js
+      - echo $CODEBUILD_BUILD_ARN
+      - echo $AWS_REGION
       - npm i -g cdk
       - cdk bootstrap
       - cdk deploy --all --require-approval=never --outputs-file ./stackexports.json
+      - cat ./stackexports.json

@@ -10,14 +10,17 @@ const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");
+const accountConfig = require("../bin/accountConfig.json");
 
 class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
+    const {envName, certificateArn, domain} = accountConfig[awsAccountId][awsRegion];
+
     const allEntities = props.clientsToOnboardConfigs || [];
 
-    let stackProps = {...props, allEntities};
+    let stackProps = {...props, envName, certificateArn, domain, allEntities};
 
     // IAM Policies & Roles
     const iamInfraStack = new IamInfraStack(this, 'IamInfraStack', stackProps);
