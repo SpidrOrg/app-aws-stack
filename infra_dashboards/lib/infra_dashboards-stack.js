@@ -42,7 +42,7 @@ class InfraDashboardsStack extends Stack {
     let sourcePath = path.join(__dirname, '../../services/uiBundles/DefaultUiBundle');
     const defaultIDPTemplate = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
 
-    clientsToOnboardConfigs.forEach(entity => {
+    clientsToOnboardConfigs.forEach((entity, iter) => {
       const clientId = entity.id;
       const host = entity.host;
       const clientName = entity.name;
@@ -53,6 +53,7 @@ class InfraDashboardsStack extends Stack {
         idpConfigTemplateContents = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
       }
 
+      console.log(`idpConfigTemplateContents-${iter}`, idpConfigTemplateContents);
       //// Modify idpConfig file
       const clientWebAppFQDN = `https://${host}.${domain}`;
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(REGION_PALCEHOLDER, awsRegion);
@@ -75,6 +76,7 @@ class InfraDashboardsStack extends Stack {
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTID_PALCEHOLDER, clientId);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTDISPLAYNAME_PALCEHOLDER, clientName);
 
+      console.log(`wiriting - ${iter} idpConfigTemplateContents: `, idpConfigTemplateContents)
       fs.writeFileSync(`${sourcePath}/idpConfig.js`, idpConfigTemplateContents)
 
       new s3deploy.BucketDeployment(this, `infraDashboards-create-bucket-folders${clientId}`, {
