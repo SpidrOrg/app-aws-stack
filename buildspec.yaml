@@ -15,5 +15,6 @@ phases:
       - cat ./stackexports.json
       - cd ../infra_dashboards
       - npm ci
+      - node createTempBundleIdpTemplates.js
       - cdk bootstrap
       - cdk deploy --all --require-approval=never

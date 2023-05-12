@@ -40,7 +40,7 @@ class InfraDashboardsStack extends Stack {
     const dashboardsBucket = s3.Bucket.fromBucketName(this, `infraDashboardsBucketName`, dashboardsBucketName);
 
     let sourcePath = path.join(__dirname, '../../services/uiBundles/DefaultUiBundle');
-    const defaultIDPTemplate = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
+    const defaultIDPTemplate = fs.readFileSync(`${sourcePath}/tempIdpConfig.js`, 'utf-8');
 
     clientsToOnboardConfigs.forEach((entity, iter) => {
       const clientId = entity.id;
@@ -50,7 +50,7 @@ class InfraDashboardsStack extends Stack {
       let idpConfigTemplateContents = `${defaultIDPTemplate}`;
       if (fs.existsSync(path.join(__dirname, `../../services/uiBundles/${clientId}`))){
         sourcePath = path.join(__dirname, `../../services/uiBundles/${clientId}`);
-        idpConfigTemplateContents = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
+        idpConfigTemplateContents = fs.readFileSync(`${sourcePath}/tempIdpConfig.js`, 'utf-8');
       }
 
       console.log(`idpConfigTemplateContents-${iter}`, idpConfigTemplateContents);
@@ -76,7 +76,6 @@ class InfraDashboardsStack extends Stack {
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTID_PALCEHOLDER, clientId);
       idpConfigTemplateContents = idpConfigTemplateContents.replaceAll(CLIENTDISPLAYNAME_PALCEHOLDER, clientName);
 
-      console.log(`wiriting - ${iter} idpConfigTemplateContents: `, idpConfigTemplateContents)
       fs.writeFileSync(`${sourcePath}/idpConfig.js`, idpConfigTemplateContents)
 
       new s3deploy.BucketDeployment(this, `infraDashboards-create-bucket-folders${clientId}`, {
