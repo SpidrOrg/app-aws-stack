@@ -13,3 +13,5 @@ phases:
       - cdk bootstrap
       - cdk deploy --all --require-approval=never --outputs-file ./stackexports.json
       - cat ./stackexports.json
+      - cd ../infra_dashboards
+      - cdk deploy --all --require-approval=never

@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  parameter-store:
-    clientonboardingconfig: "clientonboardingconfig"
-
 phases:
   build:
     commands:
