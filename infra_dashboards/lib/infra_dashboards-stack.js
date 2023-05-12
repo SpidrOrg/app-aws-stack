@@ -47,7 +47,7 @@ class InfraDashboardsStack extends Stack {
       const host = entity.host;
       const clientName = entity.name;
 
-      let idpConfigTemplateContents = defaultIDPTemplate;
+      let idpConfigTemplateContents = `${defaultIDPTemplate}`;
       if (fs.existsSync(path.join(__dirname, `../../services/uiBundles/${clientId}`))){
         sourcePath = path.join(__dirname, `../../services/uiBundles/${clientId}`);
         idpConfigTemplateContents = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
