@@ -93,7 +93,7 @@ class InfraStack extends Stack {
     // Create IAM Roles
     //// Create all Policies
     const pathToPoliciesFolder = path.join(__dirname, "../../services/IAM/policies");
-    const policiesFolders = fs.readdirSync(pathToPoliciesFolder);
+    const policiesFolders = fs.readdirSync(pathToPoliciesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
 
     const policiesP = {};
     policiesFolders.forEach(policyFolder => {
@@ -118,7 +118,7 @@ class InfraStack extends Stack {
 
     // //// Create all Roles
     const pathToRolesFolder = path.join(__dirname, "../../services/IAM/roles");
-    const rolesFolders = fs.readdirSync(pathToRolesFolder);
+    const rolesFolders = fs.readdirSync(pathToRolesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
     const rolesP = {};
     rolesFolders.forEach(roleFolder=>{
       let roleText =  fs.readFileSync(path.join(pathToRolesFolder, roleFolder, "config.json"), "utf-8");
@@ -159,7 +159,7 @@ class InfraStack extends Stack {
 
     // Create Lamba@Edge
     const pathToLambdaEdgeCodeFolders = path.join(__dirname, "../../services/lambda@Edge");
-    const lambdaFolders = fs.readdirSync(pathToLambdaEdgeCodeFolders);
+    const lambdaFolders = fs.readdirSync(pathToLambdaEdgeCodeFolders).filter(item => !/(^|\/)\.[^/.]/g.test(item));
 
     const edgeLambdas = {};
 

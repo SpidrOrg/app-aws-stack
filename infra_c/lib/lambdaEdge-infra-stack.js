@@ -1,4 +1,4 @@
-const {Stack, Duration, Fn, CfnOutput} = require("aws-cdk-lib");
+const { Stack, Duration } = require("aws-cdk-lib");
 const iam = require('aws-cdk-lib/aws-iam');
 const path = require("path");
 const fs = require("fs");
@@ -10,8 +10,11 @@ class LambdaEdgeInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
+    const {iamInfraStack} = props;
+    this.stackExports = {};
+
     const pathToLambdaEdgeCodeFolders = path.join(__dirname, "../../services/lambda@Edge");
-    const lambdaEdgeFolders = fs.readdirSync(pathToLambdaEdgeCodeFolders);
+    const lambdaEdgeFolders = fs.readdirSync(pathToLambdaEdgeCodeFolders).filter(item => !/(^|\/)\.[^/.]/g.test(item));
 
     lambdaEdgeFolders.forEach(lambdaEdgeFolder =>{
       const lambdaConfigurationFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "configuration.json");
@@ -22,8 +25,8 @@ class LambdaEdgeInfraStack extends Stack {
       const lambdaCodeFilePath = path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs");
       let lambdacode = fs.readFileSync(lambdaCodeFilePath, "utf-8");
       lambdacode = lambdacode.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
-      fs.writeFileSync(path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs"), lambdacode)
-      const iamRoleName = Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
+      fs.writeFileSync(path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs"), lambdacode);
+      const iamRoleName = iamInfraStack[`iamRoleRef${configP.configuration.iamRole}`] //Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
 
       const lambdaEdgeFunction = new lambda.Function(this, `${lambdaEdgeFolder}`, {
         runtime: lambda.Runtime[configP.runtime],
@@ -40,10 +43,12 @@ class LambdaEdgeInfraStack extends Stack {
       });
 
       // Export Lambda@Edge Version ARN
-      new CfnOutput(this, `lambdaEdgeVersionRef${lambdaEdgeFolder}`, {
-        value: lambdaVersion.edgeArn,
-        exportName: `lambdaEdgeVersionArnRef${lambdaEdgeFolder}`
-      })
+      this.exportValue(lambdaVersion.functionArn);
+      this.stackExports[`lambdaEdgeVersionArnRef${lambdaEdgeFolder}`] = lambdaVersion.functionArn;
+      // new CfnOutput(this, `lambdaEdgeVersionRef${lambdaEdgeFolder}`, {
+      //   value: lambdaVersion.edgeArn,
+      //   exportName: `lambdaEdgeVersionArnRef${lambdaEdgeFolder}`
+      // })
     })
   }
 }

@@ -13,4 +13,5 @@ phases:
       - node scanClientsTable.js
       - npm i -g cdk
       - cdk bootstrap
-      - cdk deploy --all --require-approval=never --outputs-file ./stackexports.json
+      - cdk deploy -e krny-snp-application-stack/AthenaInfraStack krny-snp-application-stack/GlueInfraStack krny-snp-application-stack/ApiGatewayInfraStack
+      - cdk deploy --all --require-approval=never

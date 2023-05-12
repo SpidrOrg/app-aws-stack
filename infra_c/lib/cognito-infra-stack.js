@@ -1,4 +1,4 @@
-const {Stack, RemovalPolicy, Duration, CfnOutput} = require("aws-cdk-lib");
+const { Stack, RemovalPolicy, Duration } = require("aws-cdk-lib");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const constants = require("./constants");
 
@@ -20,6 +20,8 @@ const localhostPortMappingByEnv = (env)=>{
 class CognitoInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
+    this.stackExports = {};
+
     const REFRESH_TOKEN_VALIDITY_DURATION = Duration.minutes(60);
     const AUTH_SESSION_VALIDITY_DURATION = Duration.minutes(3);
     const ACCESS_TOKEN_VALIDITY_DURATION = Duration.minutes(5);
@@ -63,6 +65,11 @@ class CognitoInfraStack extends Stack {
         },
         accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
         removalPolicy: RemovalPolicy.DESTROY,
+        userInvitation: {
+          emailSubject: "Kearney's Sensing & Pivot Solution",
+          emailBody: `<div style="background-color:#f6f6f6; padding:16px; width: 100%; height: 100%; border:1px solid; font-style:oblique;font-size:21px"><br /> Greetings, <br/><br/> Your account has been created. <br/><br/> Username: {username} <br /> Temporary password: <b> {####}</b> <br/> <br/> Application URL: <b><a href="https://${host}.${envName}.${domain}">https://${host}.${envName}.${domain}</b> <br /> <br /> </div>`,
+          smsMessage: 'Your username is {username} and temporary password is {####}.',
+        }
       });
 
       // Cognito user pool Domain
@@ -136,32 +143,46 @@ class CognitoInfraStack extends Stack {
       cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolUser)
 
       //// Export Cognito IDs
-      new CfnOutput(this, `userpool${clientId}ResourceIdsUserPoolId`, {
-        value: userPool.userPoolId,
-        description: `User Pool ID`,
-        exportName: `userpool${clientId}ResourceIdsUserPoolId`,
-      });
-      new CfnOutput(this, `userpool${clientId}ResourceIdsClientId`, {
-        value: userPoolClient.userPoolClientId,
-        description: `Web Client ID`,
-        exportName: `userpool${clientId}ResourceIdsClientId`,
-      });
-      new CfnOutput(this, `userpool${clientId}ResourceIdsDomain`, {
-        value: userPoolDomain.domainName,
-        description: `Domain`,
-        exportName: `userpool${clientId}ResourceIdsDomain`,
-      });
+      this.exportValue(userPool.userPoolId);
+      this.stackExports[`userpool${clientId}ResourceIdsUserPoolId`] = userPool.userPoolId;
+      // new CfnOutput(this, `userpool${clientId}ResourceIdsUserPoolId`, {
+      //   value: userPool.userPoolId,
+      //   description: `User Pool ID`,
+      //   exportName: `userpool${clientId}ResourceIdsUserPoolId`,
+      // });
+
+      this.exportValue(userPoolClient.userPoolClientId);
+      this.stackExports[`userpool${clientId}ResourceIdsClientId`] = userPoolClient.userPoolClientId;
+      // new CfnOutput(this, `userpool${clientId}ResourceIdsClientId`, {
+      //   value: userPoolClient.userPoolClientId,
+      //   description: `Web Client ID`,
+      //   exportName: `userpool${clientId}ResourceIdsClientId`,
+      // });
+
+      this.exportValue(userPoolDomain.domainName);
+      this.stackExports[`userpool${clientId}ResourceIdsDomain`] = userPoolDomain.domainName;
+      // new CfnOutput(this, `userpool${clientId}ResourceIdsDomain`, {
+      //   value: userPoolDomain.domainName,
+      //   description: `Domain`,
+      //   exportName: `userpool${clientId}ResourceIdsDomain`,
+      // });
+
       //// Other exports
-      new CfnOutput(this, `userpool${clientId}redirectSignIn`, {
-        value: POOL_CALLBACK_URL_PUBLIC,
-        description: `UserPool Redirect SignIn`,
-        exportName: `userpool${clientId}redirectSignIn`,
-      });
-      new CfnOutput(this, `userpool${clientId}redirectSignOut`, {
-        value: POOL_LOGOUT_URL_PUBLIC,
-        description: `UserPool Redirect SignOut`,
-        exportName: `userpool${clientId}redirectSignOut`,
-      });
+      // this.exportValue(POOL_CALLBACK_URL_PUBLIC);
+      // this.stackExports[`userpool${clientId}redirectSignIn`] = POOL_CALLBACK_URL_PUBLIC;
+      // new CfnOutput(this, `userpool${clientId}redirectSignIn`, {
+      //   value: POOL_CALLBACK_URL_PUBLIC,
+      //   description: `UserPool Redirect SignIn`,
+      //   exportName: `userpool${clientId}redirectSignIn`,
+      // });
+
+      // this.exportValue(POOL_LOGOUT_URL_PUBLIC);
+      // this.stackExports[`userpool${clientId}redirectSignOut`] = POOL_LOGOUT_URL_PUBLIC;
+      // new CfnOutput(this, `userpool${clientId}redirectSignOut`, {
+      //   value: POOL_LOGOUT_URL_PUBLIC,
+      //   description: `UserPool Redirect SignOut`,
+      //   exportName: `userpool${clientId}redirectSignOut`,
+      // });
     })
   }
 }

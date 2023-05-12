@@ -1,0 +1,20 @@
+{
+  "287882505924": {
+    "region": "us-east-1",
+    "envName": "dev",
+    "certificateArn": "arn:aws:acm:us-east-1:287882505924:certificate/b54cabc3-6787-4e9a-b52b-eea0aebef606",
+    "domain": "dev.kearneysnp.com"
+  },
+  "993809450021": {
+    "region": "us-east-1",
+    "envName": "qa",
+    "certificateArn": "arn:aws:acm:us-east-1:993809450021:certificate/d337e784-f14b-45b5-977d-029d5bc34e30",
+    "domain": "qa.kearneysnp.com"
+  },
+  "396112814485": {
+    "region": "us-east-1",
+    "envName": "uat",
+    "certificateArn": "arn:aws:acm:us-east-1:396112814485:certificate/a6e89b23-9619-48e5-b6a1-38b3e80093dd",
+    "domain": "uat.kearneysnp.com"
+  }
+}

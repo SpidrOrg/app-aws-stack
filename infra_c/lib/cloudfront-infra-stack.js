@@ -1,21 +1,22 @@
-const {Stack, Fn, CfnOutput} = require("aws-cdk-lib");
+const { Stack } = require("aws-cdk-lib");
 const acm = require("aws-cdk-lib/aws-certificatemanager");
 const cloudfront = require("aws-cdk-lib/aws-cloudfront");
 const lambda = require("aws-cdk-lib/aws-lambda");
 const s3 = require("aws-cdk-lib/aws-s3");
 const cloudfrontOrigins = require("aws-cdk-lib/aws-cloudfront-origins");
-const cr = require("aws-cdk-lib/custom-resources");
-const iam = require('aws-cdk-lib/aws-iam');
-const {CfnBucketPolicy} = require("aws-cdk-lib/aws-s3");
 
 class CloudfrontInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
+    this.stackExports = {};
+
+    const {lambdaEdgeInfraStack, s3InfraStack} = props;
+
     const lambdaEdgeCloudfrontOriginRequestName = "dd-cf-lambda-edge";
     const {allEntities, certificateArn, domain} = props;
 
-    const lambdaEdgeVersionArn = Fn.importValue(`lambdaEdgeVersionArnRef${lambdaEdgeCloudfrontOriginRequestName}`);
-    const dashboardsBucketARN = Fn.importValue('dashboardsBucketARN');
+    const lambdaEdgeVersionArn = lambdaEdgeInfraStack[`lambdaEdgeVersionArnRef${lambdaEdgeCloudfrontOriginRequestName}`]; //Fn.importValue(`lambdaEdgeVersionArnRef${lambdaEdgeCloudfrontOriginRequestName}`);
+    const dashboardsBucketARN = s3InfraStack['dashboardsBucketARN']; //Fn.importValue('dashboardsBucketARN');
     const dashboardsBucket = s3.Bucket.fromBucketArn(this, 'cfS3DashboardsBucket', dashboardsBucketARN)
 
     const lambdaVersion = lambda.Version.fromVersionArn(this, "cloudfrontOriginRequestEdgeLambda", lambdaEdgeVersionArn)
@@ -28,7 +29,7 @@ class CloudfrontInfraStack extends Stack {
       includeBody: false,
     };
 
-    const oiaId = Fn.importValue('dashboardsBucketRefOia');
+    const oiaId = s3InfraStack['dashboardsBucketRefOia'] //Fn.importValue('dashboardsBucketRefOia');
     const oia = cloudfront.OriginAccessIdentity.fromOriginAccessIdentityId(this, 'cloudfrontS3DashboardsOIA', oiaId)
 
     const originRequestPolicy = new cloudfront.OriginRequestPolicy(this, 'webappCdnDistributionOriginRequestPolicy', {
@@ -62,17 +63,21 @@ class CloudfrontInfraStack extends Stack {
       certificate
     });
 
-    new CfnOutput(this, `snpWebAppCloudfrontDistributionID`, {
-      value: cf.distributionId,
-      description: `WebApp Cloudfront Distribution ID`,
-      exportName: `snpWebAppCloudfrontDistributionID`,
-    });
+    this.exportValue(cf.distributionId);
+    this.stackExports['snpWebAppCloudfrontDistributionID'] = cf.distributionId;
+    // new CfnOutput(this, `snpWebAppCloudfrontDistributionID`, {
+    //   value: cf.distributionId,
+    //   description: `WebApp Cloudfront Distribution ID`,
+    //   exportName: `snpWebAppCloudfrontDistributionID`,
+    // });
 
-    new CfnOutput(this, `snpWebAppCloudfrontDistributionDomainName`, {
-      value: cf.distributionDomainName,
-      description: `WebApp Cloudfront Distribution Domain Name`,
-      exportName: `snpWebAppCloudfrontDistributionDomainName`,
-    });
+    this.exportValue(cf.distributionDomainName);
+    this.stackExports['snpWebAppCloudfrontDistributionDomainName'] = cf.distributionDomainName;
+    // new CfnOutput(this, `snpWebAppCloudfrontDistributionDomainName`, {
+    //   value: cf.distributionDomainName,
+    //   description: `WebApp Cloudfront Distribution Domain Name`,
+    //   exportName: `snpWebAppCloudfrontDistributionDomainName`,
+    // });
   }
 }
 

@@ -1,4 +1,4 @@
-const {Stack, Fn} = require("aws-cdk-lib");
+const { Stack } = require("aws-cdk-lib");
 const route53 = require("aws-cdk-lib/aws-route53");
 const route53Targets = require("aws-cdk-lib/aws-route53-targets");
 const cloudfront = require("aws-cdk-lib/aws-cloudfront");
@@ -6,14 +6,15 @@ const cloudfront = require("aws-cdk-lib/aws-cloudfront");
 class Route53InfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
+    this.stackExports = {};
 
-    const {allEntities = [], domain, hostedZoneId} = props;
+    const {allEntities = [], domain, cloudfrontInfraStack} = props;
     const zone = route53.HostedZone.fromLookup(this, `route53HostedZone`, {
       domainName: domain
     });
 
-    const cfDistributionId = Fn.importValue('snpWebAppCloudfrontDistributionID');
-    const cfDistributionDomainName = Fn.importValue('snpWebAppCloudfrontDistributionDomainName');
+    const cfDistributionId = cloudfrontInfraStack['snpWebAppCloudfrontDistributionID'] //Fn.importValue('snpWebAppCloudfrontDistributionID');
+    const cfDistributionDomainName = cloudfrontInfraStack['snpWebAppCloudfrontDistributionDomainName'] // Fn.importValue('snpWebAppCloudfrontDistributionDomainName');
 
     const cf = cloudfront.Distribution.fromDistributionAttributes(this, "snpWebAppCloudfrontDistribution", {
       distributionId: cfDistributionId,

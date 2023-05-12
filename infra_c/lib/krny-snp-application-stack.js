@@ -17,48 +17,58 @@ class krnySnpApplicationStack extends Stack {
 
     const allEntities = props.clientsToOnboardConfigs || [];
 
-    const stackProps = {...props, allEntities};
+    let stackProps = {...props, allEntities};
 
     // IAM Policies & Roles
     const iamInfraStack = new IamInfraStack(this, 'IamInfraStack', stackProps);
+    stackProps = {...stackProps, iamInfraStack: iamInfraStack.stackExports}
 
     // Lambda Layers
     const lambdaLayerInfraStack = new LambdaLayerInfraStack(this, 'LambdaLayerInfraStack', stackProps);
+    stackProps = {...stackProps, lambdaLayerInfraStack: lambdaLayerInfraStack.stackExports}
 
     // Lambda Functions
     const lambdaInfraStack = new LambdaInfraStack(this, 'LambdaInfraStack', stackProps);
     lambdaInfraStack.addDependency(iamInfraStack);
     lambdaInfraStack.addDependency(lambdaLayerInfraStack);
+    stackProps = {...stackProps, lambdaInfraStack: lambdaInfraStack.stackExports}
 
     // S3 Buckets and S3 Client Bucket Event Notification
     const s3InfraStack = new S3InfraStack(this, 'S3InfraStack', stackProps);
     s3InfraStack.addDependency(lambdaInfraStack);
+    stackProps = {...stackProps, s3InfraStack: s3InfraStack.stackExports}
 
     // // Lambda@Edge function for cloudfront
     const lambdaEdgeInfraStack = new LambdaEdgeInfraStack(this, 'LambdaEdgeInfraStack', stackProps);
     lambdaEdgeInfraStack.addDependency(iamInfraStack);
+    stackProps = {...stackProps, lambdaEdgeInfraStack: lambdaEdgeInfraStack.stackExports};
 
     // CloudFront Distribution
     const cloudfrontInfraStack = new CloudfrontInfraStack(this, 'CloudfrontInfraStack', stackProps);
     cloudfrontInfraStack.addDependency(lambdaEdgeInfraStack);
     cloudfrontInfraStack.addDependency(s3InfraStack);
+    stackProps = {...stackProps, cloudfrontInfraStack: cloudfrontInfraStack.stackExports};
     //
 
     // Route53
     const route53InfraStack = new Route53InfraStack(this, 'Route53InfraStack', stackProps);
     route53InfraStack.addDependency(cloudfrontInfraStack);
+    stackProps = {...stackProps, route53InfraStack: route53InfraStack.stackExports};
 
-    // // Glue Database and Tables
+    // Glue Database and Tables
     const glueInfraStack = new GlueInfraStack(this, 'GlueInfraStack', stackProps);
     glueInfraStack.addDependency(s3InfraStack);
-    //
-    // // Athena Workgroup
+    stackProps = {...stackProps, glueInfraStack: glueInfraStack.stackExports}
+
+    // Athena Workgroup
     const athenaInfraStack = new AthenaInfraStack(this, 'AthenaInfraStack', stackProps);
     athenaInfraStack.addDependency(s3InfraStack);
-    //
+    stackProps = {...stackProps, athenaInfraStack: athenaInfraStack.stackExports};
+
     // // Cognito UserPool
     const cognitoInfraStack = new CognitoInfraStack(this, 'CognitoInfraStack', stackProps);
     cognitoInfraStack.addDependency(cloudfrontInfraStack);
+    stackProps = {...stackProps, cognitoInfraStack: cognitoInfraStack.stackExports};
 
     // API Gateway
     const apiGatewayInfraStack = new ApiGatewayInfraStack(this, 'ApiGatewayInfraStack', stackProps);

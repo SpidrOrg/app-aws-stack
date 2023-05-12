@@ -1,4 +1,4 @@
-const { Stack, RemovalPolicy, CfnOutput, Fn} = require('aws-cdk-lib');
+const { Stack, RemovalPolicy } = require('aws-cdk-lib');
 const getServiceNames = require("./utils/getServiceName");
 const s3 = require("aws-cdk-lib/aws-s3");
 const s3deploy = require("aws-cdk-lib/aws-s3-deployment");
@@ -12,6 +12,8 @@ const cloudfront = require("aws-cdk-lib/aws-cloudfront");
 class S3InfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
+    this.stackExports = {}
+    const {lambdaInfraStack} = props;
 
     // Create Dashboards S3 Bucket if not exists
     const dashboardsBucketName = getServiceNames.getDashboardsBucketName(props.envName)
@@ -34,16 +36,20 @@ class S3InfraStack extends Stack {
     );
 
     //// Export Dashboard bucket name
-    new CfnOutput(this, 'dashboardsBucketRef', {
-      value: dashboardsBucket.bucketArn,
-      description: 'The ARN of the Dashboards s3 bucket',
-      exportName: 'dashboardsBucketARN',
-    });
-    new CfnOutput(this, 'dashboardsBucketRefOia', {
-      value: oia.originAccessIdentityId,
-      description: 'The ARN of the Dashboards s3 bucket',
-      exportName: 'dashboardsBucketRefOia',
-    });
+    this.exportValue(dashboardsBucket.bucketArn);
+    this.stackExports['dashboardsBucketARN'] = dashboardsBucket.bucketArn;
+    // new CfnOutput(this, 'dashboardsBucketRef', {
+    //   value: dashboardsBucket.bucketArn,
+    //   description: 'The ARN of the Dashboards s3 bucket',
+    //   exportName: 'dashboardsBucketARN',
+    // });
+    this.exportValue(oia.originAccessIdentityId);
+    this.stackExports['dashboardsBucketRefOia'] = oia.originAccessIdentityId;
+    // new CfnOutput(this, 'dashboardsBucketRefOia', {
+    //   value: oia.originAccessIdentityId,
+    //   description: 'The ARN of the Dashboards s3 bucket',
+    //   exportName: 'dashboardsBucketRefOia',
+    // });
 
     const {allEntities = []} = props;
     allEntities.forEach(entity =>{
@@ -61,7 +67,7 @@ class S3InfraStack extends Stack {
         const notificationConfig = clientBucketNotificationConfig[notificationName];
 
         const clientDataTransformationLambdaName = notificationConfig.notify.lambda;
-        const clientDataTransformationLambdaARN = Fn.importValue(`lambdaARN${clientDataTransformationLambdaName}`);
+        const clientDataTransformationLambdaARN = lambdaInfraStack[`lambdaARN${clientDataTransformationLambdaName}`] //Fn.importValue(`lambdaARN${clientDataTransformationLambdaName}`);
         const clientDataTransformationLambda = lambda.Function.fromFunctionArn(this, `client${clientId}S3BucketNotification${notificationName}lambda`, clientDataTransformationLambdaARN);
 
         const cfnPermission = new lambda.CfnPermission(this, `client${clientId}S3BucketNotification${notificationName}lambdaResourcePermission`, {
@@ -78,11 +84,13 @@ class S3InfraStack extends Stack {
         )
       })
       //// Export Client bucket name
-      new CfnOutput(this, `clientBucket${clientId}Ref`, {
-        value: clientBucket.bucketArn,
-        description: `The ARN of the Client s3 bucket`,
-        exportName: `clientBucketRef${clientId}`,
-      });
+      this.exportValue(clientBucket.bucketArn);
+      this.stackExports[`clientBucketRef${clientId}`] = clientBucket.bucketArn;
+      // new CfnOutput(this, `clientBucket${clientId}Ref`, {
+      //   value: clientBucket.bucketArn,
+      //   description: `The ARN of the Client s3 bucket`,
+      //   exportName: `clientBucketRef${clientId}`,
+      // });
       //// Create Client Bucket folders
       new s3deploy.BucketDeployment(this, `client-bucket-folders-${clientBucketName}`, {
         sources: [s3deploy.Source.asset(path.join(__dirname, '../../services/s3/clientBucket/folderStructure'))],

@@ -1,4 +1,4 @@
-const { Stack, CfnOutput } = require('aws-cdk-lib');
+const { Stack } = require('aws-cdk-lib');
 const iam = require('aws-cdk-lib/aws-iam');
 const cr = require('aws-cdk-lib/custom-resources');
 const path = require("path");
@@ -8,11 +8,12 @@ const constants = require("./constants");
 class IamInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
+    this.stackExports = {};
 
     // Create IAM Roles
     //// Create all Policies
     const pathToPoliciesFolder = path.join(__dirname, "../../services/IAM/policies");
-    const policiesFolders = fs.readdirSync(pathToPoliciesFolder);
+    const policiesFolders = fs.readdirSync(pathToPoliciesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
 
     const policiesP = {};
     policiesFolders.forEach(policyFolder => {
@@ -37,7 +38,7 @@ class IamInfraStack extends Stack {
 
     // //// Create all Roles
     const pathToRolesFolder = path.join(__dirname, "../../services/IAM/roles");
-    const rolesFolders = fs.readdirSync(pathToRolesFolder);
+    const rolesFolders = fs.readdirSync(pathToRolesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
     const allRoles = {};
     rolesFolders.forEach(roleFolder=>{
       let roleText =  fs.readFileSync(path.join(pathToRolesFolder, roleFolder, "config.json"), "utf-8");
@@ -60,11 +61,13 @@ class IamInfraStack extends Stack {
       });
 
       // Export Role
-      new CfnOutput(this, `iamRoleRef${roleFolder}`, {
-        value: iamRole.roleName,
-        description: `IAM Role Name: ${roleFolder}`,
-        exportName: `iamRoleRef${roleFolder}`,
-      });
+      this.exportValue(iamRole.roleName);
+      this.stackExports[`iamRoleRef${roleFolder}`] = iamRole.roleName;
+      // new CfnOutput(this, `iamRoleRef${roleFolder}`, {
+      //   value: iamRole.roleName,
+      //   description: `IAM Role Name: ${roleFolder}`,
+      //   exportName: `iamRoleRef${roleFolder}`,
+      // });
     })
 
     rolesFolders.forEach(roleFolder=> {

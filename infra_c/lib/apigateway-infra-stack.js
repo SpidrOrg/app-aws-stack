@@ -1,18 +1,21 @@
-const {Stack, Fn, CfnOutput} = require("aws-cdk-lib");
+const { Stack } = require("aws-cdk-lib");
 const apigateway = require("aws-cdk-lib/aws-apigateway");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const lambda = require('aws-cdk-lib/aws-lambda');
-const iam = require('aws-cdk-lib/aws-iam');
 const apiGatewayResourcesConfig = require("../../services/APIGateway/resourceConfig.json");
 const path = require("path");
 const fs = require("fs");
-const s3deploy = require("aws-cdk-lib/aws-s3-deployment");
-const s3 = require("aws-cdk-lib/aws-s3");
 
 class ApiGatewayInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
-    const {allEntities = [], envName, domain} = props;
+    this.stackExports = {};
+
+    const { allEntities = [], envName, lambdaInfraStack, cognitoInfraStack } = props;
+
+    if (allEntities.length <= 0){
+      return;
+    }
     // Create Rest API
     const api = new apigateway.RestApi(this, 'krny-spi-dashboard-apiGateway', {
       restApiName: `spi-dashboards-${envName}`,
@@ -22,22 +25,26 @@ class ApiGatewayInfraStack extends Stack {
       }
     });
 
-    new CfnOutput(this, `gatewayRootUrl`, {
-      value: api.url,
-      description: `The deployed root URL of this REST API.`,
-      exportName: `gatewayRootUrl`,
-    });
-    new CfnOutput(this, `gatewayBaseDeploymentStage`, {
-      value: api.deploymentStage.stageName,
-      description: `API Gateway stage that points to the latest deployment.`,
-      exportName: `gatewayBaseDeploymentStage`,
-    });
+    // this.exportValue(api.url);
+    // this.stackExports['gatewayRootUrl'] = api.url;
+    // new CfnOutput(this, `gatewayRootUrl`, {
+    //   value: api.url,
+    //   description: `The deployed root URL of this REST API.`,
+    //   exportName: `gatewayRootUrl`,
+    // });
 
+    this.exportValue(api.deploymentStage.stageName);
+    this.stackExports['gatewayBaseDeploymentStage'] = api.deploymentStage.stageName;
+    // new CfnOutput(this, `gatewayBaseDeploymentStage`, {
+    //   value: api.deploymentStage.stageName,
+    //   description: `API Gateway stage that points to the latest deployment.`,
+    //   exportName: `gatewayBaseDeploymentStage`,
+    // });
 
     const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
-    const lambdaFolders = fs.readdirSync(pathToLambdaFolder);
+    const lambdaFolders = fs.readdirSync(pathToLambdaFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
     lambdaFolders.forEach(lambdaFolder => {
-      const fnArn = Fn.importValue(`lambdaARN${lambdaFolder}`);
+      const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
       new lambda.CfnPermission(this, `PermitAPIGInvocation${lambdaFolder}refarn`, {
         action: 'lambda:InvokeFunction',
         functionName: fnArn,
@@ -52,7 +59,7 @@ class ApiGatewayInfraStack extends Stack {
       // Add Root Resource
       const rootResource = api.root.addResource(`${envName}${clientId}`);
 
-      const cognitoUserPoolId = Fn.importValue(`userpool${clientId}ResourceIdsUserPoolId`);
+      const cognitoUserPoolId =  cognitoInfraStack[`userpool${clientId}ResourceIdsUserPoolId`]; //Fn.importValue(`userpool${clientId}ResourceIdsUserPoolId`);
       const userPool = cognito.UserPool.fromUserPoolId(this, `apiGateway${clientId}CogAuthorizerRef`, cognitoUserPoolId);
 
       const apiGatewayLambdaAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(this, `apiGateway${clientId}CogAuthorizer`, {
@@ -68,7 +75,7 @@ class ApiGatewayInfraStack extends Stack {
           const methodConfig = resourceConfig[methodName];
           const integerationConfig = methodConfig.integrationRequest;
 
-          const lambdaArn = Fn.importValue(`lambdaARN${integerationConfig.lambda}`);
+          const lambdaArn = lambdaInfraStack[`lambdaARN${integerationConfig.lambda}`] //Fn.importValue(`lambdaARN${integerationConfig.lambda}`);
           const backendLamdba = lambda.Function.fromFunctionArn(this, `backendLamdba${clientId}${resourceName}${methodName}`, lambdaArn);
           const method = resource.addMethod(
             methodName,
