@@ -68,6 +68,11 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
+      console.log("exists is falsy")
+    } else {
+      console.log("exists is truthy")
+    }
+    if (!exists){
       exec(`aws s3 cp ${pathToDashboardsTempDir} s3://${dashboardsBucketName}/dashboards --recursive`, (err, output) => {
         if (err) {
           console.error("could not execute command: ", err)
