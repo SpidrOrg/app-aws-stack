@@ -57,7 +57,7 @@ class CloudfrontInfraStack extends Stack {
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         originRequestPolicy: originRequestPolicy,
         cachePolicy: cachePolicy,
-        edgeLambdas: [lambdaFunctionAssociation]
+        // edgeLambdas: [lambdaFunctionAssociation]
       },
       domainNames: [domain, ...allEntities.map(v => `${v.host}.${domain}`)],
       certificate
