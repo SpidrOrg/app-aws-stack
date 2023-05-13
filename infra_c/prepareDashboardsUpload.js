@@ -61,10 +61,10 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
 
 
   const pathToDashboardsTempDir = path.join(__dirname, `dashboardsTemp`);
-  const pathToDashboardsBundles = path.join(pathToDashboardsTempDir, `${clientId}/dashboard`);
-  fs.mkdirSync(pathToDashboardsBundles, {recursive:true});
-  fs.cpSync(sourcePath, pathToDashboardsBundles, {recursive: true});
-  fs.writeFileSync(`${pathToDashboardsBundles}/idpConfig.js`, idpConfigTemplateContents);
+  const pathToDashboardsTempBundles = path.join(pathToDashboardsTempDir, `${clientId}/dashboard`);
+  fs.mkdirSync(pathToDashboardsTempBundles, {recursive:true});
+  fs.cpSync(sourcePath, pathToDashboardsTempBundles, {recursive: true});
+  fs.writeFileSync(`${pathToDashboardsTempBundles}/idpConfig.js`, idpConfigTemplateContents);
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
@@ -73,13 +73,16 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
       console.log("exists is truthy")
     }
     if (!exists){
-      exec(`aws s3 cp ${pathToDashboardsTempDir} s3://${dashboardsBucketName}/dashboards --recursive`, (err, output) => {
+      console.log("wirting")
+      exec(`aws s3 cp ${pathToDashboardsTempDir}/${clientId} s3://${dashboardsBucketName}/dashboards/${clientId} --recursive`, (err, output) => {
         if (err) {
           console.error("could not execute command: ", err)
           return
         }
         console.log("Output: \n", output)
       })
+    } else {
+      console.log("skip wirting")
     }
   })
 })
