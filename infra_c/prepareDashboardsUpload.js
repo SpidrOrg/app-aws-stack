@@ -31,6 +31,8 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   const host = entity.host;
   const clientName = entity.name;
 
+  const hostedUILogoBase64 = fs.readFileSync("./cognitoHostedUIlogoBase64.txt", "utf-8");
+
   let idpConfigTemplateContents = `${defaultIDPTemplate}`;
   if (fs.existsSync(path.join(__dirname, `../services/uiBundles/${clientId}`))) {
     sourcePath = path.join(__dirname, `../services/uiBundles/${clientId}`);
@@ -38,8 +40,11 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   }
 
   idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)region:.*/, `$1region: "${awsRegion}",`);
-  idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)userPoolId:.*/, `$1userPoolId: "${cognitoExports[`Export${getExportName('userPoolId', {clientId})}`]}",`);
-  idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)userPoolWebClientId:.*/, `$1userPoolWebClientId: "${cognitoExports[`Export${getExportName('userPoolClient', {clientId})}`]}",`);
+
+  const clientUserPoolID = cognitoExports[`Export${getExportName('userPoolId', {clientId})}`];
+  const clientUserPoolWebClientId = cognitoExports[`Export${getExportName('userPoolClient', {clientId})}`];
+  idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)userPoolId:.*/, `$1userPoolId: "${clientUserPoolID}",`);
+  idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)userPoolWebClientId:.*/, `$1userPoolWebClientId: "${clientUserPoolWebClientId}",`);
 
   const oauthDomainFQDN = `${cognitoExports[`Export${getExportName('userPoolDomain', {clientId})}`]}.auth.us-east-1.amazoncognito.com`;
   idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)oauthDomain:.*/, `$1oauthDomain: "${oauthDomainFQDN}",`);
@@ -74,6 +79,14 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
           return
         }
         console.log("Output: \n", output)
+      });
+      console.log("Upading hosted UI logo...")
+      exec(`aws cognito-idp set-ui-customization --user-pool-id ${clientUserPoolID} --client-id ${clientUserPoolWebClientId} --image-file "${hostedUILogoBase64}" --css ".banner-customizable {background-color: #303030;}"`, (err, output) => {
+        if (err) {
+          console.error("Failed to update logo: ", err)
+          return
+        }
+        console.log("Logo Updated: \n", output)
       })
     }
   })

@@ -144,7 +144,6 @@ class CognitoInfraStack extends Stack {
       cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolUser)
 
       //// Export Cognito IDs
-      console.log("getExportName('userPoolId', {clientId})", getExportName('userPoolId', {clientId}))
       this.exportValue(userPool.userPoolId, {
         name: getExportName('userPoolId', {clientId})
       });
