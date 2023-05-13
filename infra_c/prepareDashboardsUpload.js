@@ -81,7 +81,7 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         console.log("Output: \n", output)
       });
       console.log("Upading hosted UI logo...")
-      exec(`aws cognito-idp set-ui-customization --user-pool-id ${clientUserPoolID} --client-id ${clientUserPoolWebClientId} --image-file "${hostedUILogoBase64}" --css ".banner-customizable {background-color: #303030;}"`, (err, output) => {
+      exec(`aws cognito-idp set-ui-customization --user-pool-id ${clientUserPoolID} --client-id ${clientUserPoolWebClientId} --image-file "${hostedUILogoBase64}" --css  ".banner-customizable {background-color: #ffffff;} .submitButton-customizable:hover {background-color: #802d2c;} .submitButton-customizable {background-color: #000000;} .textDescription-customizable {font-family: serif}"`, (err, output) => {
         if (err) {
           console.error("Failed to update logo: ", err)
           return
