@@ -116,16 +116,16 @@ class CognitoInfraStack extends Stack {
       });
 
       // Create Admin User
-      const cfnUserPoolUser = new cognito.CfnUserPoolUser(this, `userpool${clientId}adminUser`, {
-        userPoolId: userPool.userPoolId,
-        desiredDeliveryMediums: ['EMAIL'],
-        forceAliasCreation: false,
-        userAttributes: [{
-          name: 'email',
-          value: `${adminEmail}`,
-        }],
-        username: `${adminEmail}`
-      });
+      // const cfnUserPoolUser = new cognito.CfnUserPoolUser(this, `userpool${clientId}adminUser`, {
+      //   userPoolId: userPool.userPoolId,
+      //   desiredDeliveryMediums: ['EMAIL'],
+      //   forceAliasCreation: false,
+      //   userAttributes: [{
+      //     name: 'email',
+      //     value: `${adminEmail}`,
+      //   }],
+      //   username: `${adminEmail}`
+      // });
 
       // Create Admin user pool Group
       const cfnUserPoolGroup = new cognito.CfnUserPoolGroup(this, `userpool${clientId}adminGroup`, {
@@ -135,13 +135,13 @@ class CognitoInfraStack extends Stack {
       });
 
       // Attach user to Admin user pool group
-      const cfnUserPoolUserToGroupAttachment = new cognito.CfnUserPoolUserToGroupAttachment(this, `userpool${clientId}adminUserToAdminGroupAttachment`, {
-        groupName: cfnUserPoolGroup.groupName,
-        username: cfnUserPoolUser.username,
-        userPoolId: userPool.userPoolId
-      });
-      cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolGroup)
-      cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolUser)
+      // const cfnUserPoolUserToGroupAttachment = new cognito.CfnUserPoolUserToGroupAttachment(this, `userpool${clientId}adminUserToAdminGroupAttachment`, {
+      //   groupName: cfnUserPoolGroup.groupName,
+      //   username: cfnUserPoolUser.username,
+      //   userPoolId: userPool.userPoolId
+      // });
+      // cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolGroup)
+      // cfnUserPoolUserToGroupAttachment.node.addDependency(cfnUserPoolUser)
 
       //// Export Cognito IDs
       this.exportValue(userPool.userPoolId, {
