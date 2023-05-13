@@ -73,7 +73,9 @@ export const handler = async(event) => {
       }));
 
       console.log("Strinigfied DD Query Result", JSON.stringify(queryResult));
-      const tenantId = queryResult.Items[0].id['N'];
+      const idItem = queryResult.Items[0].id;
+      const idType = Object.keys(idItem)[0]
+      const tenantId = idItem[idType];
       console.log("Resolved Tenant ID", tenantId);
       request.origin.s3.path = `/dashboards/${tenantId}/dashboard`
       request.headers.host[0].value = request.origin.s3.domainName;
