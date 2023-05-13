@@ -30,6 +30,7 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   const clientId = entity.id;
   const host = entity.host;
   const clientName = entity.name;
+  const adminEmail = entity.adminEmail;
 
   const hostedUILogoBase64 = fs.readFileSync("./cognitoHostedUIlogoBase64.txt", "utf-8");
 
@@ -80,8 +81,23 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         }
         console.log("Output: \n", output)
       });
+      console.log("Create Admin User and sending email...")
+      exec(`aws cognito-idp admin-create-user --user-pool-id ${clientUserPoolID} --username ${adminEmail} --user-attributes Name=email,Value=${adminEmail} Name=email_verified,Value=True --desired-delivery-mediums EMAIL --no-force-alias-creation`, (err, output) => {
+        if (err) {
+          console.error("Failed to Admin User!!! ", err)
+          return
+        }
+        console.log("Admin user created, email sent. \n", output);
+        console.log("Adding user to admin group");
+        exec(`aws cognito-idp admin-add-user-to-group --user-pool-id ${clientUserPoolID} --username ${adminEmail} --group-name Admin`, (err1, out1)=>{
+          if (err1){
+            console.log("Failed to add user to Admin group")
+          }
+          console.log("Added user to Admin group");
+        })
+      })
       console.log("Upading hosted UI logo...")
-      exec(`aws cognito-idp set-ui-customization --user-pool-id ${clientUserPoolID} --client-id ${clientUserPoolWebClientId} --image-file "${hostedUILogoBase64}" --css  ".banner-customizable {background-color: #ffffff;} .submitButton-customizable:hover {background-color: #802d2c;} .submitButton-customizable {background-color: #000000;} .textDescription-customizable {font-family: serif}"`, (err, output) => {
+      exec(`aws cognito-idp set-ui-customization --user-pool-id ${clientUserPoolID} --client-id ${clientUserPoolWebClientId} --image-file fileb://./Kearney_Logo.svg.png --css  ".banner-customizable {background-color: #ffffff;} .submitButton-customizable:hover {background-color: #802d2c;} .submitButton-customizable {background-color: #000000;} .textDescription-customizable {font-family: serif}"`, (err, output) => {
         if (err) {
           console.error("Failed to update logo: ", err)
           return
