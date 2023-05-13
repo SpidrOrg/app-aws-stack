@@ -13,8 +13,4 @@ phases:
       - cdk bootstrap
       - cdk deploy --all --require-approval=never --outputs-file ./stackexports.json
       - cat ./stackexports.json
-      - cd ../infra_dashboards
-      - npm ci
-      - node createTempBundleIdpTemplates.js
-      - cdk bootstrap
-      - cdk deploy --all --require-approval=never
+      - aws s3 cp ./stackexports.json s3://krny-spi-2117584757-alpha/
