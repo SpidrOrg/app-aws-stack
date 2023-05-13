@@ -44,13 +44,13 @@ class krnySnpApplicationStack extends Stack {
     stackProps = {...stackProps, s3InfraStack: s3InfraStack.stackExports}
 
     // // Lambda@Edge function for cloudfront
-    const lambdaEdgeInfraStack = new LambdaEdgeInfraStack(this, 'LambdaEdgeInfraStack', stackProps);
-    lambdaEdgeInfraStack.addDependency(iamInfraStack);
-    stackProps = {...stackProps, lambdaEdgeInfraStack: lambdaEdgeInfraStack.stackExports};
+    // const lambdaEdgeInfraStack = new LambdaEdgeInfraStack(this, 'LambdaEdgeInfraStack', stackProps);
+    // lambdaEdgeInfraStack.addDependency(iamInfraStack);
+    // stackProps = {...stackProps, lambdaEdgeInfraStack: lambdaEdgeInfraStack.stackExports};
 
     // CloudFront Distribution
     const cloudfrontInfraStack = new CloudfrontInfraStack(this, 'CloudfrontInfraStack', stackProps);
-    cloudfrontInfraStack.addDependency(lambdaEdgeInfraStack);
+    cloudfrontInfraStack.addDependency(iamInfraStack);
     cloudfrontInfraStack.addDependency(s3InfraStack);
     stackProps = {...stackProps, cloudfrontInfraStack: cloudfrontInfraStack.stackExports};
     //
