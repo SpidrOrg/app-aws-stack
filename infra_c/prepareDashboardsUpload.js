@@ -32,8 +32,6 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   const clientName = entity.name;
   const adminEmail = entity.adminEmail;
 
-  const hostedUILogoBase64 = fs.readFileSync("./cognitoHostedUIlogoBase64.txt", "utf-8");
-
   let idpConfigTemplateContents = `${defaultIDPTemplate}`;
   if (fs.existsSync(path.join(__dirname, `../services/uiBundles/${clientId}`))) {
     sourcePath = path.join(__dirname, `../services/uiBundles/${clientId}`);
