@@ -29,13 +29,12 @@ class krnySnpApplicationStack extends Stack {
     stackProps = {...stackProps, iamInfraStack: iamInfraStack.stackExports}
 
     // Lambda Layers
-    const lambdaLayerInfraStack = new LambdaLayerInfraStack(this, 'LambdaLayerInfraStack', stackProps);
-    stackProps = {...stackProps, lambdaLayerInfraStack: lambdaLayerInfraStack.stackExports}
+    // const lambdaLayerInfraStack = new LambdaLayerInfraStack(this, 'LambdaLayerInfraStack', stackProps);
+    // stackProps = {...stackProps, lambdaLayerInfraStack: lambdaLayerInfraStack.stackExports}
 
     // Lambda Functions
     const lambdaInfraStack = new LambdaInfraStack(this, 'LambdaInfraStack', stackProps);
     lambdaInfraStack.addDependency(iamInfraStack);
-    lambdaInfraStack.addDependency(lambdaLayerInfraStack);
     stackProps = {...stackProps, lambdaInfraStack: lambdaInfraStack.stackExports}
 
     // S3 Buckets and S3 Client Bucket Event Notification
