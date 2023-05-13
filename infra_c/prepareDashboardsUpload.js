@@ -67,7 +67,6 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   fs.writeFileSync(`${pathToDashboardsBundles}/idpConfig.js`, idpConfigTemplateContents);
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (notExists, exits)=>{
-    console.log("notExists", notExists);
     if (notExists){
       exec(`aws s3 cp ${pathToDashboardsTempDir} s3://${dashboardsBucketName}/dashboards --recursive`, (err, output) => {
         if (err) {
@@ -76,11 +75,6 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         }
         console.log("Output: \n", output)
       })
-    } else {
-      console.log("exists", exits);
-    }
-    if (exits){
-      console.log("exists111", exits);
     }
   })
 
