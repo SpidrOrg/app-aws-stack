@@ -10,7 +10,7 @@ const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");
-const accountConfig = require("../bin/accountConfig.json");
+const accountConfig = require("../accountConfig.json");
 
 class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
