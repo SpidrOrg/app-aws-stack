@@ -66,11 +66,22 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   fs.cpSync(sourcePath, pathToDashboardsBundles, {recursive: true});
   fs.writeFileSync(`${pathToDashboardsBundles}/idpConfig.js`, idpConfigTemplateContents);
 
-  exec(`aws s3 cp ${pathToDashboardsTempDir} s3://${dashboardsBucketName}/dashboards --recursive`, (err, output) => {
-    if (err) {
-      console.error("could not execute command: ", err)
-      return
+  exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (notExists, exits)=>{
+    console.log("notExists", notExists);
+    if (notExists){
+      exec(`aws s3 cp ${pathToDashboardsTempDir} s3://${dashboardsBucketName}/dashboards --recursive`, (err, output) => {
+        if (err) {
+          console.error("could not execute command: ", err)
+          return
+        }
+        console.log("Output: \n", output)
+      })
+    } else {
+      console.log("exists", exits);
     }
-    console.log("Output: \n", output)
+    if (exits){
+      console.log("exists111", exits);
+    }
   })
+
 })
