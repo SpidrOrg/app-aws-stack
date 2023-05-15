@@ -17,6 +17,7 @@
     "filters": {
       "prefix": "raw-data/similar_web/manual_upload/",
       "suffix": ".xlsx"
-    }
+    },
+    "external": true
   }
 }

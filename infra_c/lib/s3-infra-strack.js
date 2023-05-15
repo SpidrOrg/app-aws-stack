@@ -13,7 +13,7 @@ class S3InfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
     this.stackExports = {}
-    const {lambdaInfraStack, envName} = props;
+    const {lambdaInfraStack, envName, awsAccountId, awsRegion} = props;
 
     // Create Dashboards S3 Bucket if not exists
     const dashboardsBucketName = getServiceNames.getDashboardsBucketName(envName)
@@ -67,7 +67,10 @@ class S3InfraStack extends Stack {
         const notificationConfig = clientBucketNotificationConfig[notificationName];
 
         const clientDataTransformationLambdaName = notificationConfig.notify.lambda;
-        const clientDataTransformationLambdaARN = lambdaInfraStack[`lambdaARN${clientDataTransformationLambdaName}`] //Fn.importValue(`lambdaARN${clientDataTransformationLambdaName}`);
+        let clientDataTransformationLambdaARN = lambdaInfraStack[`lambdaARN${clientDataTransformationLambdaName}`] //Fn.importValue(`lambdaARN${clientDataTransformationLambdaName}`);
+        if (notificationConfig.external){
+          clientDataTransformationLambdaARN = `arn:aws:lambda:${awsRegion}:${awsAccountId}:function:${clientDataTransformationLambdaName}`;
+        }
         const clientDataTransformationLambda = lambda.Function.fromFunctionArn(this, `client${clientId}S3BucketNotification${notificationName}lambda`, clientDataTransformationLambdaARN);
 
         const cfnPermission = new lambda.CfnPermission(this, `client${clientId}S3BucketNotification${notificationName}lambdaResourcePermission`, {

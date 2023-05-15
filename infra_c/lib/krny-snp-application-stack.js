@@ -22,7 +22,7 @@ class krnySnpApplicationStack extends Stack {
 
     const allEntities = props.clientsToOnboardConfigs || [];
 
-    let stackProps = {...props, envName, certificateArn, domain, allEntities};
+    let stackProps = {...props, envName, certificateArn, domain, allEntities, awsAccountId, awsRegion};
 
     // IAM Policies & Roles
     const iamInfraStack = new IamInfraStack(this, 'IamInfraStack', stackProps);
