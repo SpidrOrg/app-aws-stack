@@ -8,5 +8,15 @@
       "prefix": "client_raw_data/",
       "suffix": ".csv"
     }
+  },
+  "similarWebIngestion": {
+    "eventType": "OBJECT_CREATED",
+    "notify": {
+      "lambda": "ingestion-similarweb-client"
+    },
+    "filters": {
+      "prefix": "raw-data/similar_web/manual_upload/",
+      "suffix": ".xlsx"
+    }
   }
 }

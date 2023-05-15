@@ -72,6 +72,14 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
+      const onboardDtISO = new Date().toISOString();
+      exec(`aws dynamodb update-item --table-name "sensing-solution-tenant" --key '{"id": {"N": "${clientId}"}}' --update-expression "SET #H = :h" --expression-attribute-names '{"#H":"onboardDt"}' --expression-attribute-values '{":h":{"S":"${onboardDtISO}"}}'`, (err, output) => {
+        if (err){
+          console.log("Failed to update dyanmodb item with onboarding status.", err);
+        } else {
+          console.log("Updated dynamodb with onboarding status", output)
+        }
+      })
       exec(`aws s3 cp ${pathToDashboardsTempDir}/${clientId} s3://${dashboardsBucketName}/dashboards/${clientId} --recursive`, (err, output) => {
         if (err) {
           console.error("could not execute command: ", err)
