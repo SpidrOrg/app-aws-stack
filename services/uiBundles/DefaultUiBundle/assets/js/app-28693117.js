@@ -5561,7 +5561,7 @@ function makeMap(str, expectsLowerCase) {
   return expectsLowerCase ? (val) => !!map[val.toLowerCase()] : (val) => !!map[val];
 }
 function normalizeStyle(value) {
-  if (isArray$2(value)) {
+  if (isArray$1(value)) {
     const res = {};
     for (let i2 = 0; i2 < value.length; i2++) {
       const item = value[i2];
@@ -5596,7 +5596,7 @@ function normalizeClass(value) {
   let res = "";
   if (isString$1(value)) {
     res = value;
-  } else if (isArray$2(value)) {
+  } else if (isArray$1(value)) {
     for (let i2 = 0; i2 < value.length; i2++) {
       const normalized = normalizeClass(value[i2]);
       if (normalized) {
@@ -5630,7 +5630,7 @@ function includeBooleanAttr(value) {
   return !!value || value === "";
 }
 const toDisplayString = (val) => {
-  return isString$1(val) ? val : val == null ? "" : isArray$2(val) || isObject$2(val) && (val.toString === objectToString || !isFunction$1(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
+  return isString$1(val) ? val : val == null ? "" : isArray$1(val) || isObject$2(val) && (val.toString === objectToString || !isFunction$1(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
 const replacer = (_key, val) => {
   if (val && val.__v_isRef) {
@@ -5646,7 +5646,7 @@ const replacer = (_key, val) => {
     return {
       [`Set(${val.size})`]: [...val.values()]
     };
-  } else if (isObject$2(val) && !isArray$2(val) && !isPlainObject$1(val)) {
+  } else if (isObject$2(val) && !isArray$1(val) && !isPlainObject$1(val)) {
     return String(val);
   }
   return val;
@@ -5668,7 +5668,7 @@ const remove = (arr, el2) => {
 };
 const hasOwnProperty$3 = Object.prototype.hasOwnProperty;
 const hasOwn = (val, key) => hasOwnProperty$3.call(val, key);
-const isArray$2 = Array.isArray;
+const isArray$1 = Array.isArray;
 const isMap = (val) => toTypeString(val) === "[object Map]";
 const isSet = (val) => toTypeString(val) === "[object Set]";
 const isFunction$1 = (val) => typeof val === "function";
@@ -5953,7 +5953,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
   let deps = [];
   if (type === "clear") {
     deps = [...depsMap.values()];
-  } else if (key === "length" && isArray$2(target)) {
+  } else if (key === "length" && isArray$1(target)) {
     const newLength = Number(newValue);
     depsMap.forEach((dep, key2) => {
       if (key2 === "length" || key2 >= newLength) {
@@ -5966,7 +5966,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
     }
     switch (type) {
       case "add":
-        if (!isArray$2(target)) {
+        if (!isArray$1(target)) {
           deps.push(depsMap.get(ITERATE_KEY));
           if (isMap(target)) {
             deps.push(depsMap.get(MAP_KEY_ITERATE_KEY));
@@ -5976,7 +5976,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
         }
         break;
       case "delete":
-        if (!isArray$2(target)) {
+        if (!isArray$1(target)) {
           deps.push(depsMap.get(ITERATE_KEY));
           if (isMap(target)) {
             deps.push(depsMap.get(MAP_KEY_ITERATE_KEY));
@@ -6009,7 +6009,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
   }
 }
 function triggerEffects(dep, debuggerEventExtraInfo) {
-  const effects = isArray$2(dep) ? dep : [...dep];
+  const effects = isArray$1(dep) ? dep : [...dep];
   for (const effect of effects) {
     if (effect.computed) {
       triggerEffect(effect);
@@ -6084,7 +6084,7 @@ function createGetter(isReadonly2 = false, shallow = false) {
     } else if (key === "__v_raw" && receiver === (isReadonly2 ? shallow ? shallowReadonlyMap : readonlyMap : shallow ? shallowReactiveMap : reactiveMap).get(target)) {
       return target;
     }
-    const targetIsArray = isArray$2(target);
+    const targetIsArray = isArray$1(target);
     if (!isReadonly2) {
       if (targetIsArray && hasOwn(arrayInstrumentations, key)) {
         return Reflect.get(arrayInstrumentations, key, receiver);
@@ -6125,12 +6125,12 @@ function createSetter(shallow = false) {
         oldValue = toRaw(oldValue);
         value = toRaw(value);
       }
-      if (!isArray$2(target) && isRef(oldValue) && !isRef(value)) {
+      if (!isArray$1(target) && isRef(oldValue) && !isRef(value)) {
         oldValue.value = value;
         return true;
       }
     }
-    const hadKey = isArray$2(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
+    const hadKey = isArray$1(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
     const result = Reflect.set(target, key, value, receiver);
     if (target === toRaw(receiver)) {
       if (!hadKey) {
@@ -6159,7 +6159,7 @@ function has$1(target, key) {
   return result;
 }
 function ownKeys(target) {
-  track(target, "iterate", isArray$2(target) ? "length" : ITERATE_KEY);
+  track(target, "iterate", isArray$1(target) ? "length" : ITERATE_KEY);
   return Reflect.ownKeys(target);
 }
 const mutableHandlers = {
@@ -6563,7 +6563,7 @@ function proxyRefs(objectWithRefs) {
   return isReactive(objectWithRefs) ? objectWithRefs : new Proxy(objectWithRefs, shallowUnwrapHandlers);
 }
 function toRefs(object) {
-  const ret = isArray$2(object) ? new Array(object.length) : {};
+  const ret = isArray$1(object) ? new Array(object.length) : {};
   for (const key in object) {
     ret[key] = toRef(object, key);
   }
@@ -6741,7 +6741,7 @@ function invalidateJob(job) {
   }
 }
 function queuePostFlushCb(cb) {
-  if (!isArray$2(cb)) {
+  if (!isArray$1(cb)) {
     if (!activePostFlushCbs || !activePostFlushCbs.includes(cb, cb.allowRecurse ? postFlushIndex + 1 : postFlushIndex)) {
       pendingPostFlushCbs.push(cb);
     }
@@ -6882,7 +6882,7 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
     }
     return null;
   }
-  if (isArray$2(raw)) {
+  if (isArray$1(raw)) {
     raw.forEach((key) => normalized[key] = null);
   } else {
     extend$1(normalized, raw);
@@ -7081,7 +7081,7 @@ function updateHOCHostEl({ vnode, parent }, el2) {
 const isSuspense = (type) => type.__isSuspense;
 function queueEffectWithSuspense(fn2, suspense) {
   if (suspense && suspense.pendingBranch) {
-    if (isArray$2(fn2)) {
+    if (isArray$1(fn2)) {
       suspense.effects.push(...fn2);
     } else {
       suspense.effects.push(fn2);
@@ -7132,7 +7132,7 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
   } else if (isReactive(source)) {
     getter = () => source;
     deep = true;
-  } else if (isArray$2(source)) {
+  } else if (isArray$1(source)) {
     isMultiSource = true;
     forceTrigger = source.some((s3) => isReactive(s3) || isShallow(s3));
     getter = () => source.map((s3) => {
@@ -7288,7 +7288,7 @@ function traverse(value, seen2) {
   seen2.add(value);
   if (isRef(value)) {
     traverse(value.value, seen2);
-  } else if (isArray$2(value)) {
+  } else if (isArray$1(value)) {
     for (let i2 = 0; i2 < value.length; i2++) {
       traverse(value[i2], seen2);
     }
@@ -7429,7 +7429,7 @@ function resolveTransitionHooks(vnode, props, state, instance) {
   const callAsyncHook = (hook, args) => {
     const done = args[1];
     callHook2(hook, args);
-    if (isArray$2(hook)) {
+    if (isArray$1(hook)) {
       if (hook.every((hook2) => hook2.length <= 1))
         done();
     } else if (hook.length <= 1) {
@@ -7735,7 +7735,7 @@ function resolve(registry, name2) {
 function renderList(source, renderItem, cache, index2) {
   let ret;
   const cached = cache && cache[index2];
-  if (isArray$2(source) || isString$1(source)) {
+  if (isArray$1(source) || isString$1(source)) {
     ret = new Array(source.length);
     for (let i2 = 0, l = source.length; i2 < l; i2++) {
       ret[i2] = renderItem(source[i2], i2, void 0, cached && cached[i2]);
@@ -7767,7 +7767,7 @@ function renderList(source, renderItem, cache, index2) {
 function createSlots(slots, dynamicSlots) {
   for (let i2 = 0; i2 < dynamicSlots.length; i2++) {
     const slot = dynamicSlots[i2];
-    if (isArray$2(slot)) {
+    if (isArray$1(slot)) {
       for (let j = 0; j < slot.length; j++) {
         slots[slot[j].name] = slot[j].fn;
       }
@@ -8025,7 +8025,7 @@ function applyOptions(instance) {
     callHook$1(created, instance, "c");
   }
   function registerLifecycleHook(register, hook) {
-    if (isArray$2(hook)) {
+    if (isArray$1(hook)) {
       hook.forEach((_hook) => register(_hook.bind(publicThis)));
     } else if (hook) {
       register(hook.bind(publicThis));
@@ -8043,7 +8043,7 @@ function applyOptions(instance) {
   registerLifecycleHook(onBeforeUnmount, beforeUnmount);
   registerLifecycleHook(onUnmounted, unmounted2);
   registerLifecycleHook(onServerPrefetch, serverPrefetch);
-  if (isArray$2(expose)) {
+  if (isArray$1(expose)) {
     if (expose.length) {
       const exposed = instance.exposed || (instance.exposed = {});
       expose.forEach((key) => {
@@ -8068,7 +8068,7 @@ function applyOptions(instance) {
     instance.directives = directives;
 }
 function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP, unwrapRef = false) {
-  if (isArray$2(injectOptions)) {
+  if (isArray$1(injectOptions)) {
     injectOptions = normalizeInject(injectOptions);
   }
   for (const key in injectOptions) {
@@ -8100,7 +8100,7 @@ function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP, 
   }
 }
 function callHook$1(hook, instance, type) {
-  callWithAsyncErrorHandling(isArray$2(hook) ? hook.map((h4) => h4.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type);
+  callWithAsyncErrorHandling(isArray$1(hook) ? hook.map((h4) => h4.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type);
 }
 function createWatcher(raw, ctx, publicThis, key) {
   const getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
@@ -8112,7 +8112,7 @@ function createWatcher(raw, ctx, publicThis, key) {
   } else if (isFunction$1(raw)) {
     watch(getter, raw.bind(publicThis));
   } else if (isObject$2(raw)) {
-    if (isArray$2(raw)) {
+    if (isArray$1(raw)) {
       raw.forEach((r2) => createWatcher(r2, ctx, publicThis, key));
     } else {
       const handler = isFunction$1(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
@@ -8138,22 +8138,22 @@ function resolveMergedOptions(instance) {
   } else {
     resolved = {};
     if (globalMixins.length) {
-      globalMixins.forEach((m3) => mergeOptions$1(resolved, m3, optionMergeStrategies, true));
+      globalMixins.forEach((m3) => mergeOptions(resolved, m3, optionMergeStrategies, true));
     }
-    mergeOptions$1(resolved, base, optionMergeStrategies);
+    mergeOptions(resolved, base, optionMergeStrategies);
   }
   if (isObject$2(base)) {
     cache.set(base, resolved);
   }
   return resolved;
 }
-function mergeOptions$1(to, from, strats, asMixin = false) {
+function mergeOptions(to, from, strats, asMixin = false) {
   const { mixins, extends: extendsOptions } = from;
   if (extendsOptions) {
-    mergeOptions$1(to, extendsOptions, strats, true);
+    mergeOptions(to, extendsOptions, strats, true);
   }
   if (mixins) {
-    mixins.forEach((m3) => mergeOptions$1(to, m3, strats, true));
+    mixins.forEach((m3) => mergeOptions(to, m3, strats, true));
   }
   for (const key in from) {
     if (asMixin && key === "expose")
@@ -8206,7 +8206,7 @@ function mergeInject(to, from) {
   return mergeObjectOptions(normalizeInject(to), normalizeInject(from));
 }
 function normalizeInject(raw) {
-  if (isArray$2(raw)) {
+  if (isArray$1(raw)) {
     const res = {};
     for (let i2 = 0; i2 < raw.length; i2++) {
       res[raw[i2]] = raw[i2];
@@ -8413,7 +8413,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
     }
     return EMPTY_ARR;
   }
-  if (isArray$2(raw)) {
+  if (isArray$1(raw)) {
     for (let i2 = 0; i2 < raw.length; i2++) {
       const normalizedKey = camelize(raw[i2]);
       if (validatePropName(normalizedKey)) {
@@ -8425,7 +8425,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
       const normalizedKey = camelize(key);
       if (validatePropName(normalizedKey)) {
         const opt = raw[key];
-        const prop = normalized[normalizedKey] = isArray$2(opt) || isFunction$1(opt) ? { type: opt } : Object.assign({}, opt);
+        const prop = normalized[normalizedKey] = isArray$1(opt) || isFunction$1(opt) ? { type: opt } : Object.assign({}, opt);
         if (prop) {
           const booleanIndex = getTypeIndex(Boolean, prop.type);
           const stringIndex = getTypeIndex(String, prop.type);
@@ -8458,7 +8458,7 @@ function isSameType(a3, b3) {
   return getType(a3) === getType(b3);
 }
 function getTypeIndex(type, expectedTypes) {
-  if (isArray$2(expectedTypes)) {
+  if (isArray$1(expectedTypes)) {
     return expectedTypes.findIndex((t3) => isSameType(t3, type));
   } else if (isFunction$1(expectedTypes)) {
     return isSameType(expectedTypes, type) ? 0 : -1;
@@ -8466,8 +8466,8 @@ function getTypeIndex(type, expectedTypes) {
   return -1;
 }
 const isInternalKey = (key) => key[0] === "_" || key === "$stable";
-const normalizeSlotValue = (value) => isArray$2(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
-const normalizeSlot$1 = (key, rawSlot, ctx) => {
+const normalizeSlotValue = (value) => isArray$1(value) ? value.map(normalizeVNode) : [normalizeVNode(value)];
+const normalizeSlot = (key, rawSlot, ctx) => {
   if (rawSlot._n) {
     return rawSlot;
   }
@@ -8486,7 +8486,7 @@ const normalizeObjectSlots = (rawSlots, slots, instance) => {
       continue;
     const value = rawSlots[key];
     if (isFunction$1(value)) {
-      slots[key] = normalizeSlot$1(key, value, ctx);
+      slots[key] = normalizeSlot(key, value, ctx);
     } else if (value != null) {
       const normalized = normalizeSlotValue(value);
       slots[key] = () => normalized;
@@ -8657,8 +8657,8 @@ function createAppAPI(render, hydrate) {
   };
 }
 function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
-  if (isArray$2(rawRef)) {
-    rawRef.forEach((r2, i2) => setRef(r2, oldRawRef && (isArray$2(oldRawRef) ? oldRawRef[i2] : oldRawRef), parentSuspense, vnode, isUnmount));
+  if (isArray$1(rawRef)) {
+    rawRef.forEach((r2, i2) => setRef(r2, oldRawRef && (isArray$1(oldRawRef) ? oldRawRef[i2] : oldRawRef), parentSuspense, vnode, isUnmount));
     return;
   }
   if (isAsyncWrapper(vnode) && !isUnmount) {
@@ -8690,9 +8690,9 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
         if (rawRef.f) {
           const existing = _isString ? hasOwn(setupState, ref2) ? setupState[ref2] : refs[ref2] : ref2.value;
           if (isUnmount) {
-            isArray$2(existing) && remove(existing, refValue);
+            isArray$1(existing) && remove(existing, refValue);
           } else {
-            if (!isArray$2(existing)) {
+            if (!isArray$1(existing)) {
               if (_isString) {
                 refs[ref2] = [refValue];
                 if (hasOwn(setupState, ref2)) {
@@ -9531,7 +9531,7 @@ function toggleRecurse({ effect, update }, allowed) {
 function traverseStaticChildren(n1, n2, shallow = false) {
   const ch1 = n1.children;
   const ch2 = n2.children;
-  if (isArray$2(ch1) && isArray$2(ch2)) {
+  if (isArray$1(ch1) && isArray$1(ch2)) {
     for (let i2 = 0; i2 < ch1.length; i2++) {
       const c1 = ch1[i2];
       let c2 = ch2[i2];
@@ -9855,7 +9855,7 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
       props.class = normalizeClass(klass);
     }
     if (isObject$2(style)) {
-      if (isProxy(style) && !isArray$2(style)) {
+      if (isProxy(style) && !isArray$1(style)) {
         style = extend$1({}, style);
       }
       props.style = normalizeStyle(style);
@@ -9878,7 +9878,7 @@ function cloneVNode(vnode, extraProps, mergeRef = false) {
     type: vnode.type,
     props: mergedProps,
     key: mergedProps && normalizeKey(mergedProps),
-    ref: extraProps && extraProps.ref ? mergeRef && ref2 ? isArray$2(ref2) ? ref2.concat(normalizeRef(extraProps)) : [ref2, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref2,
+    ref: extraProps && extraProps.ref ? mergeRef && ref2 ? isArray$1(ref2) ? ref2.concat(normalizeRef(extraProps)) : [ref2, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref2,
     scopeId: vnode.scopeId,
     slotScopeIds: vnode.slotScopeIds,
     children,
@@ -9912,7 +9912,7 @@ function createCommentVNode(text = "", asBlock = false) {
 function normalizeVNode(child) {
   if (child == null || typeof child === "boolean") {
     return createVNode(Comment);
-  } else if (isArray$2(child)) {
+  } else if (isArray$1(child)) {
     return createVNode(
       Fragment,
       null,
@@ -9932,7 +9932,7 @@ function normalizeChildren(vnode, children) {
   const { shapeFlag } = vnode;
   if (children == null) {
     children = null;
-  } else if (isArray$2(children)) {
+  } else if (isArray$1(children)) {
     type = 16;
   } else if (typeof children === "object") {
     if (shapeFlag & (1 | 64)) {
@@ -9986,7 +9986,7 @@ function mergeProps(...args) {
       } else if (isOn$1(key)) {
         const existing = ret[key];
         const incoming = toMerge[key];
-        if (incoming && existing !== incoming && !(isArray$2(existing) && existing.includes(incoming))) {
+        if (incoming && existing !== incoming && !(isArray$1(existing) && existing.includes(incoming))) {
           ret[key] = existing ? [].concat(existing, incoming) : incoming;
         }
       } else if (key !== "") {
@@ -10227,7 +10227,7 @@ function getContext() {
 function h(type, propsOrChildren, children) {
   const l = arguments.length;
   if (l === 2) {
-    if (isObject$2(propsOrChildren) && !isArray$2(propsOrChildren)) {
+    if (isObject$2(propsOrChildren) && !isArray$1(propsOrChildren)) {
       if (isVNode(propsOrChildren)) {
         return createVNode(type, null, [propsOrChildren]);
       }
@@ -10355,7 +10355,7 @@ function patchStyle(el2, prev, next) {
 }
 const importantRE = /\s*!important$/;
 function setStyle(style, name2, val) {
-  if (isArray$2(val)) {
+  if (isArray$1(val)) {
     val.forEach((v) => setStyle(style, name2, v));
   } else {
     if (val == null)
@@ -10500,7 +10500,7 @@ function createInvoker(initialValue, instance) {
   return invoker;
 }
 function patchStopImmediatePropagation(e3, value) {
-  if (isArray$2(value)) {
+  if (isArray$1(value)) {
     const originalStop = e3.stopImmediatePropagation;
     e3.stopImmediatePropagation = () => {
       originalStop.call(e3);
@@ -10583,14 +10583,14 @@ const DOMTransitionPropsValidators = {
 };
 const TransitionPropsValidators = Transition.props = /* @__PURE__ */ extend$1({}, BaseTransition.props, DOMTransitionPropsValidators);
 const callHook = (hook, args = []) => {
-  if (isArray$2(hook)) {
+  if (isArray$1(hook)) {
     hook.forEach((h4) => h4(...args));
   } else if (hook) {
     hook(...args);
   }
 };
 const hasExplicitCallback = (hook) => {
-  return hook ? isArray$2(hook) ? hook.some((h4) => h4.length > 1) : hook.length > 1 : false;
+  return hook ? isArray$1(hook) ? hook.some((h4) => h4.length > 1) : hook.length > 1 : false;
 };
 function resolveTransitionProps(rawProps) {
   const baseProps = {};
@@ -10903,7 +10903,7 @@ function hasCSSTransform(el2, root, moveClass) {
 }
 const getModelAssigner = (vnode) => {
   const fn2 = vnode.props["onUpdate:modelValue"] || false;
-  return isArray$2(fn2) ? (value) => invokeArrayFns(fn2, value) : fn2;
+  return isArray$1(fn2) ? (value) => invokeArrayFns(fn2, value) : fn2;
 };
 function onCompositionStart(e3) {
   e3.target.composing = true;
@@ -11081,7 +11081,7 @@ function normalizeContainer(container) {
   }
   return container;
 }
-const SideBar_vue_vue_type_style_index_0_scoped_33e90246_lang = "";
+const SideBar_vue_vue_type_style_index_0_scoped_cd244289_lang = "";
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -11089,87 +11089,74 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const LANDING_ROUTE_NAME = "landing";
-const _sfc_main$t = {
+const _sfc_main$r = {
   name: "SideBar",
   props: {
     orgLogo: {
       type: String,
       required: true
     },
+    activePageKey: { type: String, required: true },
+    PAGES_CONFIG: { type: Object, required: true },
+    PAGE_KEYS: { type: Object, required: true },
     isSidebarCollapsed: { type: Boolean, default: false }
   },
+  emits: ["pageSelected"],
   data() {
     return {
       menuItems: []
     };
   },
-  computed: {
-    cRoute() {
-      if (!this.$route.name || this.$route.name === LANDING_ROUTE_NAME) {
-        return _.get(this.$router, "options.routes[0].children[1].name", "");
-      }
-      return this.$route.name;
+  methods: {
+    menuItemClickHandler(pageKey) {
+      this.$emit("pageSelected", pageKey);
     }
-  },
-  mounted() {
-    const allRouteItems = _.map(
-      _.get(this.$router, "options.routes[0].children", []),
-      (v) => _.omit(v, "component")
-    );
-    this.menuItems = _.filter(
-      allRouteItems,
-      (v) => v.name !== LANDING_ROUTE_NAME
-    );
   }
 };
-const _hoisted_1$n = { class: "logo-area" };
-const _hoisted_2$l = { class: "logo" };
-const _hoisted_3$l = ["src"];
-const _hoisted_4$l = { class: "menu-area" };
-const _hoisted_5$i = { class: "menu-item-content" };
-const _hoisted_6$h = { class: "menu-item-content-image" };
-const _hoisted_7$f = ["src"];
-const _hoisted_8$f = ["src"];
-function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_router_link = resolveComponent("router-link");
+const _hoisted_1$o = { class: "logo-area" };
+const _hoisted_2$m = { class: "logo" };
+const _hoisted_3$m = ["src"];
+const _hoisted_4$m = { class: "menu-area" };
+const _hoisted_5$j = ["onClick"];
+const _hoisted_6$i = { class: "menu-item-content" };
+const _hoisted_7$g = { class: "menu-item-content-image" };
+const _hoisted_8$g = ["src"];
+const _hoisted_9$f = ["src"];
+function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$n, [
-      createBaseVNode("div", _hoisted_2$l, [
+    createBaseVNode("div", _hoisted_1$o, [
+      createBaseVNode("div", _hoisted_2$m, [
         createBaseVNode("img", {
           class: normalizeClass($props.isSidebarCollapsed ? "logoImageSmall" : "logoImageLarge"),
           src: $props.orgLogo
-        }, null, 10, _hoisted_3$l)
+        }, null, 10, _hoisted_3$m)
       ])
     ]),
-    createBaseVNode("div", _hoisted_4$l, [
-      (openBlock(true), createElementBlock(Fragment, null, renderList($data.menuItems, (menuItem) => {
-        return openBlock(), createBlock(_component_router_link, {
-          key: menuItem.name,
-          to: menuItem.path,
-          class: normalizeClass(`menu-item ${menuItem.name === $options.cRoute ? "menu-item-selected" : ""}`)
-        }, {
-          default: withCtx(() => [
-            createBaseVNode("div", _hoisted_5$i, [
-              createBaseVNode("div", _hoisted_6$h, [
-                menuItem.name === $options.cRoute ? (openBlock(), createElementBlock("img", {
-                  key: 0,
-                  src: menuItem.icon_active
-                }, null, 8, _hoisted_7$f)) : (openBlock(), createElementBlock("img", {
-                  key: 1,
-                  src: menuItem.icon
-                }, null, 8, _hoisted_8$f))
-              ]),
-              createBaseVNode("div", null, toDisplayString(menuItem.label), 1)
-            ])
-          ]),
-          _: 2
-        }, 1032, ["to", "class"]);
+    createBaseVNode("div", _hoisted_4$m, [
+      (openBlock(true), createElementBlock(Fragment, null, renderList($props.PAGE_KEYS, (pageKey) => {
+        return openBlock(), createElementBlock("div", {
+          key: pageKey,
+          class: normalizeClass(`menu-item ${pageKey === $props.activePageKey ? "menu-item-selected" : ""}`),
+          onClick: ($event) => $options.menuItemClickHandler(pageKey)
+        }, [
+          createBaseVNode("div", _hoisted_6$i, [
+            createBaseVNode("div", _hoisted_7$g, [
+              pageKey === $props.activePageKey ? (openBlock(), createElementBlock("img", {
+                key: 0,
+                src: $props.PAGES_CONFIG[pageKey].icon_active
+              }, null, 8, _hoisted_8$g)) : (openBlock(), createElementBlock("img", {
+                key: 1,
+                src: $props.PAGES_CONFIG[pageKey].icon
+              }, null, 8, _hoisted_9$f))
+            ]),
+            createBaseVNode("div", null, toDisplayString($props.PAGES_CONFIG[pageKey].label), 1)
+          ])
+        ], 10, _hoisted_5$j);
       }), 128))
     ])
   ], 64);
 }
-const SideBar = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$t], ["__scopeId", "data-v-33e90246"]]);
+const SideBar = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$r], ["__scopeId", "data-v-cd244289"]]);
 const AnyUser = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAhCAYAAAC803lsAAAKNGlDQ1BJQ0MgUHJvZmlsZQAASImVlgdQU+kWx7970xuBJIQOoXekE0B6jYAgVRCVkECoMYQqYEMWV3AtqEizgasgCq4uRdaKBQsioICKuiCLgLIuFkAFzV5k1y1v5r15/5lvzm/O/e655ysz9w8A6RBXJEqCpQFIFqaJA71cWcvDI1i454AIaIABpIEll5cqcgkI8AWI/oz/1HQfgObjPeP5Wv/5/L+Kxo9J5QEARSKcwE/lJSN8A2E7nkicBgCMRlgzM000z3oIM8RIgwgvnmfBAgfMc/QC87/MCQ50QzgLADyZyxULACDmI3lWBk+A1CEeQdhUyI8XInwfYUdeHBd5j8RA2Cg5ec08OyOsh8wXIRyHMDv6bzUF/6gf/bU+lyv4ygvr+iJpb3c/DsuNmxQfLeamxfD/zy3630pOSv/zW/MnQY4RhgQhURUZysAbuAM/wAEs4Aa4IAnEg2ggRigNxACklbSYrLT5F93WiNaK4wVxaSwX5BRjWBwhz8SIZW5qbg7A/J1YKP824MsXIOaFv3JrqpDtmQIAteuvXHQJAM1bAJB/9FdO6wAAVGRvmtp46eKMhdz88QIMctuoyG1TQDrWBHrAGJgDa2APnIEHWAL8QTAIB6sAD8SBZKTzTJALNoECUAR2gr2gHBwE1aAGnASnQTM4By6D6+A26AK9YAAMghHwEkyCaTALQRAOokB0SAFSg7QhQ8gcYkOOkAfkCwVC4VAUJICEUDqUC22GiqBiqBw6DNVCP0BnocvQTagbeggNQePQG+gjjILJMANWgXXgRTAbdoF94GB4JSyAU+BsOB/eDpfCVfAJuAm+DN+Ge+FB+CU8hQIoEoqJUkcZo9goN5Q/KgIVixKj1qMKUSWoKlQ9qhXVjrqHGkRNoD6gsWg6moU2RtujvdEhaB46Bb0evQ1djq5BN6Gvou+hh9CT6M8YCkYZY4ixw3AwyzECTCamAFOCOYppxFzD9GJGMNNYLJaJ1cXaYL2x4dgEbA52G3Y/tgF7CduNHcZO4XA4BZwhzgHnj+Pi0nAFuDLcCdxFXA9uBPceT8Kr4c3xnvgIvBCfhy/BH8dfwPfgR/GzBGmCNsGO4E/gE9YSdhCOEFoJdwkjhFmiDFGX6EAMJiYQNxFLifXEa8THxLckEkmDZEtaRoonbSSVkk6RbpCGSB/INLIB2Y0cSU4nbycfI18iPyS/pVAoOhRnSgQljbKdUku5QnlKeS9FlzKR4kjxpTZIVUg1SfVIvaISqNpUF+oqaja1hHqGepc6IU2Q1pF2k+ZKr5eukD4r3S89JUOXMZPxl0mW2SZzXOamzBgNR9OhedD4tHxaNe0KbZiOomvS3eg8+mb6Efo1+ggDy9BlcBgJjCLGSUYnY1KWJmspGyqbJVshe152kIli6jA5zCTmDuZpZh/zo5yKnItcjNxWuXq5HrkZeSV5Z/kY+UL5Bvle+Y8KLAUPhUSFXQrNCk8U0YoGissUMxUPKF5TnFBiKNkr8ZQKlU4rPVKGlQ2UA5VzlKuVO5SnVFRVvFREKmUqV1QmVJmqzqoJqntUL6iOq9HVHNXi1faoXVR7wZJlubCSWKWsq6xJdWV1b/V09cPqneqzGroaIRp5Gg0aTzSJmmzNWM09mm2ak1pqWn5auVp1Wo+0Cdps7Tjtfdrt2jM6ujphOlt0mnXGdOV1ObrZunW6j/Uoek56KXpVevf1sfps/UT9/fpdBrCBlUGcQYXBXUPY0Now3nC/YbcRxsjWSGhUZdRvTDZ2Mc4wrjMeMmGa+JrkmTSbvFqktShi0a5F7Ys+m1qZJpkeMR0wo5ktMcszazV7Y25gzjOvML9vQbHwtNhg0WLx2tLQMsbygOUDK7qVn9UWqzarT9Y21mLreutxGy2bKJtKm342gx3A3sa+YYuxdbXdYHvO9oOdtV2a3Wm73+yN7RPtj9uPLdZdHLP4yOJhBw0HrsNhh0FHlmOU4yHHQSd1J65TldMzZ01nvvNR51EXfZcElxMur1xNXcWuja4zbnZu69wuuaPcvdwL3Ts9aB4hHuUeTz01PAWedZ6TXlZeOV6XvDHePt67vPs5Khwep5YzucRmybolV33IPkE+5T7PfA18xb6tfrDfEr/dfo+Xai8VLm32B/4c/93+TwJ0A1ICflqGXRawrGLZ80CzwNzA9iB60Oqg40HTwa7BO4IHQvRC0kPaQqmhkaG1oTNh7mHFYYPLFy1ft/x2uGJ4fHhLBC4iNOJoxNQKjxV7V4xEWkUWRPat1F2ZtfLmKsVVSavOr6au5q4+E4WJCos6HjXH9edWcaeiOdGV0ZM8N94+3ku+M38PfzzGIaY4ZjTWIbY4dkzgINgtGI9ziiuJm4h3iy+Pf53gnXAwYSbRP/FYoiQpLKkhGZ8clXxWSBMmCq+uUV2TtaZbZCgqEA2m2KXsTZkU+4iPpkKpK1Nb0hjIz7cjXS/9m/ShDMeMioz3maGZZ7JksoRZHWsN1m5dO5rtmf19DjqHl9OWq567KXdoncu6w+uh9dHr2zZobsjfMLLRa2PNJuKmxE138kzzivPebQ7b3Jqvkr8xf/gbr2/qCqQKxAX9W+y3HPwW/W38t51bLbaWbf1cyC+8VWRaVFI0t4237dZ3Zt+VfifZHru9c4f1jgM7sTuFO/t2Oe2qKZYpzi4e3u23u2kPa0/hnnd7V++9WWJZcnAfcV/6vsFS39KWMq2ynWVz5XHlvRWuFQ2VypVbK2f28/f3HHA+UH9Q5WDRwY+H4g89OOx1uKlKp6qkGludUf38SOiR9u/Z39ceVTxadPTTMeGxwZrAmqu1NrW1x5WP76iD69Lrxk9Enug66X6ypd64/nADs6HoFDiVfurFD1E/9J32Od12hn2m/kftHysb6Y2FTVDT2qbJ5rjmwZbwlu6zS862tdq3Nv5k8tOxc+rnKs7Lnt9xgXgh/4LkYvbFqUuiSxOXBZeH21a3DVxZfuX+1WVXO6/5XLtx3fP6lXaX9os3HG6cu2l38+wt9q3m29a3mzqsOhrvWN1p7LTubLprc7ely7artXtx94Uep57L99zvXb/PuX+7d2lvd19I34P+yP7BB/wHYw+THr5+lPFodmDjY8zjwifST0qeKj+t+ln/54ZB68HzQ+5DHc+Cng0M84Zf/pL6y9xI/nPK85JRtdHaMfOxc+Oe410vVrwYeSl6OTtR8KvMr5Wv9F79+Jvzbx2TyydHXotfS95se6vw9tg7y3dtUwFTT6eTp2dnCt8rvK/5wP7Q/jHs4+hs5hxurvST/qfWzz6fH0uSJRIRV8z9YgVQyIBjYwF4cwwASjgA9C7ES61Y8Gx/eBtIzWIBJXNf+Ysf+ZqXLPi6L7IGoLofgOAcAHzvAFBWDoAOUp+KeM0AKpK3B9A0+uv4Q6mxFuYLdckuiDV5IpG8RXwnrhiATzslktkqieRTNdLsAACXsha84rx83wGgrTNPA8O+r/7tzxZ85N/W+O8Ivnbwj/g7oifQY3gB+70AAAA4ZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAKgAgAEAAAAAQAAACKgAwAEAAAAAQAAACEAAAAAZhL5vgAAAwdJREFUWAnNl0ty2kAQhnnErHjIO6qMiXIDfILADbzNynADbhD7BKmcIOQEjk8ANwjZZZcJ9oKsgl1eucom3x8krBIjaSSSKnfVMDM93T2feloju1R6IVIuwuEh9Xq9V6lU+qH/er2eX19ffwnnefvcIN1u9z2bjGmeZTODbrJYLC4sa6kqZxBlodFoXJbL5b4ikoEZ428MVzRBvaX1aJL53d3dYIVsptm/r7JNNhYRCPP09DS6ubmZxX2Pj49PgfuAvtdqtS7hGMRtkuaVpIWong2GQSYMdTGwQcheNaJ1hoaM9TnGcTRO2tgJBAjVheTcIH9HCT9aV8aC5dAvwfpZnVkjR0dHvWq1+hUXQxG+eXZNH5GN31h4ZOgEtnm6damUmREC+UEQFWYeuZLx4+NjWMCpvpkgeHtBBD3hfxMXkJV2p0589a5Csb6WLb1x8ckEoT5mCqS3QHeJS9B2u+0Hb1np/v5+7uKTCUKhrYCYKRh3idNbcHBwcC57ZOJ6qWWCKBpZGdGteMpxcMVLbRWtY3emRQr9wmpkUVYtuh2VnqrZbP5ig1MW+4x92i3XuAmNO51On9v0EzZD6cjiiNd9prGLlF2MQpvIFe6HOnpD82mh6ChHeb/EThkJdyAD3w8PD6/Y6Ce6dtDCAjbMP3Ic78iEU4Fiv5VtRoLvgscmhvT6snh4eJgsl0ujcZL4CGsrFXWSjd6iWq021Ho0PsDn0kmiID+Y+xRmj9twwrhHM8AMsmCwS5QAYoqBT5uTsRHfIn0ySoBs9995ayC+xXggJ5qeZKpgjHOLBUJxrZnbAdFuSvO+MDaItOOzguwLkxdC+yWCJMHozwKtJUkRCMVKBZFB/Jgo5mkSjPSqKdx8mgpzkHYc2GwlE0SWMRjPBhP8AVUIQns4gWTBRCA8bHNlQrElziAytmWGi/BMGWK5MIRi5wKRQxwG1YS2FwT++UHkJBhuxRMuv8+aI4WOY+O6+XX+ByvqFI75wg75Is/oJ6GuaJ/7aOIb/QsIxdwbJA5WdP5iQP4ABFJSR4UL5eYAAAAASUVORK5CYII=";
 var runtime = { exports: {} };
 (function(module2) {
@@ -13330,7 +13317,7 @@ var querystring$1 = {};
 function hasOwnProperty$1(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
-var decode$2 = function(qs, sep, eq, options) {
+var decode$1 = function(qs, sep, eq, options) {
   sep = sep || "&";
   eq = eq || "=";
   var obj = {};
@@ -13402,7 +13389,7 @@ var encode$3 = function(obj, sep, eq, name2) {
     return "";
   return encodeURIComponent(stringifyPrimitive(name2)) + eq + encodeURIComponent(stringifyPrimitive(obj));
 };
-querystring$1.decode = querystring$1.parse = decode$2;
+querystring$1.decode = querystring$1.parse = decode$1;
 querystring$1.encode = querystring$1.stringify = encode$3;
 var punycode = punycode$1.exports;
 var util = util$1;
@@ -23826,7 +23813,7 @@ Amplify.register(Credentials);
  */
 var parse_1 = parse$1;
 var serialize_1 = serialize;
-var decode$1 = decodeURIComponent;
+var decode = decodeURIComponent;
 var encode$2 = encodeURIComponent;
 var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
 function parse$1(str, options) {
@@ -23836,7 +23823,7 @@ function parse$1(str, options) {
   var obj = {};
   var opt = options || {};
   var pairs = str.split(";");
-  var dec = opt.decode || decode$1;
+  var dec = opt.decode || decode;
   for (var i2 = 0; i2 < pairs.length; i2++) {
     var pair = pairs[i2];
     var index2 = pair.indexOf("=");
@@ -24048,7 +24035,7 @@ var Cookies = function() {
   return Cookies2;
 }();
 const Cookies$1 = Cookies;
-var isBrowser$1 = browserOrNode().isBrowser;
+var isBrowser = browserOrNode().isBrowser;
 var ONE_YEAR_IN_MS = 365 * 24 * 60 * 60 * 1e3;
 var UniversalStorage = function() {
   function UniversalStorage2(context) {
@@ -24056,7 +24043,7 @@ var UniversalStorage = function() {
       context = {};
     }
     this.cookies = new Cookies$1();
-    this.store = isBrowser$1 ? window.localStorage : /* @__PURE__ */ Object.create(null);
+    this.store = isBrowser ? window.localStorage : /* @__PURE__ */ Object.create(null);
     this.cookies = context.req ? new Cookies$1(context.req.headers.cookie) : new Cookies$1();
     Object.assign(this.store, this.cookies.getAll());
   }
@@ -24124,7 +24111,7 @@ var UniversalStorage = function() {
     this.cookies.set(key, value, __assign$c(__assign$c({}, options), {
       path: "/",
       sameSite: true,
-      secure: isBrowser$1 && window.location.hostname === "localhost" ? false : true
+      secure: isBrowser && window.location.hostname === "localhost" ? false : true
     }));
   };
   return UniversalStorage2;
@@ -31598,7 +31585,7 @@ const kindOfTest = (type) => {
   return (thing) => kindOf(thing) === type;
 };
 const typeOfTest = (type) => (thing) => typeof thing === type;
-const { isArray: isArray$1 } = Array;
+const { isArray } = Array;
 const isUndefined = typeOfTest("undefined");
 function isBuffer(val) {
   return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor) && isFunction(val.constructor.isBuffer) && val.constructor.isBuffer(val);
@@ -31645,7 +31632,7 @@ function forEach(obj, fn2, { allOwnKeys = false } = {}) {
   if (typeof obj !== "object") {
     obj = [obj];
   }
-  if (isArray$1(obj)) {
+  if (isArray(obj)) {
     for (i2 = 0, l = obj.length; i2 < l; i2++) {
       fn2.call(null, obj[i2], i2, obj);
     }
@@ -31687,7 +31674,7 @@ function merge() {
       result[targetKey] = merge(result[targetKey], val);
     } else if (isPlainObject(val)) {
       result[targetKey] = merge({}, val);
-    } else if (isArray$1(val)) {
+    } else if (isArray(val)) {
       result[targetKey] = val.slice();
     } else {
       result[targetKey] = val;
@@ -31756,7 +31743,7 @@ const endsWith = (str, searchString, position) => {
 const toArray = (thing) => {
   if (!thing)
     return null;
-  if (isArray$1(thing))
+  if (isArray(thing))
     return thing;
   let i2 = thing.length;
   if (!isNumber(i2))
@@ -31837,10 +31824,10 @@ const toObjectSet = (arrayOrString, delimiter) => {
       obj[value] = true;
     });
   };
-  isArray$1(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
+  isArray(arrayOrString) ? define(arrayOrString) : define(String(arrayOrString).split(delimiter));
   return obj;
 };
-const noop$1 = () => {
+const noop = () => {
 };
 const toFiniteNumber = (value, defaultValue) => {
   value = +value;
@@ -31873,7 +31860,7 @@ const toJSONObject = (obj) => {
       }
       if (!("toJSON" in source)) {
         stack[i2] = source;
-        const target = isArray$1(source) ? [] : {};
+        const target = isArray(source) ? [] : {};
         forEach(source, (value, key) => {
           const reducedValue = visit(value, i2 + 1);
           !isUndefined(reducedValue) && (target[key] = reducedValue);
@@ -31887,7 +31874,7 @@ const toJSONObject = (obj) => {
   return visit(obj, 0);
 };
 const utils = {
-  isArray: isArray$1,
+  isArray,
   isArrayBuffer,
   isBuffer,
   isFormData,
@@ -31927,7 +31914,7 @@ const utils = {
   freezeMethods,
   toObjectSet,
   toCamelCase,
-  noop: noop$1,
+  noop,
   toFiniteNumber,
   findKey: findKey$1,
   global: _global,
@@ -33586,7 +33573,7 @@ async function invokePostApi(apiName, payload) {
   return (_a2 = response == null ? void 0 : response.data) == null ? void 0 : _a2.body;
 }
 const TheHeader_vue_vue_type_style_index_0_lang = "";
-const _sfc_main$s = {
+const _sfc_main$q = {
   name: "TheHeader",
   data() {
     return {
@@ -33616,32 +33603,32 @@ const _sfc_main$s = {
     }
   }
 };
-const _hoisted_1$m = { class: "account-control" };
-const _hoisted_2$k = { class: "control-section" };
-const _hoisted_3$k = { class: "dropdown-container" };
-const _hoisted_4$k = { class: "user-icon" };
-const _hoisted_5$h = ["src"];
-const _hoisted_6$g = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
-const _hoisted_7$e = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
-const _hoisted_8$e = {
+const _hoisted_1$n = { class: "account-control" };
+const _hoisted_2$l = { class: "control-section" };
+const _hoisted_3$l = { class: "dropdown-container" };
+const _hoisted_4$l = { class: "user-icon" };
+const _hoisted_5$i = ["src"];
+const _hoisted_6$h = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
+const _hoisted_7$f = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
+const _hoisted_8$f = {
   key: 0,
   class: "dropdown-menu"
 };
-function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("div", _hoisted_1$m, [
-    createBaseVNode("div", _hoisted_2$k, [
-      createBaseVNode("div", _hoisted_3$k, [
+function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", _hoisted_1$n, [
+    createBaseVNode("div", _hoisted_2$l, [
+      createBaseVNode("div", _hoisted_3$l, [
         createBaseVNode("button", {
           class: "dropdown-button",
           onClick: _cache[0] || (_cache[0] = (...args) => $options.dropdownClickHandler && $options.dropdownClickHandler(...args))
         }, [
-          createBaseVNode("div", _hoisted_4$k, [
-            createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$h)
+          createBaseVNode("div", _hoisted_4$l, [
+            createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$i)
           ]),
-          _hoisted_6$g,
-          _hoisted_7$e
+          _hoisted_6$h,
+          _hoisted_7$f
         ]),
-        $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$e, [
+        $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$f, [
           createBaseVNode("a", {
             class: normalizeClass($data.selectedOption === 1 ? "selected" : "menu-option")
           }, " Hello! " + toDisplayString($props.userdata.userName) + toDisplayString($props.userdata.isAdmin ? "(Admin)" : ""), 3),
@@ -33654,10 +33641,10 @@ function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const TheHeader$1 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$s]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_05f506f1_lang = "";
+const TheHeader$1 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
+const TheSckeleton_vue_vue_type_style_index_0_scoped_99fe8e49_lang = "";
 const DESKTOP_SCREEN_MIN_WIDTH_PIXELS = 1440;
-const _sfc_main$r = {
+const _sfc_main$p = {
   name: "TheSckeleton",
   components: {
     SideBar,
@@ -33671,15 +33658,27 @@ const _sfc_main$r = {
     userdata: {
       type: Object,
       required: false
-    }
+    },
+    PAGES_CONFIG: { type: Object, required: true },
+    PAGE_KEYS: { type: Object, required: true }
   },
   data() {
     return {
+      activePageKey: this.PAGE_KEYS.DEMAND_PLANNER,
       isSidebarCollapsed: false,
       orgLogoSmall: "/src/images/orgLogoSmall.svg"
     };
   },
+  computed: {
+    ActiveComponent() {
+      return this.PAGES_CONFIG[this.activePageKey].component;
+    }
+  },
   methods: {
+    pageSelectionHandler(key) {
+      this.activePageKey = key;
+      sessionStorage.setItem("pageKey", key);
+    },
     expandSidebarHandler() {
       if (window.screen.availWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
         const sidebar = document.querySelector(".sidebar");
@@ -33697,6 +33696,15 @@ const _sfc_main$r = {
         sidebar.style["z-index"] = 0;
         this.isSidebarCollapsed = true;
       }
+    }
+  },
+  created() {
+    const currentPageKey = sessionStorage.getItem("pageKey");
+    if (_.includes(this.PAGE_KEYS, currentPageKey)) {
+      this.activePageKey = currentPageKey;
+    } else {
+      this.activePageKey = this.PAGE_KEYS.DEMAND_PLANNER;
+      sessionStorage.setItem("pageKey", this.activePageKey);
     }
   },
   mounted() {
@@ -33718,20 +33726,19 @@ const _sfc_main$r = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-05f506f1"), n2 = n2(), popScopeId(), n2);
-const _hoisted_1$l = { class: "screen" };
-const _hoisted_2$j = { class: "main-area" };
-const _hoisted_3$j = { class: "control-container" };
-const _hoisted_4$j = { class: "control-section" };
-const _hoisted_5$g = { class: "content-container" };
-const _hoisted_6$f = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-99fe8e49"), n2 = n2(), popScopeId(), n2);
+const _hoisted_1$m = { class: "screen" };
+const _hoisted_2$k = { class: "main-area" };
+const _hoisted_3$k = { class: "control-container" };
+const _hoisted_4$k = { class: "control-section" };
+const _hoisted_5$h = { class: "content-container" };
+const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
   /* @__PURE__ */ createBaseVNode("div", { class: "footer-copy-right" }, "Copyright @ Kearney 2023")
 ], -1));
-function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_SideBar = resolveComponent("SideBar");
   const _component_TheHeader = resolveComponent("TheHeader");
-  const _component_router_view = resolveComponent("router-view");
-  return openBlock(), createElementBlock("div", _hoisted_1$l, [
+  return openBlock(), createElementBlock("div", _hoisted_1$m, [
     createBaseVNode("div", {
       class: "sidebar",
       onMouseover: _cache[0] || (_cache[0] = (...args) => $options.expandSidebarHandler && $options.expandSidebarHandler(...args)),
@@ -33739,26 +33746,30 @@ function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     }, [
       createVNode(_component_SideBar, {
         "org-logo": $data.isSidebarCollapsed ? $data.orgLogoSmall : $props.orgLogo,
-        isSidebarCollapsed: $data.isSidebarCollapsed
-      }, null, 8, ["org-logo", "isSidebarCollapsed"])
+        isSidebarCollapsed: $data.isSidebarCollapsed,
+        PAGES_CONFIG: $props.PAGES_CONFIG,
+        PAGE_KEYS: $props.PAGE_KEYS,
+        activePageKey: $data.activePageKey,
+        onPageSelected: $options.pageSelectionHandler
+      }, null, 8, ["org-logo", "isSidebarCollapsed", "PAGES_CONFIG", "PAGE_KEYS", "activePageKey", "onPageSelected"])
     ], 32),
-    createBaseVNode("div", _hoisted_2$j, [
-      createBaseVNode("div", _hoisted_3$j, [
-        createBaseVNode("div", _hoisted_4$j, [
+    createBaseVNode("div", _hoisted_2$k, [
+      createBaseVNode("div", _hoisted_3$k, [
+        createBaseVNode("div", _hoisted_4$k, [
           createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
         ])
       ]),
-      createBaseVNode("div", _hoisted_5$g, [
-        createVNode(_component_router_view, { userdata: $props.userdata }, null, 8, ["userdata"])
+      createBaseVNode("div", _hoisted_5$h, [
+        (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
       ]),
-      _hoisted_6$f
+      _hoisted_6$g
     ])
   ]);
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$r], ["__scopeId", "data-v-05f506f1"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-99fe8e49"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
-const _sfc_main$q = {
+const _sfc_main$o = {
   name: "LoginButton",
   props: {
     label: {
@@ -33776,14 +33787,14 @@ const _sfc_main$q = {
     }
   }
 };
-function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("button", {
     class: normalizeClass(`tw-px-4 tw-py-2 tw-text-white ${$props.type === "primary" ? "tw-bg-brand-primary" : ""}`)
   }, toDisplayString($props.label), 3);
 }
-const LoginButton = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
+const LoginButton = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$o]]);
 const LoginPage_vue_vue_type_style_index_0_scoped_b0d1a283_lang = "";
-const _sfc_main$p = {
+const _sfc_main$n = {
   name: "LoginPage",
   components: {
     LoginButton
@@ -33801,41 +33812,41 @@ const _sfc_main$p = {
   }
 };
 const _withScopeId = (n2) => (pushScopeId("data-v-b0d1a283"), n2 = n2(), popScopeId(), n2);
-const _hoisted_1$k = { class: "tw-flex tw-h-screen tw-flex-col" };
-const _hoisted_2$i = { class: "tw-grid tw-grid-cols-12 tw-my-auto" };
-const _hoisted_3$i = { class: "tw-col-span-6 tw-col-start-1 tw-self-center tw-justify-self-center" };
-const _hoisted_4$i = ["src"];
-const _hoisted_5$f = { class: "tw-col-span-6 tw-col-start-7 tw-px-20 desktop:tw-px-10 small-laptop:tw-px-10" };
-const _hoisted_6$e = { class: "tw-flex tw-flex-col tw-justify-center tw-h-full" };
-const _hoisted_7$d = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-4xl desktop:tw-text-3xl small-laptop:tw-text-xl tw-text-black tw-font-medium" }, " Kearney\u2019s Sensing Solution ", -1));
-const _hoisted_8$d = { class: "tw-py-6 desktop:tw-py-2 small-laptop:tw-py-1" };
-const _hoisted_9$d = ["src"];
-const _hoisted_10$b = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-lg desktop:tw-text-base small-laptop:tw-text-sm tw-text-black tw-break-words" }, " Demand Dashboard uses rigorous analytics to project demand growth and compare against internal forecasts. The goal is to help users identify \u201Ctriggers\u201D to review projection calibration. ", -1));
-const _hoisted_11$a = { class: "tw-pt-8 small-laptop:tw-pt-5 small-laptop:tw-pb-2" };
-const _hoisted_12$8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
+const _hoisted_1$l = { class: "tw-flex tw-h-screen tw-flex-col" };
+const _hoisted_2$j = { class: "tw-grid tw-grid-cols-12 tw-my-auto" };
+const _hoisted_3$j = { class: "tw-col-span-6 tw-col-start-1 tw-self-center tw-justify-self-center" };
+const _hoisted_4$j = ["src"];
+const _hoisted_5$g = { class: "tw-col-span-6 tw-col-start-7 tw-px-20 desktop:tw-px-10 small-laptop:tw-px-10" };
+const _hoisted_6$f = { class: "tw-flex tw-flex-col tw-justify-center tw-h-full" };
+const _hoisted_7$e = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-4xl desktop:tw-text-3xl small-laptop:tw-text-xl tw-text-black tw-font-medium" }, " Kearney\u2019s Sensing Solution ", -1));
+const _hoisted_8$e = { class: "tw-py-6 desktop:tw-py-2 small-laptop:tw-py-1" };
+const _hoisted_9$e = ["src"];
+const _hoisted_10$c = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-lg desktop:tw-text-base small-laptop:tw-text-sm tw-text-black tw-break-words" }, " Demand Dashboard uses rigorous analytics to project demand growth and compare against internal forecasts. The goal is to help users identify \u201Ctriggers\u201D to review projection calibration. ", -1));
+const _hoisted_11$b = { class: "tw-pt-8 small-laptop:tw-pt-5 small-laptop:tw-pb-2" };
+const _hoisted_12$9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
   /* @__PURE__ */ createBaseVNode("div", { class: "footer-copy-right" }, "Copyright @ Kearney 2023")
 ], -1));
-function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_LoginButton = resolveComponent("LoginButton");
-  return openBlock(), createElementBlock("section", _hoisted_1$k, [
-    createBaseVNode("div", _hoisted_2$i, [
-      createBaseVNode("div", _hoisted_3$i, [
+  return openBlock(), createElementBlock("section", _hoisted_1$l, [
+    createBaseVNode("div", _hoisted_2$j, [
+      createBaseVNode("div", _hoisted_3$j, [
         createBaseVNode("img", {
           class: "kearney-home-logo",
           src: $data.KearneyHomeLogo
-        }, null, 8, _hoisted_4$i)
+        }, null, 8, _hoisted_4$j)
       ]),
-      createBaseVNode("div", _hoisted_5$f, [
-        createBaseVNode("div", _hoisted_6$e, [
-          _hoisted_7$d,
-          createBaseVNode("div", _hoisted_8$d, [
+      createBaseVNode("div", _hoisted_5$g, [
+        createBaseVNode("div", _hoisted_6$f, [
+          _hoisted_7$e,
+          createBaseVNode("div", _hoisted_8$e, [
             createBaseVNode("img", {
               class: "kearney-infographic-image",
               src: $data.kearneyInfographicImage
-            }, null, 8, _hoisted_9$d)
+            }, null, 8, _hoisted_9$e)
           ]),
-          _hoisted_10$b,
-          createBaseVNode("div", _hoisted_11$a, [
+          _hoisted_10$c,
+          createBaseVNode("div", _hoisted_11$b, [
             createVNode(_component_LoginButton, {
               label: "Proceed to Sign In",
               type: "primary",
@@ -33845,11 +33856,11 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
         ])
       ])
     ]),
-    _hoisted_12$8
+    _hoisted_12$9
   ]);
 }
-const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-b0d1a283"]]);
-const _sfc_main$o = {
+const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n], ["__scopeId", "data-v-b0d1a283"]]);
+const _sfc_main$m = {
   name: "App",
   components: {
     LoginPage,
@@ -33863,7 +33874,9 @@ const _sfc_main$o = {
     OrgLogo: {
       type: String,
       required: true
-    }
+    },
+    PAGES_CONFIG: { type: Object, required: true },
+    PAGE_KEYS: { type: Object, required: true }
   },
   data() {
     return {
@@ -33889,7 +33902,10 @@ const _sfc_main$o = {
         this.loggedInUserData.userPoolId = usrPoolId;
         const jwtDecoded = o(token);
         this.loggedInUserData.deocdedJWT = jwtDecoded;
-        this.loggedInUserData.isAdmin = _.filter(_.get(jwtDecoded, "['cognito:groups']", []), (v) => v === "admin").length > 0;
+        this.loggedInUserData.isAdmin = _.filter(
+          _.get(jwtDecoded, "['cognito:groups']", []),
+          (v) => v === "admin"
+        ).length > 0;
         this.loggedInUserData.userName = (_a2 = _.get(jwtDecoded, "name", null)) != null ? _a2 : _.get(jwtDecoded, "email", "---");
       } else {
         this.loggedInUserData.token = null;
@@ -33898,7 +33914,7 @@ const _sfc_main$o = {
     }
   }
 };
-function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_LoginPage = resolveComponent("LoginPage");
   const _component_TheSckeleton = resolveComponent("TheSckeleton");
   return openBlock(), createElementBlock(Fragment, null, [
@@ -33906,11 +33922,13 @@ function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
     $data.isLoggedIn && !$data.loading ? (openBlock(), createBlock(_component_TheSckeleton, {
       key: 1,
       "org-logo": $props.OrgLogo,
-      userdata: this.loggedInUserData
-    }, null, 8, ["org-logo", "userdata"])) : createCommentVNode("", true)
+      userdata: this.loggedInUserData,
+      PAGES_CONFIG: $props.PAGES_CONFIG,
+      PAGE_KEYS: $props.PAGE_KEYS
+    }, null, 8, ["org-logo", "userdata", "PAGES_CONFIG", "PAGE_KEYS"])) : createCommentVNode("", true)
   ], 64);
 }
-const App = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$o]]);
+const App = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$m]]);
 function toInteger(dirtyNumber) {
   if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
     return NaN;
@@ -35604,7 +35622,7 @@ function cleanEscapedString$1(input) {
   }
   return matched[1].replace(doubleQuoteRegExp$1, "'");
 }
-function assign$1(target, object) {
+function assign(target, object) {
   if (target == null) {
     throw new TypeError("assign requires that input parameter not be null or undefined");
   }
@@ -41236,7 +41254,7 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
       var result = setter.set(utcDate, flags, subFnOptions);
       if (Array.isArray(result)) {
         utcDate = result[0];
-        assign$1(flags, result[1]);
+        assign(flags, result[1]);
       } else {
         utcDate = result;
       }
@@ -47000,248 +47018,6 @@ function useResizeObserver(callback) {
     contentRect: readonly(contentRect)
   };
 }
-const VuetifyLayoutKey = Symbol.for("vuetify:layout");
-const VuetifyLayoutItemKey = Symbol.for("vuetify:layout-item");
-const ROOT_ZINDEX = 1e3;
-const makeLayoutProps = propsFactory({
-  overlaps: {
-    type: Array,
-    default: () => []
-  },
-  fullHeight: Boolean
-}, "layout");
-function useLayout() {
-  const layout = inject$1(VuetifyLayoutKey);
-  if (!layout)
-    throw new Error("[Vuetify] Could not find injected layout");
-  return {
-    getLayoutItem: layout.getLayoutItem,
-    mainRect: layout.mainRect,
-    mainStyles: layout.mainStyles
-  };
-}
-const generateLayers = (layout, positions, layoutSizes, activeItems) => {
-  let previousLayer = {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  };
-  const layers = [{
-    id: "",
-    layer: {
-      ...previousLayer
-    }
-  }];
-  for (const id of layout) {
-    const position = positions.get(id);
-    const amount = layoutSizes.get(id);
-    const active = activeItems.get(id);
-    if (!position || !amount || !active)
-      continue;
-    const layer = {
-      ...previousLayer,
-      [position.value]: parseInt(previousLayer[position.value], 10) + (active.value ? parseInt(amount.value, 10) : 0)
-    };
-    layers.push({
-      id,
-      layer
-    });
-    previousLayer = layer;
-  }
-  return layers;
-};
-function createLayout(props) {
-  const parentLayout = inject$1(VuetifyLayoutKey, null);
-  const rootZIndex = computed(() => parentLayout ? parentLayout.rootZIndex.value - 100 : ROOT_ZINDEX);
-  const registered = ref([]);
-  const positions = reactive(/* @__PURE__ */ new Map());
-  const layoutSizes = reactive(/* @__PURE__ */ new Map());
-  const priorities = reactive(/* @__PURE__ */ new Map());
-  const activeItems = reactive(/* @__PURE__ */ new Map());
-  const disabledTransitions = reactive(/* @__PURE__ */ new Map());
-  const {
-    resizeRef,
-    contentRect: layoutRect
-  } = useResizeObserver();
-  const computedOverlaps = computed(() => {
-    var _a2;
-    const map = /* @__PURE__ */ new Map();
-    const overlaps = (_a2 = props.overlaps) != null ? _a2 : [];
-    for (const overlap of overlaps.filter((item) => item.includes(":"))) {
-      const [top, bottom] = overlap.split(":");
-      if (!registered.value.includes(top) || !registered.value.includes(bottom))
-        continue;
-      const topPosition = positions.get(top);
-      const bottomPosition = positions.get(bottom);
-      const topAmount = layoutSizes.get(top);
-      const bottomAmount = layoutSizes.get(bottom);
-      if (!topPosition || !bottomPosition || !topAmount || !bottomAmount)
-        continue;
-      map.set(bottom, {
-        position: topPosition.value,
-        amount: parseInt(topAmount.value, 10)
-      });
-      map.set(top, {
-        position: bottomPosition.value,
-        amount: -parseInt(bottomAmount.value, 10)
-      });
-    }
-    return map;
-  });
-  const layers = computed(() => {
-    const uniquePriorities = [...new Set([...priorities.values()].map((p2) => p2.value))].sort((a3, b3) => a3 - b3);
-    const layout = [];
-    for (const p2 of uniquePriorities) {
-      const items2 = registered.value.filter((id) => {
-        var _priorities$get;
-        return ((_priorities$get = priorities.get(id)) == null ? void 0 : _priorities$get.value) === p2;
-      });
-      layout.push(...items2);
-    }
-    return generateLayers(layout, positions, layoutSizes, activeItems);
-  });
-  const transitionsEnabled = computed(() => {
-    return !Array.from(disabledTransitions.values()).some((ref2) => ref2.value);
-  });
-  const mainRect = computed(() => {
-    return layers.value[layers.value.length - 1].layer;
-  });
-  const mainStyles = computed(() => {
-    return {
-      "--v-layout-left": convertToUnit(mainRect.value.left),
-      "--v-layout-right": convertToUnit(mainRect.value.right),
-      "--v-layout-top": convertToUnit(mainRect.value.top),
-      "--v-layout-bottom": convertToUnit(mainRect.value.bottom),
-      ...transitionsEnabled.value ? void 0 : {
-        transition: "none"
-      }
-    };
-  });
-  const items = computed(() => {
-    return layers.value.slice(1).map((_ref, index2) => {
-      let {
-        id
-      } = _ref;
-      const {
-        layer
-      } = layers.value[index2];
-      const size2 = layoutSizes.get(id);
-      const position = positions.get(id);
-      return {
-        id,
-        ...layer,
-        size: Number(size2.value),
-        position: position.value
-      };
-    });
-  });
-  const getLayoutItem = (id) => {
-    return items.value.find((item) => item.id === id);
-  };
-  const rootVm = getCurrentInstance("createLayout");
-  const isMounted = ref(false);
-  onMounted(() => {
-    isMounted.value = true;
-  });
-  provide(VuetifyLayoutKey, {
-    register: (vm, _ref2) => {
-      let {
-        id,
-        order,
-        position,
-        layoutSize,
-        elementSize,
-        active,
-        disableTransitions,
-        absolute
-      } = _ref2;
-      priorities.set(id, order);
-      positions.set(id, position);
-      layoutSizes.set(id, layoutSize);
-      activeItems.set(id, active);
-      disableTransitions && disabledTransitions.set(id, disableTransitions);
-      const instances = findChildrenWithProvide(VuetifyLayoutItemKey, rootVm == null ? void 0 : rootVm.vnode);
-      const instanceIndex = instances.indexOf(vm);
-      if (instanceIndex > -1)
-        registered.value.splice(instanceIndex, 0, id);
-      else
-        registered.value.push(id);
-      const index2 = computed(() => items.value.findIndex((i2) => i2.id === id));
-      const zIndex = computed(() => rootZIndex.value + layers.value.length * 2 - index2.value * 2);
-      const layoutItemStyles = computed(() => {
-        const isHorizontal = position.value === "left" || position.value === "right";
-        const isOppositeHorizontal = position.value === "right";
-        const isOppositeVertical = position.value === "bottom";
-        const styles = {
-          [position.value]: 0,
-          zIndex: zIndex.value,
-          transform: `translate${isHorizontal ? "X" : "Y"}(${(active.value ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1)}%)`,
-          position: absolute.value || rootZIndex.value !== ROOT_ZINDEX ? "absolute" : "fixed",
-          ...transitionsEnabled.value ? void 0 : {
-            transition: "none"
-          }
-        };
-        if (!isMounted.value)
-          return styles;
-        const item = items.value[index2.value];
-        if (!item)
-          throw new Error(`[Vuetify] Could not find layout item "${id}"`);
-        const overlap = computedOverlaps.value.get(id);
-        if (overlap) {
-          item[overlap.position] += overlap.amount;
-        }
-        return {
-          ...styles,
-          height: isHorizontal ? `calc(100% - ${item.top}px - ${item.bottom}px)` : elementSize.value ? `${elementSize.value}px` : void 0,
-          left: isOppositeHorizontal ? void 0 : `${item.left}px`,
-          right: isOppositeHorizontal ? `${item.right}px` : void 0,
-          top: position.value !== "bottom" ? `${item.top}px` : void 0,
-          bottom: position.value !== "top" ? `${item.bottom}px` : void 0,
-          width: !isHorizontal ? `calc(100% - ${item.left}px - ${item.right}px)` : elementSize.value ? `${elementSize.value}px` : void 0
-        };
-      });
-      const layoutItemScrimStyles = computed(() => ({
-        zIndex: zIndex.value - 1
-      }));
-      return {
-        layoutItemStyles,
-        layoutItemScrimStyles,
-        zIndex
-      };
-    },
-    unregister: (id) => {
-      priorities.delete(id);
-      positions.delete(id);
-      layoutSizes.delete(id);
-      activeItems.delete(id);
-      disabledTransitions.delete(id);
-      registered.value = registered.value.filter((v) => v !== id);
-    },
-    mainRect,
-    mainStyles,
-    getLayoutItem,
-    items,
-    layoutRect,
-    rootZIndex
-  });
-  const layoutClasses = computed(() => ["v-layout", {
-    "v-layout--full-height": props.fullHeight
-  }]);
-  const layoutStyles = computed(() => ({
-    zIndex: rootZIndex.value,
-    position: parentLayout ? "relative" : void 0,
-    overflow: parentLayout ? "hidden" : void 0
-  }));
-  return {
-    layoutClasses,
-    layoutStyles,
-    getLayoutItem,
-    items,
-    layoutRect,
-    layoutRef: resizeRef
-  };
-}
 function createVuetify() {
   let vuetify2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
   const {
@@ -47345,1807 +47121,10 @@ const vuetify = createVuetify({
     }
   }
 });
-/*!
-  * vue-router v4.1.6
-  * (c) 2022 Eduardo San Martin Morote
-  * @license MIT
-  */
-const isBrowser = typeof window !== "undefined";
-function isESModule(obj) {
-  return obj.__esModule || obj[Symbol.toStringTag] === "Module";
+function registerPlugins(app2) {
+  loadFonts();
+  app2.use(vuetify);
 }
-const assign = Object.assign;
-function applyToParams(fn2, params) {
-  const newParams = {};
-  for (const key in params) {
-    const value = params[key];
-    newParams[key] = isArray(value) ? value.map(fn2) : fn2(value);
-  }
-  return newParams;
-}
-const noop = () => {
-};
-const isArray = Array.isArray;
-const TRAILING_SLASH_RE = /\/$/;
-const removeTrailingSlash = (path) => path.replace(TRAILING_SLASH_RE, "");
-function parseURL(parseQuery2, location2, currentLocation = "/") {
-  let path, query = {}, searchString = "", hash2 = "";
-  const hashPos = location2.indexOf("#");
-  let searchPos = location2.indexOf("?");
-  if (hashPos < searchPos && hashPos >= 0) {
-    searchPos = -1;
-  }
-  if (searchPos > -1) {
-    path = location2.slice(0, searchPos);
-    searchString = location2.slice(searchPos + 1, hashPos > -1 ? hashPos : location2.length);
-    query = parseQuery2(searchString);
-  }
-  if (hashPos > -1) {
-    path = path || location2.slice(0, hashPos);
-    hash2 = location2.slice(hashPos, location2.length);
-  }
-  path = resolveRelativePath(path != null ? path : location2, currentLocation);
-  return {
-    fullPath: path + (searchString && "?") + searchString + hash2,
-    path,
-    query,
-    hash: hash2
-  };
-}
-function stringifyURL(stringifyQuery2, location2) {
-  const query = location2.query ? stringifyQuery2(location2.query) : "";
-  return location2.path + (query && "?") + query + (location2.hash || "");
-}
-function stripBase(pathname, base) {
-  if (!base || !pathname.toLowerCase().startsWith(base.toLowerCase()))
-    return pathname;
-  return pathname.slice(base.length) || "/";
-}
-function isSameRouteLocation(stringifyQuery2, a3, b3) {
-  const aLastIndex = a3.matched.length - 1;
-  const bLastIndex = b3.matched.length - 1;
-  return aLastIndex > -1 && aLastIndex === bLastIndex && isSameRouteRecord(a3.matched[aLastIndex], b3.matched[bLastIndex]) && isSameRouteLocationParams(a3.params, b3.params) && stringifyQuery2(a3.query) === stringifyQuery2(b3.query) && a3.hash === b3.hash;
-}
-function isSameRouteRecord(a3, b3) {
-  return (a3.aliasOf || a3) === (b3.aliasOf || b3);
-}
-function isSameRouteLocationParams(a3, b3) {
-  if (Object.keys(a3).length !== Object.keys(b3).length)
-    return false;
-  for (const key in a3) {
-    if (!isSameRouteLocationParamsValue(a3[key], b3[key]))
-      return false;
-  }
-  return true;
-}
-function isSameRouteLocationParamsValue(a3, b3) {
-  return isArray(a3) ? isEquivalentArray(a3, b3) : isArray(b3) ? isEquivalentArray(b3, a3) : a3 === b3;
-}
-function isEquivalentArray(a3, b3) {
-  return isArray(b3) ? a3.length === b3.length && a3.every((value, i2) => value === b3[i2]) : a3.length === 1 && a3[0] === b3;
-}
-function resolveRelativePath(to, from) {
-  if (to.startsWith("/"))
-    return to;
-  if (!to)
-    return from;
-  const fromSegments = from.split("/");
-  const toSegments = to.split("/");
-  let position = fromSegments.length - 1;
-  let toPosition;
-  let segment;
-  for (toPosition = 0; toPosition < toSegments.length; toPosition++) {
-    segment = toSegments[toPosition];
-    if (segment === ".")
-      continue;
-    if (segment === "..") {
-      if (position > 1)
-        position--;
-    } else
-      break;
-  }
-  return fromSegments.slice(0, position).join("/") + "/" + toSegments.slice(toPosition - (toPosition === toSegments.length ? 1 : 0)).join("/");
-}
-var NavigationType;
-(function(NavigationType2) {
-  NavigationType2["pop"] = "pop";
-  NavigationType2["push"] = "push";
-})(NavigationType || (NavigationType = {}));
-var NavigationDirection;
-(function(NavigationDirection2) {
-  NavigationDirection2["back"] = "back";
-  NavigationDirection2["forward"] = "forward";
-  NavigationDirection2["unknown"] = "";
-})(NavigationDirection || (NavigationDirection = {}));
-function normalizeBase(base) {
-  if (!base) {
-    if (isBrowser) {
-      const baseEl = document.querySelector("base");
-      base = baseEl && baseEl.getAttribute("href") || "/";
-      base = base.replace(/^\w+:\/\/[^\/]+/, "");
-    } else {
-      base = "/";
-    }
-  }
-  if (base[0] !== "/" && base[0] !== "#")
-    base = "/" + base;
-  return removeTrailingSlash(base);
-}
-const BEFORE_HASH_RE = /^[^#]+#/;
-function createHref(base, location2) {
-  return base.replace(BEFORE_HASH_RE, "#") + location2;
-}
-function getElementPosition(el2, offset) {
-  const docRect = document.documentElement.getBoundingClientRect();
-  const elRect = el2.getBoundingClientRect();
-  return {
-    behavior: offset.behavior,
-    left: elRect.left - docRect.left - (offset.left || 0),
-    top: elRect.top - docRect.top - (offset.top || 0)
-  };
-}
-const computeScrollPosition = () => ({
-  left: window.pageXOffset,
-  top: window.pageYOffset
-});
-function scrollToPosition(position) {
-  let scrollToOptions;
-  if ("el" in position) {
-    const positionEl = position.el;
-    const isIdSelector = typeof positionEl === "string" && positionEl.startsWith("#");
-    const el2 = typeof positionEl === "string" ? isIdSelector ? document.getElementById(positionEl.slice(1)) : document.querySelector(positionEl) : positionEl;
-    if (!el2) {
-      return;
-    }
-    scrollToOptions = getElementPosition(el2, position);
-  } else {
-    scrollToOptions = position;
-  }
-  if ("scrollBehavior" in document.documentElement.style)
-    window.scrollTo(scrollToOptions);
-  else {
-    window.scrollTo(scrollToOptions.left != null ? scrollToOptions.left : window.pageXOffset, scrollToOptions.top != null ? scrollToOptions.top : window.pageYOffset);
-  }
-}
-function getScrollKey(path, delta2) {
-  const position = history.state ? history.state.position - delta2 : -1;
-  return position + path;
-}
-const scrollPositions = /* @__PURE__ */ new Map();
-function saveScrollPosition(key, scrollPosition) {
-  scrollPositions.set(key, scrollPosition);
-}
-function getSavedScrollPosition(key) {
-  const scroll = scrollPositions.get(key);
-  scrollPositions.delete(key);
-  return scroll;
-}
-let createBaseLocation = () => location.protocol + "//" + location.host;
-function createCurrentLocation(base, location2) {
-  const { pathname, search, hash: hash2 } = location2;
-  const hashPos = base.indexOf("#");
-  if (hashPos > -1) {
-    let slicePos = hash2.includes(base.slice(hashPos)) ? base.slice(hashPos).length : 1;
-    let pathFromHash = hash2.slice(slicePos);
-    if (pathFromHash[0] !== "/")
-      pathFromHash = "/" + pathFromHash;
-    return stripBase(pathFromHash, "");
-  }
-  const path = stripBase(pathname, base);
-  return path + search + hash2;
-}
-function useHistoryListeners(base, historyState, currentLocation, replace2) {
-  let listeners = [];
-  let teardowns = [];
-  let pauseState = null;
-  const popStateHandler = ({ state }) => {
-    const to = createCurrentLocation(base, location);
-    const from = currentLocation.value;
-    const fromState = historyState.value;
-    let delta2 = 0;
-    if (state) {
-      currentLocation.value = to;
-      historyState.value = state;
-      if (pauseState && pauseState === from) {
-        pauseState = null;
-        return;
-      }
-      delta2 = fromState ? state.position - fromState.position : 0;
-    } else {
-      replace2(to);
-    }
-    listeners.forEach((listener) => {
-      listener(currentLocation.value, from, {
-        delta: delta2,
-        type: NavigationType.pop,
-        direction: delta2 ? delta2 > 0 ? NavigationDirection.forward : NavigationDirection.back : NavigationDirection.unknown
-      });
-    });
-  };
-  function pauseListeners() {
-    pauseState = currentLocation.value;
-  }
-  function listen(callback) {
-    listeners.push(callback);
-    const teardown = () => {
-      const index2 = listeners.indexOf(callback);
-      if (index2 > -1)
-        listeners.splice(index2, 1);
-    };
-    teardowns.push(teardown);
-    return teardown;
-  }
-  function beforeUnloadListener() {
-    const { history: history2 } = window;
-    if (!history2.state)
-      return;
-    history2.replaceState(assign({}, history2.state, { scroll: computeScrollPosition() }), "");
-  }
-  function destroy() {
-    for (const teardown of teardowns)
-      teardown();
-    teardowns = [];
-    window.removeEventListener("popstate", popStateHandler);
-    window.removeEventListener("beforeunload", beforeUnloadListener);
-  }
-  window.addEventListener("popstate", popStateHandler);
-  window.addEventListener("beforeunload", beforeUnloadListener);
-  return {
-    pauseListeners,
-    listen,
-    destroy
-  };
-}
-function buildState(back, current, forward, replaced = false, computeScroll = false) {
-  return {
-    back,
-    current,
-    forward,
-    replaced,
-    position: window.history.length,
-    scroll: computeScroll ? computeScrollPosition() : null
-  };
-}
-function useHistoryStateNavigation(base) {
-  const { history: history2, location: location2 } = window;
-  const currentLocation = {
-    value: createCurrentLocation(base, location2)
-  };
-  const historyState = { value: history2.state };
-  if (!historyState.value) {
-    changeLocation(currentLocation.value, {
-      back: null,
-      current: currentLocation.value,
-      forward: null,
-      position: history2.length - 1,
-      replaced: true,
-      scroll: null
-    }, true);
-  }
-  function changeLocation(to, state, replace3) {
-    const hashIndex = base.indexOf("#");
-    const url = hashIndex > -1 ? (location2.host && document.querySelector("base") ? base : base.slice(hashIndex)) + to : createBaseLocation() + base + to;
-    try {
-      history2[replace3 ? "replaceState" : "pushState"](state, "", url);
-      historyState.value = state;
-    } catch (err) {
-      {
-        console.error(err);
-      }
-      location2[replace3 ? "replace" : "assign"](url);
-    }
-  }
-  function replace2(to, data) {
-    const state = assign({}, history2.state, buildState(
-      historyState.value.back,
-      to,
-      historyState.value.forward,
-      true
-    ), data, { position: historyState.value.position });
-    changeLocation(to, state, true);
-    currentLocation.value = to;
-  }
-  function push(to, data) {
-    const currentState = assign(
-      {},
-      historyState.value,
-      history2.state,
-      {
-        forward: to,
-        scroll: computeScrollPosition()
-      }
-    );
-    changeLocation(currentState.current, currentState, true);
-    const state = assign({}, buildState(currentLocation.value, to, null), { position: currentState.position + 1 }, data);
-    changeLocation(to, state, false);
-    currentLocation.value = to;
-  }
-  return {
-    location: currentLocation,
-    state: historyState,
-    push,
-    replace: replace2
-  };
-}
-function createWebHistory(base) {
-  base = normalizeBase(base);
-  const historyNavigation = useHistoryStateNavigation(base);
-  const historyListeners = useHistoryListeners(base, historyNavigation.state, historyNavigation.location, historyNavigation.replace);
-  function go(delta2, triggerListeners = true) {
-    if (!triggerListeners)
-      historyListeners.pauseListeners();
-    history.go(delta2);
-  }
-  const routerHistory = assign({
-    location: "",
-    base,
-    go,
-    createHref: createHref.bind(null, base)
-  }, historyNavigation, historyListeners);
-  Object.defineProperty(routerHistory, "location", {
-    enumerable: true,
-    get: () => historyNavigation.location.value
-  });
-  Object.defineProperty(routerHistory, "state", {
-    enumerable: true,
-    get: () => historyNavigation.state.value
-  });
-  return routerHistory;
-}
-function isRouteLocation(route) {
-  return typeof route === "string" || route && typeof route === "object";
-}
-function isRouteName(name2) {
-  return typeof name2 === "string" || typeof name2 === "symbol";
-}
-const START_LOCATION_NORMALIZED = {
-  path: "/",
-  name: void 0,
-  params: {},
-  query: {},
-  hash: "",
-  fullPath: "/",
-  matched: [],
-  meta: {},
-  redirectedFrom: void 0
-};
-const NavigationFailureSymbol = Symbol("");
-var NavigationFailureType;
-(function(NavigationFailureType2) {
-  NavigationFailureType2[NavigationFailureType2["aborted"] = 4] = "aborted";
-  NavigationFailureType2[NavigationFailureType2["cancelled"] = 8] = "cancelled";
-  NavigationFailureType2[NavigationFailureType2["duplicated"] = 16] = "duplicated";
-})(NavigationFailureType || (NavigationFailureType = {}));
-function createRouterError(type, params) {
-  {
-    return assign(new Error(), {
-      type,
-      [NavigationFailureSymbol]: true
-    }, params);
-  }
-}
-function isNavigationFailure(error, type) {
-  return error instanceof Error && NavigationFailureSymbol in error && (type == null || !!(error.type & type));
-}
-const BASE_PARAM_PATTERN = "[^/]+?";
-const BASE_PATH_PARSER_OPTIONS = {
-  sensitive: false,
-  strict: false,
-  start: true,
-  end: true
-};
-const REGEX_CHARS_RE = /[.+*?^${}()[\]/\\]/g;
-function tokensToParser(segments, extraOptions) {
-  const options = assign({}, BASE_PATH_PARSER_OPTIONS, extraOptions);
-  const score = [];
-  let pattern = options.start ? "^" : "";
-  const keys = [];
-  for (const segment of segments) {
-    const segmentScores = segment.length ? [] : [90];
-    if (options.strict && !segment.length)
-      pattern += "/";
-    for (let tokenIndex = 0; tokenIndex < segment.length; tokenIndex++) {
-      const token = segment[tokenIndex];
-      let subSegmentScore = 40 + (options.sensitive ? 0.25 : 0);
-      if (token.type === 0) {
-        if (!tokenIndex)
-          pattern += "/";
-        pattern += token.value.replace(REGEX_CHARS_RE, "\\$&");
-        subSegmentScore += 40;
-      } else if (token.type === 1) {
-        const { value, repeatable, optional, regexp } = token;
-        keys.push({
-          name: value,
-          repeatable,
-          optional
-        });
-        const re2 = regexp ? regexp : BASE_PARAM_PATTERN;
-        if (re2 !== BASE_PARAM_PATTERN) {
-          subSegmentScore += 10;
-          try {
-            new RegExp(`(${re2})`);
-          } catch (err) {
-            throw new Error(`Invalid custom RegExp for param "${value}" (${re2}): ` + err.message);
-          }
-        }
-        let subPattern = repeatable ? `((?:${re2})(?:/(?:${re2}))*)` : `(${re2})`;
-        if (!tokenIndex)
-          subPattern = optional && segment.length < 2 ? `(?:/${subPattern})` : "/" + subPattern;
-        if (optional)
-          subPattern += "?";
-        pattern += subPattern;
-        subSegmentScore += 20;
-        if (optional)
-          subSegmentScore += -8;
-        if (repeatable)
-          subSegmentScore += -20;
-        if (re2 === ".*")
-          subSegmentScore += -50;
-      }
-      segmentScores.push(subSegmentScore);
-    }
-    score.push(segmentScores);
-  }
-  if (options.strict && options.end) {
-    const i2 = score.length - 1;
-    score[i2][score[i2].length - 1] += 0.7000000000000001;
-  }
-  if (!options.strict)
-    pattern += "/?";
-  if (options.end)
-    pattern += "$";
-  else if (options.strict)
-    pattern += "(?:/|$)";
-  const re = new RegExp(pattern, options.sensitive ? "" : "i");
-  function parse2(path) {
-    const match2 = path.match(re);
-    const params = {};
-    if (!match2)
-      return null;
-    for (let i2 = 1; i2 < match2.length; i2++) {
-      const value = match2[i2] || "";
-      const key = keys[i2 - 1];
-      params[key.name] = value && key.repeatable ? value.split("/") : value;
-    }
-    return params;
-  }
-  function stringify(params) {
-    let path = "";
-    let avoidDuplicatedSlash = false;
-    for (const segment of segments) {
-      if (!avoidDuplicatedSlash || !path.endsWith("/"))
-        path += "/";
-      avoidDuplicatedSlash = false;
-      for (const token of segment) {
-        if (token.type === 0) {
-          path += token.value;
-        } else if (token.type === 1) {
-          const { value, repeatable, optional } = token;
-          const param = value in params ? params[value] : "";
-          if (isArray(param) && !repeatable) {
-            throw new Error(`Provided param "${value}" is an array but it is not repeatable (* or + modifiers)`);
-          }
-          const text = isArray(param) ? param.join("/") : param;
-          if (!text) {
-            if (optional) {
-              if (segment.length < 2) {
-                if (path.endsWith("/"))
-                  path = path.slice(0, -1);
-                else
-                  avoidDuplicatedSlash = true;
-              }
-            } else
-              throw new Error(`Missing required param "${value}"`);
-          }
-          path += text;
-        }
-      }
-    }
-    return path || "/";
-  }
-  return {
-    re,
-    score,
-    keys,
-    parse: parse2,
-    stringify
-  };
-}
-function compareScoreArray(a3, b3) {
-  let i2 = 0;
-  while (i2 < a3.length && i2 < b3.length) {
-    const diff = b3[i2] - a3[i2];
-    if (diff)
-      return diff;
-    i2++;
-  }
-  if (a3.length < b3.length) {
-    return a3.length === 1 && a3[0] === 40 + 40 ? -1 : 1;
-  } else if (a3.length > b3.length) {
-    return b3.length === 1 && b3[0] === 40 + 40 ? 1 : -1;
-  }
-  return 0;
-}
-function comparePathParserScore(a3, b3) {
-  let i2 = 0;
-  const aScore = a3.score;
-  const bScore = b3.score;
-  while (i2 < aScore.length && i2 < bScore.length) {
-    const comp = compareScoreArray(aScore[i2], bScore[i2]);
-    if (comp)
-      return comp;
-    i2++;
-  }
-  if (Math.abs(bScore.length - aScore.length) === 1) {
-    if (isLastScoreNegative(aScore))
-      return 1;
-    if (isLastScoreNegative(bScore))
-      return -1;
-  }
-  return bScore.length - aScore.length;
-}
-function isLastScoreNegative(score) {
-  const last = score[score.length - 1];
-  return score.length > 0 && last[last.length - 1] < 0;
-}
-const ROOT_TOKEN = {
-  type: 0,
-  value: ""
-};
-const VALID_PARAM_RE = /[a-zA-Z0-9_]/;
-function tokenizePath(path) {
-  if (!path)
-    return [[]];
-  if (path === "/")
-    return [[ROOT_TOKEN]];
-  if (!path.startsWith("/")) {
-    throw new Error(`Invalid path "${path}"`);
-  }
-  function crash(message) {
-    throw new Error(`ERR (${state})/"${buffer2}": ${message}`);
-  }
-  let state = 0;
-  let previousState = state;
-  const tokens = [];
-  let segment;
-  function finalizeSegment() {
-    if (segment)
-      tokens.push(segment);
-    segment = [];
-  }
-  let i2 = 0;
-  let char;
-  let buffer2 = "";
-  let customRe = "";
-  function consumeBuffer() {
-    if (!buffer2)
-      return;
-    if (state === 0) {
-      segment.push({
-        type: 0,
-        value: buffer2
-      });
-    } else if (state === 1 || state === 2 || state === 3) {
-      if (segment.length > 1 && (char === "*" || char === "+"))
-        crash(`A repeatable param (${buffer2}) must be alone in its segment. eg: '/:ids+.`);
-      segment.push({
-        type: 1,
-        value: buffer2,
-        regexp: customRe,
-        repeatable: char === "*" || char === "+",
-        optional: char === "*" || char === "?"
-      });
-    } else {
-      crash("Invalid state to consume buffer");
-    }
-    buffer2 = "";
-  }
-  function addCharToBuffer() {
-    buffer2 += char;
-  }
-  while (i2 < path.length) {
-    char = path[i2++];
-    if (char === "\\" && state !== 2) {
-      previousState = state;
-      state = 4;
-      continue;
-    }
-    switch (state) {
-      case 0:
-        if (char === "/") {
-          if (buffer2) {
-            consumeBuffer();
-          }
-          finalizeSegment();
-        } else if (char === ":") {
-          consumeBuffer();
-          state = 1;
-        } else {
-          addCharToBuffer();
-        }
-        break;
-      case 4:
-        addCharToBuffer();
-        state = previousState;
-        break;
-      case 1:
-        if (char === "(") {
-          state = 2;
-        } else if (VALID_PARAM_RE.test(char)) {
-          addCharToBuffer();
-        } else {
-          consumeBuffer();
-          state = 0;
-          if (char !== "*" && char !== "?" && char !== "+")
-            i2--;
-        }
-        break;
-      case 2:
-        if (char === ")") {
-          if (customRe[customRe.length - 1] == "\\")
-            customRe = customRe.slice(0, -1) + char;
-          else
-            state = 3;
-        } else {
-          customRe += char;
-        }
-        break;
-      case 3:
-        consumeBuffer();
-        state = 0;
-        if (char !== "*" && char !== "?" && char !== "+")
-          i2--;
-        customRe = "";
-        break;
-      default:
-        crash("Unknown state");
-        break;
-    }
-  }
-  if (state === 2)
-    crash(`Unfinished custom RegExp for param "${buffer2}"`);
-  consumeBuffer();
-  finalizeSegment();
-  return tokens;
-}
-function createRouteRecordMatcher(record, parent, options) {
-  const parser = tokensToParser(tokenizePath(record.path), options);
-  const matcher = assign(parser, {
-    record,
-    parent,
-    children: [],
-    alias: []
-  });
-  if (parent) {
-    if (!matcher.record.aliasOf === !parent.record.aliasOf)
-      parent.children.push(matcher);
-  }
-  return matcher;
-}
-function createRouterMatcher(routes2, globalOptions) {
-  const matchers = [];
-  const matcherMap = /* @__PURE__ */ new Map();
-  globalOptions = mergeOptions({ strict: false, end: true, sensitive: false }, globalOptions);
-  function getRecordMatcher(name2) {
-    return matcherMap.get(name2);
-  }
-  function addRoute(record, parent, originalRecord) {
-    const isRootAdd = !originalRecord;
-    const mainNormalizedRecord = normalizeRouteRecord(record);
-    mainNormalizedRecord.aliasOf = originalRecord && originalRecord.record;
-    const options = mergeOptions(globalOptions, record);
-    const normalizedRecords = [
-      mainNormalizedRecord
-    ];
-    if ("alias" in record) {
-      const aliases2 = typeof record.alias === "string" ? [record.alias] : record.alias;
-      for (const alias of aliases2) {
-        normalizedRecords.push(assign({}, mainNormalizedRecord, {
-          components: originalRecord ? originalRecord.record.components : mainNormalizedRecord.components,
-          path: alias,
-          aliasOf: originalRecord ? originalRecord.record : mainNormalizedRecord
-        }));
-      }
-    }
-    let matcher;
-    let originalMatcher;
-    for (const normalizedRecord of normalizedRecords) {
-      const { path } = normalizedRecord;
-      if (parent && path[0] !== "/") {
-        const parentPath = parent.record.path;
-        const connectingSlash = parentPath[parentPath.length - 1] === "/" ? "" : "/";
-        normalizedRecord.path = parent.record.path + (path && connectingSlash + path);
-      }
-      matcher = createRouteRecordMatcher(normalizedRecord, parent, options);
-      if (originalRecord) {
-        originalRecord.alias.push(matcher);
-      } else {
-        originalMatcher = originalMatcher || matcher;
-        if (originalMatcher !== matcher)
-          originalMatcher.alias.push(matcher);
-        if (isRootAdd && record.name && !isAliasRecord(matcher))
-          removeRoute(record.name);
-      }
-      if (mainNormalizedRecord.children) {
-        const children = mainNormalizedRecord.children;
-        for (let i2 = 0; i2 < children.length; i2++) {
-          addRoute(children[i2], matcher, originalRecord && originalRecord.children[i2]);
-        }
-      }
-      originalRecord = originalRecord || matcher;
-      if (matcher.record.components && Object.keys(matcher.record.components).length || matcher.record.name || matcher.record.redirect) {
-        insertMatcher(matcher);
-      }
-    }
-    return originalMatcher ? () => {
-      removeRoute(originalMatcher);
-    } : noop;
-  }
-  function removeRoute(matcherRef) {
-    if (isRouteName(matcherRef)) {
-      const matcher = matcherMap.get(matcherRef);
-      if (matcher) {
-        matcherMap.delete(matcherRef);
-        matchers.splice(matchers.indexOf(matcher), 1);
-        matcher.children.forEach(removeRoute);
-        matcher.alias.forEach(removeRoute);
-      }
-    } else {
-      const index2 = matchers.indexOf(matcherRef);
-      if (index2 > -1) {
-        matchers.splice(index2, 1);
-        if (matcherRef.record.name)
-          matcherMap.delete(matcherRef.record.name);
-        matcherRef.children.forEach(removeRoute);
-        matcherRef.alias.forEach(removeRoute);
-      }
-    }
-  }
-  function getRoutes() {
-    return matchers;
-  }
-  function insertMatcher(matcher) {
-    let i2 = 0;
-    while (i2 < matchers.length && comparePathParserScore(matcher, matchers[i2]) >= 0 && (matcher.record.path !== matchers[i2].record.path || !isRecordChildOf(matcher, matchers[i2])))
-      i2++;
-    matchers.splice(i2, 0, matcher);
-    if (matcher.record.name && !isAliasRecord(matcher))
-      matcherMap.set(matcher.record.name, matcher);
-  }
-  function resolve2(location2, currentLocation) {
-    let matcher;
-    let params = {};
-    let path;
-    let name2;
-    if ("name" in location2 && location2.name) {
-      matcher = matcherMap.get(location2.name);
-      if (!matcher)
-        throw createRouterError(1, {
-          location: location2
-        });
-      name2 = matcher.record.name;
-      params = assign(
-        paramsFromLocation(
-          currentLocation.params,
-          matcher.keys.filter((k2) => !k2.optional).map((k2) => k2.name)
-        ),
-        location2.params && paramsFromLocation(location2.params, matcher.keys.map((k2) => k2.name))
-      );
-      path = matcher.stringify(params);
-    } else if ("path" in location2) {
-      path = location2.path;
-      matcher = matchers.find((m3) => m3.re.test(path));
-      if (matcher) {
-        params = matcher.parse(path);
-        name2 = matcher.record.name;
-      }
-    } else {
-      matcher = currentLocation.name ? matcherMap.get(currentLocation.name) : matchers.find((m3) => m3.re.test(currentLocation.path));
-      if (!matcher)
-        throw createRouterError(1, {
-          location: location2,
-          currentLocation
-        });
-      name2 = matcher.record.name;
-      params = assign({}, currentLocation.params, location2.params);
-      path = matcher.stringify(params);
-    }
-    const matched = [];
-    let parentMatcher = matcher;
-    while (parentMatcher) {
-      matched.unshift(parentMatcher.record);
-      parentMatcher = parentMatcher.parent;
-    }
-    return {
-      name: name2,
-      path,
-      params,
-      matched,
-      meta: mergeMetaFields(matched)
-    };
-  }
-  routes2.forEach((route) => addRoute(route));
-  return { addRoute, resolve: resolve2, removeRoute, getRoutes, getRecordMatcher };
-}
-function paramsFromLocation(params, keys) {
-  const newParams = {};
-  for (const key of keys) {
-    if (key in params)
-      newParams[key] = params[key];
-  }
-  return newParams;
-}
-function normalizeRouteRecord(record) {
-  return {
-    path: record.path,
-    redirect: record.redirect,
-    name: record.name,
-    meta: record.meta || {},
-    aliasOf: void 0,
-    beforeEnter: record.beforeEnter,
-    props: normalizeRecordProps(record),
-    children: record.children || [],
-    instances: {},
-    leaveGuards: /* @__PURE__ */ new Set(),
-    updateGuards: /* @__PURE__ */ new Set(),
-    enterCallbacks: {},
-    components: "components" in record ? record.components || null : record.component && { default: record.component }
-  };
-}
-function normalizeRecordProps(record) {
-  const propsObject = {};
-  const props = record.props || false;
-  if ("component" in record) {
-    propsObject.default = props;
-  } else {
-    for (const name2 in record.components)
-      propsObject[name2] = typeof props === "boolean" ? props : props[name2];
-  }
-  return propsObject;
-}
-function isAliasRecord(record) {
-  while (record) {
-    if (record.record.aliasOf)
-      return true;
-    record = record.parent;
-  }
-  return false;
-}
-function mergeMetaFields(matched) {
-  return matched.reduce((meta, record) => assign(meta, record.meta), {});
-}
-function mergeOptions(defaults2, partialOptions) {
-  const options = {};
-  for (const key in defaults2) {
-    options[key] = key in partialOptions ? partialOptions[key] : defaults2[key];
-  }
-  return options;
-}
-function isRecordChildOf(record, parent) {
-  return parent.children.some((child) => child === record || isRecordChildOf(record, child));
-}
-const HASH_RE = /#/g;
-const AMPERSAND_RE = /&/g;
-const SLASH_RE = /\//g;
-const EQUAL_RE = /=/g;
-const IM_RE = /\?/g;
-const PLUS_RE = /\+/g;
-const ENC_BRACKET_OPEN_RE = /%5B/g;
-const ENC_BRACKET_CLOSE_RE = /%5D/g;
-const ENC_CARET_RE = /%5E/g;
-const ENC_BACKTICK_RE = /%60/g;
-const ENC_CURLY_OPEN_RE = /%7B/g;
-const ENC_PIPE_RE = /%7C/g;
-const ENC_CURLY_CLOSE_RE = /%7D/g;
-const ENC_SPACE_RE = /%20/g;
-function commonEncode(text) {
-  return encodeURI("" + text).replace(ENC_PIPE_RE, "|").replace(ENC_BRACKET_OPEN_RE, "[").replace(ENC_BRACKET_CLOSE_RE, "]");
-}
-function encodeHash(text) {
-  return commonEncode(text).replace(ENC_CURLY_OPEN_RE, "{").replace(ENC_CURLY_CLOSE_RE, "}").replace(ENC_CARET_RE, "^");
-}
-function encodeQueryValue(text) {
-  return commonEncode(text).replace(PLUS_RE, "%2B").replace(ENC_SPACE_RE, "+").replace(HASH_RE, "%23").replace(AMPERSAND_RE, "%26").replace(ENC_BACKTICK_RE, "`").replace(ENC_CURLY_OPEN_RE, "{").replace(ENC_CURLY_CLOSE_RE, "}").replace(ENC_CARET_RE, "^");
-}
-function encodeQueryKey(text) {
-  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
-}
-function encodePath(text) {
-  return commonEncode(text).replace(HASH_RE, "%23").replace(IM_RE, "%3F");
-}
-function encodeParam(text) {
-  return text == null ? "" : encodePath(text).replace(SLASH_RE, "%2F");
-}
-function decode(text) {
-  try {
-    return decodeURIComponent("" + text);
-  } catch (err) {
-  }
-  return "" + text;
-}
-function parseQuery(search) {
-  const query = {};
-  if (search === "" || search === "?")
-    return query;
-  const hasLeadingIM = search[0] === "?";
-  const searchParams = (hasLeadingIM ? search.slice(1) : search).split("&");
-  for (let i2 = 0; i2 < searchParams.length; ++i2) {
-    const searchParam = searchParams[i2].replace(PLUS_RE, " ");
-    const eqPos = searchParam.indexOf("=");
-    const key = decode(eqPos < 0 ? searchParam : searchParam.slice(0, eqPos));
-    const value = eqPos < 0 ? null : decode(searchParam.slice(eqPos + 1));
-    if (key in query) {
-      let currentValue = query[key];
-      if (!isArray(currentValue)) {
-        currentValue = query[key] = [currentValue];
-      }
-      currentValue.push(value);
-    } else {
-      query[key] = value;
-    }
-  }
-  return query;
-}
-function stringifyQuery(query) {
-  let search = "";
-  for (let key in query) {
-    const value = query[key];
-    key = encodeQueryKey(key);
-    if (value == null) {
-      if (value !== void 0) {
-        search += (search.length ? "&" : "") + key;
-      }
-      continue;
-    }
-    const values = isArray(value) ? value.map((v) => v && encodeQueryValue(v)) : [value && encodeQueryValue(value)];
-    values.forEach((value2) => {
-      if (value2 !== void 0) {
-        search += (search.length ? "&" : "") + key;
-        if (value2 != null)
-          search += "=" + value2;
-      }
-    });
-  }
-  return search;
-}
-function normalizeQuery(query) {
-  const normalizedQuery = {};
-  for (const key in query) {
-    const value = query[key];
-    if (value !== void 0) {
-      normalizedQuery[key] = isArray(value) ? value.map((v) => v == null ? null : "" + v) : value == null ? value : "" + value;
-    }
-  }
-  return normalizedQuery;
-}
-const matchedRouteKey = Symbol("");
-const viewDepthKey = Symbol("");
-const routerKey = Symbol("");
-const routeLocationKey = Symbol("");
-const routerViewLocationKey = Symbol("");
-function useCallbacks() {
-  let handlers = [];
-  function add2(handler) {
-    handlers.push(handler);
-    return () => {
-      const i2 = handlers.indexOf(handler);
-      if (i2 > -1)
-        handlers.splice(i2, 1);
-    };
-  }
-  function reset() {
-    handlers = [];
-  }
-  return {
-    add: add2,
-    list: () => handlers,
-    reset
-  };
-}
-function guardToPromiseFn(guard, to, from, record, name2) {
-  const enterCallbackArray = record && (record.enterCallbacks[name2] = record.enterCallbacks[name2] || []);
-  return () => new Promise((resolve2, reject) => {
-    const next = (valid) => {
-      if (valid === false) {
-        reject(createRouterError(4, {
-          from,
-          to
-        }));
-      } else if (valid instanceof Error) {
-        reject(valid);
-      } else if (isRouteLocation(valid)) {
-        reject(createRouterError(2, {
-          from: to,
-          to: valid
-        }));
-      } else {
-        if (enterCallbackArray && record.enterCallbacks[name2] === enterCallbackArray && typeof valid === "function") {
-          enterCallbackArray.push(valid);
-        }
-        resolve2();
-      }
-    };
-    const guardReturn = guard.call(record && record.instances[name2], to, from, next);
-    let guardCall = Promise.resolve(guardReturn);
-    if (guard.length < 3)
-      guardCall = guardCall.then(next);
-    guardCall.catch((err) => reject(err));
-  });
-}
-function extractComponentsGuards(matched, guardType, to, from) {
-  const guards = [];
-  for (const record of matched) {
-    for (const name2 in record.components) {
-      let rawComponent = record.components[name2];
-      if (guardType !== "beforeRouteEnter" && !record.instances[name2])
-        continue;
-      if (isRouteComponent(rawComponent)) {
-        const options = rawComponent.__vccOpts || rawComponent;
-        const guard = options[guardType];
-        guard && guards.push(guardToPromiseFn(guard, to, from, record, name2));
-      } else {
-        let componentPromise = rawComponent();
-        guards.push(() => componentPromise.then((resolved) => {
-          if (!resolved)
-            return Promise.reject(new Error(`Couldn't resolve component "${name2}" at "${record.path}"`));
-          const resolvedComponent = isESModule(resolved) ? resolved.default : resolved;
-          record.components[name2] = resolvedComponent;
-          const options = resolvedComponent.__vccOpts || resolvedComponent;
-          const guard = options[guardType];
-          return guard && guardToPromiseFn(guard, to, from, record, name2)();
-        }));
-      }
-    }
-  }
-  return guards;
-}
-function isRouteComponent(component) {
-  return typeof component === "object" || "displayName" in component || "props" in component || "__vccOpts" in component;
-}
-function useLink$1(props) {
-  const router2 = inject$1(routerKey);
-  const currentRoute = inject$1(routeLocationKey);
-  const route = computed(() => router2.resolve(unref(props.to)));
-  const activeRecordIndex = computed(() => {
-    const { matched } = route.value;
-    const { length } = matched;
-    const routeMatched = matched[length - 1];
-    const currentMatched = currentRoute.matched;
-    if (!routeMatched || !currentMatched.length)
-      return -1;
-    const index2 = currentMatched.findIndex(isSameRouteRecord.bind(null, routeMatched));
-    if (index2 > -1)
-      return index2;
-    const parentRecordPath = getOriginalPath(matched[length - 2]);
-    return length > 1 && getOriginalPath(routeMatched) === parentRecordPath && currentMatched[currentMatched.length - 1].path !== parentRecordPath ? currentMatched.findIndex(isSameRouteRecord.bind(null, matched[length - 2])) : index2;
-  });
-  const isActive = computed(() => activeRecordIndex.value > -1 && includesParams(currentRoute.params, route.value.params));
-  const isExactActive = computed(() => activeRecordIndex.value > -1 && activeRecordIndex.value === currentRoute.matched.length - 1 && isSameRouteLocationParams(currentRoute.params, route.value.params));
-  function navigate(e3 = {}) {
-    if (guardEvent(e3)) {
-      return router2[unref(props.replace) ? "replace" : "push"](
-        unref(props.to)
-      ).catch(noop);
-    }
-    return Promise.resolve();
-  }
-  return {
-    route,
-    href: computed(() => route.value.href),
-    isActive,
-    isExactActive,
-    navigate
-  };
-}
-const RouterLinkImpl = /* @__PURE__ */ defineComponent$1({
-  name: "RouterLink",
-  compatConfig: { MODE: 3 },
-  props: {
-    to: {
-      type: [String, Object],
-      required: true
-    },
-    replace: Boolean,
-    activeClass: String,
-    exactActiveClass: String,
-    custom: Boolean,
-    ariaCurrentValue: {
-      type: String,
-      default: "page"
-    }
-  },
-  useLink: useLink$1,
-  setup(props, { slots }) {
-    const link = reactive(useLink$1(props));
-    const { options } = inject$1(routerKey);
-    const elClass = computed(() => ({
-      [getLinkClass(props.activeClass, options.linkActiveClass, "router-link-active")]: link.isActive,
-      [getLinkClass(props.exactActiveClass, options.linkExactActiveClass, "router-link-exact-active")]: link.isExactActive
-    }));
-    return () => {
-      const children = slots.default && slots.default(link);
-      return props.custom ? children : h("a", {
-        "aria-current": link.isExactActive ? props.ariaCurrentValue : null,
-        href: link.href,
-        onClick: link.navigate,
-        class: elClass.value
-      }, children);
-    };
-  }
-});
-const RouterLink = RouterLinkImpl;
-function guardEvent(e3) {
-  if (e3.metaKey || e3.altKey || e3.ctrlKey || e3.shiftKey)
-    return;
-  if (e3.defaultPrevented)
-    return;
-  if (e3.button !== void 0 && e3.button !== 0)
-    return;
-  if (e3.currentTarget && e3.currentTarget.getAttribute) {
-    const target = e3.currentTarget.getAttribute("target");
-    if (/\b_blank\b/i.test(target))
-      return;
-  }
-  if (e3.preventDefault)
-    e3.preventDefault();
-  return true;
-}
-function includesParams(outer, inner) {
-  for (const key in inner) {
-    const innerValue = inner[key];
-    const outerValue = outer[key];
-    if (typeof innerValue === "string") {
-      if (innerValue !== outerValue)
-        return false;
-    } else {
-      if (!isArray(outerValue) || outerValue.length !== innerValue.length || innerValue.some((value, i2) => value !== outerValue[i2]))
-        return false;
-    }
-  }
-  return true;
-}
-function getOriginalPath(record) {
-  return record ? record.aliasOf ? record.aliasOf.path : record.path : "";
-}
-const getLinkClass = (propClass, globalClass, defaultClass) => propClass != null ? propClass : globalClass != null ? globalClass : defaultClass;
-const RouterViewImpl = /* @__PURE__ */ defineComponent$1({
-  name: "RouterView",
-  inheritAttrs: false,
-  props: {
-    name: {
-      type: String,
-      default: "default"
-    },
-    route: Object
-  },
-  compatConfig: { MODE: 3 },
-  setup(props, { attrs, slots }) {
-    const injectedRoute = inject$1(routerViewLocationKey);
-    const routeToDisplay = computed(() => props.route || injectedRoute.value);
-    const injectedDepth = inject$1(viewDepthKey, 0);
-    const depth = computed(() => {
-      let initialDepth = unref(injectedDepth);
-      const { matched } = routeToDisplay.value;
-      let matchedRoute;
-      while ((matchedRoute = matched[initialDepth]) && !matchedRoute.components) {
-        initialDepth++;
-      }
-      return initialDepth;
-    });
-    const matchedRouteRef = computed(() => routeToDisplay.value.matched[depth.value]);
-    provide(viewDepthKey, computed(() => depth.value + 1));
-    provide(matchedRouteKey, matchedRouteRef);
-    provide(routerViewLocationKey, routeToDisplay);
-    const viewRef = ref();
-    watch(() => [viewRef.value, matchedRouteRef.value, props.name], ([instance, to, name2], [oldInstance, from, oldName]) => {
-      if (to) {
-        to.instances[name2] = instance;
-        if (from && from !== to && instance && instance === oldInstance) {
-          if (!to.leaveGuards.size) {
-            to.leaveGuards = from.leaveGuards;
-          }
-          if (!to.updateGuards.size) {
-            to.updateGuards = from.updateGuards;
-          }
-        }
-      }
-      if (instance && to && (!from || !isSameRouteRecord(to, from) || !oldInstance)) {
-        (to.enterCallbacks[name2] || []).forEach((callback) => callback(instance));
-      }
-    }, { flush: "post" });
-    return () => {
-      const route = routeToDisplay.value;
-      const currentName = props.name;
-      const matchedRoute = matchedRouteRef.value;
-      const ViewComponent = matchedRoute && matchedRoute.components[currentName];
-      if (!ViewComponent) {
-        return normalizeSlot(slots.default, { Component: ViewComponent, route });
-      }
-      const routePropsOption = matchedRoute.props[currentName];
-      const routeProps = routePropsOption ? routePropsOption === true ? route.params : typeof routePropsOption === "function" ? routePropsOption(route) : routePropsOption : null;
-      const onVnodeUnmounted = (vnode) => {
-        if (vnode.component.isUnmounted) {
-          matchedRoute.instances[currentName] = null;
-        }
-      };
-      const component = h(ViewComponent, assign({}, routeProps, attrs, {
-        onVnodeUnmounted,
-        ref: viewRef
-      }));
-      return normalizeSlot(slots.default, { Component: component, route }) || component;
-    };
-  }
-});
-function normalizeSlot(slot, data) {
-  if (!slot)
-    return null;
-  const slotContent = slot(data);
-  return slotContent.length === 1 ? slotContent[0] : slotContent;
-}
-const RouterView = RouterViewImpl;
-function createRouter(options) {
-  const matcher = createRouterMatcher(options.routes, options);
-  const parseQuery$1 = options.parseQuery || parseQuery;
-  const stringifyQuery$1 = options.stringifyQuery || stringifyQuery;
-  const routerHistory = options.history;
-  const beforeGuards = useCallbacks();
-  const beforeResolveGuards = useCallbacks();
-  const afterGuards = useCallbacks();
-  const currentRoute = shallowRef(START_LOCATION_NORMALIZED);
-  let pendingLocation = START_LOCATION_NORMALIZED;
-  if (isBrowser && options.scrollBehavior && "scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
-  const normalizeParams = applyToParams.bind(null, (paramValue) => "" + paramValue);
-  const encodeParams = applyToParams.bind(null, encodeParam);
-  const decodeParams = applyToParams.bind(null, decode);
-  function addRoute(parentOrRoute, route) {
-    let parent;
-    let record;
-    if (isRouteName(parentOrRoute)) {
-      parent = matcher.getRecordMatcher(parentOrRoute);
-      record = route;
-    } else {
-      record = parentOrRoute;
-    }
-    return matcher.addRoute(record, parent);
-  }
-  function removeRoute(name2) {
-    const recordMatcher = matcher.getRecordMatcher(name2);
-    if (recordMatcher) {
-      matcher.removeRoute(recordMatcher);
-    }
-  }
-  function getRoutes() {
-    return matcher.getRoutes().map((routeMatcher) => routeMatcher.record);
-  }
-  function hasRoute(name2) {
-    return !!matcher.getRecordMatcher(name2);
-  }
-  function resolve2(rawLocation, currentLocation) {
-    currentLocation = assign({}, currentLocation || currentRoute.value);
-    if (typeof rawLocation === "string") {
-      const locationNormalized = parseURL(parseQuery$1, rawLocation, currentLocation.path);
-      const matchedRoute2 = matcher.resolve({ path: locationNormalized.path }, currentLocation);
-      const href2 = routerHistory.createHref(locationNormalized.fullPath);
-      return assign(locationNormalized, matchedRoute2, {
-        params: decodeParams(matchedRoute2.params),
-        hash: decode(locationNormalized.hash),
-        redirectedFrom: void 0,
-        href: href2
-      });
-    }
-    let matcherLocation;
-    if ("path" in rawLocation) {
-      matcherLocation = assign({}, rawLocation, {
-        path: parseURL(parseQuery$1, rawLocation.path, currentLocation.path).path
-      });
-    } else {
-      const targetParams = assign({}, rawLocation.params);
-      for (const key in targetParams) {
-        if (targetParams[key] == null) {
-          delete targetParams[key];
-        }
-      }
-      matcherLocation = assign({}, rawLocation, {
-        params: encodeParams(rawLocation.params)
-      });
-      currentLocation.params = encodeParams(currentLocation.params);
-    }
-    const matchedRoute = matcher.resolve(matcherLocation, currentLocation);
-    const hash2 = rawLocation.hash || "";
-    matchedRoute.params = normalizeParams(decodeParams(matchedRoute.params));
-    const fullPath = stringifyURL(stringifyQuery$1, assign({}, rawLocation, {
-      hash: encodeHash(hash2),
-      path: matchedRoute.path
-    }));
-    const href = routerHistory.createHref(fullPath);
-    return assign({
-      fullPath,
-      hash: hash2,
-      query: stringifyQuery$1 === stringifyQuery ? normalizeQuery(rawLocation.query) : rawLocation.query || {}
-    }, matchedRoute, {
-      redirectedFrom: void 0,
-      href
-    });
-  }
-  function locationAsObject(to) {
-    return typeof to === "string" ? parseURL(parseQuery$1, to, currentRoute.value.path) : assign({}, to);
-  }
-  function checkCanceledNavigation(to, from) {
-    if (pendingLocation !== to) {
-      return createRouterError(8, {
-        from,
-        to
-      });
-    }
-  }
-  function push(to) {
-    return pushWithRedirect(to);
-  }
-  function replace2(to) {
-    return push(assign(locationAsObject(to), { replace: true }));
-  }
-  function handleRedirectRecord(to) {
-    const lastMatched = to.matched[to.matched.length - 1];
-    if (lastMatched && lastMatched.redirect) {
-      const { redirect } = lastMatched;
-      let newTargetLocation = typeof redirect === "function" ? redirect(to) : redirect;
-      if (typeof newTargetLocation === "string") {
-        newTargetLocation = newTargetLocation.includes("?") || newTargetLocation.includes("#") ? newTargetLocation = locationAsObject(newTargetLocation) : { path: newTargetLocation };
-        newTargetLocation.params = {};
-      }
-      return assign({
-        query: to.query,
-        hash: to.hash,
-        params: "path" in newTargetLocation ? {} : to.params
-      }, newTargetLocation);
-    }
-  }
-  function pushWithRedirect(to, redirectedFrom) {
-    const targetLocation = pendingLocation = resolve2(to);
-    const from = currentRoute.value;
-    const data = to.state;
-    const force = to.force;
-    const replace3 = to.replace === true;
-    const shouldRedirect = handleRedirectRecord(targetLocation);
-    if (shouldRedirect)
-      return pushWithRedirect(
-        assign(locationAsObject(shouldRedirect), {
-          state: typeof shouldRedirect === "object" ? assign({}, data, shouldRedirect.state) : data,
-          force,
-          replace: replace3
-        }),
-        redirectedFrom || targetLocation
-      );
-    const toLocation = targetLocation;
-    toLocation.redirectedFrom = redirectedFrom;
-    let failure;
-    if (!force && isSameRouteLocation(stringifyQuery$1, from, targetLocation)) {
-      failure = createRouterError(16, { to: toLocation, from });
-      handleScroll(
-        from,
-        from,
-        true,
-        false
-      );
-    }
-    return (failure ? Promise.resolve(failure) : navigate(toLocation, from)).catch((error) => isNavigationFailure(error) ? isNavigationFailure(error, 2) ? error : markAsReady(error) : triggerError(error, toLocation, from)).then((failure2) => {
-      if (failure2) {
-        if (isNavigationFailure(failure2, 2)) {
-          return pushWithRedirect(
-            assign({
-              replace: replace3
-            }, locationAsObject(failure2.to), {
-              state: typeof failure2.to === "object" ? assign({}, data, failure2.to.state) : data,
-              force
-            }),
-            redirectedFrom || toLocation
-          );
-        }
-      } else {
-        failure2 = finalizeNavigation(toLocation, from, true, replace3, data);
-      }
-      triggerAfterEach(toLocation, from, failure2);
-      return failure2;
-    });
-  }
-  function checkCanceledNavigationAndReject(to, from) {
-    const error = checkCanceledNavigation(to, from);
-    return error ? Promise.reject(error) : Promise.resolve();
-  }
-  function navigate(to, from) {
-    let guards;
-    const [leavingRecords, updatingRecords, enteringRecords] = extractChangingRecords(to, from);
-    guards = extractComponentsGuards(leavingRecords.reverse(), "beforeRouteLeave", to, from);
-    for (const record of leavingRecords) {
-      record.leaveGuards.forEach((guard) => {
-        guards.push(guardToPromiseFn(guard, to, from));
-      });
-    }
-    const canceledNavigationCheck = checkCanceledNavigationAndReject.bind(null, to, from);
-    guards.push(canceledNavigationCheck);
-    return runGuardQueue(guards).then(() => {
-      guards = [];
-      for (const guard of beforeGuards.list()) {
-        guards.push(guardToPromiseFn(guard, to, from));
-      }
-      guards.push(canceledNavigationCheck);
-      return runGuardQueue(guards);
-    }).then(() => {
-      guards = extractComponentsGuards(updatingRecords, "beforeRouteUpdate", to, from);
-      for (const record of updatingRecords) {
-        record.updateGuards.forEach((guard) => {
-          guards.push(guardToPromiseFn(guard, to, from));
-        });
-      }
-      guards.push(canceledNavigationCheck);
-      return runGuardQueue(guards);
-    }).then(() => {
-      guards = [];
-      for (const record of to.matched) {
-        if (record.beforeEnter && !from.matched.includes(record)) {
-          if (isArray(record.beforeEnter)) {
-            for (const beforeEnter of record.beforeEnter)
-              guards.push(guardToPromiseFn(beforeEnter, to, from));
-          } else {
-            guards.push(guardToPromiseFn(record.beforeEnter, to, from));
-          }
-        }
-      }
-      guards.push(canceledNavigationCheck);
-      return runGuardQueue(guards);
-    }).then(() => {
-      to.matched.forEach((record) => record.enterCallbacks = {});
-      guards = extractComponentsGuards(enteringRecords, "beforeRouteEnter", to, from);
-      guards.push(canceledNavigationCheck);
-      return runGuardQueue(guards);
-    }).then(() => {
-      guards = [];
-      for (const guard of beforeResolveGuards.list()) {
-        guards.push(guardToPromiseFn(guard, to, from));
-      }
-      guards.push(canceledNavigationCheck);
-      return runGuardQueue(guards);
-    }).catch((err) => isNavigationFailure(err, 8) ? err : Promise.reject(err));
-  }
-  function triggerAfterEach(to, from, failure) {
-    for (const guard of afterGuards.list())
-      guard(to, from, failure);
-  }
-  function finalizeNavigation(toLocation, from, isPush, replace3, data) {
-    const error = checkCanceledNavigation(toLocation, from);
-    if (error)
-      return error;
-    const isFirstNavigation = from === START_LOCATION_NORMALIZED;
-    const state = !isBrowser ? {} : history.state;
-    if (isPush) {
-      if (replace3 || isFirstNavigation)
-        routerHistory.replace(toLocation.fullPath, assign({
-          scroll: isFirstNavigation && state && state.scroll
-        }, data));
-      else
-        routerHistory.push(toLocation.fullPath, data);
-    }
-    currentRoute.value = toLocation;
-    handleScroll(toLocation, from, isPush, isFirstNavigation);
-    markAsReady();
-  }
-  let removeHistoryListener;
-  function setupListeners() {
-    if (removeHistoryListener)
-      return;
-    removeHistoryListener = routerHistory.listen((to, _from, info) => {
-      if (!router2.listening)
-        return;
-      const toLocation = resolve2(to);
-      const shouldRedirect = handleRedirectRecord(toLocation);
-      if (shouldRedirect) {
-        pushWithRedirect(assign(shouldRedirect, { replace: true }), toLocation).catch(noop);
-        return;
-      }
-      pendingLocation = toLocation;
-      const from = currentRoute.value;
-      if (isBrowser) {
-        saveScrollPosition(getScrollKey(from.fullPath, info.delta), computeScrollPosition());
-      }
-      navigate(toLocation, from).catch((error) => {
-        if (isNavigationFailure(error, 4 | 8)) {
-          return error;
-        }
-        if (isNavigationFailure(error, 2)) {
-          pushWithRedirect(
-            error.to,
-            toLocation
-          ).then((failure) => {
-            if (isNavigationFailure(failure, 4 | 16) && !info.delta && info.type === NavigationType.pop) {
-              routerHistory.go(-1, false);
-            }
-          }).catch(noop);
-          return Promise.reject();
-        }
-        if (info.delta) {
-          routerHistory.go(-info.delta, false);
-        }
-        return triggerError(error, toLocation, from);
-      }).then((failure) => {
-        failure = failure || finalizeNavigation(
-          toLocation,
-          from,
-          false
-        );
-        if (failure) {
-          if (info.delta && !isNavigationFailure(failure, 8)) {
-            routerHistory.go(-info.delta, false);
-          } else if (info.type === NavigationType.pop && isNavigationFailure(failure, 4 | 16)) {
-            routerHistory.go(-1, false);
-          }
-        }
-        triggerAfterEach(toLocation, from, failure);
-      }).catch(noop);
-    });
-  }
-  let readyHandlers = useCallbacks();
-  let errorHandlers = useCallbacks();
-  let ready;
-  function triggerError(error, to, from) {
-    markAsReady(error);
-    const list = errorHandlers.list();
-    if (list.length) {
-      list.forEach((handler) => handler(error, to, from));
-    } else {
-      console.error(error);
-    }
-    return Promise.reject(error);
-  }
-  function isReady() {
-    if (ready && currentRoute.value !== START_LOCATION_NORMALIZED)
-      return Promise.resolve();
-    return new Promise((resolve3, reject) => {
-      readyHandlers.add([resolve3, reject]);
-    });
-  }
-  function markAsReady(err) {
-    if (!ready) {
-      ready = !err;
-      setupListeners();
-      readyHandlers.list().forEach(([resolve3, reject]) => err ? reject(err) : resolve3());
-      readyHandlers.reset();
-    }
-    return err;
-  }
-  function handleScroll(to, from, isPush, isFirstNavigation) {
-    const { scrollBehavior } = options;
-    if (!isBrowser || !scrollBehavior)
-      return Promise.resolve();
-    const scrollPosition = !isPush && getSavedScrollPosition(getScrollKey(to.fullPath, 0)) || (isFirstNavigation || !isPush) && history.state && history.state.scroll || null;
-    return nextTick().then(() => scrollBehavior(to, from, scrollPosition)).then((position) => position && scrollToPosition(position)).catch((err) => triggerError(err, to, from));
-  }
-  const go = (delta2) => routerHistory.go(delta2);
-  let started;
-  const installedApps = /* @__PURE__ */ new Set();
-  const router2 = {
-    currentRoute,
-    listening: true,
-    addRoute,
-    removeRoute,
-    hasRoute,
-    getRoutes,
-    resolve: resolve2,
-    options,
-    push,
-    replace: replace2,
-    go,
-    back: () => go(-1),
-    forward: () => go(1),
-    beforeEach: beforeGuards.add,
-    beforeResolve: beforeResolveGuards.add,
-    afterEach: afterGuards.add,
-    onError: errorHandlers.add,
-    isReady,
-    install(app2) {
-      const router3 = this;
-      app2.component("RouterLink", RouterLink);
-      app2.component("RouterView", RouterView);
-      app2.config.globalProperties.$router = router3;
-      Object.defineProperty(app2.config.globalProperties, "$route", {
-        enumerable: true,
-        get: () => unref(currentRoute)
-      });
-      if (isBrowser && !started && currentRoute.value === START_LOCATION_NORMALIZED) {
-        started = true;
-        push(routerHistory.location).catch((err) => {
-        });
-      }
-      const reactiveRoute = {};
-      for (const key in START_LOCATION_NORMALIZED) {
-        reactiveRoute[key] = computed(() => currentRoute.value[key]);
-      }
-      app2.provide(routerKey, router3);
-      app2.provide(routeLocationKey, reactive(reactiveRoute));
-      app2.provide(routerViewLocationKey, currentRoute);
-      const unmountApp = app2.unmount;
-      installedApps.add(app2);
-      app2.unmount = function() {
-        installedApps.delete(app2);
-        if (installedApps.size < 1) {
-          pendingLocation = START_LOCATION_NORMALIZED;
-          removeHistoryListener && removeHistoryListener();
-          removeHistoryListener = null;
-          currentRoute.value = START_LOCATION_NORMALIZED;
-          started = false;
-          ready = false;
-        }
-        unmountApp();
-      };
-    }
-  };
-  return router2;
-}
-function runGuardQueue(guards) {
-  return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
-}
-function extractChangingRecords(to, from) {
-  const leavingRecords = [];
-  const updatingRecords = [];
-  const enteringRecords = [];
-  const len = Math.max(from.matched.length, to.matched.length);
-  for (let i2 = 0; i2 < len; i2++) {
-    const recordFrom = from.matched[i2];
-    if (recordFrom) {
-      if (to.matched.find((record) => isSameRouteRecord(record, recordFrom)))
-        updatingRecords.push(recordFrom);
-      else
-        leavingRecords.push(recordFrom);
-    }
-    const recordTo = to.matched[i2];
-    if (recordTo) {
-      if (!from.matched.find((record) => isSameRouteRecord(record, recordTo))) {
-        enteringRecords.push(recordTo);
-      }
-    }
-  }
-  return [leavingRecords, updatingRecords, enteringRecords];
-}
-const VMain$1 = "";
-const makeTagProps = propsFactory({
-  tag: {
-    type: String,
-    default: "div"
-  }
-}, "tag");
-function useSsrBoot() {
-  const isBooted = ref(false);
-  onMounted(() => {
-    window.requestAnimationFrame(() => {
-      isBooted.value = true;
-    });
-  });
-  const ssrBootStyles = computed(() => !isBooted.value ? {
-    transition: "none !important"
-  } : void 0);
-  return {
-    ssrBootStyles,
-    isBooted: readonly(isBooted)
-  };
-}
-const VMain = defineComponent({
-  name: "VMain",
-  props: {
-    scrollable: Boolean,
-    ...makeTagProps({
-      tag: "main"
-    })
-  },
-  setup(props, _ref) {
-    let {
-      slots
-    } = _ref;
-    const {
-      mainStyles
-    } = useLayout();
-    const {
-      ssrBootStyles
-    } = useSsrBoot();
-    useRender(() => {
-      var _slots$default, _slots$default2;
-      return createVNode(props.tag, {
-        "class": ["v-main", {
-          "v-main--scrollable": props.scrollable
-        }],
-        "style": [mainStyles.value, ssrBootStyles.value]
-      }, {
-        default: () => [props.scrollable ? createVNode("div", {
-          "class": "v-main__scroller"
-        }, [(_slots$default = slots.default) == null ? void 0 : _slots$default.call(slots)]) : (_slots$default2 = slots.default) == null ? void 0 : _slots$default2.call(slots)]
-      });
-    });
-    return {};
-  }
-});
-const _sfc_main$n = {
-  name: "default-view",
-  props: {
-    userdata: {
-      type: Object,
-      required: true
-    }
-  }
-};
-function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_router_view = resolveComponent("router-view");
-  return openBlock(), createBlock(VMain, null, {
-    default: withCtx(() => [
-      createVNode(_component_router_view, { userdata: $props.userdata }, null, 8, ["userdata"])
-    ]),
-    _: 1
-  });
-}
-const DefaultView = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n]]);
-const Default_vue_vue_type_style_index_0_lang = "";
-const VApp$1 = "";
-const VApp = defineComponent({
-  name: "VApp",
-  props: {
-    ...makeLayoutProps({
-      fullHeight: true
-    }),
-    ...makeThemeProps()
-  },
-  setup(props, _ref) {
-    let {
-      slots
-    } = _ref;
-    const theme = provideTheme(props);
-    const {
-      layoutClasses,
-      layoutStyles,
-      getLayoutItem,
-      items,
-      layoutRef
-    } = createLayout(props);
-    const {
-      rtlClasses
-    } = useRtl();
-    useRender(() => {
-      var _slots$default;
-      return createVNode("div", {
-        "ref": layoutRef,
-        "class": ["v-application", theme.themeClasses.value, layoutClasses.value, rtlClasses.value],
-        "style": layoutStyles.value
-      }, [createVNode("div", {
-        "class": "v-application__wrap"
-      }, [(_slots$default = slots.default) == null ? void 0 : _slots$default.call(slots)])]);
-    });
-    return {
-      getLayoutItem,
-      items,
-      theme
-    };
-  }
-});
-const _sfc_main$m = {
-  name: "default-p",
-  props: {
-    userdata: {
-      type: Object,
-      require: true
-    }
-  },
-  components: {
-    DefaultView
-  }
-};
-function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_default_view = resolveComponent("default-view");
-  return openBlock(), createBlock(VApp, { class: "gp-full-height" }, {
-    default: withCtx(() => [
-      createVNode(_component_default_view, { userdata: $props.userdata }, null, 8, ["userdata"])
-    ]),
-    _: 1
-  });
-}
-const Default = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$m]]);
 const MONTH_INDEX_MAP = {
   Jan: 0,
   Feb: 1,
@@ -50184,6 +48163,12 @@ function useSize(props) {
     };
   });
 }
+const makeTagProps = propsFactory({
+  tag: {
+    type: String,
+    default: "div"
+  }
+}, "tag");
 function useColor(colors) {
   return destructComputed(() => {
     const classes = [];
@@ -53353,19 +51338,19 @@ function useRouter() {
   return (_getCurrentInstance = getCurrentInstance("useRouter")) == null ? void 0 : (_getCurrentInstance$p = _getCurrentInstance.proxy) == null ? void 0 : _getCurrentInstance$p.$router;
 }
 function useLink(props, attrs) {
-  const RouterLink2 = resolveDynamicComponent("RouterLink");
+  const RouterLink = resolveDynamicComponent("RouterLink");
   const isLink = computed(() => !!(props.href || props.to));
   const isClickable = computed(() => {
     return (isLink == null ? void 0 : isLink.value) || hasEvent(attrs, "click") || hasEvent(props, "click");
   });
-  if (typeof RouterLink2 === "string") {
+  if (typeof RouterLink === "string") {
     return {
       isLink,
       isClickable,
       href: toRef(props, "href")
     };
   }
-  const link = props.to ? RouterLink2.useLink(props) : void 0;
+  const link = props.to ? RouterLink.useLink(props) : void 0;
   return {
     isLink,
     isClickable,
@@ -53385,14 +51370,14 @@ const makeRouterProps = propsFactory({
   exact: Boolean
 }, "router");
 let inTransition = false;
-function useBackButton(router2, cb) {
+function useBackButton(router, cb) {
   let popped = false;
   let removeBefore;
   let removeAfter;
   if (IN_BROWSER) {
     nextTick(() => {
       window.addEventListener("popstate", onPopstate);
-      removeBefore = router2 == null ? void 0 : router2.beforeEach((to, from, next) => {
+      removeBefore = router == null ? void 0 : router.beforeEach((to, from, next) => {
         if (!inTransition) {
           setTimeout(() => popped ? cb(next) : next());
         } else {
@@ -53400,7 +51385,7 @@ function useBackButton(router2, cb) {
         }
         inTransition = true;
       });
-      removeAfter = router2 == null ? void 0 : router2.afterEach(() => {
+      removeAfter = router == null ? void 0 : router.afterEach(() => {
         inTransition = false;
       });
     });
@@ -54853,26 +52838,26 @@ const VList = genericComponent()({
       }
       e3.preventDefault();
     }
-    function focus(location2) {
+    function focus(location) {
       if (!contentRef.value)
         return;
       const focusable = [...contentRef.value.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter((el2) => !el2.hasAttribute("disabled"));
       const idx = focusable.indexOf(document.activeElement);
-      if (!location2) {
+      if (!location) {
         if (!contentRef.value.contains(document.activeElement)) {
           var _focusable$;
           (_focusable$ = focusable[0]) == null ? void 0 : _focusable$.focus();
         }
-      } else if (location2 === "first") {
+      } else if (location === "first") {
         var _focusable$2;
         (_focusable$2 = focusable[0]) == null ? void 0 : _focusable$2.focus();
-      } else if (location2 === "last") {
+      } else if (location === "last") {
         var _focusable$at;
         (_focusable$at = focusable.at(-1)) == null ? void 0 : _focusable$at.focus();
       } else {
         let el2;
         let idxx = idx;
-        const inc = location2 === "next" ? 1 : -1;
+        const inc = location === "next" ? 1 : -1;
         do {
           idxx += inc;
           el2 = focusable[idxx];
@@ -54880,7 +52865,7 @@ const VList = genericComponent()({
         if (el2)
           el2.focus();
         else
-          focus(location2 === "next" ? "first" : "last");
+          focus(location === "next" ? "first" : "last");
       }
     }
     useRender(() => {
@@ -56053,9 +54038,9 @@ const VOverlay = genericComponent()({
           animateClick();
       }
     }
-    const router2 = useRouter();
+    const router = useRouter();
     useToggleScope(() => props.closeOnBack, () => {
-      useBackButton(router2, (next) => {
+      useBackButton(router, (next) => {
         if (globalTop.value && isActive.value) {
           next(false);
           if (!props.persistent)
@@ -56865,30 +54850,30 @@ const _sfc_main$l = {
     }
   }
 };
-const _hoisted_1$j = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_2$h = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_3$h = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$k = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$i = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$i = /* @__PURE__ */ createBaseVNode("label", {
   for: "date-picker",
   class: "tw-text-sm"
 }, "Month & Year", -1);
-const _hoisted_4$h = { class: "tw-text-base" };
-const _hoisted_5$e = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_6$d = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_4$i = { class: "tw-text-base" };
+const _hoisted_5$f = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_6$e = /* @__PURE__ */ createBaseVNode("label", {
   for: "category",
   class: "tw-text-sm"
 }, "Category", -1);
-const _hoisted_7$c = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_8$c = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_7$d = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_8$d = /* @__PURE__ */ createBaseVNode("label", {
   for: "customers",
   class: "tw-text-sm"
 }, "Customer(s)", -1);
-const _hoisted_9$c = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
-const _hoisted_10$a = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
+const _hoisted_9$d = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_10$b = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
 function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_VueDatePicker = resolveComponent("VueDatePicker");
-  return openBlock(), createElementBlock("div", _hoisted_1$j, [
-    createBaseVNode("div", _hoisted_2$h, [
-      _hoisted_3$h,
+  return openBlock(), createElementBlock("div", _hoisted_1$k, [
+    createBaseVNode("div", _hoisted_2$i, [
+      _hoisted_3$i,
       createVNode(_component_VueDatePicker, {
         id: "date-picker",
         modelValue: $data.filters.refreshDates.selected,
@@ -56910,7 +54895,7 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
             class: normalizeClass(`tw-flex tw-items-center tw-justify-between tw-py-2 tw-px-3 tw-bg-brand-gray-1
             ${$props.isDataLoading ? "tw-opacity-40" : "tw-cursor-pointer"}`)
           }, [
-            createBaseVNode("span", _hoisted_4$h, toDisplayString(value), 1),
+            createBaseVNode("span", _hoisted_4$i, toDisplayString(value), 1),
             createVNode(VIcon, {
               icon: "mdi-calendar-month",
               class: "tw-text-brand-primary",
@@ -56921,8 +54906,8 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }, 8, ["modelValue", "onUpdate:modelValue", "format", "min-date", "max-date", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_5$e, [
-      _hoisted_6$d,
+    createBaseVNode("div", _hoisted_5$f, [
+      _hoisted_6$e,
       createVNode(VSelect, {
         id: "category",
         items: $data.filters.categories.items,
@@ -56932,8 +54917,8 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $props.isDataLoading
       }, null, 8, ["items", "model-value", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_7$c, [
-      _hoisted_8$c,
+    createBaseVNode("div", _hoisted_7$d, [
+      _hoisted_8$d,
       createVNode(VSelect, {
         id: "customers",
         items: $data.filters.customers.items,
@@ -56943,11 +54928,11 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $props.isDataLoading
       }, null, 8, ["items", "model-value", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_9$c, [
+    createBaseVNode("div", _hoisted_9$d, [
       createBaseVNode("span", {
         class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
       }, " Value (" + toDisplayString($data.currency) + ") ", 3),
-      createBaseVNode("div", _hoisted_10$a, [
+      createBaseVNode("div", _hoisted_10$b, [
         createVNode(VSwitch, {
           "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
           inset: "",
@@ -57315,18 +55300,18 @@ const _sfc_main$k = {
     }
   }
 };
-const _hoisted_1$i = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
-const _hoisted_2$g = /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-xl tw-font-medium" }, " Model Accuracy (Rolling Test) for past 6 months ", -1);
-const _hoisted_3$g = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_4$g = { class: "tw-w-full tw-py-3 tw-px-5 tw-flex tw-justify-center" };
-const _hoisted_5$d = ["src"];
+const _hoisted_1$j = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
+const _hoisted_2$h = /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-xl tw-font-medium" }, " Model Accuracy (Rolling Test) for past 6 months ", -1);
+const _hoisted_3$h = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_4$h = { class: "tw-w-full tw-py-3 tw-px-5 tw-flex tw-justify-center" };
+const _hoisted_5$e = ["src"];
 function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$i, [
-    _hoisted_2$g,
-    _hoisted_3$g,
-    createBaseVNode("div", _hoisted_4$g, [
-      createBaseVNode("img", { src: $data.ModelAccuracyScaleIcon }, null, 8, _hoisted_5$d)
+  return openBlock(), createElementBlock("div", _hoisted_1$j, [
+    _hoisted_2$h,
+    _hoisted_3$h,
+    createBaseVNode("div", _hoisted_4$h, [
+      createBaseVNode("img", { src: $data.ModelAccuracyScaleIcon }, null, 8, _hoisted_5$e)
     ]),
     createVNode(_component_GChart, {
       type: "ColumnChart",
@@ -57429,15 +55414,15 @@ const _sfc_main$j = {
     this.fetchData();
   }
 };
-const _hoisted_1$h = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$i = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " ML Model accuracy is the percentage of correctness of prediction by ML Model for the given dataset. ")
 ], -1);
-const _hoisted_2$f = { id: "modelAccuracyPieChart" };
-const _hoisted_3$f = {
+const _hoisted_2$g = { id: "modelAccuracyPieChart" };
+const _hoisted_3$g = {
   key: 0,
   class: "tw-w-full tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_4$f = { class: "tw-absolute tw-z-10 tw-h-full tw-w-full tw-flex tw-items-center tw-justify-center tw-text-xl tw-font-semibold" };
+const _hoisted_4$g = { class: "tw-absolute tw-z-10 tw-h-full tw-w-full tw-flex tw-items-center tw-justify-center tw-text-xl tw-font-semibold" };
 function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
   const _component_ModelAccuracyChart = resolveComponent("ModelAccuracyChart");
@@ -57450,12 +55435,12 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("p", mergeProps(props, { class: "tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-font-medium tw-text-center tw-pb-2" }), " ML Model Accuracy ", 16)
       ]),
       default: withCtx(() => [
-        _hoisted_1$h
+        _hoisted_1$i
       ]),
       _: 1
     }),
-    createBaseVNode("div", _hoisted_2$f, [
-      $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_3$f, [
+    createBaseVNode("div", _hoisted_2$g, [
+      $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_3$g, [
         createVNode(VProgressCircular, {
           indeterminate: "",
           color: "#7823DC",
@@ -57473,7 +55458,7 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
             key: 0,
             class: "tw-relative tw-flex tw-items-center"
           }, props), [
-            createBaseVNode("div", _hoisted_4$f, toDisplayString(Math.round($data.modelAccuracy, 0)) + "% ", 1),
+            createBaseVNode("div", _hoisted_4$g, toDisplayString(Math.round($data.modelAccuracy, 0)) + "% ", 1),
             createVNode(_component_GChart, {
               type: "PieChart",
               data: [
@@ -57898,7 +55883,7 @@ const _sfc_main$i = {
     }
   }
 };
-const _hoisted_1$g = { class: "tw-text-black tw-normal-case tw-font-medium desktop:tw-text-xs small-laptop:xs tw-text-base" };
+const _hoisted_1$h = { class: "tw-text-black tw-normal-case tw-font-medium desktop:tw-text-xs small-laptop:xs tw-text-base" };
 function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createBlock(VBtn, {
     variant: "outlined",
@@ -57915,7 +55900,7 @@ function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
         color: $options.getColorCode($props.variance),
         size: 24
       }, null, 8, ["icon", "color"]),
-      createBaseVNode("span", _hoisted_1$g, toDisplayString($options.getActionButtonLabel($props.variance)), 1),
+      createBaseVNode("span", _hoisted_1$h, toDisplayString($options.getActionButtonLabel($props.variance)), 1),
       createVNode(VIcon, {
         icon: "mdi-chevron-right",
         end: "",
@@ -58111,33 +56096,33 @@ const _sfc_main$h = {
     }
   }
 };
-const _hoisted_1$f = { class: "tw-w-[80vw] tw-h-[80vh] tw-overflow-auto tw-bg-white tw-p-3" };
-const _hoisted_2$e = { class: "tw-w-full tw-h-full tw-min-w-[800px] tw-min-h-[450px] tw-flex tw-flex-col" };
-const _hoisted_3$e = { class: "tw-text-lg tw-font-bold tw-pb-3" };
-const _hoisted_4$e = { class: "tw-grid tw-grid-cols-2 tw-grow" };
-const _hoisted_5$c = { class: "tw-col-span-1 tw-py-3 tw-px-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10 tw-overflow-auto" };
-const _hoisted_6$c = {
+const _hoisted_1$g = { class: "tw-w-[80vw] tw-h-[80vh] tw-overflow-auto tw-bg-white tw-p-3" };
+const _hoisted_2$f = { class: "tw-w-full tw-h-full tw-min-w-[800px] tw-min-h-[450px] tw-flex tw-flex-col" };
+const _hoisted_3$f = { class: "tw-text-lg tw-font-bold tw-pb-3" };
+const _hoisted_4$f = { class: "tw-grid tw-grid-cols-2 tw-grow" };
+const _hoisted_5$d = { class: "tw-col-span-1 tw-py-3 tw-px-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10 tw-overflow-auto" };
+const _hoisted_6$d = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_7$b = {
+const _hoisted_7$c = {
   key: 1,
   class: "tw-flex tw-flex-col tw-gap-y-7"
 };
-const _hoisted_8$b = { class: "tw-flex tw-justify-between" };
-const _hoisted_9$b = { class: "tw-text-base tw-font-medium tw-text-black" };
-const _hoisted_10$9 = { class: "tw-text-base tw-text-brand-gray-3" };
-const _hoisted_11$9 = { class: "tw-col-span-1 tw-p-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10" };
-const _hoisted_12$7 = { class: "tw-w-full tw-h-3/5 small-laptop:tw-h-2/4 tw-overflow-auto tw-mb-4" };
-const _hoisted_13$6 = /* @__PURE__ */ createBaseVNode("label", { for: "review" }, "Add Your Response", -1);
-const _hoisted_14$5 = /* @__PURE__ */ createBaseVNode("label", { for: "status" }, "Recommended Action Status", -1);
-const _hoisted_15$5 = { class: "tw-flex tw-items-center tw-gap-x-4 tw-pt-4" };
-const _hoisted_16$3 = ["disabled"];
-const _hoisted_17$3 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-white tw-text-base" }, "Save Updates", -1);
-const _hoisted_18$3 = [
-  _hoisted_17$3
+const _hoisted_8$c = { class: "tw-flex tw-justify-between" };
+const _hoisted_9$c = { class: "tw-text-base tw-font-medium tw-text-black" };
+const _hoisted_10$a = { class: "tw-text-base tw-text-brand-gray-3" };
+const _hoisted_11$a = { class: "tw-col-span-1 tw-p-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10" };
+const _hoisted_12$8 = { class: "tw-w-full tw-h-3/5 small-laptop:tw-h-2/4 tw-overflow-auto tw-mb-4" };
+const _hoisted_13$7 = /* @__PURE__ */ createBaseVNode("label", { for: "review" }, "Add Your Response", -1);
+const _hoisted_14$6 = /* @__PURE__ */ createBaseVNode("label", { for: "status" }, "Recommended Action Status", -1);
+const _hoisted_15$6 = { class: "tw-flex tw-items-center tw-gap-x-4 tw-pt-4" };
+const _hoisted_16$4 = ["disabled"];
+const _hoisted_17$4 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-white tw-text-base" }, "Save Updates", -1);
+const _hoisted_18$4 = [
+  _hoisted_17$4
 ];
-const _hoisted_19$3 = {
+const _hoisted_19$4 = {
   key: 0,
   class: "tw-px-4 tw-py-1 tw-flex tw-items-center tw-gap-x-2 tw-border-2 tw-border-solid tw-border-brand-green-1 tw-rounded-sm tw-bg-brand-green-3"
 };
@@ -58153,36 +56138,36 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     persistent: ""
   }, {
     default: withCtx(() => [
-      createBaseVNode("div", _hoisted_1$f, [
-        createBaseVNode("div", _hoisted_2$e, [
-          createBaseVNode("h1", _hoisted_3$e, " Recommended Action - " + toDisplayString($options.getStatus($props.variance)) + " Status ", 1),
-          createBaseVNode("div", _hoisted_4$e, [
-            createBaseVNode("div", _hoisted_5$c, [
-              $props.isFetching ? (openBlock(), createElementBlock("div", _hoisted_6$c, [
+      createBaseVNode("div", _hoisted_1$g, [
+        createBaseVNode("div", _hoisted_2$f, [
+          createBaseVNode("h1", _hoisted_3$f, " Recommended Action - " + toDisplayString($options.getStatus($props.variance)) + " Status ", 1),
+          createBaseVNode("div", _hoisted_4$f, [
+            createBaseVNode("div", _hoisted_5$d, [
+              $props.isFetching ? (openBlock(), createElementBlock("div", _hoisted_6$d, [
                 createVNode(VProgressCircular, {
                   indeterminate: "",
                   color: "#7823DC",
                   size: 60,
                   width: 10
                 })
-              ])) : (openBlock(), createElementBlock("div", _hoisted_7$b, [
+              ])) : (openBlock(), createElementBlock("div", _hoisted_7$c, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList($props.reviews, (review) => {
                   return openBlock(), createElementBlock("div", {
                     key: $data.lodGet(review, "id"),
                     class: "tw-flex tw-flex-col tw-gap-y-2"
                   }, [
-                    createBaseVNode("div", _hoisted_8$b, [
-                      createBaseVNode("span", _hoisted_9$b, toDisplayString($data.lodGet(review, "user_display_name")), 1),
-                      createBaseVNode("span", _hoisted_10$9, toDisplayString($options.formatDate($data.lodGet(review, "date"), "MMM dd, yyyy")), 1)
+                    createBaseVNode("div", _hoisted_8$c, [
+                      createBaseVNode("span", _hoisted_9$c, toDisplayString($data.lodGet(review, "user_display_name")), 1),
+                      createBaseVNode("span", _hoisted_10$a, toDisplayString($options.formatDate($data.lodGet(review, "date"), "MMM dd, yyyy")), 1)
                     ]),
                     createBaseVNode("p", null, toDisplayString($data.lodGet(review, "comment")), 1)
                   ]);
                 }), 128))
               ]))
             ]),
-            createBaseVNode("div", _hoisted_11$9, [
-              createBaseVNode("div", _hoisted_12$7, [
-                _hoisted_13$6,
+            createBaseVNode("div", _hoisted_11$a, [
+              createBaseVNode("div", _hoisted_12$8, [
+                _hoisted_13$7,
                 withDirectives(createBaseVNode("textarea", {
                   id: "review",
                   "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userResponse = $event),
@@ -58193,7 +56178,7 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
                 ])
               ]),
               createBaseVNode("div", null, [
-                _hoisted_14$5,
+                _hoisted_14$6,
                 createVNode(VSelect, {
                   id: "status",
                   "model-value": $data.selectedAction,
@@ -58204,13 +56189,13 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
               ])
             ])
           ]),
-          createBaseVNode("div", _hoisted_15$5, [
+          createBaseVNode("div", _hoisted_15$6, [
             createBaseVNode("button", {
               class: normalizeClass(`tw-px-6 tw-py-2 ${$options.isSubmitButtonDisabled() ? "tw-bg-brand-primary-disabled" : "tw-bg-brand-primary"}`),
               disabled: $options.isSubmitButtonDisabled(),
               onClick: _cache[2] || (_cache[2] = (...args) => $options.submitHandler && $options.submitHandler(...args))
-            }, _hoisted_18$3, 10, _hoisted_16$3),
-            $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$3, [
+            }, _hoisted_18$4, 10, _hoisted_16$4),
+            $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$4, [
               createVNode(VIcon, {
                 icon: "mdi-check-circle",
                 color: "#04BB46"
@@ -58382,40 +56367,40 @@ const _sfc_main$g = {
     this.fetchReviews();
   }
 };
-const _hoisted_1$e = { class: "tw-w-full tw-h-full tw-px-3 tw-py-4" };
-const _hoisted_2$d = { class: "tw-flex tw-flex-col tw-py-2" };
-const _hoisted_3$d = /* @__PURE__ */ createBaseVNode("p", {
+const _hoisted_1$f = { class: "tw-w-full tw-h-full tw-px-3 tw-py-4" };
+const _hoisted_2$e = { class: "tw-flex tw-flex-col tw-py-2" };
+const _hoisted_3$e = /* @__PURE__ */ createBaseVNode("p", {
   style: { "color": "#9291a5" },
   class: "desktop:tw-text-sm small-laptop:tw-text-xs"
 }, "Projected Period", -1);
-const _hoisted_4$d = { class: "tw-flex tw-gap-x-4 desktop:tw-gap-x-3 tw-items-center tw-w-full" };
-const _hoisted_5$b = { class: "tw-text-lg desktop:tw-text-sm small-laptop:tw-text-sm tw-font-medium" };
-const _hoisted_6$b = {
+const _hoisted_4$e = { class: "tw-flex tw-gap-x-4 desktop:tw-gap-x-3 tw-items-center tw-w-full" };
+const _hoisted_5$c = { class: "tw-text-lg desktop:tw-text-sm small-laptop:tw-text-sm tw-font-medium" };
+const _hoisted_6$c = {
   key: 0,
   class: "tw-bg-brand-gray-4 tw-rounded tw-text-center"
 };
-const _hoisted_7$a = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_8$a = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_9$a = { class: "tw-col-span-3" };
-const _hoisted_10$8 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-52 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_7$b = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_8$b = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_9$b = { class: "tw-col-span-3" };
+const _hoisted_10$9 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-52 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " The % increase in demand the company expects. ")
 ], -1);
-const _hoisted_11$8 = { class: "tw-grid tw-grid-cols-2 tw-pt-4" };
-const _hoisted_12$6 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
-const _hoisted_13$5 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Planned Internal Forecast", -1);
-const _hoisted_14$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_11$9 = { class: "tw-grid tw-grid-cols-2 tw-pt-4" };
+const _hoisted_12$7 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
+const _hoisted_13$6 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Planned Internal Forecast", -1);
+const _hoisted_14$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Internal market demands at a category level determined by internal historical data. ")
 ], -1);
-const _hoisted_15$4 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
-const _hoisted_16$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
-const _hoisted_17$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_15$5 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
+const _hoisted_16$3 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
+const _hoisted_17$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Highly accurate market demand projections at a category level based on ML models that analyze and learn from internal and external data feeds ")
 ], -1);
-const _hoisted_18$2 = {
+const _hoisted_18$3 = {
   key: 0,
   class: "tw-flex tw-flex-col tw-items-center tw-col-span-2"
 };
-const _hoisted_19$2 = { class: "tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-3 tw-pt-2" };
+const _hoisted_19$3 = { class: "tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-3 tw-pt-2" };
 const _hoisted_20$2 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Variance", -1);
 const _hoisted_21$2 = { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
 const _hoisted_22$2 = { class: "tw-text-sm tw-text-center" };
@@ -58423,21 +56408,21 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ModelAccuracySection = resolveComponent("ModelAccuracySection");
   const _component_ActionButton = resolveComponent("ActionButton");
   const _component_ActionForm = resolveComponent("ActionForm");
-  return openBlock(), createElementBlock("div", _hoisted_1$e, [
-    createBaseVNode("div", _hoisted_2$d, [
-      _hoisted_3$d,
-      createBaseVNode("div", _hoisted_4$d, [
-        createBaseVNode("p", _hoisted_5$b, toDisplayString($options.periodLabel), 1),
-        $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_6$b, [
-          createBaseVNode("p", _hoisted_7$a, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
+  return openBlock(), createElementBlock("div", _hoisted_1$f, [
+    createBaseVNode("div", _hoisted_2$e, [
+      _hoisted_3$e,
+      createBaseVNode("div", _hoisted_4$e, [
+        createBaseVNode("p", _hoisted_5$c, toDisplayString($options.periodLabel), 1),
+        $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_6$c, [
+          createBaseVNode("p", _hoisted_7$b, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
         ])) : createCommentVNode("", true)
       ])
     ]),
-    _hoisted_8$a,
+    _hoisted_8$b,
     createBaseVNode("div", {
       class: normalizeClass(`tw-grid tw-py-2 small-laptop:tw-py-1 ${$options.isModelAccuracyHidden ? "tw-grid-cols-3" : "tw-grid-cols-5"}`)
     }, [
-      createBaseVNode("div", _hoisted_9$a, [
+      createBaseVNode("div", _hoisted_9$b, [
         createVNode(VMenu, {
           "open-on-hover": "",
           location: "top"
@@ -58446,23 +56431,23 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("p", mergeProps(props, { class: "tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-font-medium" }), " Projected Growth (%YoY) ", 16)
           ]),
           default: withCtx(() => [
-            _hoisted_10$8
+            _hoisted_10$9
           ]),
           _: 1
         }),
-        createBaseVNode("div", _hoisted_11$8, [
+        createBaseVNode("div", _hoisted_11$9, [
           createVNode(VMenu, {
             "open-on-hover": "",
             location: "top"
           }, {
             activator: withCtx(({ props }) => [
               createBaseVNode("div", mergeProps(props, { class: "tw-text-center" }), [
-                createBaseVNode("p", _hoisted_12$6, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.jdaGrowth")}`), 1),
-                _hoisted_13$5
+                createBaseVNode("p", _hoisted_12$7, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.jdaGrowth")}`), 1),
+                _hoisted_13$6
               ], 16)
             ]),
             default: withCtx(() => [
-              _hoisted_14$4
+              _hoisted_14$5
             ]),
             _: 1
           }),
@@ -58472,18 +56457,18 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
           }, {
             activator: withCtx(({ props }) => [
               createBaseVNode("div", mergeProps(props, { class: "tw-text-center" }), [
-                createBaseVNode("p", _hoisted_15$4, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.marketSensingGrowth")}`), 1),
-                _hoisted_16$2
+                createBaseVNode("p", _hoisted_15$5, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.marketSensingGrowth")}`), 1),
+                _hoisted_16$3
               ], 16)
             ]),
             default: withCtx(() => [
-              _hoisted_17$2
+              _hoisted_17$3
             ]),
             _: 1
           })
         ])
       ]),
-      !$options.isModelAccuracyHidden ? (openBlock(), createElementBlock("div", _hoisted_18$2, [
+      !$options.isModelAccuracyHidden ? (openBlock(), createElementBlock("div", _hoisted_18$3, [
         createVNode(_component_ModelAccuracySection, {
           marketSensingRefreshDate: this.selectedFilters.marketSensingRefreshDate,
           category: this.selectedFilters.category,
@@ -58492,7 +56477,7 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8, ["marketSensingRefreshDate", "category", "horizon", "forecastPeriodType"])
       ])) : createCommentVNode("", true)
     ], 2),
-    createBaseVNode("div", _hoisted_19$2, [
+    createBaseVNode("div", _hoisted_19$3, [
       createVNode(VMenu, {
         "open-on-hover": "",
         location: "top"
@@ -58553,17 +56538,17 @@ const _sfc_main$f = {
   },
   emits: ["setActiveCard"]
 };
-const _hoisted_1$d = ["onClick"];
-const _hoisted_2$c = {
+const _hoisted_1$e = ["onClick"];
+const _hoisted_2$d = {
   key: 0,
   class: "tw-flex tw-w-full tw-justify-center"
 };
-const _hoisted_3$c = /* @__PURE__ */ createBaseVNode("div", {
+const _hoisted_3$d = /* @__PURE__ */ createBaseVNode("div", {
   class: "tw-w-0 tw-h-0 tw-border-solid tw-border-t-brand-primary",
   style: { "border-left-width": "16px", "border-left-color": "transparent", "border-right-width": "16px", "border-right-color": "transparent", "border-top-width": "16px" }
 }, null, -1);
-const _hoisted_4$c = [
-  _hoisted_3$c
+const _hoisted_4$d = [
+  _hoisted_3$d
 ];
 function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CardsListItem = resolveComponent("CardsListItem");
@@ -58577,8 +56562,8 @@ function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
         data: cardData,
         options: $props.options
       }, null, 8, ["data", "options"]),
-      cardData.isActive ? (openBlock(), createElementBlock("div", _hoisted_2$c, _hoisted_4$c)) : createCommentVNode("", true)
-    ], 10, _hoisted_1$d);
+      cardData.isActive ? (openBlock(), createElementBlock("div", _hoisted_2$d, _hoisted_4$d)) : createCommentVNode("", true)
+    ], 10, _hoisted_1$e);
   }), 128);
 }
 const CardsList$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$f]]);
@@ -58764,38 +56749,38 @@ const _sfc_main$e = {
     }
   }
 };
-const _hoisted_1$c = { class: "tw-flex tw-flex-col tw-justify-between tw-h-full" };
-const _hoisted_2$b = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$d = { class: "tw-flex tw-flex-col tw-justify-between tw-h-full" };
+const _hoisted_2$c = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Most impactful types of data for the select projected period of demand predictions. These factors are accounting the most for the demand forecast. ")
 ], -1);
-const _hoisted_3$b = { class: "tw-w-full tw-max-h-[80vh] tw-min-h-[590px] tw-bg-white tw-px-5 tw-py-4 tw-overflow-auto" };
-const _hoisted_4$b = { class: "tw-flex tw-justify-between tw-gap-x-2" };
-const _hoisted_5$a = { class: "tw-flex tw-flex-col tw-items-start" };
-const _hoisted_6$a = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-text-brand-gray-3" }, " Key Demand Driver(s) ", -1);
-const _hoisted_7$9 = { class: "tw-text-2xl tw-font-medium tw-text-black" };
-const _hoisted_8$9 = {
+const _hoisted_3$c = { class: "tw-w-full tw-max-h-[80vh] tw-min-h-[590px] tw-bg-white tw-px-5 tw-py-4 tw-overflow-auto" };
+const _hoisted_4$c = { class: "tw-flex tw-justify-between tw-gap-x-2" };
+const _hoisted_5$b = { class: "tw-flex tw-flex-col tw-items-start" };
+const _hoisted_6$b = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-text-brand-gray-3" }, " Key Demand Driver(s) ", -1);
+const _hoisted_7$a = { class: "tw-text-2xl tw-font-medium tw-text-black" };
+const _hoisted_8$a = {
   key: 0,
   class: "tw-w-full tw-mt-32 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_9$9 = {
+const _hoisted_9$a = {
   key: 1,
   class: "tw-py-4"
 };
-const _hoisted_10$7 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 tw-bg-brand-gray-1" }, [
+const _hoisted_10$8 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black" }, " Data point(s) "),
   /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-gap-x-1" }, [
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black tw-text-left tw-w-44" }, " Source(s) "),
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black tw-text-right tw-w-24 tw-pr-1" }, " Value ")
   ])
 ], -1);
-const _hoisted_11$7 = { class: "tw-max-h-[420px] tw-overflow-scroll" };
-const _hoisted_12$5 = { class: "tw-text-base tw-text-black" };
-const _hoisted_13$4 = { class: "tw-flex tw-gap-x-1" };
-const _hoisted_14$3 = { class: "tw-text-base tw-text-black tw-text-left tw-w-44" };
-const _hoisted_15$3 = { class: "tw-text-base tw-text-black tw-text-right tw-w-24 tw-pr-1" };
+const _hoisted_11$8 = { class: "tw-max-h-[420px] tw-overflow-scroll" };
+const _hoisted_12$6 = { class: "tw-text-base tw-text-black" };
+const _hoisted_13$5 = { class: "tw-flex tw-gap-x-1" };
+const _hoisted_14$4 = { class: "tw-text-base tw-text-black tw-text-left tw-w-44" };
+const _hoisted_15$4 = { class: "tw-text-base tw-text-black tw-text-right tw-w-24 tw-pr-1" };
 function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$c, [
+  return openBlock(), createElementBlock("div", _hoisted_1$d, [
     createVNode(VMenu, {
       "open-on-hover": "",
       location: "top"
@@ -58804,7 +56789,7 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("span", mergeProps(props, { class: "tw-font-medium tw-text-lg small-laptop:tw-text-base desktop:tw-text-base tw-cursor-default" }), " Key Demand Drivers ", 16)
       ]),
       default: withCtx(() => [
-        _hoisted_2$b
+        _hoisted_2$c
       ]),
       _: 1
     }),
@@ -58822,11 +56807,11 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.dialogIsShown = $event)
     }, {
       default: withCtx(() => [
-        createBaseVNode("div", _hoisted_3$b, [
-          createBaseVNode("div", _hoisted_4$b, [
-            createBaseVNode("div", _hoisted_5$a, [
-              _hoisted_6$a,
-              createBaseVNode("span", _hoisted_7$9, toDisplayString($options.getSelectedDriverLabel()), 1)
+        createBaseVNode("div", _hoisted_3$c, [
+          createBaseVNode("div", _hoisted_4$c, [
+            createBaseVNode("div", _hoisted_5$b, [
+              _hoisted_6$b,
+              createBaseVNode("span", _hoisted_7$a, toDisplayString($options.getSelectedDriverLabel()), 1)
             ]),
             createVNode(VBtn, {
               variant: "plain",
@@ -58834,7 +56819,7 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: $options.closeDialog
             }, null, 8, ["onClick"])
           ]),
-          $data.isFetchingDriverDetails ? (openBlock(), createElementBlock("div", _hoisted_8$9, [
+          $data.isFetchingDriverDetails ? (openBlock(), createElementBlock("div", _hoisted_8$a, [
             createVNode(VProgressCircular, {
               indeterminate: "",
               color: "#7823DC",
@@ -58842,18 +56827,18 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
               width: 10
             })
           ])) : createCommentVNode("", true),
-          !$data.isFetchingDriverDetails && $data.lodSize($data.selectedDriverDetails) > 0 ? (openBlock(), createElementBlock("div", _hoisted_9$9, [
-            _hoisted_10$7,
-            createBaseVNode("ul", _hoisted_11$7, [
+          !$data.isFetchingDriverDetails && $data.lodSize($data.selectedDriverDetails) > 0 ? (openBlock(), createElementBlock("div", _hoisted_9$a, [
+            _hoisted_10$8,
+            createBaseVNode("ul", _hoisted_11$8, [
               (openBlock(true), createElementBlock(Fragment, null, renderList($data.selectedDriverDetails, (item, index2) => {
                 return openBlock(), createElementBlock("li", {
                   key: item.dataPoint,
                   class: normalizeClass(`tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 ${index2 % 2 === 0 ? "tw-bg-white" : "tw-bg-brand-gray-1"}`)
                 }, [
-                  createBaseVNode("span", _hoisted_12$5, toDisplayString(item.dataPoint), 1),
-                  createBaseVNode("div", _hoisted_13$4, [
-                    createBaseVNode("span", _hoisted_14$3, toDisplayString(item.source), 1),
-                    createBaseVNode("span", _hoisted_15$3, toDisplayString($options.getPercentValue(item.value)), 1)
+                  createBaseVNode("span", _hoisted_12$6, toDisplayString(item.dataPoint), 1),
+                  createBaseVNode("div", _hoisted_13$5, [
+                    createBaseVNode("span", _hoisted_14$4, toDisplayString(item.source), 1),
+                    createBaseVNode("span", _hoisted_15$4, toDisplayString($options.getPercentValue(item.value)), 1)
                   ])
                 ], 2);
               }), 128))
@@ -58964,10 +56949,10 @@ const _sfc_main$d = {
     }
   }
 };
-const _hoisted_1$b = { class: "tw-flex tw-flex-col tw-gap-y-2 desktop:tw-items-center small-laptop:tw-items-center" };
-const _hoisted_2$a = { class: "tw-flex tw-items-center tw-gap-x-3" };
-const _hoisted_3$a = { class: "tw-text-xs" };
-const _hoisted_4$a = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$c = { class: "tw-flex tw-flex-col tw-gap-y-2 desktop:tw-items-center small-laptop:tw-items-center" };
+const _hoisted_2$b = { class: "tw-flex tw-items-center tw-gap-x-3" };
+const _hoisted_3$b = { class: "tw-text-xs" };
+const _hoisted_4$b = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Size of the company in relation to its market and its competitors based on demand projections ")
 ], -1);
 function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
@@ -58978,9 +56963,9 @@ function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
       location: "top"
     }, {
       activator: withCtx(({ props }) => [
-        createBaseVNode("div", _hoisted_1$b, [
+        createBaseVNode("div", _hoisted_1$c, [
           createBaseVNode("span", mergeProps(props, { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }), " Implied Market Share ", 16),
-          createBaseVNode("div", _hoisted_2$a, [
+          createBaseVNode("div", _hoisted_2$b, [
             (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
               return openBlock(), createElementBlock("div", {
                 key: item.key,
@@ -58989,14 +56974,14 @@ function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
                 createBaseVNode("span", {
                   style: normalizeStyle(`height: 12px; width: 12px; background: ${item.color}`)
                 }, null, 4),
-                createBaseVNode("span", _hoisted_3$a, toDisplayString(item.label), 1)
+                createBaseVNode("span", _hoisted_3$b, toDisplayString(item.label), 1)
               ]);
             }), 128))
           ])
         ])
       ]),
       default: withCtx(() => [
-        _hoisted_4$a
+        _hoisted_4$b
       ]),
       _: 1
     }),
@@ -59116,18 +57101,18 @@ const _sfc_main$c = {
     };
   }
 };
-const _hoisted_1$a = { class: "tw-flex tw-flex-col tw-gap-y-2 small-laptop:tw-overflow-auto" };
-const _hoisted_2$9 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }, " Market Sensing Forecast vs Sales (%, YoY) \u2013 Historical Period ", -1);
-const _hoisted_3$9 = { class: "tw-flex tw-items-center tw-gap-x-3" };
-const _hoisted_4$9 = { class: "tw-text-xs" };
-const _hoisted_5$9 = { class: "tw-overflow-x-auto tw-overflow-y-hidden" };
-const _hoisted_6$9 = { class: "tw-min-w-[800px]" };
+const _hoisted_1$b = { class: "tw-flex tw-flex-col tw-gap-y-2 small-laptop:tw-overflow-auto" };
+const _hoisted_2$a = /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }, " Market Sensing Forecast vs Sales (%, YoY) \u2013 Historical Period ", -1);
+const _hoisted_3$a = { class: "tw-flex tw-items-center tw-gap-x-3" };
+const _hoisted_4$a = { class: "tw-text-xs" };
+const _hoisted_5$a = { class: "tw-overflow-x-auto tw-overflow-y-hidden" };
+const _hoisted_6$a = { class: "tw-min-w-[800px]" };
 function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$a, [
-      _hoisted_2$9,
-      createBaseVNode("div", _hoisted_3$9, [
+    createBaseVNode("div", _hoisted_1$b, [
+      _hoisted_2$a,
+      createBaseVNode("div", _hoisted_3$a, [
         (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
           return openBlock(), createElementBlock("div", {
             key: item.key,
@@ -59136,13 +57121,13 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("span", {
               style: normalizeStyle(`height: 12px; width: 12px; background: ${item.color}`)
             }, null, 4),
-            createBaseVNode("span", _hoisted_4$9, toDisplayString(item.label), 1)
+            createBaseVNode("span", _hoisted_4$a, toDisplayString(item.label), 1)
           ]);
         }), 128))
       ])
     ]),
-    createBaseVNode("div", _hoisted_5$9, [
-      createBaseVNode("div", _hoisted_6$9, [
+    createBaseVNode("div", _hoisted_5$a, [
+      createBaseVNode("div", _hoisted_6$a, [
         createVNode(_component_GChart, {
           type: "ColumnChart",
           data: $options.chartData,
@@ -59191,49 +57176,49 @@ const _sfc_main$b = {
     }
   }
 };
-const _hoisted_1$9 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full tw-py-2" };
-const _hoisted_2$8 = { class: "tw-font-medium tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg" };
-const _hoisted_3$8 = {
+const _hoisted_1$a = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full tw-py-2" };
+const _hoisted_2$9 = { class: "tw-font-medium tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg" };
+const _hoisted_3$9 = {
   key: 0,
   class: "tw-bg-brand-gray-4 tw-rounded"
 };
-const _hoisted_4$8 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_5$8 = { class: "tw-py-3 tw-w-full" };
-const _hoisted_6$8 = {
+const _hoisted_4$9 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_5$9 = { class: "tw-py-3 tw-w-full" };
+const _hoisted_6$9 = {
   key: 0,
   class: "tw-grid tw-grid-cols-7 desktop:tw-grid-cols-12 small-laptop:tw-grid-cols-12 tw-gap-4"
 };
-const _hoisted_7$8 = { class: "tw-col-span-2 desktop:tw-col-span-4 small-laptop:tw-col-span-4" };
-const _hoisted_8$8 = { class: "tw-col-span-1 desktop:tw-col-span-2 small-laptop:tw-col-span-2" };
-const _hoisted_9$8 = { class: "tw-col-span-4 desktop:tw-col-span-6 small-laptop:tw-col-span-6" };
+const _hoisted_7$9 = { class: "tw-col-span-2 desktop:tw-col-span-4 small-laptop:tw-col-span-4" };
+const _hoisted_8$9 = { class: "tw-col-span-1 desktop:tw-col-span-2 small-laptop:tw-col-span-2" };
+const _hoisted_9$9 = { class: "tw-col-span-4 desktop:tw-col-span-6 small-laptop:tw-col-span-6" };
 function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ChartKeyDemandDrivers = resolveComponent("ChartKeyDemandDrivers");
   const _component_ChartPYandImpliedGrowth = resolveComponent("ChartPYandImpliedGrowth");
   const _component_ChartHistoricalAndActual = resolveComponent("ChartHistoricalAndActual");
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$9, [
-      createBaseVNode("p", _hoisted_2$8, " More details for " + toDisplayString($options.periodLabel), 1),
-      $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_3$8, [
-        createBaseVNode("p", _hoisted_4$8, " Future " + toDisplayString($options.formattedHorizon) + " months ", 1)
+    createBaseVNode("div", _hoisted_1$a, [
+      createBaseVNode("p", _hoisted_2$9, " More details for " + toDisplayString($options.periodLabel), 1),
+      $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_3$9, [
+        createBaseVNode("p", _hoisted_4$9, " Future " + toDisplayString($options.formattedHorizon) + " months ", 1)
       ])) : createCommentVNode("", true)
     ]),
-    createBaseVNode("div", _hoisted_5$8, [
-      $options.metrics ? (openBlock(), createElementBlock("div", _hoisted_6$8, [
-        createBaseVNode("div", _hoisted_7$8, [
+    createBaseVNode("div", _hoisted_5$9, [
+      $options.metrics ? (openBlock(), createElementBlock("div", _hoisted_6$9, [
+        createBaseVNode("div", _hoisted_7$9, [
           createVNode(_component_ChartKeyDemandDrivers, {
             data: $options.metrics.keyDemandDrivers,
             horizon: $options.horizon,
             selectedFilters: $options.selectedFilters
           }, null, 8, ["data", "horizon", "selectedFilters"])
         ]),
-        createBaseVNode("div", _hoisted_8$8, [
+        createBaseVNode("div", _hoisted_8$9, [
           createVNode(_component_ChartPYandImpliedGrowth, {
             projectedPeriod: $options.periodLabel,
             pyVal: $options.metrics.pyGrowth,
             impliedVal: $options.metrics.impliedGrowth
           }, null, 8, ["projectedPeriod", "pyVal", "impliedVal"])
         ]),
-        createBaseVNode("div", _hoisted_9$8, [
+        createBaseVNode("div", _hoisted_9$9, [
           createVNode(_component_ChartHistoricalAndActual, {
             data: $options.metrics.historical
           }, null, 8, ["data"])
@@ -59623,34 +57608,34 @@ const _sfc_main$a = {
     }
   }
 };
-const _hoisted_1$8 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
-const _hoisted_2$7 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
-const _hoisted_3$7 = { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" };
-const _hoisted_4$7 = {
+const _hoisted_1$9 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
+const _hoisted_2$8 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$8 = { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" };
+const _hoisted_4$8 = {
   key: 0,
   class: "tw-ml-auto tw-h-full tw-flex tw-items-center"
 };
-const _hoisted_5$7 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_6$7 = { class: "tw-py-5" };
-const _hoisted_7$7 = {
+const _hoisted_5$8 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$8 = { class: "tw-py-5" };
+const _hoisted_7$8 = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_8$7 = {
+const _hoisted_8$8 = {
   key: 1,
   class: "tw-w-full tw-p-4 tw-bg-white"
 };
-const _hoisted_9$7 = { class: "tw-flex tw-flex-col tw-w-full tw-border-b tw-border-solid tw-border-brand-gray-2" };
-const _hoisted_10$6 = /* @__PURE__ */ createBaseVNode("h1", { class: "desktop:tw-text-2xl small-laptop:tw-text-2xl tw-text-3xl tw-font-bold" }, " Future Demand Forecasting ", -1);
-const _hoisted_11$6 = { class: "tw-flex tw-items-center tw-w-full" };
-const _hoisted_12$4 = /* @__PURE__ */ createBaseVNode("p", { class: "desktop:tw-text-sm small-laptop:tw-text-sm" }, " Show demand projections for: ", -1);
-const _hoisted_13$3 = ["for"];
-const _hoisted_14$2 = { class: "tw-flex tw-gap-x-3 tw-ml-auto small-laptop:tw-ml-3" };
-const _hoisted_15$2 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-laptop:tw-gap-x-0" };
-const _hoisted_16$1 = ["src"];
-const _hoisted_17$1 = { class: "tw-text-sm desktop:tw-text-xs" };
-const _hoisted_18$1 = ["disabled"];
-const _hoisted_19$1 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_9$8 = { class: "tw-flex tw-flex-col tw-w-full tw-border-b tw-border-solid tw-border-brand-gray-2" };
+const _hoisted_10$7 = /* @__PURE__ */ createBaseVNode("h1", { class: "desktop:tw-text-2xl small-laptop:tw-text-2xl tw-text-3xl tw-font-bold" }, " Future Demand Forecasting ", -1);
+const _hoisted_11$7 = { class: "tw-flex tw-items-center tw-w-full" };
+const _hoisted_12$5 = /* @__PURE__ */ createBaseVNode("p", { class: "desktop:tw-text-sm small-laptop:tw-text-sm" }, " Show demand projections for: ", -1);
+const _hoisted_13$4 = ["for"];
+const _hoisted_14$3 = { class: "tw-flex tw-gap-x-3 tw-ml-auto small-laptop:tw-ml-3" };
+const _hoisted_15$3 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-laptop:tw-gap-x-0" };
+const _hoisted_16$2 = ["src"];
+const _hoisted_17$2 = { class: "tw-text-sm desktop:tw-text-xs" };
+const _hoisted_18$2 = ["disabled"];
+const _hoisted_19$2 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
 const _hoisted_20$1 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-gap-2.5 tw-w-full tw-py-5"
@@ -59661,13 +57646,13 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_FiltersSection = resolveComponent("FiltersSection");
   const _component_CardsList = resolveComponent("CardsList");
   const _component_ChartsSection = resolveComponent("ChartsSection");
-  return openBlock(), createElementBlock("div", _hoisted_1$8, [
-    createBaseVNode("div", _hoisted_2$7, [
-      createBaseVNode("h1", _hoisted_3$7, " Demand Planner Dashboard " + toDisplayString($data.selectedRefreshDate ? `as of ${$data.selectedRefreshDate}` : ""), 1),
-      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$7, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
+  return openBlock(), createElementBlock("div", _hoisted_1$9, [
+    createBaseVNode("div", _hoisted_2$8, [
+      createBaseVNode("h1", _hoisted_3$8, " Demand Planner Dashboard " + toDisplayString($data.selectedRefreshDate ? `as of ${$data.selectedRefreshDate}` : ""), 1),
+      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$8, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
     ]),
-    _hoisted_5$7,
-    createBaseVNode("div", _hoisted_6$7, [
+    _hoisted_5$8,
+    createBaseVNode("div", _hoisted_6$8, [
       createVNode(_component_FiltersSection, {
         onUpdateFilters: $data.debounceUpdateFilters,
         onUpdateFiltersInstant: $data.debounceUpdateFiltersInstant,
@@ -59675,7 +57660,7 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
         isDataLoading: $data.dataLoading
       }, null, 8, ["onUpdateFilters", "onUpdateFiltersInstant", "onLatestRefreshDateUpdate", "isDataLoading"])
     ]),
-    $data.dataLoading ? (openBlock(), createElementBlock("div", _hoisted_7$7, [
+    $data.dataLoading ? (openBlock(), createElementBlock("div", _hoisted_7$8, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -59683,11 +57668,11 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.dataLoading && !$data.error && $options.isApiDataAvailable ? (openBlock(), createElementBlock("div", _hoisted_8$7, [
-      createBaseVNode("div", _hoisted_9$7, [
-        _hoisted_10$6,
-        createBaseVNode("div", _hoisted_11$6, [
-          _hoisted_12$4,
+    !$data.dataLoading && !$data.error && $options.isApiDataAvailable ? (openBlock(), createElementBlock("div", _hoisted_8$8, [
+      createBaseVNode("div", _hoisted_9$8, [
+        _hoisted_10$7,
+        createBaseVNode("div", _hoisted_11$7, [
+          _hoisted_12$5,
           (openBlock(true), createElementBlock(Fragment, null, renderList($data.dashboardData.periodsData, (periodData) => {
             return openBlock(), createElementBlock("div", {
               key: periodData.label,
@@ -59703,19 +57688,19 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
               createBaseVNode("label", {
                 for: `period${periodData.checkboxLabel}`,
                 class: "tw-text-black desktop:tw-text-sm small-laptop:tw-text-sm"
-              }, toDisplayString(periodData.checkboxLabel), 9, _hoisted_13$3)
+              }, toDisplayString(periodData.checkboxLabel), 9, _hoisted_13$4)
             ]);
           }), 128)),
-          createBaseVNode("div", _hoisted_14$2, [
+          createBaseVNode("div", _hoisted_14$3, [
             createBaseVNode("button", {
               class: "small-laptop:tw-hidden tw-px-2 tw-py-1.5 tw-border tw-border-solid tw-border-brand-primary",
               onClick: _cache[0] || (_cache[0] = ($event) => $data.isModelAccuracyHidden = !$data.isModelAccuracyHidden)
             }, [
-              createBaseVNode("div", _hoisted_15$2, [
+              createBaseVNode("div", _hoisted_15$3, [
                 createBaseVNode("img", {
                   src: $data.isModelAccuracyHidden ? $data.EyeIcon : $data.EyeOffIcon
-                }, null, 8, _hoisted_16$1),
-                createBaseVNode("span", _hoisted_17$1, toDisplayString($data.isModelAccuracyHidden ? "Show" : "Hide") + " Model Accuracy ", 1)
+                }, null, 8, _hoisted_16$2),
+                createBaseVNode("span", _hoisted_17$2, toDisplayString($data.isModelAccuracyHidden ? "Show" : "Hide") + " Model Accuracy ", 1)
               ])
             ]),
             createBaseVNode("button", {
@@ -59723,8 +57708,8 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleForecastPeriodType && $options.toggleForecastPeriodType(...args)),
               disabled: $data.dataLoading
             }, [
-              createBaseVNode("span", _hoisted_19$1, " Switch to " + toDisplayString($data.forecastPeriodType === $data.R3M_VIEW ? "Fixed/Quarterly" : "Rolling 3 Months") + " View ", 1)
-            ], 8, _hoisted_18$1)
+              createBaseVNode("span", _hoisted_19$2, " Switch to " + toDisplayString($data.forecastPeriodType === $data.R3M_VIEW ? "Fixed/Quarterly" : "Rolling 3 Months") + " View ", 1)
+            ], 8, _hoisted_18$2)
           ])
         ])
       ]),
@@ -59864,19 +57849,19 @@ const _sfc_main$9 = {
     }
   }
 };
-const _hoisted_1$7 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_2$6 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_3$6 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$8 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$7 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$7 = /* @__PURE__ */ createBaseVNode("label", {
   for: "date-picker",
   class: "tw-text-sm"
 }, "Month & Year", -1);
-const _hoisted_4$6 = { class: "tw-text-base" };
-const _hoisted_5$6 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
-const _hoisted_6$6 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
-const _hoisted_7$6 = { class: "tw-flex tw-justify-end tw-items-end tw-ml-auto tw-py-2" };
-const _hoisted_8$6 = { class: "tw-flex tw-gap-1" };
-const _hoisted_9$6 = ["src"];
-const _hoisted_10$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_4$7 = { class: "tw-text-base" };
+const _hoisted_5$7 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_6$7 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
+const _hoisted_7$7 = { class: "tw-flex tw-justify-end tw-items-end tw-ml-auto tw-py-2" };
+const _hoisted_8$7 = { class: "tw-flex tw-gap-1" };
+const _hoisted_9$7 = ["src"];
+const _hoisted_10$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, [
     /* @__PURE__ */ createTextVNode(" Value = Market Sensing - Internal Prediction"),
     /* @__PURE__ */ createBaseVNode("br"),
@@ -59885,14 +57870,14 @@ const _hoisted_10$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 t
     /* @__PURE__ */ createTextVNode("+ = Market Higher than Internal ")
   ])
 ], -1);
-const _hoisted_11$5 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-flex tw-items-center" }, "Abs value scale:", -1);
-const _hoisted_12$3 = { class: "tw-w-8/12 tw-pb-2 tw-pl-3" };
-const _hoisted_13$2 = ["src"];
+const _hoisted_11$6 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-flex tw-items-center" }, "Abs value scale:", -1);
+const _hoisted_12$4 = { class: "tw-w-8/12 tw-pb-2 tw-pl-3" };
+const _hoisted_13$3 = ["src"];
 function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_VueDatePicker = resolveComponent("VueDatePicker");
-  return openBlock(), createElementBlock("div", _hoisted_1$7, [
-    createBaseVNode("div", _hoisted_2$6, [
-      _hoisted_3$6,
+  return openBlock(), createElementBlock("div", _hoisted_1$8, [
+    createBaseVNode("div", _hoisted_2$7, [
+      _hoisted_3$7,
       createVNode(_component_VueDatePicker, {
         id: "date-picker",
         modelValue: $data.filters.refreshDates.selected,
@@ -59914,7 +57899,7 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
             class: normalizeClass(`tw-flex tw-items-center tw-justify-between tw-py-2 tw-px-3 tw-bg-brand-gray-1
             ${$props.isDataLoading ? "tw-opacity-40" : "tw-cursor-pointer"}`)
           }, [
-            createBaseVNode("span", _hoisted_4$6, toDisplayString(value), 1),
+            createBaseVNode("span", _hoisted_4$7, toDisplayString(value), 1),
             createVNode(VIcon, {
               icon: "mdi-calendar-month",
               class: "tw-text-brand-primary",
@@ -59925,11 +57910,11 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }, 8, ["modelValue", "onUpdate:modelValue", "format", "min-date", "max-date", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_5$6, [
+    createBaseVNode("div", _hoisted_5$7, [
       createBaseVNode("span", {
         class: normalizeClass(`tw-pt-10 desktop:tw-text-sm ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
       }, " Value (" + toDisplayString($data.currency) + ") ", 3),
-      createBaseVNode("div", _hoisted_6$6, [
+      createBaseVNode("div", _hoisted_6$7, [
         createVNode(VSwitch, {
           "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
           inset: "",
@@ -59942,8 +57927,8 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
         class: normalizeClass(`tw-pt-10 desktop:tw-text-sm ${$data.filters.valueOrQuantity === $data.BY_QUANTITY ? "tw-font-medium" : ""}`)
       }, " Volume ", 2)
     ]),
-    createBaseVNode("div", _hoisted_7$6, [
-      createBaseVNode("div", _hoisted_8$6, [
+    createBaseVNode("div", _hoisted_7$7, [
+      createBaseVNode("div", _hoisted_8$7, [
         createVNode(VMenu, {
           "open-on-hover": "",
           location: "top"
@@ -59952,20 +57937,20 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("img", mergeProps(props, {
               src: $data.InfoIcon,
               class: "tw-h-6 tw-m-2"
-            }), null, 16, _hoisted_9$6)
+            }), null, 16, _hoisted_9$7)
           ]),
           default: withCtx(() => [
-            _hoisted_10$5
+            _hoisted_10$6
           ]),
           _: 1
         }),
-        _hoisted_11$5
+        _hoisted_11$6
       ]),
-      createBaseVNode("div", _hoisted_12$3, [
+      createBaseVNode("div", _hoisted_12$4, [
         createBaseVNode("img", {
           src: $data.HeatMapScaleIcon,
           class: "tw-h-full"
-        }, null, 8, _hoisted_13$2)
+        }, null, 8, _hoisted_13$3)
       ])
     ])
   ]);
@@ -60077,16 +58062,18 @@ async function fetchDemandForecastData({
   const dataKeys2 = _.keys(data);
   let dataForUi = _.map(dataKeys2, (key) => {
     const values = _.get(data, `${key}`);
-    const msForecastGrowth = getNumericValue(_.get(values, "msForecastGrwoth"));
-    const internalForecastGrowth = getNumericValue(
+    const marketSensingForecast = getNumericValue(
+      _.get(values, "msForecastGrwoth")
+    );
+    const internalForecast = getNumericValue(
       _.get(values, "internalForecastGrowth")
     );
-    const actualGrowth = getNumericValue(_.get(values, "actualGrowth"));
+    const sales = getNumericValue(_.get(values, "actualGrowth"));
     return {
       period: key,
-      msForecastGrowth,
-      internalForecastGrowth,
-      actualGrowth
+      marketSensingForecast,
+      internalForecast,
+      sales
     };
   });
   return dataForUi;
@@ -60098,19 +58085,19 @@ const DATA_CONFIG = [
     color: ""
   },
   {
-    key: "msForecastGrowth",
+    key: "marketSensingForecast",
     label: "Market Sensing Forecast",
     color: "#570EAA",
     legendStyle: "solid"
   },
   {
-    key: "internalForecastGrowth",
+    key: "internalForecast",
     label: "Internal Forecast",
     color: "#8C8C8C",
     legendStyle: "dashed"
   },
   {
-    key: "actualGrowth",
+    key: "sales",
     label: "Sales",
     color: "#B991EB",
     legendStyle: "solid"
@@ -60189,14 +58176,14 @@ const _sfc_main$8 = {
         title: "",
         curveType: "none",
         legend: { position: "none" },
-        tooltip: { trigger: "none" },
         width: 850,
         height: 350,
         annotations: {
           textStyle: {
             color: "#000000",
             fontSize: 12
-          }
+          },
+          datum: { stem: { length: 4 } }
         },
         hAxis: {
           textStyle: {
@@ -60221,7 +58208,6 @@ const _sfc_main$8 = {
             color: DATA_CONFIG[1].color,
             annotations: {
               stem: {
-                length: 15,
                 color: DATA_CONFIG[1].color
               }
             }
@@ -60231,7 +58217,6 @@ const _sfc_main$8 = {
             lineDashStyle: [6, 6],
             annotations: {
               stem: {
-                length: 5,
                 color: DATA_CONFIG[2].color
               }
             }
@@ -60240,7 +58225,6 @@ const _sfc_main$8 = {
             color: DATA_CONFIG[3].color,
             annotations: {
               stem: {
-                length: 0,
                 color: DATA_CONFIG[3].color
               }
             }
@@ -60250,24 +58234,24 @@ const _sfc_main$8 = {
     }
   }
 };
-const _hoisted_1$6 = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border-2 tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl tw-z-10" };
-const _hoisted_2$5 = {
+const _hoisted_1$7 = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border-2 tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl tw-z-10" };
+const _hoisted_2$6 = {
   key: 0,
   class: "tw-w-60 tw-h-60 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_3$5 = { key: 1 };
-const _hoisted_4$5 = { class: "tw-flex tw-items-center tw-w-full" };
-const _hoisted_5$5 = { class: "tw-text-xl tw-font-medium" };
-const _hoisted_6$5 = { class: "tw-flex tw-items-center tw-ml-auto" };
-const _hoisted_7$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_8$5 = { class: "tw-flex tw-items-center tw-pt-3 tw-px-4" };
-const _hoisted_9$5 = { class: "tw-text-xs tw-text-black" };
-const _hoisted_10$4 = { class: "tw-w-full tw-flex tw-justify-center tw-pt-4" };
-const _hoisted_11$4 = { key: 2 };
+const _hoisted_3$6 = { key: 1 };
+const _hoisted_4$6 = { class: "tw-flex tw-items-center tw-w-full" };
+const _hoisted_5$6 = { class: "tw-text-xl tw-font-medium" };
+const _hoisted_6$6 = { class: "tw-flex tw-items-center tw-ml-auto" };
+const _hoisted_7$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_8$6 = { class: "tw-flex tw-items-center tw-pt-3 tw-px-4" };
+const _hoisted_9$6 = { class: "tw-text-xs tw-text-black" };
+const _hoisted_10$5 = { class: "tw-w-full tw-flex tw-justify-center tw-pt-4" };
+const _hoisted_11$5 = { key: 2 };
 function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GoogleChart = resolveComponent("GoogleChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$6, [
-    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_2$5, [
+  return openBlock(), createElementBlock("div", _hoisted_1$7, [
+    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_2$6, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -60275,10 +58259,10 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.isLoading && $data.apiData.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3$5, [
-      createBaseVNode("div", _hoisted_4$5, [
-        createBaseVNode("h1", _hoisted_5$5, " Demand Forecast : " + toDisplayString($props.category) + " / " + toDisplayString($props.customer), 1),
-        createBaseVNode("div", _hoisted_6$5, [
+    !$data.isLoading && $data.apiData.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3$6, [
+      createBaseVNode("div", _hoisted_4$6, [
+        createBaseVNode("h1", _hoisted_5$6, " Demand Forecast : " + toDisplayString($props.category) + " / " + toDisplayString($props.customer), 1),
+        createBaseVNode("div", _hoisted_6$6, [
           createVNode(VBtn, {
             variant: "plain",
             icon: "mdi-close",
@@ -60286,8 +58270,8 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8, ["onClick"])
         ])
       ]),
-      _hoisted_7$5,
-      createBaseVNode("div", _hoisted_8$5, [
+      _hoisted_7$6,
+      createBaseVNode("div", _hoisted_8$6, [
         (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
           return openBlock(), createElementBlock("div", {
             key: item.key,
@@ -60296,11 +58280,11 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("span", {
               style: normalizeStyle(`width: 24px; border: 2px ${item.legendStyle} ${item.color}`)
             }, null, 4),
-            createBaseVNode("span", _hoisted_9$5, toDisplayString(item.label), 1)
+            createBaseVNode("span", _hoisted_9$6, toDisplayString(item.label), 1)
           ]);
         }), 128))
       ]),
-      createBaseVNode("div", _hoisted_10$4, [
+      createBaseVNode("div", _hoisted_10$5, [
         createVNode(_component_GoogleChart, {
           type: "LineChart",
           options: $options.chartOptions,
@@ -60308,7 +58292,7 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8, ["options", "data"])
       ])
     ])) : createCommentVNode("", true),
-    !$data.isLoading && $data.error ? (openBlock(), createElementBlock("div", _hoisted_11$4, [
+    !$data.isLoading && $data.error ? (openBlock(), createElementBlock("div", _hoisted_11$5, [
       createVNode(VAlert, {
         type: "error",
         text: $data.error.toString()
@@ -60392,32 +58376,32 @@ const _sfc_main$7 = {
     }
   }
 };
-const _hoisted_1$5 = { class: "tw-flex tw-flex-col tw-gap-3 tw-w-full tw-h-full tw-bg-white tw-p-4 desktop:tw-p-2 small-laptop:tw-p-2" };
-const _hoisted_2$4 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full" };
-const _hoisted_3$4 = { class: "tw-text-xl desktop:tw-text-base small-laptop:tw-text-base tw-font-medium" };
-const _hoisted_4$4 = { class: "tw-bg-brand-gray-4 tw-rounded tw-text-center" };
-const _hoisted_5$4 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_6$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_7$4 = { class: "tw-w-full tw-h-full tw-overflow-auto" };
-const _hoisted_8$4 = { key: 0 };
-const _hoisted_9$4 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
-const _hoisted_10$3 = ["onClick"];
-const _hoisted_11$3 = {
+const _hoisted_1$6 = { class: "tw-flex tw-flex-col tw-gap-3 tw-w-full tw-h-full tw-bg-white tw-p-4 desktop:tw-p-2 small-laptop:tw-p-2" };
+const _hoisted_2$5 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full" };
+const _hoisted_3$5 = { class: "tw-text-xl desktop:tw-text-base small-laptop:tw-text-base tw-font-medium" };
+const _hoisted_4$5 = { class: "tw-bg-brand-gray-4 tw-rounded tw-text-center" };
+const _hoisted_5$5 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_6$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_7$5 = { class: "tw-w-full tw-h-full tw-overflow-auto" };
+const _hoisted_8$5 = { key: 0 };
+const _hoisted_9$5 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
+const _hoisted_10$4 = ["onClick"];
+const _hoisted_11$4 = {
   key: 0,
   class: "desktop:tw-text-xs small-laptop:tw-text-xs"
 };
-const _hoisted_12$2 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
+const _hoisted_12$3 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
 function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_TooltipChart = resolveComponent("TooltipChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$5, [
-    createBaseVNode("div", _hoisted_2$4, [
-      createBaseVNode("p", _hoisted_3$4, toDisplayString($props.data.period), 1),
-      createBaseVNode("div", _hoisted_4$4, [
-        createBaseVNode("p", _hoisted_5$4, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
+  return openBlock(), createElementBlock("div", _hoisted_1$6, [
+    createBaseVNode("div", _hoisted_2$5, [
+      createBaseVNode("p", _hoisted_3$5, toDisplayString($props.data.period), 1),
+      createBaseVNode("div", _hoisted_4$5, [
+        createBaseVNode("p", _hoisted_5$5, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
       ])
     ]),
-    _hoisted_6$4,
-    createBaseVNode("div", _hoisted_7$4, [
+    _hoisted_6$5,
+    createBaseVNode("div", _hoisted_7$5, [
       createBaseVNode("div", {
         class: normalizeClass(`tw-grid tw-grid-cols-${$data.lodSize(
           $data.lodGet($props.data, "columnHeaders", [])
@@ -60428,7 +58412,7 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
             key: columnHeader,
             class: normalizeClass(`tw-font-medium tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-cursor-default ${index2 > 0 ? "tw-text-center" : "tw-text-left"}`)
           }, [
-            index2 === 0 ? (openBlock(), createElementBlock("span", _hoisted_8$4, toDisplayString(columnHeader), 1)) : createCommentVNode("", true),
+            index2 === 0 ? (openBlock(), createElementBlock("span", _hoisted_8$5, toDisplayString(columnHeader), 1)) : createCommentVNode("", true),
             index2 > 0 ? (openBlock(), createBlock(VMenu, {
               key: 1,
               "open-on-hover": "",
@@ -60438,7 +58422,7 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
                 createBaseVNode("span", normalizeProps(guardReactiveProps(props)), toDisplayString(columnHeader), 17)
               ]),
               default: withCtx(() => [
-                createBaseVNode("div", _hoisted_9$4, toDisplayString(columnHeader), 1)
+                createBaseVNode("div", _hoisted_9$5, toDisplayString(columnHeader), 1)
               ]),
               _: 2
             }, 1024)) : createCommentVNode("", true)
@@ -60472,7 +58456,7 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
                       onClick: ($event) => $options.handleCellClick(`${rowData[0]}${index2}`, index2 === 0),
                       class: $options.getCellStyling(cellValue, index2 === 0)
                     }), [
-                      index2 > 0 ? (openBlock(), createElementBlock("span", _hoisted_11$3, toDisplayString($options.getCellLabel(cellValue)), 1)) : createCommentVNode("", true),
+                      index2 > 0 ? (openBlock(), createElementBlock("span", _hoisted_11$4, toDisplayString($options.getCellLabel(cellValue)), 1)) : createCommentVNode("", true),
                       index2 === 0 ? (openBlock(), createBlock(VMenu, {
                         key: 1,
                         "open-on-hover": "",
@@ -60482,11 +58466,11 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
                           createBaseVNode("span", mergeProps(props2, { class: "desktop:tw-text-xs small-laptop:tw-text-xs" }), toDisplayString(cellValue), 17)
                         ]),
                         default: withCtx(() => [
-                          createBaseVNode("div", _hoisted_12$2, toDisplayString(cellValue), 1)
+                          createBaseVNode("div", _hoisted_12$3, toDisplayString(cellValue), 1)
                         ]),
                         _: 2
                       }, 1024)) : createCommentVNode("", true)
-                    ], 16, _hoisted_10$3)
+                    ], 16, _hoisted_10$4)
                   ]),
                   default: withCtx(() => [
                     createVNode(_component_TooltipChart, {
@@ -60530,10 +58514,10 @@ const _sfc_main$6 = {
     };
   }
 };
-const _hoisted_1$4 = { class: "tw-grid tw-grid-cols-2 tw-gap-5 tw-w-full tw-h-full" };
+const _hoisted_1$5 = { class: "tw-grid tw-grid-cols-2 tw-gap-5 tw-w-full tw-h-full" };
 function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CardsListItem = resolveComponent("CardsListItem");
-  return openBlock(), createElementBlock("div", _hoisted_1$4, [
+  return openBlock(), createElementBlock("div", _hoisted_1$5, [
     (openBlock(true), createElementBlock(Fragment, null, renderList($props.data, (cardData, index2) => {
       return openBlock(), createElementBlock("div", {
         key: cardData.period
@@ -60634,36 +58618,36 @@ const _sfc_main$5 = {
     }
   }
 };
-const _hoisted_1$3 = { class: "tw-h-full tw-w-full tw-pb-10 tw-bg-brand-gray-1" };
-const _hoisted_2$3 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
-const _hoisted_3$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center" }, [
+const _hoisted_1$4 = { class: "tw-h-full tw-w-full tw-pb-10 tw-bg-brand-gray-1" };
+const _hoisted_2$4 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center" }, [
   /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-lg" }, [
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-bold" }, "Heat-map View -"),
     /* @__PURE__ */ createTextVNode(" Representation of variance across categories and stores ")
   ])
 ], -1);
-const _hoisted_4$3 = {
+const _hoisted_4$4 = {
   key: 0,
   class: "tw-ml-auto tw-h-full tw-flex tw-items-center"
 };
-const _hoisted_5$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_6$3 = { class: "tw-py-5" };
-const _hoisted_7$3 = {
+const _hoisted_5$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$4 = { class: "tw-py-5" };
+const _hoisted_7$4 = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_8$3 = { key: 1 };
-const _hoisted_9$3 = { key: 2 };
+const _hoisted_8$4 = { key: 1 };
+const _hoisted_9$4 = { key: 2 };
 function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_FiltersSection = resolveComponent("FiltersSection");
   const _component_CardsList = resolveComponent("CardsList");
-  return openBlock(), createElementBlock("div", _hoisted_1$3, [
-    createBaseVNode("div", _hoisted_2$3, [
-      _hoisted_3$3,
-      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$3, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
+  return openBlock(), createElementBlock("div", _hoisted_1$4, [
+    createBaseVNode("div", _hoisted_2$4, [
+      _hoisted_3$4,
+      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$4, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
     ]),
-    _hoisted_5$3,
-    createBaseVNode("div", _hoisted_6$3, [
+    _hoisted_5$4,
+    createBaseVNode("div", _hoisted_6$4, [
       createVNode(_component_FiltersSection, {
         onUpdateFilters: $data.debounceUpdateFilters,
         onUpdateFiltersInstant: $data.debounceUpdateFiltersInstant,
@@ -60671,7 +58655,7 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
         isDataLoading: $data.isFetchingData
       }, null, 8, ["onUpdateFilters", "onUpdateFiltersInstant", "onLatestRefreshDateUpdate", "isDataLoading"])
     ]),
-    $data.isFetchingData ? (openBlock(), createElementBlock("div", _hoisted_7$3, [
+    $data.isFetchingData ? (openBlock(), createElementBlock("div", _hoisted_7$4, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -60679,13 +58663,13 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.isFetchingData && !$data.error ? (openBlock(), createElementBlock("div", _hoisted_8$3, [
+    !$data.isFetchingData && !$data.error ? (openBlock(), createElementBlock("div", _hoisted_8$4, [
       createVNode(_component_CardsList, {
         data: $data.apiData,
         selectedFilters: $data.selectedFilters
       }, null, 8, ["data", "selectedFilters"])
     ])) : createCommentVNode("", true),
-    !$data.isFetchingData && $data.error ? (openBlock(), createElementBlock("div", _hoisted_9$3, [
+    !$data.isFetchingData && $data.error ? (openBlock(), createElementBlock("div", _hoisted_9$4, [
       createVNode(VAlert, {
         type: "error",
         text: $data.error.toString()
@@ -60779,36 +58763,36 @@ const _sfc_main$4 = {
     }
   }
 };
-const _hoisted_1$2 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_2$2 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_3$2 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$3 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$3 = /* @__PURE__ */ createBaseVNode("label", {
   for: "category",
   class: "tw-text-sm"
 }, "Category", -1);
-const _hoisted_4$2 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_5$2 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_4$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_5$3 = /* @__PURE__ */ createBaseVNode("label", {
   for: "customer",
   class: "tw-text-sm"
 }, "Customer(s)", -1);
-const _hoisted_6$2 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_7$2 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_6$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_7$3 = /* @__PURE__ */ createBaseVNode("label", {
   for: "mstimehorizon",
   class: "tw-text-sm"
 }, "MS Time Horizon", -1);
-const _hoisted_8$2 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_9$2 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_8$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_9$3 = /* @__PURE__ */ createBaseVNode("label", {
   for: "model",
   class: "tw-text-sm"
 }, "Model", -1);
-const _hoisted_10$2 = { class: "tw-flex tw-items-center tw-gap-1.5 tw-mt-3" };
-const _hoisted_11$2 = {
+const _hoisted_10$3 = { class: "tw-flex tw-items-center tw-gap-1.5 tw-mt-3" };
+const _hoisted_11$3 = {
   class: "tw-flex tw-pt-5",
   style: { "color": "#7823DC" }
 };
 function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("div", _hoisted_1$2, [
-    createBaseVNode("div", _hoisted_2$2, [
-      _hoisted_3$2,
+  return openBlock(), createElementBlock("div", _hoisted_1$3, [
+    createBaseVNode("div", _hoisted_2$3, [
+      _hoisted_3$3,
       createVNode(VSelect, {
         disabled: $props.filterDisabled,
         items: $data.filters.categories.items,
@@ -60817,8 +58801,8 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
         density: "comfortable"
       }, null, 8, ["disabled", "items", "model-value"])
     ]),
-    createBaseVNode("div", _hoisted_4$2, [
-      _hoisted_5$2,
+    createBaseVNode("div", _hoisted_4$3, [
+      _hoisted_5$3,
       createVNode(VSelect, {
         disabled: $props.filterDisabled,
         items: $data.filters.customers.items,
@@ -60827,8 +58811,8 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
         density: "comfortable"
       }, null, 8, ["disabled", "items", "model-value"])
     ]),
-    createBaseVNode("div", _hoisted_6$2, [
-      _hoisted_7$2,
+    createBaseVNode("div", _hoisted_6$3, [
+      _hoisted_7$3,
       createVNode(VSelect, {
         disabled: $props.filterDisabled,
         items: $data.filters.time_horizon.items,
@@ -60837,8 +58821,8 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
         density: "comfortable"
       }, null, 8, ["disabled", "items", "model-value"])
     ]),
-    createBaseVNode("div", _hoisted_8$2, [
-      _hoisted_9$2,
+    createBaseVNode("div", _hoisted_8$3, [
+      _hoisted_9$3,
       createVNode(VSelect, {
         disabled: $props.filterDisabled,
         items: $data.filters.internal_model.items,
@@ -60847,11 +58831,11 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
         density: "comfortable"
       }, null, 8, ["disabled", "items", "model-value"])
     ]),
-    createBaseVNode("div", _hoisted_10$2, [
+    createBaseVNode("div", _hoisted_10$3, [
       createBaseVNode("p", {
         class: normalizeClass(`${!$data.isByVolume ? "tw-font-medium" : ""}`)
       }, "Value (USD)", 2),
-      createBaseVNode("div", _hoisted_11$2, [
+      createBaseVNode("div", _hoisted_11$3, [
         createVNode(VSwitch, {
           inset: "",
           onClick: $options.valueOrQuantityUpdate,
@@ -61288,21 +59272,21 @@ const _sfc_main$3 = {
     }
   }
 };
-const _hoisted_1$1 = { class: "tw-w-full tw-h-full tw-bg-brand-gray-1" };
-const _hoisted_2$1 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
-const _hoisted_3$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" }, " Internal Charts ", -1);
-const _hoisted_4$1 = { class: "tw-ml-auto tw-h-full tw-flex tw-items-center" };
-const _hoisted_5$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_6$1 = { class: "tw-py-5 tw-bg-brand-gray-1" };
-const _hoisted_7$1 = {
+const _hoisted_1$2 = { class: "tw-w-full tw-h-full tw-bg-brand-gray-1" };
+const _hoisted_2$2 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" }, " Internal Charts ", -1);
+const _hoisted_4$2 = { class: "tw-ml-auto tw-h-full tw-flex tw-items-center" };
+const _hoisted_5$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$2 = { class: "tw-py-5 tw-bg-brand-gray-1" };
+const _hoisted_7$2 = {
   key: 0,
   class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2"
 };
-const _hoisted_8$1 = { class: "tw-grid tw-grid-rows-2 tw-gap-6" };
-const _hoisted_9$1 = { style: { "overflow-x": "auto !important" } };
-const _hoisted_10$1 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Internal Forecast vs Sales", -1);
-const _hoisted_11$1 = /* @__PURE__ */ createBaseVNode("div", { class: "overflow-x-auto tw-w-full tw-items-left tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_12$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-mt-3" }, [
+const _hoisted_8$2 = { class: "tw-grid tw-grid-rows-2 tw-gap-6" };
+const _hoisted_9$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_10$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Internal Forecast vs Sales", -1);
+const _hoisted_11$2 = /* @__PURE__ */ createBaseVNode("div", { class: "overflow-x-auto tw-w-full tw-items-left tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-mt-3" }, [
   /* @__PURE__ */ createBaseVNode("div", {
     style: { "width": "12px", "height": "12px", "background": "#787878" },
     class: "tw-ml-3 tw-mt-px"
@@ -61322,9 +59306,9 @@ const _hoisted_12$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex t
     }, "Sales")
   ])
 ], -1);
-const _hoisted_13$1 = { style: { "overflow-x": "auto !important" } };
-const _hoisted_14$1 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Projections of Market Sensing Forecast vs Internal Forecast vs Sales", -1);
-const _hoisted_15$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_13$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_14$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Projections of Market Sensing Forecast vs Internal Forecast vs Sales", -1);
+const _hoisted_15$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
 function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_TheHeader = resolveComponent("TheHeader");
   const _component_GChart = resolveComponent("GChart");
@@ -61337,26 +59321,26 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
       width: 7,
       style: { "position": "fixed", "left": "50%", "top": "35%", "z-index": "1000" }
     })) : createCommentVNode("", true),
-    createBaseVNode("div", _hoisted_1$1, [
-      createBaseVNode("div", _hoisted_2$1, [
-        _hoisted_3$1,
-        createBaseVNode("div", _hoisted_4$1, " Last refreshed on " + toDisplayString($data.refreshDate), 1)
+    createBaseVNode("div", _hoisted_1$2, [
+      createBaseVNode("div", _hoisted_2$2, [
+        _hoisted_3$2,
+        createBaseVNode("div", _hoisted_4$2, " Last refreshed on " + toDisplayString($data.refreshDate), 1)
       ]),
-      _hoisted_5$1,
-      createBaseVNode("div", _hoisted_6$1, [
+      _hoisted_5$2,
+      createBaseVNode("div", _hoisted_6$2, [
         createVNode(_component_TheHeader, {
           onUpdateFilters: $data.debounceUpdateFilters,
           filterDisabled: $data.filterDisabled
         }, null, 8, ["onUpdateFilters", "filterDisabled"])
       ]),
-      !$data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_7$1, [
-        createBaseVNode("div", _hoisted_8$1, [
-          createBaseVNode("div", _hoisted_9$1, [
+      !$data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
+        createBaseVNode("div", _hoisted_8$2, [
+          createBaseVNode("div", _hoisted_9$2, [
             createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
               default: withCtx(() => [
-                _hoisted_10$1,
-                _hoisted_11$1,
-                _hoisted_12$1,
+                _hoisted_10$2,
+                _hoisted_11$2,
+                _hoisted_12$2,
                 createVNode(_component_GChart, {
                   type: "ColumnChart",
                   data: $data.columnChartData,
@@ -61367,11 +59351,11 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
               _: 1
             })
           ]),
-          createBaseVNode("div", _hoisted_13$1, [
+          createBaseVNode("div", _hoisted_13$2, [
             createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
               default: withCtx(() => [
-                _hoisted_14$1,
-                _hoisted_15$1,
+                _hoisted_14$2,
+                _hoisted_15$2,
                 createVNode(_component_GChart, {
                   type: "LineChart",
                   options: $data.lineChartOptions,
@@ -61762,25 +59746,25 @@ const _sfc_main$2 = {
     this.selectFilterUpdated("projected_period", this.filtersCharts.projected_period.items[0]);
   }
 };
-const _hoisted_1 = { class: "tw-w-full tw-h-full tw-bg-brand-gray-1" };
-const _hoisted_2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-8 tw-items-center tw-font-bold" }, " Accuracy ", -1);
-const _hoisted_3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_4 = { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" };
-const _hoisted_5 = { class: "tw-grid tw-grid-rows-2" };
-const _hoisted_6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-font-bold tw-py-2 tw-pl-2 tw-text-lg" }, " Model Accuracy Forecast Performance ", -1);
-const _hoisted_7 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_8 = { class: "tw-flex tw-gap-x-4 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_9 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_10 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$1 = { class: "tw-w-full tw-h-full tw-bg-brand-gray-1" };
+const _hoisted_2$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-8 tw-items-center tw-font-bold" }, " Accuracy ", -1);
+const _hoisted_3$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_4$1 = { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" };
+const _hoisted_5$1 = { class: "tw-grid tw-grid-rows-2" };
+const _hoisted_6$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-font-bold tw-py-2 tw-pl-2 tw-text-lg" }, " Model Accuracy Forecast Performance ", -1);
+const _hoisted_7$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_8$1 = { class: "tw-flex tw-gap-x-4 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_9$1 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_10$1 = /* @__PURE__ */ createBaseVNode("label", {
   for: "category",
   class: "tw-text-sm"
 }, "Category", -1);
-const _hoisted_11 = { class: "tw-flex tw-items-center tw-gap-1.5 tw-mt-3" };
-const _hoisted_12 = {
+const _hoisted_11$1 = { class: "tw-flex tw-items-center tw-gap-1.5 tw-mt-3" };
+const _hoisted_12$1 = {
   class: "tw-flex tw-pt-5",
   style: { "color": "#7823DC" }
 };
-const _hoisted_13 = /* @__PURE__ */ createBaseVNode("div", {
+const _hoisted_13$1 = /* @__PURE__ */ createBaseVNode("div", {
   class: "tw-flex tw-justify-end tw-items-center tw-w-7/12 tw-mt-9",
   style: { "height": "72px" }
 }, [
@@ -61789,22 +59773,22 @@ const _hoisted_13 = /* @__PURE__ */ createBaseVNode("div", {
     class: "tw-h-full"
   })
 ], -1);
-const _hoisted_14 = {
+const _hoisted_14$1 = {
   key: 0,
   class: "tw-block tw-m-auto"
 };
-const _hoisted_15 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-center" }, [
+const _hoisted_15$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-center" }, [
   /* @__PURE__ */ createBaseVNode("h3", { class: "tw-pl-2 tw-flex tw-h-8 tw-justify-center tw-font-bold tw-text-lg tw-pt-3" }, "CV Accuracy")
 ], -1);
-const _hoisted_16 = {
+const _hoisted_16$1 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-p-6 tw-pt-5"
 };
-const _hoisted_17 = { key: 1 };
-const _hoisted_18 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-center" }, [
+const _hoisted_17$1 = { key: 1 };
+const _hoisted_18$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-center" }, [
   /* @__PURE__ */ createBaseVNode("h3", { class: "tw-pl-2 tw-pt-3 tw-flex tw-h-8 tw-items-center tw-text-lg tw-font-bold" }, "Rolling Test Accuracy")
 ], -1);
-const _hoisted_19 = {
+const _hoisted_19$1 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-p-6 tw-pt-5"
 };
@@ -61882,19 +59866,19 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
       width: 7,
       style: { "position": "fixed", "left": "50%", "top": "70%", "z-index": "1000" }
     })) : createCommentVNode("", true),
-    createBaseVNode("div", _hoisted_1, [
-      _hoisted_2,
-      _hoisted_3,
-      createBaseVNode("div", _hoisted_4, [
-        createBaseVNode("div", _hoisted_5, [
+    createBaseVNode("div", _hoisted_1$1, [
+      _hoisted_2$1,
+      _hoisted_3$1,
+      createBaseVNode("div", _hoisted_4$1, [
+        createBaseVNode("div", _hoisted_5$1, [
           createBaseVNode("div", null, [
             createVNode(VCard, null, {
               default: withCtx(() => [
-                _hoisted_6,
-                _hoisted_7,
-                createBaseVNode("div", _hoisted_8, [
-                  createBaseVNode("div", _hoisted_9, [
-                    _hoisted_10,
+                _hoisted_6$1,
+                _hoisted_7$1,
+                createBaseVNode("div", _hoisted_8$1, [
+                  createBaseVNode("div", _hoisted_9$1, [
+                    _hoisted_10$1,
                     createVNode(VSelect, {
                       disabled: $data.accuracy_disabled,
                       items: $data.filtersTestAccuracy.categories.items,
@@ -61903,11 +59887,11 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
                       density: "comfortable"
                     }, null, 8, ["disabled", "items", "model-value"])
                   ]),
-                  createBaseVNode("div", _hoisted_11, [
+                  createBaseVNode("div", _hoisted_11$1, [
                     createBaseVNode("p", {
                       class: normalizeClass(`${!$data.cvAccuracy ? "tw-font-medium desktop:tw-leading-tight small-laptop:tw-leading-tight desktop:tw-text-end small-laptop:tw-text-end" : "desktop:tw-leading-tight small-laptop:tw-leading-tight desktop:tw-text-end small-laptop:tw-text-end"}`)
                     }, "Rolling Test Accuracy", 2),
-                    createBaseVNode("div", _hoisted_12, [
+                    createBaseVNode("div", _hoisted_12$1, [
                       createVNode(VSwitch, {
                         inset: "",
                         onClick: _cache[1] || (_cache[1] = ($event) => $data.cvAccuracy = !$data.cvAccuracy)
@@ -61917,20 +59901,20 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
                       class: normalizeClass(`${$data.cvAccuracy ? "tw-font-medium desktop:tw-leading-tight small-laptop:tw-leading-tight" : "desktop:tw-leading-tight small-laptop:tw-leading-tight"}`)
                     }, "CV Accuracy", 2)
                   ]),
-                  _hoisted_13
+                  _hoisted_13$1
                 ]),
-                $data.cvAccuracy ? (openBlock(), createElementBlock("div", _hoisted_14, [
-                  _hoisted_15,
-                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_16, [
+                $data.cvAccuracy ? (openBlock(), createElementBlock("div", _hoisted_14$1, [
+                  _hoisted_15$1,
+                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_16$1, [
                     createVNode(_component_GChart, {
                       type: "ColumnChart",
                       data: $data.cvAccuracyData,
                       options: $data.cvAccuracyOptions
                     }, null, 8, ["data", "options"])
                   ])) : createCommentVNode("", true)
-                ])) : (openBlock(), createElementBlock("div", _hoisted_17, [
-                  _hoisted_18,
-                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_19, [
+                ])) : (openBlock(), createElementBlock("div", _hoisted_17$1, [
+                  _hoisted_18$1,
+                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_19$1, [
                     createVNode(_component_GChart, {
                       type: "ColumnChart",
                       data: $data.rollingTestAccuracyData,
@@ -62003,11 +59987,91 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return " TheFAQ ";
 }
 const TheFaq = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render$1]]);
+const HelpAndSupportImage = "/assets/HelpAndSupport.f6e330be.svg";
 const _sfc_main = {
-  name: "TheSupport"
+  name: "TheSupport",
+  data() {
+    return {
+      HelpAndSupportImage,
+      supportEmail: "arjun.shyamsundar@kearney.com"
+    };
+  }
 };
+const _hoisted_1 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
+const _hoisted_2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-bg-brand-gray-1 tw-border-b tw-border-solid tw-border-brand-gray-2" }, [
+  /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-items-center" }, [
+    /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-lg tw-font-bold" }, "Help & Support")
+  ])
+], -1);
+const _hoisted_3 = { class: "tw-w-full tw-p-5 tw-my-5 tw-bg-white" };
+const _hoisted_4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border-b tw-border-solid tw-border-brand-gray-2" }, [
+  /* @__PURE__ */ createBaseVNode("h2", { class: "tw-text-xl" }, " Get help getting started, with features and settings, and technical support. ")
+], -1);
+const _hoisted_5 = { class: "tw-grid tw-grid-cols-2 tw-w-full tw-py-5" };
+const _hoisted_6 = { class: "tw-col-span-1" };
+const _hoisted_7 = { class: "tw-flex tw-flex-col tw-gap-y-6 tw-py-5" };
+const _hoisted_8 = { class: "tw-flex tw-flex-col tw-gap-3" };
+const _hoisted_9 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black tw-font-medium" }, "For any queries, email at:", -1);
+const _hoisted_10 = { class: "tw-flex tw-gap-x-4 tw-items-center" };
+const _hoisted_11 = ["href"];
+const _hoisted_12 = { class: "tw-flex tw-flex-col tw-gap-3" };
+const _hoisted_13 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black tw-font-medium" }, "Read through the User Guide to know more:", -1);
+const _hoisted_14 = { class: "tw-px-2 tw-py-1.5 tw-border-2 tw-border-solid tw-border-brand-primary" };
+const _hoisted_15 = { class: "tw-flex tw-gap-x-2 tw-items-center" };
+const _hoisted_16 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black" }, " Download User Guide ", -1);
+const _hoisted_17 = { class: "tw-col-span-1" };
+const _hoisted_18 = { class: "tw-h-full tw-w-full tw-px-4" };
+const _hoisted_19 = ["src"];
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return " TheSupport ";
+  return openBlock(), createElementBlock("div", _hoisted_1, [
+    _hoisted_2,
+    createBaseVNode("div", _hoisted_3, [
+      _hoisted_4,
+      createBaseVNode("div", _hoisted_5, [
+        createBaseVNode("div", _hoisted_6, [
+          createBaseVNode("div", _hoisted_7, [
+            createBaseVNode("div", _hoisted_8, [
+              _hoisted_9,
+              createBaseVNode("div", _hoisted_10, [
+                createVNode(VIcon, {
+                  icon: "mdi-email-outline",
+                  class: "tw-text-brand-primary",
+                  size: 32
+                }),
+                createBaseVNode("a", {
+                  href: `mailto:${$data.supportEmail}`,
+                  class: "tw-text-xl tw-text-black tw-underline"
+                }, toDisplayString($data.supportEmail), 9, _hoisted_11)
+              ])
+            ]),
+            createBaseVNode("div", _hoisted_12, [
+              _hoisted_13,
+              createBaseVNode("div", null, [
+                createBaseVNode("button", _hoisted_14, [
+                  createBaseVNode("div", _hoisted_15, [
+                    createVNode(VIcon, {
+                      icon: "mdi-tray-arrow-down",
+                      class: "tw-text-brand-primary",
+                      size: 24
+                    }),
+                    _hoisted_16
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]),
+        createBaseVNode("div", _hoisted_17, [
+          createBaseVNode("div", _hoisted_18, [
+            createBaseVNode("img", {
+              src: $data.HelpAndSupportImage,
+              class: "tw-h-full tw-w-full tw-object-contain"
+            }, null, 8, _hoisted_19)
+          ])
+        ])
+      ])
+    ])
+  ]);
 }
 const TheSupport = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 const DemandPlannerIcon = "/assets/demand-planner-icon.baaa7b65.svg";
@@ -62022,81 +60086,55 @@ const FaqIcon = "/assets/faq-icon.b9cecf90.svg";
 const FaqIconActive = "/assets/faq-icon-active.66296de8.svg";
 const HelpSupportIcon = "/assets/help-support-icon.b008338f.svg";
 const HelpSupportIconActive = "/assets/help-support-icon-active.dd73ac77.svg";
-const routes = [
-  {
-    path: "/",
-    component: Default,
-    children: [
-      {
-        path: "",
-        name: "landing",
-        label: "Demand Planner",
-        icon: DemandPlannerIcon,
-        icon_active: DemandPlannerIconActive,
-        component: DemandPlanner
-      },
-      {
-        path: "/demand-planner",
-        name: "DemandPlanner",
-        label: "Demand Planner",
-        icon: DemandPlannerIcon,
-        icon_active: DemandPlannerIconActive,
-        component: DemandPlanner
-      },
-      {
-        path: "/heatmap",
-        name: "HeatMap",
-        label: "Heat-map View",
-        icon: HeatMapIcon,
-        icon_active: HeatMapIconActive,
-        component: HeatMap
-      },
-      {
-        path: "/internal-charts",
-        name: "InternalCharts",
-        label: "Internal Charts",
-        icon: InternalChartsIcon,
-        icon_active: InternalChartsIconActive,
-        component: InternalCharts
-      },
-      {
-        path: "/model-accuracy",
-        name: "ModelAccuracy",
-        label: "Accuracy",
-        icon: ModelAccuracyIcon,
-        icon_active: ModelAccuracyIconActive,
-        component: ModelAccuracy
-      },
-      {
-        path: "/faqs",
-        name: "FAQs",
-        label: "FAQs",
-        icon: FaqIcon,
-        icon_active: FaqIconActive,
-        component: TheFaq
-      },
-      {
-        path: "/support",
-        name: "HelpSupport",
-        label: "Help & Support",
-        icon: HelpSupportIcon,
-        icon_active: HelpSupportIconActive,
-        component: TheSupport
-      }
-    ]
+const PAGE_KEYS = {
+  DEMAND_PLANNER: "demandPlanner",
+  HEAT_MAP: "heatMap",
+  INTERNAL_CHARTS: "internalCharts",
+  MODEL_ACCURACY: "modelAccuracy",
+  FAQS: "faqs",
+  HELP: "help"
+};
+const PAGES_CONFIG = {
+  demandPlanner: {
+    label: "Demand Planner",
+    icon: DemandPlannerIcon,
+    icon_active: DemandPlannerIconActive,
+    component: DemandPlanner
+  },
+  heatMap: {
+    label: "Heat-map View",
+    icon: HeatMapIcon,
+    icon_active: HeatMapIconActive,
+    component: HeatMap
+  },
+  internalCharts: {
+    label: "Internal Charts",
+    icon: InternalChartsIcon,
+    icon_active: InternalChartsIconActive,
+    component: InternalCharts
+  },
+  modelAccuracy: {
+    label: "Accuracy",
+    icon: ModelAccuracyIcon,
+    icon_active: ModelAccuracyIconActive,
+    component: ModelAccuracy
+  },
+  faqs: {
+    label: "FAQs",
+    icon: FaqIcon,
+    icon_active: FaqIconActive,
+    component: TheFaq
+  },
+  help: {
+    label: "Help & Support",
+    icon: HelpSupportIcon,
+    icon_active: HelpSupportIconActive,
+    component: TheSupport
   }
-];
-const router = createRouter({
-  history: createWebHistory({}.BASE_URL),
-  routes
-});
-function registerPlugins(app2) {
-  loadFonts();
-  app2.use(vuetify).use(router);
-}
+};
 const OrgLogo = "/assets/orgLogo.d7e6b17b.svg";
 const index = "";
-const app = createApp(App, { idpConfig: idpData$1, OrgLogo });
+const app = createApp(App, { idpConfig: idpData$1, OrgLogo, PAGES_CONFIG, PAGE_KEYS });
 app.component("VueDatePicker", Gn);
 registerPlugins(app);
 app.mount("#app");
