@@ -81,12 +81,22 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
-      exec(`aws lambda invoke --invocation-type Event --region ${awsRegion} --function-name ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}  --payload '{ "tenantId": "${clientId}" }'`, (err, output)=>{
+      // Create lake permission command json file from template and call the permission command
+      let commandJsonContent = fs.readFileSync("./dataLakePermissionTemplate.json", "utf-8");
+      commandJsonContent = commandJsonContent.replaceAll(":123456789012:", awsAccount);
+      const databaseName = `${clientId}-database-${envName}`;
+      commandJsonContent = commandJsonContent.replaceAll(":DATABASENAME:", databaseName);
+      const commandJSONFileName = `dataLakePermissionTemplate${clientId}.json`;
+      fs.writeFileSync(`./${commandJSONFileName}`, commandJsonContent);
+      exec(`aws lakeformation grant-permissions --cli-input-json file://${commandJSONFileName}`, (err, output)=>{
         if (err){
-          console.log(`Error in invoking client onboarding data provisioning handler ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}`, err);
+          console.log(`Error in granting permssion to role on database ${databaseName}`, err);
         }
-        console.log(`Successfully invoked lambda: ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}`, output);
+        console.log(`Successfully granted permission to database ${databaseName}`, output);
       });
+      ///
+      ///
+      ///
       const onboardDtISO = new Date().toISOString();
       exec(`aws dynamodb update-item --table-name "sensing-solution-tenant" --key '{"id": {"N": "${clientId}"}}' --update-expression "SET #H = :h" --expression-attribute-names '{"#H":"onboardDt"}' --expression-attribute-values '{":h":{"S":"${onboardDtISO}"}}'`, (err, output) => {
         if (err){
