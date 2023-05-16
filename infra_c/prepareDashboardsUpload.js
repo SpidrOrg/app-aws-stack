@@ -7,6 +7,8 @@ const {getExportName} = require("./lib/utils/stackExportsName");
 const getAWSAccountAndRegion = require("./getAWSAccountAndRegion");
 const accountConfig = require("./accountConfig.json");
 
+const dataSideClientOnboardingFurtherProcessingHandlerLambdaName = "client-onboarding-data"
+
 const {awsAccount, awsRegion} = getAWSAccountAndRegion();
 const {envName, domain} = accountConfig[awsAccount][awsRegion];
 
@@ -72,6 +74,12 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
 
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
+      exec(`aws lambda invoke --invocation-type Event --region ${awsRegion} --function-name ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}  --payload '{ "tenantId": "${clientId}" }'`, (err, output)=>{
+        if (err){
+          console.log(`Error in invoking client onboarding data provisioning handler ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}`, err);
+        }
+        console.log(`Successfully invoked lambda: ${dataSideClientOnboardingFurtherProcessingHandlerLambdaName}`, output);
+      });
       const onboardDtISO = new Date().toISOString();
       exec(`aws dynamodb update-item --table-name "sensing-solution-tenant" --key '{"id": {"N": "${clientId}"}}' --update-expression "SET #H = :h" --expression-attribute-names '{"#H":"onboardDt"}' --expression-attribute-values '{":h":{"S":"${onboardDtISO}"}}'`, (err, output) => {
         if (err){

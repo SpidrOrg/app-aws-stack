@@ -7,6 +7,22 @@ const path = require("path");
 const fs = require("fs");
 const {getExportName} = require("./utils/stackExportsName");
 
+const getSuffixByClientId = (id)=>{
+  const strigifiedEntityId = `${id}`;
+  const strigifiedEntityIdLength = strigifiedEntityId.length;
+  return strigifiedEntityId.substring(strigifiedEntityIdLength-3, strigifiedEntityIdLength);
+}
+
+const getDistinctGatewaySuffix = (allEntities)=>{
+  const gatewaySuffix = new Set();
+  allEntities.forEach(entity =>{
+    const suffix = getSuffixByClientId(entity.id);
+    gatewaySuffix.add(`${suffix}`);
+  });
+
+  return Array.from(gatewaySuffix);
+}
+
 class ApiGatewayInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
@@ -17,14 +33,45 @@ class ApiGatewayInfraStack extends Stack {
     if (allEntities.length <= 0){
       return;
     }
-    // Create Rest API
-    const api = new apigateway.RestApi(this, 'krny-spi-dashboard-apiGateway', {
-      restApiName: `spi-dashboards-${envName}`,
-      description: 'Created by CDK',
-      deployOptions: {
-        stageName: envName,
-      }
-    });
+
+    const gatewaySuffixes = getDistinctGatewaySuffix(allEntities);
+
+    const apiConstructBySuffix = {};
+
+    gatewaySuffixes.forEach(suffix =>{
+      // Create Rest API
+      const api = new apigateway.RestApi(this, `krny-spi-dashboard-${suffix}apiGateway`, {
+        restApiName: `spi-dashboards-${suffix}-${envName}`,
+        description: 'Created by CDK',
+        deployOptions: {
+          stageName: envName,
+        }
+      });
+
+      this.exportValue(api.deploymentStage.stageName, {
+        name: getExportName('apiGatewayDeploymentStage', {suffix})
+      });
+      this.stackExports[getExportName('apiGatewayDeploymentStage', {suffix})] = api.deploymentStage.stageName;
+
+      this.exportValue(api.restApiId, {
+        name: getExportName('apiGatewayRestApiId', {suffix})
+      });
+      this.stackExports[getExportName('apiGatewayRestApiId', {suffix})] = api.restApiId;
+
+      const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
+      const lambdaFolders = fs.readdirSync(pathToLambdaFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
+      lambdaFolders.forEach(lambdaFolder => {
+        const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
+        new lambda.CfnPermission(this, `PermitAPIG${suffix}Invocation${lambdaFolder}refarn`, {
+          action: 'lambda:InvokeFunction',
+          functionName: fnArn,
+          principal: 'apigateway.amazonaws.com',
+          sourceArn: api.arnForExecuteApi('*')
+        });
+      })
+      apiConstructBySuffix[suffix] = api;
+    })
+
 
     // this.exportValue(api.url);
     // this.stackExports['gatewayRootUrl'] = api.url;
@@ -34,35 +81,19 @@ class ApiGatewayInfraStack extends Stack {
     //   exportName: `gatewayRootUrl`,
     // });
 
-    this.exportValue(api.deploymentStage.stageName, {
-      name: getExportName('apiGatewayDeploymentStage')
-    });
-    this.stackExports[getExportName('apiGatewayDeploymentStage')] = api.deploymentStage.stageName;
 
-    this.exportValue(api.restApiId, {
-      name: getExportName('apiGatewayRestApiId')
-    });
-    this.stackExports[getExportName('apiGatewayRestApiId')] = api.restApiId;
     // new CfnOutput(this, `gatewayBaseDeploymentStage`, {
     //   value: api.deploymentStage.stageName,
     //   description: `API Gateway stage that points to the latest deployment.`,
     //   exportName: `gatewayBaseDeploymentStage`,
     // });
 
-    const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
-    const lambdaFolders = fs.readdirSync(pathToLambdaFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
-    lambdaFolders.forEach(lambdaFolder => {
-      const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
-      new lambda.CfnPermission(this, `PermitAPIGInvocation${lambdaFolder}refarn`, {
-        action: 'lambda:InvokeFunction',
-        functionName: fnArn,
-        principal: 'apigateway.amazonaws.com',
-        sourceArn: api.arnForExecuteApi('*')
-      });
-    })
+
 
     allEntities.forEach(entity =>{
       const clientId = entity.id;
+      const apiSuffix = getSuffixByClientId(clientId);
+      const api = apiConstructBySuffix[apiSuffix];
 
       // Add Root Resource
       const rootResource = api.root.addResource(`${clientId}`);

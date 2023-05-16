@@ -9,10 +9,10 @@ const getExportName = (type, params)=>{
     return `userpool${params.clientId}ResourceIdsDomain`
   }
   if (type === 'apiGatewayDeploymentStage'){
-    return `gatewayBaseDeploymentStage`
+    return `gatewayBaseDeploymentStage${params.suffix}`
   }
   if (type === 'apiGatewayRestApiId'){
-    return `gatewayRestApiId`
+    return `gatewayRestApiId${params.suffix}`
   }
   if (type === 'apiGatewayRootResourcePath'){
     return `gatewayRootResourceId${params.clientId}`
