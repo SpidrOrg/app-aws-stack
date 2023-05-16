@@ -33642,8 +33642,9 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
   ]);
 }
 const TheHeader$1 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_99fe8e49_lang = "";
+const TheSckeleton_vue_vue_type_style_index_0_scoped_ec70ebfd_lang = "";
 const DESKTOP_SCREEN_MIN_WIDTH_PIXELS = 1440;
+const FAQS_URL = "https://xebiagroup.sharepoint.com/sites/ProjectKearney/Gedeelde%20documenten/Forms/AllItems.aspx?id=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent%2FKearney%5FMS%20Demand%20Dashboard%20FAQ%2Epdf&parent=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent&p=true&ct=1684174121283&or=OWA%2DNT&cid=1b364130%2Dcec9%2D447e%2D6e14%2D746cabb41467&ga=1";
 const _sfc_main$p = {
   name: "TheSckeleton",
   components: {
@@ -33676,6 +33677,10 @@ const _sfc_main$p = {
   },
   methods: {
     pageSelectionHandler(key) {
+      if (key === this.PAGE_KEYS.FAQS) {
+        window.open(FAQS_URL, "_blank");
+        return;
+      }
       this.activePageKey = key;
       sessionStorage.setItem("pageKey", key);
     },
@@ -33726,7 +33731,7 @@ const _sfc_main$p = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-99fe8e49"), n2 = n2(), popScopeId(), n2);
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-ec70ebfd"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$m = { class: "screen" };
 const _hoisted_2$k = { class: "main-area" };
 const _hoisted_3$k = { class: "control-container" };
@@ -33766,7 +33771,7 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-99fe8e49"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-ec70ebfd"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
 const _sfc_main$o = {
