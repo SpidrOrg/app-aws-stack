@@ -35,7 +35,7 @@ class CloudfrontInfraStack extends Stack {
       let lambdacode = fs.readFileSync(lambdaCodeFilePath, "utf-8");
       lambdacode = lambdacode.replaceAll(constants.ACCOUNT_ID_PALCEHOLDER, `${props.env.account}`);
       fs.writeFileSync(path.join(pathToLambdaEdgeCodeFolders, lambdaEdgeFolder, "code/index.mjs"), lambdacode);
-      const iamRoleName = iamInfraStack[`iamRoleRef${configP.configuration.iamRole}`] //Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
+      const iamRoleName = iamInfraStack[`iamRoleRef_bs${configP.configuration.iamRole}`] //Fn.importValue(`iamRoleRef${configP.configuration.iamRole}`);
 
       const lambdaEdgeFunction = new lambda.Function(this, `${lambdaEdgeFolder}`, {
         runtime: lambda.Runtime[configP.runtime],

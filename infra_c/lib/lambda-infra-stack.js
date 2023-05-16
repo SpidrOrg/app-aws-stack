@@ -50,7 +50,7 @@ class LambdaInfraStack extends Stack {
       const config = JSON.parse(configFile);
 
       // const lambdaRoleName = Fn.importValue(`iamRoleRef${config.configuration.iamRole}`);
-      const lambdaRoleName = iamInfraStack[`iamRoleRef${config.configuration.iamRole}`];
+      const lambdaRoleName = iamInfraStack[`iamRoleRef_bs${config.configuration.iamRole}`];
 
       const fn = new lambda.Function(this, `${lambdaFolder}`, {
         functionName: `${lambdaFolder}`,
