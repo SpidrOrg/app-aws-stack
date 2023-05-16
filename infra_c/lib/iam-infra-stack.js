@@ -30,7 +30,7 @@ class IamInfraStack extends Stack {
         })
       })
 
-      policiesP[policyFolder] = new iam.ManagedPolicy(this, `${policyFolder}_bs`, {
+      policiesP[policyFolder] = new iam.ManagedPolicy(this, `${policyFolder}`, {
         managedPolicyName: policyFolder,
         statements: statementsP,
       });
@@ -46,7 +46,7 @@ class IamInfraStack extends Stack {
 
       const roleP = JSON.parse(roleText);
 
-      const iamRole = new iam.Role(this, `${roleFolder}_bs`, {
+      const iamRole = new iam.Role(this, `${roleFolder}`, {
         roleName: roleFolder,
         assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
         description: roleP.description ?? '',
@@ -62,7 +62,7 @@ class IamInfraStack extends Stack {
 
       // Export Role
       this.exportValue(iamRole.roleName);
-      this.stackExports[`iamRoleRef_bs${roleFolder}`] = iamRole.roleName;
+      this.stackExports[`iamRoleRef${roleFolder}`] = iamRole.roleName;
       // new CfnOutput(this, `iamRoleRef${roleFolder}`, {
       //   value: iamRole.roleName,
       //   description: `IAM Role Name: ${roleFolder}`,
@@ -77,7 +77,7 @@ class IamInfraStack extends Stack {
       const roleP = JSON.parse(roleText);
 
       const iamRole = allRoles[roleFolder];
-      const customResource = new cr.AwsCustomResource(this, `ModifyTrustPolicy${roleFolder}_bs`, {
+      const customResource = new cr.AwsCustomResource(this, `ModifyTrustPolicy${roleFolder}`, {
         onCreate: {
           service: 'IAM',
           action: 'updateAssumeRolePolicy',
