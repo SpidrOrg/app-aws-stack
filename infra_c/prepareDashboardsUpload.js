@@ -28,6 +28,12 @@ console.log("dashboardsBucketName", dashboardsBucketName);
 let sourcePath = path.join(__dirname, '../services/uiBundles/DefaultUiBundle');
 const defaultIDPTemplate = fs.readFileSync(`${sourcePath}/idpConfig.js`, 'utf-8');
 
+const getSuffixByClientId = (id)=>{
+  const strigifiedEntityId = `${id}`;
+  const strigifiedEntityIdLength = strigifiedEntityId.length;
+  return strigifiedEntityId.substring(strigifiedEntityIdLength-3, strigifiedEntityIdLength);
+}
+
 clientsToOnboardConfigs.forEach((entity, iter) => {
   const clientId = entity.id;
   const host = entity.host;
@@ -54,8 +60,9 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)redirectSignIn:.*/, `$1redirectSignIn: "${clientWebAppFQDN}",`);
   idpConfigTemplateContents = idpConfigTemplateContents.replace(/(.*)redirectSignOut:.*/, `$1redirectSignOut: "${clientWebAppFQDN}",`);
 
-  const gatewayRestApiId = apiGatewayExports[`Export${getExportName('apiGatewayRestApiId', {clientId})}`];
-  const gatewayStageName = apiGatewayExports[`Export${getExportName('apiGatewayDeploymentStage', {clientId})}`];
+  const gatewaySuffix = getSuffixByClientId(clientId);
+  const gatewayRestApiId = apiGatewayExports[`Export${getExportName('apiGatewayRestApiId', {suffix: gatewaySuffix})}`];
+  const gatewayStageName = apiGatewayExports[`Export${getExportName('apiGatewayDeploymentStage', {suffix: gatewaySuffix})}`];
   const clientApiRootResourcePath = apiGatewayExports[`Export${getExportName('apiGatewayRootResourcePath', {clientId})}`];
   const apiPrefix = `${gatewayRestApiId}.execute-api.${awsRegion}.amazonaws.com`;
   const stageRootResourcePath = `${gatewayStageName}${clientApiRootResourcePath}`;
