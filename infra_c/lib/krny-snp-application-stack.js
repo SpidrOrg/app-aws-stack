@@ -25,7 +25,7 @@ class krnySnpApplicationStack extends Stack {
     let stackProps = {...props, envName, certificateArn, domain, allEntities, awsAccountId, awsRegion};
 
     // IAM Policies & Roles
-    const iamInfraStack = new IamInfraStack(this, 'InfraIamStack', stackProps);
+    const iamInfraStack = new IamInfraStack(this, 'IamInfraStack', stackProps);
     stackProps = {...stackProps, iamInfraStack: iamInfraStack.stackExports}
 
     // Lambda Layers
