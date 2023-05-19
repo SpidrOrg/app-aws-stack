@@ -79,13 +79,6 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   fs.cpSync(sourcePath, pathToDashboardsTempBundles, {recursive: true});
   fs.writeFileSync(`${pathToDashboardsTempBundles}/idpConfig.js`, idpConfigTemplateContents);
 
-  exec(`aws lambda invoke --function-name temptrigger  --invocation-type Event --payload '{ "tenantId": "${clientId}" }' response.json`, (e, o)=>{
-    if (e){
-      console.log("Error invoking lambda", e)
-      return;
-    }
-    console.log("Invoked lambda", o);
-  })
   exec(`aws s3api head-object --bucket ${dashboardsBucketName} --key dashboards/${clientId}/dashboard/index.html`, (error, exists)=>{
     if (!exists){
       // Create lake permission command json file from template and call the permission command
@@ -142,7 +135,13 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         }
         console.log("Logo Updated: \n", output)
       })
-
+      exec(`aws lambda invoke --function-name temptrigger  --invocation-type Event --payload '{ "tenantId": "${clientId}" }' response.json`, (e, o)=>{
+        if (e){
+          console.log("Error invoking lambda", e)
+          return;
+        }
+        console.log("Invoked lambda", o);
+      })
     }
   })
 })

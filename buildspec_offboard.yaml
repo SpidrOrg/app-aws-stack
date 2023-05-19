@@ -10,13 +10,9 @@ phases:
   build:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
-      - echo $DOMAIN_NAME
-      - echo $ENV_NAME
-      - echo $CERTIFICATE_ARN
       - cd infra_c
       - npm ci
       - node scanClientsTable.js
-      - cat ../services/EventNotification/s3/clientBucket/config.json
       - npm i -g cdk
       - cdk bootstrap
       - cdk deploy -e krny-snp-application-stack/AthenaInfraStack krny-snp-application-stack/GlueInfraStack krny-snp-application-stack/ApiGatewayInfraStack
