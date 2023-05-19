@@ -79,7 +79,7 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
   fs.cpSync(sourcePath, pathToDashboardsTempBundles, {recursive: true});
   fs.writeFileSync(`${pathToDashboardsTempBundles}/idpConfig.js`, idpConfigTemplateContents);
 
-  exec(`aws lambda invoke --function-name temptrigger  --invocation-type Event --payload '{ "tenantId": "abc" }' response.json`, (e, o)=>{
+  exec(`aws lambda invoke --function-name temptrigger  --invocation-type Event --payload '{ "tenantId": "${clientId}" }' response.json`, (e, o)=>{
     if (e){
       console.log("Error invoking lambda", e)
       return;
