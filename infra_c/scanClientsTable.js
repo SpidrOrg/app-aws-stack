@@ -1,30 +1,19 @@
-const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const fs = require('fs');
 const path = require('path');
 const {exec} = require("node:child_process");
 const getServiceNames = require("./lib/utils/getServiceName");
-const getAWSAccountAndRegion = require("./getAWSAccountAndRegion");
 const clientBucketEventNotificationConfig = require("../services/EventNotification/s3/clientBucket/config.json");
 
 (async ()=>{
-  const {awsAccount, awsRegion} = getAWSAccountAndRegion();
   const envName = process.env.ENV_NAME;
   const dashboardsBucketName = getServiceNames.getDashboardsBucketName(envName)
 
-  try {
-    const ddbClient = new DynamoDBClient({ region: 'us-east-1' });
-    const {Items: clientsConfigs} = await ddbClient.send(new ScanCommand({
-      TableName: "sensing-solution-tenant",
-      AttributesToGet: [
-        "id",
-        "adminEmail",
-        "choosenModel",
-        "host",
-        "name",
-        "selectedDataSources"
-      ]
-    }));
-
+  exec(`aws dynamodb scan --table-name sensing-solution-tenant --attributes-to-get '["id", "adminEmail", "host", "name"]'`, (e, o)=>{
+    if (e){
+      throw e
+    }
+    const clientsConfigs = JSON.parse(o).Items;
+    console.log(clientsConfigs, o)
     const clientsToOnboardConfigs = [];
     clientsConfigs.forEach(clientConfig =>{
       const configObject = {};
@@ -50,9 +39,8 @@ const clientBucketEventNotificationConfig = require("../services/EventNotificati
       clientsToOnboardConfigs.push(configObject)
     })
     fs.writeFileSync(path.join(__dirname, './bin/scannedClientTable.json'), JSON.stringify(clientsToOnboardConfigs, null, 2));
-  } catch (e){
-    console.log("Error fetch data from clients table", e);
-  }
+  })
+
 
   exec('aws lambda get-function --function-name ingestion-similarweb-client', (err, out)=>{
     if (err){

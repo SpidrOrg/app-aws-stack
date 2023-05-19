@@ -19,7 +19,6 @@
     "@aws-cdk/aws-glue-alpha": "^2.78.0-alpha.0",
     "@aws-cdk/cli-lib-alpha": "^2.77.0-alpha.0",
     "@aws-cdk/custom-resources": "^1.200.0",
-    "@aws-sdk/client-dynamodb": "^3.328.0",
     "aws-cdk-lib": "2.78.0",
     "constructs": "^10.0.0"
   }
