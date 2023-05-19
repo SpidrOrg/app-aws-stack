@@ -135,7 +135,7 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         }
         console.log("Logo Updated: \n", output)
       })
-      exec(`aws lambda invoke --function-name temptrigger  --invocation-type Event --payload '{ "tenantId": "${clientId}" }' response.json`, (e, o)=>{
+      exec(`aws lambda invoke --function-name client-onboarding-data  --invocation-type Event --payload '{ "tenantId": "${clientId}" }' response.json`, (e, o)=>{
         if (e){
           console.log("Error invoking lambda", e)
           return;
