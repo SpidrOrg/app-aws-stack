@@ -11,7 +11,6 @@ import {
   EXECUTION_ROLE_NAME,
   ASSUME_ROLE_TAG,
   ASSUME_ROLE_ENV_TAG,
-  ENVIRONMENTS
 } from "./constants.mjs";
 
 const DEV_LOCALHOST_PORT = "3000";
@@ -25,33 +24,24 @@ function getenvSuffixFromOriginUrl(originUrl){
   let env;
   if (_.startsWith(hostName, "localhost")){
     if (`${hostName}`.indexOf(DEV_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.DEV
+      env = "dev"
     } else if (`${hostName}`.indexOf(QA_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.QA
+      env = "qa"
     } else if (`${hostName}`.indexOf(UAT_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.UAT
+      env = "uat"
     } else if (`${hostName}`.indexOf(PROD_LOCALHOST_PORT) !== -1){
-      env = ENVIRONMENTS.PROD
+      env = ""
     } else {
-      env = ENVIRONMENTS.DEV
+      env = "dev"
     }
   } else {
     env = _.get(_.split(hostName, "."), "[1]");
   }
-  let envName = "";
-  if (env === ENVIRONMENTS.DEV){
-    envName = ENVIRONMENTS.DEV
-  } else if (env === ENVIRONMENTS.QA){
-    envName = ENVIRONMENTS.QA
-  } else if (env === ENVIRONMENTS.UAT){
-    envName = ENVIRONMENTS.UAT
-  } else {
-    envName = ENVIRONMENTS.PROD
+
+  if (env){
+    env = `-${env}`
   }
-  if (envName){
-    envName = `-${envName}`
-  }
-  return envName;
+  return env;
 }
 
 export default class ServicesConnector{
