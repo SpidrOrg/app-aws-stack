@@ -41,6 +41,7 @@ class krnySnpApplicationStack extends Stack {
     // S3 Buckets and S3 Client Bucket Event Notification
     const s3InfraStack = new S3InfraStack(this, 'S3InfraStack', stackProps);
     s3InfraStack.addDependency(lambdaInfraStack);
+    stackProps = {...stackProps, s3InfraStack: s3InfraStack.stackExports}
 
 
     // // Lambda@Edge function for cloudfront
