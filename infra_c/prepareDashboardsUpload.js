@@ -135,6 +135,14 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
         }
         console.log("Logo Updated: \n", output)
       })
+
+      exec(`echo '{ "tenantId": "${clientId}" }' > clear_payload && openssl base64 -out encoded_payload -in clear_payload && aws lambda invoke --function-name temptrigger  --invocation-type Event --payload file://./encoded_payload response.json`, (e, o)=>{
+        if (e){
+          console.log("Error invoking lambda")
+        }
+        console.log("Invoked lambda", o);
+      })
+
     }
   })
 })
