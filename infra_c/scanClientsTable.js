@@ -4,11 +4,11 @@ const path = require('path');
 const {exec} = require("node:child_process");
 const getServiceNames = require("./lib/utils/getServiceName");
 const getAWSAccountAndRegion = require("./getAWSAccountAndRegion");
-const accountConfig = require("./accountConfig.json");
+const clientBucketEventNotificationConfig = require("../services/EventNotification/s3/clientBucket/config.json");
 
 (async ()=>{
   const {awsAccount, awsRegion} = getAWSAccountAndRegion();
-  const {envName} = accountConfig[awsAccount][awsRegion];
+  const envName = process.env.ENV_NAME;
   const dashboardsBucketName = getServiceNames.getDashboardsBucketName(envName)
 
   try {
@@ -53,5 +53,15 @@ const accountConfig = require("./accountConfig.json");
   } catch (e){
     console.log("Error fetch data from clients table", e);
   }
+
+  exec('aws lambda get-function --function-name ingestion-similarweb-client', (err, out)=>{
+    if (err){
+      console.log("ingestion-similarweb-client lambda not found, removing notification config for the lambda");
+      delete clientBucketEventNotificationConfig.similarWebIngestion
+
+      fs.writeFileSync(path.join(__dirname, "../services/EventNotification/s3/clientBucket/config.json"), JSON.stringify(clientBucketEventNotificationConfig))
+    }
+  })
+
 
 })();

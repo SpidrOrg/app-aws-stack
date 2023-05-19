@@ -5,12 +5,12 @@ const { exec } = require('node:child_process')
 const stackExports = require("./stackexports.json");
 const {getExportName} = require("./lib/utils/stackExportsName");
 const getAWSAccountAndRegion = require("./getAWSAccountAndRegion");
-const accountConfig = require("./accountConfig.json");
 
 const dataSideClientOnboardingFurtherProcessingHandlerLambdaName = "client-onboarding-data"
 
 const {awsAccount, awsRegion} = getAWSAccountAndRegion();
-const {envName, domain} = accountConfig[awsAccount][awsRegion];
+const domain = process.env.DOMAIN_NAME;
+const envName = process.env.ENV_NAME;
 
 const scannedClientTable = fs.readFileSync(path.join(__dirname, './bin/scannedClientTable.json'), "utf-8")
 const clientsToOnboardConfigs = JSON.parse(scannedClientTable);

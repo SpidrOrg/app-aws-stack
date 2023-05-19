@@ -10,7 +10,6 @@ const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");
-const accountConfig = require("../accountConfig.json");
 
 class krnySnpApplicationStack extends Stack {
   constructor(scope, id, props) {
@@ -18,7 +17,9 @@ class krnySnpApplicationStack extends Stack {
 
     const awsAccountId = Stack.of(this).account;
     const awsRegion = Stack.of(this).region;
-    const {envName, certificateArn, domain} = accountConfig[awsAccountId][awsRegion];
+    const domain = process.env.DOMAIN_NAME;
+    const envName = process.env.ENV_NAME;
+    const certificateArn = process.env.CERTIFICATE_ARN;
 
     const allEntities = props.clientsToOnboardConfigs || [];
 
@@ -40,7 +41,7 @@ class krnySnpApplicationStack extends Stack {
     // S3 Buckets and S3 Client Bucket Event Notification
     const s3InfraStack = new S3InfraStack(this, 'S3InfraStack', stackProps);
     s3InfraStack.addDependency(lambdaInfraStack);
-    stackProps = {...stackProps, s3InfraStack: s3InfraStack.stackExports}
+
 
     // // Lambda@Edge function for cloudfront
     // const lambdaEdgeInfraStack = new LambdaEdgeInfraStack(this, 'LambdaEdgeInfraStack', stackProps);

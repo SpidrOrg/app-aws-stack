@@ -23,11 +23,10 @@ const glueAlpha = require('@aws-cdk/aws-glue-alpha');
 const athena = require('aws-cdk-lib/aws-athena');
 const cognito = require('aws-cdk-lib/aws-cognito');
 const apigateway = require('aws-cdk-lib/aws-apigateway');
-
 const fs = require("fs");
 const crypto = require('crypto');
-
 const path = require("path");
+const route53HostedZoneConfig = require("../values/route53HostedZoneConfig.json");
 
 class InfraStack extends Stack {
   /**
@@ -39,122 +38,22 @@ class InfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    const parsedInput = eventInputParsed()
+    Object.keys(route53HostedZoneConfig).forEach((hostedZoneName)=>{
+      const hostedZoneConfig = route53HostedZoneConfig[hostedZoneName];
+      const hostedZone = new route53.PublicHostedZone(this, `HostedZone${hostedZoneName}`, {
+        zoneName: hostedZoneName,
+      });
 
-    // INPUT
-    const clientId = parsedInput.id;
-    const certificateArn = "arn:aws:acm:us-east-1:932399466203:certificate/f085089d-f5ab-4286-8feb-08cac18e208e";
-    const domain = "trial.dev.testvisd.online";
-    const cognitoDomain = "client1visd";
-    const host = "client5"
-    const hostedZoneId = "Z05023842CSJVZ3JVYYYJ";
-    ///
-    // Constants
-    const lambdaEdgeCloudfrontOriginRequestName = "dd-cf-lambda-edge";
-    const CLIENT_ONBOARDING_STATE_SSM_PARAMETER_NAME = 'currentHosts'
-    //
-    let currentHosts = [];
-    try {
-      currentHosts = ssm.StringParameter.valueFromLookup(this, CLIENT_ONBOARDING_STATE_SSM_PARAMETER_NAME);
-      currentHosts = currentHosts.split(",").filter(v => v.trim()).map(v => v.trim())
-    }catch (e){
-      currentHosts = [];
-    }
-
-    // Get the zone
-    const zone = route53.HostedZone.fromHostedZoneAttributes(this, `domain${host}`, {
-      zoneName: domain,
-      hostedZoneId: hostedZoneId,
-    });
-
-    const target = route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(cf));
-
-    // [...currentHosts].forEach((recordName) => {
-    //   new route53.CfnRecordSet(this, `CDNARecord${recordName}delete`, {
-    //     hostedZoneId: zone.hostedZoneId,
-    //     name: `${host}.${domain}`,
-    //     type: 'A',
-    //     aliasTarget: {
-    //       dnsName: 'd7e9gt0qkq093.cloudfront.net',
-    //       hostedZoneId: hostedZoneId
-    //     },
-    //   }).addDeletionOverride('DeletionOverride');
-    // });
-    //
-    // [...currentHosts, host].forEach((recordName) => {
-    //   new route53.ARecord(this, `CDNARecord${recordName}`, {
-    //     zone,
-    //     target: route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(cf)),
-    //     recordName
-    //   });
-    // });
-
-
-
-
-    // Create API Gateway
-    const apiGatewayLambdaAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(this, 'booksAuthorizer', {
-      cognitoUserPools: [userPool]
-    });
-    const api = new apigateway.RestApi(this, 'api', {
-      description: 'Created by CDK',
-      deployOptions: {
-        stageName: props.envName,
-      },
-      defaultCorsPreflightOptions: {
-        allowHeaders: [
-          'Content-Type',
-          'X-Amz-Date',
-          'Authorization',
-          'X-Api-Key',
-        ],
-        allowMethods: ['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-        allowCredentials: true,
-        allowOrigins: ['*'],
-      },
-    });
-
-    const todos = api.root.addResource('todos');
-
-    todos.addMethod(
-      'GET',
-      new apigateway.LambdaIntegration(edgeLambdas[lambdaEdgeCloudfrontOriginRequestName].lambda, {
-        proxy: false,
-        requestTemplates: { "application/json": JSON.stringify({
-            "scope" : "$context.authorizer.claims.scope",
-            "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
-            "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
-            "customer": "$input.params('customer')",
-            "category": "$input.params('category')",
-            "valueORvolume": "$input.params('valueORvolume')",
-            "lag": "$input.params('lag')"
-          })
-        },
-        passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES
-      }),
-      {
-        authorizer: apiGatewayLambdaAuthorizer,
-        authorizationType: apigateway.AuthorizationType.COGNITO,
-        authorizationScopes: [`tenant/${clientId}`]
-      }
-    );
-
-
-    // Create lambda layer
-    const calcLayer = new lambda.LayerVersion(this, 'calc-layer', {
-      compatibleRuntimes: [
-        lambda.Runtime.NODEJS_18_X
-      ],
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../services/lambdaLayer/nodeEssentials/layer.zip')),
-      description: 'multiplies a number by 2',
-    });
-
-    const demoLambda = new lambda.Function(this, 'lambdaFunction', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromInline('export const handler = async(event) => "Hello, CDK";'),
-      layers: [calcLayer]
+      Object.keys(hostedZoneConfig).forEach((recordName)=>{
+        const recordValues = hostedZoneConfig[recordName];
+        new route53.NsRecord(this, `NSRecord-${hostedZoneName}${recordName}`, {
+          zone: hostedZone,
+          recordName: `${recordName}`,
+          values: recordValues
+        });
+      })
     })
+
   }
 }
 

@@ -36,4 +36,6 @@ const props = {
   clientsToOnboardConfigs
 }
 
-const appStack = new krnySnpApplicationStack(app, 'krny-snp-application-stack', props);
+if (process.env.CODEBUILD_BUILD_NUMBER > 1){
+  const appStack = new krnySnpApplicationStack(app, 'krny-snp-application-stack', props);
+}
