@@ -16,7 +16,7 @@ phases:
       - cd infra_c
       - npm ci
       - node scanClientsTable.js
-      - cat ./services/EventNotification/s3/clientBucket/config.json
+      - cat ../services/EventNotification/s3/clientBucket/config.json
       - npm i -g cdk
       - cdk bootstrap
       - cdk deploy --all --require-approval=never --outputs-file ./stackexports.json
