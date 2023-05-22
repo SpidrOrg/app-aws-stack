@@ -3,21 +3,6 @@ const cognito = require("aws-cdk-lib/aws-cognito");
 const constants = require("./constants");
 const {getExportName} = require("./utils/stackExportsName");
 
-const localhostPortMappingByEnv = (env)=>{
-  switch (env){
-    case constants.ENV.DEV:
-      return 3000
-    case constants.ENV.QA:
-      return 3001
-    case constants.ENV.UAT:
-      return 3011
-    case constants.ENV.PROD:
-      return 3111
-    default:
-      return 3000
-  }
-}
-
 class CognitoInfraStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
@@ -99,8 +84,8 @@ class CognitoInfraStack extends Stack {
           userSrp: true,
         },
         oAuth: {
-          callbackUrls: [POOL_CALLBACK_URL_PUBLIC, `http://localhost:${localhostPortMappingByEnv(envName)}`],
-          logoutUrls: [POOL_LOGOUT_URL_PUBLIC, `http://localhost:${localhostPortMappingByEnv(envName)}`],
+          callbackUrls: [POOL_CALLBACK_URL_PUBLIC, `http://localhost:${process.env.LOCALHOST_PORT}`],
+          logoutUrls: [POOL_LOGOUT_URL_PUBLIC, `http://localhost:${process.env.LOCALHOST_PORT}`],
           scopes: [cognito.OAuthScope.EMAIL, cognito.OAuthScope.OPENID, cognito.OAuthScope.PROFILE, cognito.OAuthScope.resourceServer(userPoolResourceServer, userPoolResourceServerTenantScope)],
         },
         supportedIdentityProviders: [

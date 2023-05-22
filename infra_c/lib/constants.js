@@ -4,6 +4,7 @@ module.exports = {
     PROD: '',
     UAT: 'uat',
     QA: 'test',
-    DEV: 'dev'
+    DEV: 'dev',
+    STAGE: 'stage'
   }
 }
