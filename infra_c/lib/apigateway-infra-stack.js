@@ -61,13 +61,15 @@ class ApiGatewayInfraStack extends Stack {
       const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
       const lambdaFolders = fs.readdirSync(pathToLambdaFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
       lambdaFolders.forEach(lambdaFolder => {
-        const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
-        new lambda.CfnPermission(this, `PermitAPIG${suffix}Invocation${lambdaFolder}refarn`, {
-          action: 'lambda:InvokeFunction',
-          functionName: fnArn,
-          principal: 'apigateway.amazonaws.com',
-          sourceArn: api.arnForExecuteApi('*')
-        });
+        if (lambdaFolder.startsWith("dd-")){
+          const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
+          new lambda.CfnPermission(this, `PermitAPIG${suffix}Invocation${lambdaFolder}refarn`, {
+            action: 'lambda:InvokeFunction',
+            functionName: fnArn,
+            principal: 'apigateway.amazonaws.com',
+            sourceArn: api.arnForExecuteApi('*')
+          });
+        }
       })
       apiConstructBySuffix[suffix] = api;
     })
