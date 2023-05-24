@@ -11,6 +11,7 @@ import {
   EXECUTION_ROLE_NAME,
   ASSUME_ROLE_TAG,
   ASSUME_ROLE_ENV_TAG,
+  DOMAIN_PARTS_LENGTH
 } from "./constants.mjs";
 
 const DEV_LOCALHOST_PORT = "3000";
@@ -35,7 +36,12 @@ function getenvSuffixFromOriginUrl(originUrl){
       env = "dev"
     }
   } else {
-    env = _.get(_.split(hostName, "."), "[1]");
+    const splittedHostName = _.split(hostName, ".");
+    if (splittedHostName.length === (DOMAIN_PARTS_LENGTH + 1)){
+      env = 'prod';
+    } else {
+      env = _.get(_.split(hostName, "."), "[1]");
+    }
   }
 
   if (env){
