@@ -33,8 +33,8 @@ export const handler = async (event) => {
       },
       query: `
         SELECT horizon,
-               Round(Avg(rolling_test_accuracy) * 100, 0) as rolling_test_accuracy,
-               Round(Avg(cv_accuracy) * 100, 0) as cv_accuracy
+               Round(Avg(cv_accuracy) * 100, 0) as cv_accuracy,
+               Round(Avg(rolling_test_accuracy) * 100, 0) as rolling_test_accuracy
         FROM   market_sensing_model_accuracy
         WHERE  Cast(date AS DATE) IN (SELECT Max(Cast(date AS DATE))
                                       FROM   market_sensing_model_accuracy)
