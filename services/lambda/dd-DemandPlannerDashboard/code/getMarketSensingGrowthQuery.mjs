@@ -154,7 +154,7 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
       combinedWithQuery += `${queryName} AS (
             WITH t1 AS (
               SELECT      variable_treatment.category                AS fname,
-                          Sum(key_demand_drivers.feature_importance) AS imp
+                          ROUND(Sum(key_demand_drivers.feature_importance) * 100, 2) AS imp
               FROM        key_demand_drivers
               LEFT JOIN   variable_treatment
               ON          key_demand_drivers.feature_name = variable_treatment.columns
