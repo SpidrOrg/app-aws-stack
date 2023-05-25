@@ -124,7 +124,7 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
       for(let i = 0; i <= numberOfHistoricPeriods; i++){
         let historicIndex = i;
         if (isFixedQuarterView){
-          historicIndex = historicIndex * 3;
+          historicIndex = i * 3;
         }
         const forecastSubQueryMetricName = getForecastSubQueryMetricName(v.lag, historicIndex);
         const adjustedForecastSubQueryMetricName = getAdjustedForecastSubQueryMetricName(v.lag, historicIndex);
