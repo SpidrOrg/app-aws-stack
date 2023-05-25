@@ -143,5 +143,11 @@ export default {
     transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/powertools_pta_allocation/powertools_pta_allocation_split_sanitized.csv`,
     primaryKeyIndexes: [],
     lineTransformationConfig: []
+  },
+  variable_treatment: {
+    rawFileKey: () => `${RAW_FOLDER}/variable_treatment.csv`,
+    transformFileKey: () => `${TRANSFORM_FOLDER}/variable_treatment/variable_treatment.csv`,
+    primaryKeyIndexes: [],
+    lineTransformationConfig: []
   }
 }
