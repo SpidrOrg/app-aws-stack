@@ -3,25 +3,16 @@ import _ from "lodash";
 import {removeTrailingComma, removeEmptyLines} from "/opt/utils.mjs";
 import {getSubQueryName, getMetricScaledownTotalMonthlyMarketSizeName, getMetricMonthlyPosSalesName} from "./getPyMs.mjs";
 import {getForecastSubQueryMetricName, getActualYagoSubQueryMetricName} from "./getClientGrowthQuery.mjs";
-import {getPredictedSubQueryMetricName, getYagoPredictedSubQueryMetricName} from "./getMarketSensingGrowthQuery1.mjs";
+import {getPredictedSubQueryMetricName, getYagoPredictedSubQueryMetricName} from "./getMarketSensingGrowthQuery.mjs";
 
 const ALL_OPTION = "*";
 const DB_DATE_FORMAT = "yyyy-MM-dd";
 const BY_VALUE = "BY_VALUE";
 const BY_QUANTITY = "BY_QUANTITY";
 
-export const periodConfig = [{
-  lag: 1
-}, {
-  lag: 4
-}, {
-  lag: 7
-}, {
-  lag: 10
-}];
 export const getSubQueryFigureName = (lag)  => `Implied_${lag}_${lag+2}MarketShareGrowth`
 
-export default function(refreshDateP, customers, categories, valueOrQuantity){
+export default function(refreshDateP, customers, categories, valueOrQuantity, periodConfig){
   const isMultiCustomer = (_.isArray(customers) && _.size(customers) > 1) || _.get(customers, "[0]") === ALL_OPTION;
 
   const getCombinedQuery = ()=> {

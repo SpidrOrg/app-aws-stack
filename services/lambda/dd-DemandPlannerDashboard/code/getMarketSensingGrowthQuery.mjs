@@ -1,25 +1,12 @@
 import _ from "lodash";
 import dfns from "date-fns";
 import {removeTrailingComma, removeEmptyLines, escapeSqlSingleQuote} from "/opt/utils.mjs";
+import {numberOfHistoricPeriods} from "./constants.mjs";
 
 const BY_VALUE = "BY_VALUE";
 const BY_QUANTITY = "BY_QUANTITY";
 const ALL_OPTION = "*";
 const DB_DATE_FORMAT = "yyyy-MM-dd";
-
-export const periodConfig = [{
-  lag: 1,
-  model: "1_3m"
-}, {
-  lag: 4,
-  model: "4_6m"
-}, {
-  lag: 7,
-  model: "7_9m"
-}, {
-  lag: 10,
-  model: "10_12m"
-}];
 
 export const getPredictedSubQueryName = (lag, periodIndex) => `T_MS_${lag}_${lag + 2}LagPrediction_${periodIndex}`;
 export const getYagoPredictedSubQueryName = (lag, periodIndex) => `T_MS_${lag}_${lag + 2}LagYagoPrediction_${periodIndex}`;
@@ -72,7 +59,7 @@ const baseQueryMultiCustomerByQuantity = (dtYStart, msTimeHorizon, metricName, i
                     ${categoriesP ? `AND msd.category IN (${categoriesP})` : ''}
       `;
 
-export default function (refreshDateP, customers, categories, valueOrQuantity) {
+export default function (refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView = false) {
   const isMultiCustomer = (_.isArray(customers) && _.size(customers) > 1) || _.get(customers, "[0]") === ALL_OPTION;
 
   const customersP = _.get(customers, "[0]") === ALL_OPTION ? null : _.join(_.map(customers, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",")
@@ -84,7 +71,6 @@ export default function (refreshDateP, customers, categories, valueOrQuantity) {
     let combinedWithQuery = "";
     let combinedSelect = "";
     let combinedFrom = ""
-    const historicalPeriod = 6;
 
     const growthDerivedByCalcPath = (refreshDate, lagConfig, periodIndex, baseQueryFun, predictedGrowthFigureName) => {
       const predictedSubQueryName = getPredictedSubQueryName(lagConfig.lag, periodIndex);
@@ -214,12 +200,16 @@ export default function (refreshDateP, customers, categories, valueOrQuantity) {
       baseQueryFun = _.curryRight(baseQueryFun)(customersP, categoriesP);
 
       _.forEach(periodConfig, v => {
-        for (let i = 0; i <= historicalPeriod; i++) {
-          const predictedGrowthFigureName = getPredictedGrowthFigureName(v.lag, v.model, i);
-          queryPath(refreshDateP, v, i, baseQueryFun, predictedGrowthFigureName)
+        for (let i = 0; i <= numberOfHistoricPeriods; i++) {
+          let historicIndex = i;
+          if (isFixedQuarterView){
+            historicIndex = i * 3;
+          }
+          const predictedGrowthFigureName = getPredictedGrowthFigureName(v.lag, v.ms_model, historicIndex);
+          queryPath(refreshDateP, v, historicIndex, baseQueryFun, predictedGrowthFigureName)
         }
         // Add Key Demand Drivers Query
-        keyDemandDriversQuery(v.model);
+        keyDemandDriversQuery(v.ms_model);
       })
     }
 

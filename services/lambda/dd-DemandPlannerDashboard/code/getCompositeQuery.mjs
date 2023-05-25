@@ -1,30 +1,29 @@
 import _ from "lodash";
 import dfns from "date-fns";
 import getClientGrowthQuery, {
-  periodConfig as cgPeriodConfig,
   getForecastGrowthFigureName,
   getActualGrowthFigureName,
   getAdjForecastGrowthFigureName
 } from "./getClientGrowthQuery.mjs";
-import getMarketSensingGrowthQuery1, {
-  periodConfig as msPeriodConfig,
+import getMarketSensingGrowthQuery, {
   getPredictedGrowthFigureName,
   getKeyDemandDriverFeatureFigureName,
   getKeyDemandDriverFeatureImportanceFigureName
-} from "./getMarketSensingGrowthQuery1.mjs";
-import getPyMs, {periodConfig as pyPeriodConfig, getSubQueryFigureName} from "./getPyMs.mjs";
-import getImpliedMs, {periodConfig as impliedPeriodConfig, getSubQueryFigureName as getImpliedSubQueryFigureName} from "./getImpliedMs.mjs";
+} from "./getMarketSensingGrowthQuery.mjs";
+import getPyMs, {getSubQueryFigureName} from "./getPyMs.mjs";
+import getImpliedMs, {getSubQueryFigureName as getImpliedSubQueryFigureName} from "./getImpliedMs.mjs";
+import {numberOfHistoricPeriods} from "./constants.mjs";
 
-export default function (refreshDateP, customers, categories, valueOrQuantity){
+export default function (refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView = false){
   let QUERY = "";
 
-  const marketSensingQueryParts = getMarketSensingGrowthQuery1(refreshDateP, customers, categories, valueOrQuantity);
+  const marketSensingQueryParts = getMarketSensingGrowthQuery(refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView);
 
-  const clientDataQueryParts = getClientGrowthQuery(refreshDateP, customers, categories, valueOrQuantity);
+  const clientDataQueryParts = getClientGrowthQuery(refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView);
 
-  const pyMarketShareParts = getPyMs(refreshDateP, customers, categories, valueOrQuantity);
+  const pyMarketShareParts = getPyMs(refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView);
 
-  const ImpliedMarketShareParts = getImpliedMs(refreshDateP, customers, categories, valueOrQuantity);
+  const ImpliedMarketShareParts = getImpliedMs(refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView);
 
   QUERY = `
     WITH
@@ -56,79 +55,46 @@ const getFromResult = (rawResult, headerName, isNumber = true) => {
   return val;
 }
 
-export const formatResult = (rawResult, refreshDate) => {
+export const formatResult = (rawResult, refreshDate, periodConfig, isFixedQuarterView = false) => {
   const UI_DATE_FORMAT = "MMM yy"
   const getPeriodLabel = (month1Add, month2Add) =>{
     return `${dfns.format(dfns.add(refreshDate, {months: month1Add}), UI_DATE_FORMAT)} - ${dfns.format(dfns.add(refreshDate, {months: month2Add}), UI_DATE_FORMAT)}`
   }
-  const periods = [
-    getPeriodLabel(1, 3),
-    getPeriodLabel(4, 6),
-    getPeriodLabel(7, 9),
-    getPeriodLabel(10, 12)
-  ];
+  const periods = periodConfig.map(v => {
+    return getPeriodLabel(v.lag, v.lag + 2)
+  });
+
   const result = [];
   _.forEach(periods, (v, i) => {
-    const keyDemandDriverFeatures = _.split(getFromResult(rawResult, `${getKeyDemandDriverFeatureFigureName(msPeriodConfig[i].model)}`, false), "||");
-    const keyDemandDriverFeaturesImportance = _.split(getFromResult(rawResult, `${getKeyDemandDriverFeatureImportanceFigureName(msPeriodConfig[i].model)}`, false), "||");
+    const keyDemandDriverFeatures = _.split(getFromResult(rawResult, `${getKeyDemandDriverFeatureFigureName(periodConfig[i].ms_model)}`, false), "||");
+    const keyDemandDriverFeaturesImportance = _.split(getFromResult(rawResult, `${getKeyDemandDriverFeatureImportanceFigureName(periodConfig[i].ms_model)}`, false), "||");
 
+
+    const historicProjectionsData = [];
+    for (let j = 1; j <= numberOfHistoricPeriods; j++){
+      let historicIndex = j;
+      if (isFixedQuarterView){
+        historicIndex = j * 3;
+      }
+      historicProjectionsData.push({
+        "period": getPeriodLabel(-historicIndex - 2, -historicIndex),
+        "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(periodConfig[i].lag, periodConfig[i].ms_model, historicIndex)}`),
+        "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`),
+        "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(periodConfig[i].lag, historicIndex)}`),
+        "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`)
+          ? null
+          : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`)
+      })
+    }
     result.push({
       [v]: {
         metrics: {
-          marketSensingGrowth: getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 0)}`),
-          jdaGrowth: getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 0)}`),
-          pyGrowth: getFromResult(rawResult, `${getSubQueryFigureName(pyPeriodConfig[i].lag)}`),
-          impliedGrowth: getFromResult(rawResult, `${getImpliedSubQueryFigureName(impliedPeriodConfig[i].lag)}`),
+          marketSensingGrowth: getFromResult(rawResult, `${getPredictedGrowthFigureName(periodConfig[i].lag, periodConfig[i].ms_model, 0)}`),
+          jdaGrowth: getFromResult(rawResult, `${getForecastGrowthFigureName(periodConfig[i].lag, 0)}`),
+          pyGrowth: getFromResult(rawResult, `${getSubQueryFigureName(periodConfig[i].lag)}`),
+          impliedGrowth: getFromResult(rawResult, `${getImpliedSubQueryFigureName(periodConfig[i].lag)}`),
           "keyDemandDrivers": _.map(keyDemandDriverFeatures, (feature, index) => ({[feature]: _.toNumber(keyDemandDriverFeaturesImportance[index])})),
-          "historical": [{
-            "period": getPeriodLabel(-8, -6),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 6)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 6)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 6)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 6)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 6)}`)
-              ? null
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 6)}`)
-          },{
-            "period": getPeriodLabel(-7, -5),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 5)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 5)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 5)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 5)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 5)}`)
-              ? null
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 5)}`)
-          },{
-            "period": getPeriodLabel(-6, -4),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 4)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 4)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 4)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 4)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 4)}`)
-              ? null
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 4)}`)
-          },{
-            "period": getPeriodLabel(-5, -3),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 3)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 3)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 3)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 3)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 3)}`)
-              ? 0
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 3)}`)
-          },{
-            "period": getPeriodLabel(-4, -2),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 2)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 2)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 2)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 2)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 2)}`)
-              ? null
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 2)}`)
-          },{
-            "period": getPeriodLabel(-3, -1),
-            "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(msPeriodConfig[i].lag, msPeriodConfig[i].model, 1)}`),
-            "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 1)}`),
-            "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(cgPeriodConfig[i].lag, 1)}`),
-            "Adjusted": getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 1)}`) === getFromResult(rawResult, `${getForecastGrowthFigureName(cgPeriodConfig[i].lag, 1)}`)
-              ? null
-              : getFromResult(rawResult, `${getAdjForecastGrowthFigureName(cgPeriodConfig[i].lag, 1)}`)
-          }]
+          "historical": _.reverse(historicProjectionsData)
         },
         "horizon": `${(3*i)+1}_${(3*i)+3}m`
       }

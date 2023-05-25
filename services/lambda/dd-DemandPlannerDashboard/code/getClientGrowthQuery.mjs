@@ -1,25 +1,13 @@
 import dfns from "date-fns";
 import _ from "lodash";
 import {removeEmptyLines, removeTrailingComma, escapeSqlSingleQuote} from "/opt/utils.mjs";
+import {numberOfHistoricPeriods} from "./constants.mjs";
 
 const BY_VALUE = "BY_VALUE";
 const BY_QUANTITY = "BY_QUANTITY";
 const ALL_OPTION = "*";
 const DB_DATE_FORMAT = "yyyy-MM-dd";
 
-export const periodConfig = [{
-  lag: 1,
-  model: "1-3 Months"
-}, {
-  lag: 4,
-  model: "4-6 Months"
-}, {
-  lag: 7,
-  model: "1-3 Months"
-}, {
-  lag: 10,
-  model: "4-6 Months"
-}];
 export const getForecastSubQueryName = () => `t_client_forecast`;
 export const getAdjustedForecastSubQueryName = () => `t_client_forecast_adj`;
 export const getActualSubQueryName = () => `t_client_actual`;
@@ -31,12 +19,12 @@ export const getForecastGrowthFigureName = (lag, periodIndex) => `CF_R3mForecast
 export const getAdjForecastGrowthFigureName = (lag, periodIndex) => `CF_R3mAdjForecastGrowth${lag}_${lag+2}m_${periodIndex}`;
 export const getActualGrowthFigureName = (lag, periodIndex) => `CF_R3mActualGrowth${lag}_${lag+2}m_${periodIndex}`;
 
-export default function(refreshDateP, customers, categories, valueOrQuantity) {
+export default function(refreshDateP, customers, categories, valueOrQuantity, periodConfig, isFixedQuarterView = false) {
   const customersP = _.get(customers, "[0]") === ALL_OPTION ? null : _.join(_.map(customers, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const computedDate = (date, lagConfig) => `${dfns.format(dfns.add(date, lagConfig), DB_DATE_FORMAT)}`
 
-  const getJdaForecastSubQuery = (asOnDate, model, lag, metricName, isForForecastAdjusted) => {
+  const getClientForecastSubQuery = (asOnDate, model, lag, metricName, isForForecastAdjusted) => {
     const fStartDate = computedDate(asOnDate, {months: lag});
     const fLastDate = computedDate(asOnDate, {months: lag + 2});
 
@@ -66,7 +54,7 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
     `
   }
 
-  const getJdaActualSubQuery = (asOnDate, lag, metricName, yago) => {
+  const getClientActualSubQuery = (asOnDate, lag, metricName, yago) => {
     const aStartDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0)});
     const aLastDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0) + 2});
 
@@ -132,17 +120,20 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
     `;
     let combinedSelect = "";
     let combinedFrom = ""
-    const historicalPeriod = 6;
     _.forEach(periodConfig, v => {
-      for(let i = 0; i <= historicalPeriod; i++){
-        const forecastSubQueryMetricName = getForecastSubQueryMetricName(v.lag, i);
-        const adjustedForecastSubQueryMetricName = getAdjustedForecastSubQueryMetricName(v.lag, i);
-        const actualYagoSubQueryMetricName = getActualYagoSubQueryMetricName(v.lag, i);
-        const actualSubQueryMetricName = getActualSubQueryMetricName(v.lag, i);
+      for(let i = 0; i <= numberOfHistoricPeriods; i++){
+        let historicIndex = i;
+        if (isFixedQuarterView){
+          historicIndex = historicIndex * 3;
+        }
+        const forecastSubQueryMetricName = getForecastSubQueryMetricName(v.lag, historicIndex);
+        const adjustedForecastSubQueryMetricName = getAdjustedForecastSubQueryMetricName(v.lag, historicIndex);
+        const actualYagoSubQueryMetricName = getActualYagoSubQueryMetricName(v.lag, historicIndex);
+        const actualSubQueryMetricName = getActualSubQueryMetricName(v.lag, historicIndex);
 
-        const forecastGrowthFigureName = getForecastGrowthFigureName(v.lag, i);
-        const adjForecastGrowthFigureName = getAdjForecastGrowthFigureName(v.lag, i);
-        const actualGrowthFigureName = getActualGrowthFigureName(v.lag, i);
+        const forecastGrowthFigureName = getForecastGrowthFigureName(v.lag, historicIndex);
+        const adjForecastGrowthFigureName = getAdjForecastGrowthFigureName(v.lag, historicIndex);
+        const actualGrowthFigureName = getActualGrowthFigureName(v.lag, historicIndex);
 
 
         combinedSelect += `ROUND(((${forecastSubQueryMetricName} / ${actualYagoSubQueryMetricName} - 1) * 100), 2) AS ${forecastGrowthFigureName},
@@ -152,9 +143,9 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
 
         combinedFrom += `
           ${
-          getJdaForecastSubQuery(
-            dfns.add(refreshDateP, {months: -i}),
-            v.model,
+          getClientForecastSubQuery(
+            dfns.add(refreshDateP, {months: -historicIndex}),
+            v.client_model,
             v.lag,
             forecastSubQueryMetricName,
             false
@@ -164,9 +155,9 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
 
         combinedFrom += `
           ${
-          getJdaForecastSubQuery(
-            dfns.add(refreshDateP, {months: -i}),
-            v.model,
+          getClientForecastSubQuery(
+            dfns.add(refreshDateP, {months: -historicIndex}),
+            v.client_model,
             v.lag,
             adjustedForecastSubQueryMetricName,
             true
@@ -176,8 +167,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
 
         combinedFrom += `
           ${
-          getJdaActualSubQuery(
-            dfns.add(refreshDateP, {months: -i}),
+          getClientActualSubQuery(
+            dfns.add(refreshDateP, {months: -historicIndex}),
             v.lag,
             actualSubQueryMetricName,
             false
@@ -187,8 +178,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity) {
 
         combinedFrom += `
           ${
-          getJdaActualSubQuery(
-            dfns.add(refreshDateP, {months: -i}),
+          getClientActualSubQuery(
+            dfns.add(refreshDateP, {months: -historicIndex}),
             v.lag,
             actualYagoSubQueryMetricName,
             true

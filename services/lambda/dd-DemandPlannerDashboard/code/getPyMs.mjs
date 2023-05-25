@@ -5,21 +5,12 @@ import {removeTrailingComma, removeEmptyLines, escapeSqlSingleQuote} from "/opt/
 const DB_DATE_FORMAT = "yyyy-MM-dd";
 const ALL_OPTION = "*";
 
-export const periodConfig = [{
-  lag: 1
-}, {
-  lag: 4
-}, {
-  lag: 7
-}, {
-  lag: 10
-}];
 export const getSubQueryName = (lag) => `PY_${lag}_${lag+2}MarketShare`;
 export const getMetricMonthlyPosSalesName = () => "monthlyPosSales";
 export const getMetricScaledownTotalMonthlyMarketSizeName = () => "scaleddownTotalMonthlyMarketSize"
 export const getSubQueryFigureName = (lag) => `PY_${lag}_${lag+2}MarketShareGrowth`
 
-export default function (refreshDateP, customers, categories){
+export default function (refreshDateP, customers, categories, valueOrQuantity, periodConfig){
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const getCombinedQuery = ()=> {
     let combinedWithQuery = "";
