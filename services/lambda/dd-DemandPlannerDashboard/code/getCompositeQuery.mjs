@@ -73,13 +73,11 @@ export const formatResult = (rawResult, refreshDate, periodConfig, isFixedQuarte
     const historicProjectionsData = [];
     for (let j = 1; j <= numberOfHistoricPeriods; j++){
       let historicIndex = j;
-      let periodLabelIndex = isFixedQuarterView ? j : j - 1;
       if (isFixedQuarterView){
         historicIndex = j * 3;
-        periodLabelIndex = (j - 1) * 3
       }
       historicProjectionsData.push({
-        "period": getPeriodLabel(-periodLabelIndex - 2, -periodLabelIndex),
+        "period": getPeriodLabel(1-historicIndex, (1-historicIndex) + 2),
         "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(periodConfig[i].lag, periodConfig[i].ms_model, historicIndex)}`),
         "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`),
         "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(periodConfig[i].lag, historicIndex)}`),
