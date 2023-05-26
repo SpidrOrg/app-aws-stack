@@ -2,7 +2,7 @@ const { Stack } = require("aws-cdk-lib");
 const apigateway = require("aws-cdk-lib/aws-apigateway");
 const cognito = require("aws-cdk-lib/aws-cognito");
 const lambda = require('aws-cdk-lib/aws-lambda');
-const apiGatewayResourcesConfig = require("../../services/APIGateway/resourceConfig.json");
+const apiGatewayResourcesConfig = require("../../services/APIGateway/resourceConfig.js");
 const path = require("path");
 const fs = require("fs");
 const {getExportName} = require("./utils/stackExportsName");
@@ -128,7 +128,7 @@ class ApiGatewayInfraStack extends Stack {
             new apigateway.LambdaIntegration(backendLamdba, {
               proxy: integerationConfig.proxy ?? false,
               requestTemplates: {
-                "application/json": JSON.stringify(integerationConfig.mappingTemplate)
+                "application/json": integerationConfig.mappingTemplate
               },
               passthroughBehavior: apigateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
               integrationResponses: [{

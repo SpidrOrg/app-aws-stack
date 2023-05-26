@@ -69,12 +69,16 @@ export const handler = async (event) => {
       await writeFileToS3(s3Client, s3bucket, ()=>`${TRANSFORM_FOLDER}/${folderName}/${fileName}`, fileContents);
       return
     }
-    let {rawFileKey, transformFileKey, primaryKeyIndexes, lineTransformationConfig, addColumns = []} = transformationConfiguration
+    let {rawFileKey, transformFileKey, primaryKeyIndexes, lineTransformationConfig, addColumns = [], filePreProcessing = null} = transformationConfiguration
 
     const rawFKey = () => rawFileKey(event);
     const transformFKey = () => transformFileKey(event);
     // Read file from S3 entirely
-    const lhsFileContents = await readFileAsString(s3Client, s3bucket, rawFKey);
+    let lhsFileContents = await readFileAsString(s3Client, s3bucket, rawFKey);
+
+    if (typeof filePreProcessing === 'function'){
+      lhsFileContents = filePreProcessing(rawFKey(), lhsFileContents);
+    }
 
     if (_.isEmpty(lineTransformationConfig)){
       await writeFileToS3(s3Client, s3bucket, transformFKey, lhsFileContents);

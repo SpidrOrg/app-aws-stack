@@ -33641,15 +33641,15 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const TheHeader$1 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_ec70ebfd_lang = "";
+const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
+const TheSckeleton_vue_vue_type_style_index_0_scoped_471816f0_lang = "";
 const DESKTOP_SCREEN_MIN_WIDTH_PIXELS = 1440;
 const FAQS_URL = "https://xebiagroup.sharepoint.com/sites/ProjectKearney/Gedeelde%20documenten/Forms/AllItems.aspx?id=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent%2FKearney%5FMS%20Demand%20Dashboard%20FAQ%2Epdf&parent=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent&p=true&ct=1684174121283&or=OWA%2DNT&cid=1b364130%2Dcec9%2D447e%2D6e14%2D746cabb41467&ga=1";
 const _sfc_main$p = {
   name: "TheSckeleton",
   components: {
     SideBar,
-    TheHeader: TheHeader$1
+    TheHeader
   },
   props: {
     orgLogo: {
@@ -33731,14 +33731,16 @@ const _sfc_main$p = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-ec70ebfd"), n2 = n2(), popScopeId(), n2);
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-471816f0"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$m = { class: "screen" };
 const _hoisted_2$k = { class: "main-area" };
 const _hoisted_3$k = { class: "control-container" };
 const _hoisted_4$k = { class: "control-section" };
 const _hoisted_5$h = { class: "content-container" };
-const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
-  /* @__PURE__ */ createBaseVNode("div", { class: "footer-copy-right" }, "Copyright @ Kearney 2023")
+const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
+  /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
+    /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
+  ])
 ], -1));
 function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_SideBar = resolveComponent("SideBar");
@@ -33771,7 +33773,7 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-ec70ebfd"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-471816f0"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
 const _sfc_main$o = {
@@ -33798,7 +33800,7 @@ function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
   }, toDisplayString($props.label), 3);
 }
 const LoginButton = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$o]]);
-const LoginPage_vue_vue_type_style_index_0_scoped_b0d1a283_lang = "";
+const LoginPage_vue_vue_type_style_index_0_scoped_992a43da_lang = "";
 const _sfc_main$n = {
   name: "LoginPage",
   components: {
@@ -33816,7 +33818,7 @@ const _sfc_main$n = {
     }
   }
 };
-const _withScopeId = (n2) => (pushScopeId("data-v-b0d1a283"), n2 = n2(), popScopeId(), n2);
+const _withScopeId = (n2) => (pushScopeId("data-v-992a43da"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$l = { class: "tw-flex tw-h-screen tw-flex-col" };
 const _hoisted_2$j = { class: "tw-grid tw-grid-cols-12 tw-my-auto" };
 const _hoisted_3$j = { class: "tw-col-span-6 tw-col-start-1 tw-self-center tw-justify-self-center" };
@@ -33828,8 +33830,10 @@ const _hoisted_8$e = { class: "tw-py-6 desktop:tw-py-2 small-laptop:tw-py-1" };
 const _hoisted_9$e = ["src"];
 const _hoisted_10$c = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-lg desktop:tw-text-base small-laptop:tw-text-sm tw-text-black tw-break-words" }, " Demand Dashboard uses rigorous analytics to project demand growth and compare against internal forecasts. The goal is to help users identify \u201Ctriggers\u201D to review projection calibration. ", -1));
 const _hoisted_11$b = { class: "tw-pt-8 small-laptop:tw-pt-5 small-laptop:tw-pb-2" };
-const _hoisted_12$9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("footer", { class: "footer" }, [
-  /* @__PURE__ */ createBaseVNode("div", { class: "footer-copy-right" }, "Copyright @ Kearney 2023")
+const _hoisted_12$9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5" }, [
+  /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
+    /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
+  ])
 ], -1));
 function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_LoginButton = resolveComponent("LoginButton");
@@ -33864,7 +33868,7 @@ function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     _hoisted_12$9
   ]);
 }
-const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n], ["__scopeId", "data-v-b0d1a283"]]);
+const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n], ["__scopeId", "data-v-992a43da"]]);
 const _sfc_main$m = {
   name: "App",
   components: {
@@ -48121,7 +48125,8 @@ async function fetchQuarterlyData({
     ),
     categories,
     customers,
-    valueORvolume
+    valueORvolume,
+    isFixed: true
   });
   let dataForUi = _.get(data, "result", {});
   _.forEach(dataForUi, (v) => {
@@ -54952,7 +54957,7 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const FiltersSection$1 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$l]]);
+const FiltersSection$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$l]]);
 async function getReviews({
   refreshDate,
   customer,
@@ -56122,7 +56127,7 @@ const _hoisted_12$8 = { class: "tw-w-full tw-h-3/5 small-laptop:tw-h-2/4 tw-over
 const _hoisted_13$7 = /* @__PURE__ */ createBaseVNode("label", { for: "review" }, "Add Your Response", -1);
 const _hoisted_14$6 = /* @__PURE__ */ createBaseVNode("label", { for: "status" }, "Recommended Action Status", -1);
 const _hoisted_15$6 = { class: "tw-flex tw-items-center tw-gap-x-4 tw-pt-4" };
-const _hoisted_16$4 = ["disabled"];
+const _hoisted_16$5 = ["disabled"];
 const _hoisted_17$4 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-white tw-text-base" }, "Save Updates", -1);
 const _hoisted_18$4 = [
   _hoisted_17$4
@@ -56199,7 +56204,7 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
               class: normalizeClass(`tw-px-6 tw-py-2 ${$options.isSubmitButtonDisabled() ? "tw-bg-brand-primary-disabled" : "tw-bg-brand-primary"}`),
               disabled: $options.isSubmitButtonDisabled(),
               onClick: _cache[2] || (_cache[2] = (...args) => $options.submitHandler && $options.submitHandler(...args))
-            }, _hoisted_18$4, 10, _hoisted_16$4),
+            }, _hoisted_18$4, 10, _hoisted_16$5),
             $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$4, [
               createVNode(VIcon, {
                 icon: "mdi-check-circle",
@@ -56397,7 +56402,7 @@ const _hoisted_14$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 t
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Internal market demands at a category level determined by internal historical data. ")
 ], -1);
 const _hoisted_15$5 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
-const _hoisted_16$3 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
+const _hoisted_16$4 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
 const _hoisted_17$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Highly accurate market demand projections at a category level based on ML models that analyze and learn from internal and external data feeds ")
 ], -1);
@@ -56463,7 +56468,7 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
             activator: withCtx(({ props }) => [
               createBaseVNode("div", mergeProps(props, { class: "tw-text-center" }), [
                 createBaseVNode("p", _hoisted_15$5, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.marketSensingGrowth")}`), 1),
-                _hoisted_16$3
+                _hoisted_16$4
               ], 16)
             ]),
             default: withCtx(() => [
@@ -57410,12 +57415,12 @@ const VAlert = defineComponent({
   }
 });
 const { R3M_VIEW, QUARTERLY_VIEW } = FORECAST_PERIOD_TYPES;
-const FILTER_UPDATE_GAP_MS$1 = 3e3;
+const FILTER_UPDATE_GAP_MS$2 = 3e3;
 const FILTER_INSTANT_UPDATE_GAP_MS$1 = 500;
 const _sfc_main$a = {
   name: "DemandPlanner",
   components: {
-    FiltersSection: FiltersSection$1,
+    FiltersSection: FiltersSection$2,
     CardsList: CardsList$1,
     ChartsSection
   },
@@ -57431,7 +57436,7 @@ const _sfc_main$a = {
       error: null,
       debounceUpdateFilters: _.debounce(
         this.updateFilters,
-        FILTER_UPDATE_GAP_MS$1
+        FILTER_UPDATE_GAP_MS$2
       ),
       debounceUpdateFiltersInstant: _.debounce(
         this.updateFilters,
@@ -57637,7 +57642,7 @@ const _hoisted_12$5 = /* @__PURE__ */ createBaseVNode("p", { class: "desktop:tw-
 const _hoisted_13$4 = ["for"];
 const _hoisted_14$3 = { class: "tw-flex tw-gap-x-3 tw-ml-auto small-laptop:tw-ml-3" };
 const _hoisted_15$3 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-laptop:tw-gap-x-0" };
-const _hoisted_16$2 = ["src"];
+const _hoisted_16$3 = ["src"];
 const _hoisted_17$2 = { class: "tw-text-sm desktop:tw-text-xs" };
 const _hoisted_18$2 = ["disabled"];
 const _hoisted_19$2 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
@@ -57704,7 +57709,7 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
               createBaseVNode("div", _hoisted_15$3, [
                 createBaseVNode("img", {
                   src: $data.isModelAccuracyHidden ? $data.EyeIcon : $data.EyeOffIcon
-                }, null, 8, _hoisted_16$2),
+                }, null, 8, _hoisted_16$3),
                 createBaseVNode("span", _hoisted_17$2, toDisplayString($data.isModelAccuracyHidden ? "Show" : "Hide") + " Model Accuracy ", 1)
               ])
             ]),
@@ -57960,7 +57965,7 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const FiltersSection = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]);
+const FiltersSection$1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]);
 const VALUE = "Value (USD)";
 const VOLUME = "Volume";
 const NAME = "Name";
@@ -58538,12 +58543,12 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
 }
 const CardsList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$6]]);
 const LAG_VALUES = [1, 4, 7, 10];
-const FILTER_UPDATE_GAP_MS = 3e3;
+const FILTER_UPDATE_GAP_MS$1 = 3e3;
 const FILTER_INSTANT_UPDATE_GAP_MS = 500;
 const _sfc_main$5 = {
   name: "HeatMap",
   components: {
-    FiltersSection,
+    FiltersSection: FiltersSection$1,
     CardsList
   },
   data() {
@@ -58557,7 +58562,7 @@ const _sfc_main$5 = {
       },
       debounceUpdateFilters: _.debounce(
         this.updateFilters,
-        FILTER_UPDATE_GAP_MS
+        FILTER_UPDATE_GAP_MS$1
       ),
       debounceUpdateFiltersInstant: _.debounce(
         this.updateFilters,
@@ -58683,25 +58688,16 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
   ]);
 }
 const HeatMap = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
-async function fetchInternalChartsOptions() {
-  const dataForUi = await apiBase("dashboard_filters");
-  console.log(dataForUi);
-  return dataForUi;
-}
 const BY_VALUE = "BY_VALUE";
 const BY_QUANTITY = "BY_QUANTITY";
 const ALL_OPTION$1 = "All";
 const _sfc_main$4 = {
-  name: "TheHeader",
+  name: "FiltersSection",
   props: {
-    filterDisabled: {
-      required: true,
-      type: Boolean
-    }
+    filtersDisabled: { type: Boolean, default: false }
   },
   data() {
     return {
-      isByVolume: false,
       filters: {
         categories: {
           items: [],
@@ -58727,15 +58723,13 @@ const _sfc_main$4 = {
         valueOrQuantity: BY_QUANTITY
       },
       currency: "USD",
-      dataLoaded: false,
       BY_VALUE,
       BY_QUANTITY,
-      ALL_OPTION: ALL_OPTION$1,
-      includes: _.includes
+      ALL_OPTION: ALL_OPTION$1
     };
   },
   async created() {
-    const options = await fetchInternalChartsOptions().catch(() => null);
+    const options = await fetchDashboardOptions().catch(() => null);
     if (options) {
       this.filters.categories.items = options.ms.categories;
       this.filters.customers.items = options.ms.customers;
@@ -58748,8 +58742,14 @@ const _sfc_main$4 = {
     }
     this.filters.refreshDate = options.updateDates[0];
     this.selectFilterUpdated("categories", this.filters.categories.items[0]);
-    this.selectFilterUpdated("time_horizon", this.filters.time_horizon.items[0]);
-    this.selectFilterUpdated("internal_model", this.filters.internal_model.items[0]);
+    this.selectFilterUpdated(
+      "time_horizon",
+      this.filters.time_horizon.items[0]
+    );
+    this.selectFilterUpdated(
+      "internal_model",
+      this.filters.internal_model.items[0]
+    );
     this.selectFilterUpdated("customers", this.filters.customers.items[0]);
   },
   emits: ["updateFilters"],
@@ -58760,7 +58760,6 @@ const _sfc_main$4 = {
     },
     valueOrQuantityUpdate() {
       this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE ? BY_QUANTITY : BY_VALUE;
-      this.isByVolume = !this.isByVolume;
       this.filtersUpdated();
     },
     filtersUpdated() {
@@ -58789,17 +58788,14 @@ const _hoisted_9$3 = /* @__PURE__ */ createBaseVNode("label", {
   for: "model",
   class: "tw-text-sm"
 }, "Model", -1);
-const _hoisted_10$3 = { class: "tw-flex tw-items-center tw-gap-1.5 tw-mt-3" };
-const _hoisted_11$3 = {
-  class: "tw-flex tw-pt-5",
-  style: { "color": "#7823DC" }
-};
+const _hoisted_10$3 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_11$3 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
 function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1$3, [
     createBaseVNode("div", _hoisted_2$3, [
       _hoisted_3$3,
       createVNode(VSelect, {
-        disabled: $props.filterDisabled,
+        disabled: $props.filtersDisabled,
         items: $data.filters.categories.items,
         "model-value": $data.filters.categories.selected,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = (value) => $options.selectFilterUpdated("categories", value)),
@@ -58809,7 +58805,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     createBaseVNode("div", _hoisted_4$3, [
       _hoisted_5$3,
       createVNode(VSelect, {
-        disabled: $props.filterDisabled,
+        disabled: $props.filtersDisabled,
         items: $data.filters.customers.items,
         "model-value": $data.filters.customers.selected,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = (value) => $options.selectFilterUpdated("customers", value)),
@@ -58819,7 +58815,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     createBaseVNode("div", _hoisted_6$3, [
       _hoisted_7$3,
       createVNode(VSelect, {
-        disabled: $props.filterDisabled,
+        disabled: $props.filtersDisabled,
         items: $data.filters.time_horizon.items,
         "model-value": $data.filters.time_horizon.selected,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = (value) => $options.selectFilterUpdated("time_horizon", value)),
@@ -58829,7 +58825,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     createBaseVNode("div", _hoisted_8$3, [
       _hoisted_9$3,
       createVNode(VSelect, {
-        disabled: $props.filterDisabled,
+        disabled: $props.filtersDisabled,
         items: $data.filters.internal_model.items,
         "model-value": $data.filters.internal_model.selected,
         "onUpdate:modelValue": _cache[3] || (_cache[3] = (value) => $options.selectFilterUpdated("internal_model", value)),
@@ -58837,25 +58833,25 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8, ["disabled", "items", "model-value"])
     ]),
     createBaseVNode("div", _hoisted_10$3, [
-      createBaseVNode("p", {
-        class: normalizeClass(`${!$data.isByVolume ? "tw-font-medium" : ""}`)
-      }, "Value (USD)", 2),
+      createBaseVNode("span", {
+        class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
+      }, " Value (" + toDisplayString($data.currency) + ") ", 3),
       createBaseVNode("div", _hoisted_11$3, [
         createVNode(VSwitch, {
+          "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
           inset: "",
+          density: "compact",
           onClick: $options.valueOrQuantityUpdate,
-          modelValue: $data.isByVolume,
-          "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.isByVolume = $event),
-          disabled: $props.filterDisabled
-        }, null, 8, ["onClick", "modelValue", "disabled"])
+          disabled: $props.filtersDisabled
+        }, null, 8, ["model-value", "onClick", "disabled"])
       ]),
-      createBaseVNode("p", {
-        class: normalizeClass(`${$data.isByVolume ? "tw-font-medium" : ""}`)
-      }, "Volume", 2)
+      createBaseVNode("span", {
+        class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_QUANTITY ? "tw-font-medium" : ""}`)
+      }, " Volume ", 2)
     ])
   ]);
 }
-const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+const FiltersSection = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
 async function fetchInternalChartsData({ categories, customers, valueORvolume, msTimeHorizon, internalModel, refreshDate }) {
   const data = await apiBase("internalcharts", {
     marketSensingRefreshDate: refreshDate,
@@ -59141,11 +59137,12 @@ const VCard = defineComponent({
     return {};
   }
 });
+const FILTER_UPDATE_GAP_MS = 3500;
 const _sfc_main$3 = {
   name: "InternalCharts",
   components: {
     GChart,
-    TheHeader
+    FiltersSection
   },
   data() {
     return {
@@ -59153,8 +59150,11 @@ const _sfc_main$3 = {
       refreshDate: null,
       apiData: [],
       columnChartData: [],
-      debounceUpdateFilters: _.debounce(this.updateFilters, 4500),
-      filterDisabled: false,
+      debounceUpdateFilters: _.debounce(
+        this.updateFilters,
+        FILTER_UPDATE_GAP_MS
+      ),
+      filtersDisabled: false,
       columnChartOptions: {
         height: 320,
         explorer: {
@@ -59234,14 +59234,20 @@ const _sfc_main$3 = {
         this.columnChartData = [];
         this.lineChartData = [];
         this.isLoading = true;
-        this.filterDisabled = true;
+        this.filtersDisabled = true;
         const selectedCategories = _.get(filtersData, "categories.selected");
         const selectedCustomers = _.get(filtersData, "customers.selected");
         const selectedValueORvolume = _.get(filtersData, "valueOrQuantity");
         const selectedTimeHorizon = _.get(filtersData, "time_horizon.selected");
-        const selectedInternalModel = _.get(filtersData, "internal_model.selected");
+        const selectedInternalModel = _.get(
+          filtersData,
+          "internal_model.selected"
+        );
         const refreshDate = _.get(filtersData, "refreshDate");
-        this.refreshDate = format(new Date(_.get(filtersData, "refreshDate")), "MMM dd,yyyy");
+        this.refreshDate = format(
+          new Date(_.get(filtersData, "refreshDate")),
+          "MMM dd,yyyy"
+        );
         const response = await fetchInternalChartsData({
           categories: selectedCategories === ALL_OPTION$1 ? "*" : selectedCategories,
           customers: selectedCustomers === ALL_OPTION$1 ? "*" : selectedCustomers,
@@ -59253,25 +59259,53 @@ const _sfc_main$3 = {
         if (!_.isEmpty(response)) {
           this.apiData = response;
           this.isLoading = false;
-          this.filterDisabled = false;
+          this.filtersDisabled = false;
           let v = this;
           if (!this.columnChartData.length) {
-            this.columnChartData.push(["period", "Internal", { "role": "annotation" }, "Actual", { "role": "annotation" }]);
+            this.columnChartData.push([
+              "period",
+              "Internal",
+              { role: "annotation" },
+              "Actual",
+              { role: "annotation" }
+            ]);
             _.forEach(this.apiData, function(data) {
-              v.columnChartData.push([data.timeline, data.forecastSales, data.forecastSales + data.unit, data.actualSales, data.actualSales + data.unit]);
+              v.columnChartData.push([
+                data.timeline,
+                data.forecastSales,
+                data.forecastSales + data.unit,
+                data.actualSales,
+                data.actualSales + data.unit
+              ]);
             });
           }
           if (!this.lineChartData.length) {
-            this.lineChartData.push(["period", "Market Sensing Forecast", { "role": "annotation" }, "Internal Forecast", { "role": "annotation" }, "Sales", { "role": "annotation" }]);
+            this.lineChartData.push([
+              "period",
+              "Market Sensing Forecast",
+              { role: "annotation" },
+              "Internal Forecast",
+              { role: "annotation" },
+              "Sales",
+              { role: "annotation" }
+            ]);
             _.forEach(this.apiData, function(data) {
-              v.lineChartData.push([data.timeline, data.msProjectedGrowth, data.msProjectedGrowth + "%", data.forecastGrowth, data.forecastGrowth + "%", data.actualGrowth, data.actualGrowth + "%"]);
+              v.lineChartData.push([
+                data.timeline,
+                data.msProjectedGrowth,
+                data.msProjectedGrowth + "%",
+                data.forecastGrowth,
+                data.forecastGrowth + "%",
+                data.actualGrowth,
+                data.actualGrowth + "%"
+              ]);
             });
           }
         }
       } catch (e3) {
         console.log(e3);
         this.isLoading = false;
-        alert("There is some erroe while fetching data");
+        alert("There was an error while fetching data");
       }
       this.isLoading = false;
     }
@@ -59285,13 +59319,17 @@ const _hoisted_5$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw
 const _hoisted_6$2 = { class: "tw-py-5 tw-bg-brand-gray-1" };
 const _hoisted_7$2 = {
   key: 0,
+  class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
+};
+const _hoisted_8$2 = {
+  key: 1,
   class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2"
 };
-const _hoisted_8$2 = { class: "tw-grid tw-grid-rows-2 tw-gap-6" };
-const _hoisted_9$2 = { style: { "overflow-x": "auto !important" } };
-const _hoisted_10$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Internal Forecast vs Sales", -1);
-const _hoisted_11$2 = /* @__PURE__ */ createBaseVNode("div", { class: "overflow-x-auto tw-w-full tw-items-left tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-mt-3" }, [
+const _hoisted_9$2 = { class: "tw-grid tw-grid-rows-2 tw-gap-6" };
+const _hoisted_10$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_11$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, " Internal Forecast vs Sales ", -1);
+const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "overflow-x-auto tw-w-full tw-items-left tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_13$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-mt-3" }, [
   /* @__PURE__ */ createBaseVNode("div", {
     style: { "width": "12px", "height": "12px", "background": "#787878" },
     class: "tw-ml-3 tw-mt-px"
@@ -59299,7 +59337,7 @@ const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex t
   /* @__PURE__ */ createBaseVNode("div", {
     style: { "height": "12px" },
     class: "tw-text-xs tw-ml-1"
-  }, "Internal Forecast"),
+  }, " Internal Forecast "),
   /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex" }, [
     /* @__PURE__ */ createBaseVNode("div", {
       style: { "width": "12px", "height": "12px", "background": "#b991eb" },
@@ -59311,70 +59349,67 @@ const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex t
     }, "Sales")
   ])
 ], -1);
-const _hoisted_13$2 = { style: { "overflow-x": "auto !important" } };
-const _hoisted_14$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, "Projections of Market Sensing Forecast vs Internal Forecast vs Sales", -1);
-const _hoisted_15$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_14$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_15$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, " Projections of Market Sensing Forecast vs Internal Forecast vs Sales ", -1);
+const _hoisted_16$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
 function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_TheHeader = resolveComponent("TheHeader");
+  const _component_FiltersSection = resolveComponent("FiltersSection");
   const _component_GChart = resolveComponent("GChart");
-  return openBlock(), createElementBlock(Fragment, null, [
-    $data.isLoading ? (openBlock(), createBlock(VProgressCircular, {
-      key: 0,
-      indeterminate: "",
-      color: "#7823DC",
-      size: 70,
-      width: 7,
-      style: { "position": "fixed", "left": "50%", "top": "35%", "z-index": "1000" }
-    })) : createCommentVNode("", true),
-    createBaseVNode("div", _hoisted_1$2, [
-      createBaseVNode("div", _hoisted_2$2, [
-        _hoisted_3$2,
-        createBaseVNode("div", _hoisted_4$2, " Last refreshed on " + toDisplayString($data.refreshDate), 1)
-      ]),
-      _hoisted_5$2,
-      createBaseVNode("div", _hoisted_6$2, [
-        createVNode(_component_TheHeader, {
-          onUpdateFilters: $data.debounceUpdateFilters,
-          filterDisabled: $data.filterDisabled
-        }, null, 8, ["onUpdateFilters", "filterDisabled"])
-      ]),
-      !$data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
-        createBaseVNode("div", _hoisted_8$2, [
-          createBaseVNode("div", _hoisted_9$2, [
-            createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
-              default: withCtx(() => [
-                _hoisted_10$2,
-                _hoisted_11$2,
-                _hoisted_12$2,
-                createVNode(_component_GChart, {
-                  type: "ColumnChart",
-                  data: $data.columnChartData,
-                  options: $data.columnChartOptions,
-                  height: "370"
-                }, null, 8, ["data", "options"])
-              ]),
-              _: 1
-            })
-          ]),
-          createBaseVNode("div", _hoisted_13$2, [
-            createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
-              default: withCtx(() => [
-                _hoisted_14$2,
-                _hoisted_15$2,
-                createVNode(_component_GChart, {
-                  type: "LineChart",
-                  options: $data.lineChartOptions,
-                  data: $data.lineChartData
-                }, null, 8, ["options", "data"])
-              ]),
-              _: 1
-            })
-          ])
-        ])
-      ])) : createCommentVNode("", true)
+  return openBlock(), createElementBlock("div", _hoisted_1$2, [
+    createBaseVNode("div", _hoisted_2$2, [
+      _hoisted_3$2,
+      createBaseVNode("div", _hoisted_4$2, " Last refreshed on " + toDisplayString($data.refreshDate), 1)
     ]),
-    createVNode(VDivider)
-  ], 64);
+    _hoisted_5$2,
+    createBaseVNode("div", _hoisted_6$2, [
+      createVNode(_component_FiltersSection, {
+        onUpdateFilters: $data.debounceUpdateFilters,
+        filtersDisabled: $data.filtersDisabled
+      }, null, 8, ["onUpdateFilters", "filtersDisabled"])
+    ]),
+    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
+      createVNode(VProgressCircular, {
+        indeterminate: "",
+        color: "#7823DC",
+        size: 80,
+        width: 10
+      })
+    ])) : createCommentVNode("", true),
+    !$data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_8$2, [
+      createBaseVNode("div", _hoisted_9$2, [
+        createBaseVNode("div", _hoisted_10$2, [
+          createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
+            default: withCtx(() => [
+              _hoisted_11$2,
+              _hoisted_12$2,
+              _hoisted_13$2,
+              createVNode(_component_GChart, {
+                type: "ColumnChart",
+                data: $data.columnChartData,
+                options: $data.columnChartOptions,
+                height: "370"
+              }, null, 8, ["data", "options"])
+            ]),
+            _: 1
+          })
+        ]),
+        createBaseVNode("div", _hoisted_14$2, [
+          createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
+            default: withCtx(() => [
+              _hoisted_15$2,
+              _hoisted_16$2,
+              createVNode(_component_GChart, {
+                type: "LineChart",
+                options: $data.lineChartOptions,
+                data: $data.lineChartData
+              }, null, 8, ["options", "data"])
+            ]),
+            _: 1
+          })
+        ])
+      ])
+    ])) : createCommentVNode("", true)
+  ]);
 }
 const InternalCharts = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]);
 async function fetchModelAccuracyData({ categoriesAccuracy, categoriesHistoric, projected_period }) {

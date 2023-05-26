@@ -43,7 +43,7 @@ export default function (fileContents, fileConfig, addColumns = []){
         }
       } catch (e) {
         // Any error with any element in the line will cause the entire line to neither being converted nor being added
-        console.log(`ERROR WHILE TRANSFORMING FOR Line #${index}`, "Elements: ", elements);
+        console.log(`ERROR WHILE TRANSFORMING FOR Line #${index} ${e}`, "Elements: ", elements);
         if (index === 0){
           const additionalColumns = _.map(addColumns, v => v.columnName);
           transformedFileContents += `ts,${elements.join(",")}${additionalColumns.join(",")}\n`;

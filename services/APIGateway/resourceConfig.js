@@ -1,13 +1,13 @@
-{
+module.exports = {
   "dashboard_filters": {
     "GET": {
       "integrationRequest": {
         "lambda": "dd-FilterOptions",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))"
-        }
+        }`
       }
     }
   },
@@ -16,7 +16,7 @@
       "integrationRequest": {
         "lambda": "dd-HeatMapHistorical",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
@@ -24,7 +24,7 @@
           "category": "$input.params('category')",
           "valueORvolume": "$input.params('valueORvolume')",
           "lag": "$input.params('lag')"
-        }
+        }`
       }
     }
   },
@@ -33,7 +33,7 @@
       "integrationRequest": {
         "lambda": "dd-HeatMapDashboard",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
@@ -41,7 +41,7 @@
           "categories": "$input.params('categories')",
           "valueORvolume": "$input.params('valueORvolume')",
           "lag": "$input.params('lag')"
-        }
+        }`
       }
     }
   },
@@ -50,14 +50,14 @@
       "integrationRequest": {
         "lambda": "dd-ModelAccuracyHistorical",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
           "category": "$input.params('category')",
           "horizon": "$input.params('horizon')",
           "viewType": "$input.params('forecastPeriodType')"
-        }
+        }`
       }
     }
 
@@ -67,7 +67,7 @@
       "integrationRequest": {
         "lambda": "dd-InternalChartsDashboard",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
@@ -76,7 +76,7 @@
           "valueORvolume": "$input.params('valueORvolume')",
           "msTimeHorizon": "$input.params('msTimeHorizon')",
           "internalModel": "$input.params('internalModel')"
-        }
+        }`
       }
     }
   },
@@ -85,14 +85,14 @@
       "integrationRequest": {
         "lambda": "dd-KeyDemandDriverDrillDown",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
           "category": "$input.params('category')",
           "horizon": "$input.params('horizon')",
           "driver": "$input.params('driver')"
-        }
+        }`
       }
     }
   },
@@ -101,14 +101,15 @@
       "integrationRequest": {
         "lambda": "dd-DemandPlannerDashboard",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
           "customers": "$input.params('customers')",
           "categories": "$input.params('categories')",
-          "valueORvolume": "$input.params('valueORvolume')"
-        }
+          "valueORvolume": "$input.params('valueORvolume')",
+          "isFixed": "$input.params('isFixed')"
+        }`
       }
     }
   },
@@ -117,12 +118,12 @@
       "integrationRequest": {
         "lambda": "dd-ModelAccuracyDashboard",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "category": "$input.params('category')",
           "horizon": "$input.params('horizon')"
-        }
+        }`
       }
     }
   },
@@ -131,7 +132,7 @@
       "integrationRequest": {
         "lambda": "dd-ForecastReview",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "refreshDate": "$input.params('refreshDate')",
@@ -142,19 +143,19 @@
           "periodEnd": "$input.params('periodEnd')",
           "forecastPeriodType": "$input.params('forecastPeriodType')",
           "handling": "GET_REVIEWS"
-        }
+        }`
       }
     },
     "POST": {
       "integrationRequest": {
         "lambda": "dd-ForecastReview",
         "proxy": false,
-        "mappingTemplate": {
+        "mappingTemplate": `{
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
-          "params": "$input.json('$')",
+          "params": $input.json('$'),
           "handling": "ADD_REVIEW"
-        }
+        }`
       }
     }
   }

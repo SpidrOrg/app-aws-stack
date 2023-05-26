@@ -87,6 +87,32 @@ export default {
         return fileKey;
       }
     },
+    filePreProcessing: (fileKey, fileContents)=>{
+      if (fileKey === `${RAW_FOLDER}/Price_all_customer.csv`){
+        let modifiedFileContent = "";
+        const lines = _.split(fileContents, "\n");
+        const transformedLines = [];
+
+        _.forEach(lines, (line, lineNumber) =>{
+          if (line && line.length > 5){
+            let elements = _.split(line, ",");
+            try {
+              const jdaDt = elements[1];
+              const jdaDtP = dateFns.parse(jdaDt, "d-MMM-yy", new Date())
+              elements[1] = dateFns.format(jdaDtP, "M/d/yyyy");
+            } catch (e){
+              console.log(e);
+            }
+            elements = [..._.slice(elements, 0, 5),lineNumber === 0 ? "retailer" : "all", ..._.slice(elements, 5)];
+            transformedLines.push(elements.join(","));
+          }
+        })
+        modifiedFileContent = transformedLines.join("\n");
+        return modifiedFileContent
+      } else {
+        return fileContents;
+      }
+    },
     transformFileKey: () => `${TRANSFORM_FOLDER}/client_price_per_unit/client_price_per_unit.csv`,
     primaryKeyIndexes: [1, 2, 6],
     lineTransformationConfig: [{}, {
@@ -106,6 +132,27 @@ export default {
     rawFileKey: () => `${RAW_FOLDER}/Market_share.csv`,
     transformFileKey: () => `${TRANSFORM_FOLDER}/client_market_share/client_market_share.csv`,
     primaryKeyIndexes: [2, 15],
+    filePreProcessing: (fileKey, fileContents)=>{
+      let modifiedFileContent = "";
+      const lines = _.split(fileContents, "\n");
+      const transformedLines = [];
+
+      _.forEach(lines, line =>{
+        if (line && line.length > 5){
+          while(true){
+            const matches = line.match(/".*?"/);
+            if (matches && matches[0]) {
+              line = line.replace(matches[0], matches[0].replaceAll(",", "").replaceAll("\"", ""))
+            } else {
+              break;
+            }
+          }
+          transformedLines.push(line);
+        }
+      })
+      modifiedFileContent = transformedLines.join("\n");
+      return modifiedFileContent
+    },
     lineTransformationConfig: [{}, {
       transformer: v => {
         const dateP = dateFns.parse(_.split(v, " ")[0], "M/d/yyyy", new Date())
