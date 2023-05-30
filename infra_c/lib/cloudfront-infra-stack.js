@@ -108,7 +108,7 @@ class CloudfrontInfraStack extends Stack {
         cachePolicy: cachePolicy,
         edgeLambdas: [lambdaFunctionAssociation]
       },
-      domainNames: [domain, ...allEntities.map(v => `${v.host}.${domain}`)],
+      domainNames: [...allEntities.map(v => `${v.host}.${domain}`)],
       certificate
     });
 
