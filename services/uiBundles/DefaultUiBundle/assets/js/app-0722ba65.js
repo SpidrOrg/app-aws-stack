@@ -11118,7 +11118,7 @@ const _hoisted_2$m = { class: "logo" };
 const _hoisted_3$m = ["src"];
 const _hoisted_4$m = { class: "menu-area" };
 const _hoisted_5$j = ["onClick"];
-const _hoisted_6$i = { class: "menu-item-content" };
+const _hoisted_6$h = { class: "menu-item-content" };
 const _hoisted_7$g = { class: "menu-item-content-image" };
 const _hoisted_8$g = ["src"];
 const _hoisted_9$f = ["src"];
@@ -11139,7 +11139,7 @@ function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
           class: normalizeClass(`menu-item ${pageKey === $props.activePageKey ? "menu-item-selected" : ""}`),
           onClick: ($event) => $options.menuItemClickHandler(pageKey)
         }, [
-          createBaseVNode("div", _hoisted_6$i, [
+          createBaseVNode("div", _hoisted_6$h, [
             createBaseVNode("div", _hoisted_7$g, [
               pageKey === $props.activePageKey ? (openBlock(), createElementBlock("img", {
                 key: 0,
@@ -33608,7 +33608,7 @@ const _hoisted_2$l = { class: "control-section" };
 const _hoisted_3$l = { class: "dropdown-container" };
 const _hoisted_4$l = { class: "user-icon" };
 const _hoisted_5$i = ["src"];
-const _hoisted_6$h = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
+const _hoisted_6$g = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
 const _hoisted_7$f = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
 const _hoisted_8$f = {
   key: 0,
@@ -33625,7 +33625,7 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
           createBaseVNode("div", _hoisted_4$l, [
             createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$i)
           ]),
-          _hoisted_6$h,
+          _hoisted_6$g,
           _hoisted_7$f
         ]),
         $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$f, [
@@ -33642,7 +33642,1732 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
   ]);
 }
 const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_471816f0_lang = "";
+const TheSckeleton_vue_vue_type_style_index_0_scoped_fbbd3e1d_lang = "";
+const VApp$1 = "";
+const IN_BROWSER = typeof window !== "undefined";
+const SUPPORTS_INTERSECTION = IN_BROWSER && "IntersectionObserver" in window;
+const SUPPORTS_TOUCH = IN_BROWSER && ("ontouchstart" in window || window.navigator.maxTouchPoints > 0);
+const SUPPORTS_FOCUS_VISIBLE = IN_BROWSER && typeof CSS !== "undefined" && CSS.supports("selector(:focus-visible)");
+function useResizeObserver(callback) {
+  const resizeRef = ref();
+  const contentRect = ref();
+  if (IN_BROWSER) {
+    const observer = new ResizeObserver((entries) => {
+      callback == null ? void 0 : callback(entries, observer);
+      if (!entries.length)
+        return;
+      contentRect.value = entries[0].contentRect;
+    });
+    onBeforeUnmount(() => {
+      observer.disconnect();
+    });
+    watch(resizeRef, (newValue, oldValue) => {
+      if (oldValue) {
+        observer.unobserve(oldValue);
+        contentRect.value = void 0;
+      }
+      if (newValue)
+        observer.observe(newValue);
+    }, {
+      flush: "post"
+    });
+  }
+  return {
+    resizeRef,
+    contentRect: readonly(contentRect)
+  };
+}
+function getNestedValue(obj, path, fallback) {
+  const last = path.length - 1;
+  if (last < 0)
+    return obj === void 0 ? fallback : obj;
+  for (let i2 = 0; i2 < last; i2++) {
+    if (obj == null) {
+      return fallback;
+    }
+    obj = obj[path[i2]];
+  }
+  if (obj == null)
+    return fallback;
+  return obj[path[last]] === void 0 ? fallback : obj[path[last]];
+}
+function deepEqual(a3, b3) {
+  if (a3 === b3)
+    return true;
+  if (a3 instanceof Date && b3 instanceof Date && a3.getTime() !== b3.getTime()) {
+    return false;
+  }
+  if (a3 !== Object(a3) || b3 !== Object(b3)) {
+    return false;
+  }
+  const props = Object.keys(a3);
+  if (props.length !== Object.keys(b3).length) {
+    return false;
+  }
+  return props.every((p2) => deepEqual(a3[p2], b3[p2]));
+}
+function getObjectValueByPath(obj, path, fallback) {
+  if (obj == null || !path || typeof path !== "string")
+    return fallback;
+  if (obj[path] !== void 0)
+    return obj[path];
+  path = path.replace(/\[(\w+)\]/g, ".$1");
+  path = path.replace(/^\./, "");
+  return getNestedValue(obj, path.split("."), fallback);
+}
+function getPropertyFromItem(item, property, fallback) {
+  if (property == null)
+    return item === void 0 ? fallback : item;
+  if (item !== Object(item)) {
+    if (typeof property !== "function")
+      return fallback;
+    const value2 = property(item, fallback);
+    return typeof value2 === "undefined" ? fallback : value2;
+  }
+  if (typeof property === "string")
+    return getObjectValueByPath(item, property, fallback);
+  if (Array.isArray(property))
+    return getNestedValue(item, property, fallback);
+  if (typeof property !== "function")
+    return fallback;
+  const value = property(item, fallback);
+  return typeof value === "undefined" ? fallback : value;
+}
+function createRange(length) {
+  let start = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
+  return Array.from({
+    length
+  }, (v, k2) => start + k2);
+}
+function convertToUnit(str) {
+  let unit = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "px";
+  if (str == null || str === "") {
+    return void 0;
+  } else if (isNaN(+str)) {
+    return String(str);
+  } else if (!isFinite(+str)) {
+    return void 0;
+  } else {
+    return `${Number(str)}${unit}`;
+  }
+}
+function isObject(obj) {
+  return obj !== null && typeof obj === "object" && !Array.isArray(obj);
+}
+function isComponentInstance(obj) {
+  return obj == null ? void 0 : obj.$el;
+}
+const keyCodes = Object.freeze({
+  enter: 13,
+  tab: 9,
+  delete: 46,
+  esc: 27,
+  space: 32,
+  up: 38,
+  down: 40,
+  left: 37,
+  right: 39,
+  end: 35,
+  home: 36,
+  del: 46,
+  backspace: 8,
+  insert: 45,
+  pageup: 33,
+  pagedown: 34,
+  shift: 16
+});
+Object.freeze({
+  enter: "Enter",
+  tab: "Tab",
+  delete: "Delete",
+  esc: "Escape",
+  space: "Space",
+  up: "ArrowUp",
+  down: "ArrowDown",
+  left: "ArrowLeft",
+  right: "ArrowRight",
+  end: "End",
+  home: "Home",
+  del: "Delete",
+  backspace: "Backspace",
+  insert: "Insert",
+  pageup: "PageUp",
+  pagedown: "PageDown",
+  shift: "Shift"
+});
+function pick(obj, paths) {
+  const found = /* @__PURE__ */ Object.create(null);
+  const rest = /* @__PURE__ */ Object.create(null);
+  for (const key in obj) {
+    if (paths.some((path) => path instanceof RegExp ? path.test(key) : path === key)) {
+      found[key] = obj[key];
+    } else {
+      rest[key] = obj[key];
+    }
+  }
+  return [found, rest];
+}
+function omit(obj, exclude) {
+  const clone = {
+    ...obj
+  };
+  exclude.forEach((prop) => delete clone[prop]);
+  return clone;
+}
+function filterInputAttrs(attrs) {
+  return pick(attrs, ["class", "style", "id", /^data-/]);
+}
+function wrapInArray(v) {
+  return v == null ? [] : Array.isArray(v) ? v : [v];
+}
+function clamp(value) {
+  let min = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
+  let max = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 1;
+  return Math.max(min, Math.min(max, value));
+}
+function chunk(str) {
+  let size2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
+  const chunked = [];
+  let index2 = 0;
+  while (index2 < str.length) {
+    chunked.push(str.substr(index2, size2));
+    index2 += size2;
+  }
+  return chunked;
+}
+function mergeDeep() {
+  let source = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+  let target = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  let arrayFn = arguments.length > 2 ? arguments[2] : void 0;
+  const out = {};
+  for (const key in source) {
+    out[key] = source[key];
+  }
+  for (const key in target) {
+    const sourceProperty = source[key];
+    const targetProperty = target[key];
+    if (isObject(sourceProperty) && isObject(targetProperty)) {
+      out[key] = mergeDeep(sourceProperty, targetProperty, arrayFn);
+      continue;
+    }
+    if (Array.isArray(sourceProperty) && Array.isArray(targetProperty) && arrayFn) {
+      out[key] = arrayFn(sourceProperty, targetProperty);
+      continue;
+    }
+    out[key] = targetProperty;
+  }
+  return out;
+}
+function toKebabCase() {
+  let str = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "";
+  if (toKebabCase.cache.has(str))
+    return toKebabCase.cache.get(str);
+  const kebab = str.replace(/[^a-z]/gi, "-").replace(/\B([A-Z])/g, "-$1").toLowerCase();
+  toKebabCase.cache.set(str, kebab);
+  return kebab;
+}
+toKebabCase.cache = /* @__PURE__ */ new Map();
+function findChildrenWithProvide(key, vnode) {
+  if (!vnode || typeof vnode !== "object")
+    return [];
+  if (Array.isArray(vnode)) {
+    return vnode.map((child) => findChildrenWithProvide(key, child)).flat(1);
+  } else if (Array.isArray(vnode.children)) {
+    return vnode.children.map((child) => findChildrenWithProvide(key, child)).flat(1);
+  } else if (vnode.component) {
+    if (Object.getOwnPropertySymbols(vnode.component.provides).includes(key)) {
+      return [vnode.component];
+    } else if (vnode.component.subTree) {
+      return findChildrenWithProvide(key, vnode.component.subTree).flat(1);
+    }
+  }
+  return [];
+}
+function destructComputed(getter) {
+  const refs = reactive({});
+  const base = computed(getter);
+  watchEffect(() => {
+    for (const key in base.value) {
+      refs[key] = base.value[key];
+    }
+  }, {
+    flush: "sync"
+  });
+  return toRefs(refs);
+}
+function includes(arr, val) {
+  return arr.includes(val);
+}
+const onRE = /^on[^a-z]/;
+const isOn = (key) => onRE.test(key);
+const EventProp = [Function, Array];
+function hasEvent(props, name2) {
+  name2 = "on" + capitalize(name2);
+  return !!(props[name2] || props[`${name2}Once`] || props[`${name2}Capture`] || props[`${name2}OnceCapture`] || props[`${name2}CaptureOnce`]);
+}
+function callEvent(handler) {
+  for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    args[_key2 - 1] = arguments[_key2];
+  }
+  if (Array.isArray(handler)) {
+    for (const h4 of handler) {
+      h4(...args);
+    }
+  } else if (typeof handler === "function") {
+    handler(...args);
+  }
+}
+const block = ["top", "bottom"];
+const inline = ["start", "end", "left", "right"];
+function parseAnchor(anchor, isRtl) {
+  let [side, align] = anchor.split(" ");
+  if (!align) {
+    align = includes(block, side) ? "start" : includes(inline, side) ? "top" : "center";
+  }
+  return {
+    side: toPhysical(side, isRtl),
+    align: toPhysical(align, isRtl)
+  };
+}
+function toPhysical(str, isRtl) {
+  if (str === "start")
+    return isRtl ? "right" : "left";
+  if (str === "end")
+    return isRtl ? "left" : "right";
+  return str;
+}
+function flipSide(anchor) {
+  return {
+    side: {
+      center: "center",
+      top: "bottom",
+      bottom: "top",
+      left: "right",
+      right: "left"
+    }[anchor.side],
+    align: anchor.align
+  };
+}
+function flipAlign(anchor) {
+  return {
+    side: anchor.side,
+    align: {
+      center: "center",
+      top: "bottom",
+      bottom: "top",
+      left: "right",
+      right: "left"
+    }[anchor.align]
+  };
+}
+function flipCorner(anchor) {
+  return {
+    side: anchor.align,
+    align: anchor.side
+  };
+}
+function getAxis(anchor) {
+  return includes(block, anchor.side) ? "y" : "x";
+}
+class Box {
+  constructor(_ref) {
+    let {
+      x: x2,
+      y: y3,
+      width,
+      height
+    } = _ref;
+    this.x = x2;
+    this.y = y3;
+    this.width = width;
+    this.height = height;
+  }
+  get top() {
+    return this.y;
+  }
+  get bottom() {
+    return this.y + this.height;
+  }
+  get left() {
+    return this.x;
+  }
+  get right() {
+    return this.x + this.width;
+  }
+}
+function getOverflow(a3, b3) {
+  return {
+    x: {
+      before: Math.max(0, b3.left - a3.left),
+      after: Math.max(0, a3.right - b3.right)
+    },
+    y: {
+      before: Math.max(0, b3.top - a3.top),
+      after: Math.max(0, a3.bottom - b3.bottom)
+    }
+  };
+}
+function nullifyTransforms(el2) {
+  const rect = el2.getBoundingClientRect();
+  const style = getComputedStyle(el2);
+  const tx = style.transform;
+  if (tx) {
+    let ta, sx, sy, dx, dy;
+    if (tx.startsWith("matrix3d(")) {
+      ta = tx.slice(9, -1).split(/, /);
+      sx = +ta[0];
+      sy = +ta[5];
+      dx = +ta[12];
+      dy = +ta[13];
+    } else if (tx.startsWith("matrix(")) {
+      ta = tx.slice(7, -1).split(/, /);
+      sx = +ta[0];
+      sy = +ta[3];
+      dx = +ta[4];
+      dy = +ta[5];
+    } else {
+      return new Box(rect);
+    }
+    const to = style.transformOrigin;
+    const x2 = rect.x - dx - (1 - sx) * parseFloat(to);
+    const y3 = rect.y - dy - (1 - sy) * parseFloat(to.slice(to.indexOf(" ") + 1));
+    const w2 = sx ? rect.width / sx : el2.offsetWidth + 1;
+    const h4 = sy ? rect.height / sy : el2.offsetHeight + 1;
+    return new Box({
+      x: x2,
+      y: y3,
+      width: w2,
+      height: h4
+    });
+  } else {
+    return new Box(rect);
+  }
+}
+function animate(el2, keyframes, options) {
+  if (typeof el2.animate === "undefined")
+    return {
+      finished: Promise.resolve()
+    };
+  const animation = el2.animate(keyframes, options);
+  if (typeof animation.finished === "undefined") {
+    animation.finished = new Promise((resolve2) => {
+      animation.onfinish = () => {
+        resolve2(animation);
+      };
+    });
+  }
+  return animation;
+}
+function createMessage(message, vm, parent) {
+  if (parent) {
+    vm = {
+      __isVue: true,
+      $parent: parent,
+      $options: vm
+    };
+  }
+  if (vm) {
+    vm.$_alreadyWarned = vm.$_alreadyWarned || [];
+    if (vm.$_alreadyWarned.includes(message))
+      return;
+    vm.$_alreadyWarned.push(message);
+  }
+  return `[Vuetify] ${message}` + (vm ? generateComponentTrace(vm) : "");
+}
+function consoleWarn(message, vm, parent) {
+  const newMessage = createMessage(message, vm, parent);
+  newMessage != null && console.warn(newMessage);
+}
+function consoleError(message, vm, parent) {
+  const newMessage = createMessage(message, vm, parent);
+  newMessage != null && console.error(newMessage);
+}
+const classifyRE = /(?:^|[-_])(\w)/g;
+const classify = (str) => str.replace(classifyRE, (c2) => c2.toUpperCase()).replace(/[-_]/g, "");
+function formatComponentName(vm, includeFile) {
+  if (vm.$root === vm) {
+    return "<Root>";
+  }
+  const options = typeof vm === "function" && vm.cid != null ? vm.options : vm.__isVue ? vm.$options || vm.constructor.options : vm || {};
+  let name2 = options.name || options._componentTag;
+  const file = options.__file;
+  if (!name2 && file) {
+    const match2 = file.match(/([^/\\]+)\.vue$/);
+    name2 = match2 == null ? void 0 : match2[1];
+  }
+  return (name2 ? `<${classify(name2)}>` : `<Anonymous>`) + (file && includeFile !== false ? ` at ${file}` : "");
+}
+function generateComponentTrace(vm) {
+  if (vm.__isVue && vm.$parent) {
+    const tree = [];
+    let currentRecursiveSequence = 0;
+    while (vm) {
+      if (tree.length > 0) {
+        const last = tree[tree.length - 1];
+        if (last.constructor === vm.constructor) {
+          currentRecursiveSequence++;
+          vm = vm.$parent;
+          continue;
+        } else if (currentRecursiveSequence > 0) {
+          tree[tree.length - 1] = [last, currentRecursiveSequence];
+          currentRecursiveSequence = 0;
+        }
+      }
+      tree.push(vm);
+      vm = vm.$parent;
+    }
+    return "\n\nfound in\n\n" + tree.map((vm2, i2) => `${i2 === 0 ? "---> " : " ".repeat(5 + i2 * 2)}${Array.isArray(vm2) ? `${formatComponentName(vm2[0])}... (${vm2[1]} recursive calls)` : formatComponentName(vm2)}`).join("\n");
+  } else {
+    return `
+
+(found in ${formatComponentName(vm)})`;
+  }
+}
+const srgbForwardMatrix = [[3.2406, -1.5372, -0.4986], [-0.9689, 1.8758, 0.0415], [0.0557, -0.204, 1.057]];
+const srgbForwardTransform = (C) => C <= 31308e-7 ? C * 12.92 : 1.055 * C ** (1 / 2.4) - 0.055;
+const srgbReverseMatrix = [[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]];
+const srgbReverseTransform = (C) => C <= 0.04045 ? C / 12.92 : ((C + 0.055) / 1.055) ** 2.4;
+function fromXYZ$1(xyz) {
+  const rgb = Array(3);
+  const transform2 = srgbForwardTransform;
+  const matrix = srgbForwardMatrix;
+  for (let i2 = 0; i2 < 3; ++i2) {
+    rgb[i2] = Math.round(clamp(transform2(matrix[i2][0] * xyz[0] + matrix[i2][1] * xyz[1] + matrix[i2][2] * xyz[2])) * 255);
+  }
+  return {
+    r: rgb[0],
+    g: rgb[1],
+    b: rgb[2]
+  };
+}
+function toXYZ$1(_ref) {
+  let {
+    r: r2,
+    g,
+    b: b3
+  } = _ref;
+  const xyz = [0, 0, 0];
+  const transform2 = srgbReverseTransform;
+  const matrix = srgbReverseMatrix;
+  r2 = transform2(r2 / 255);
+  g = transform2(g / 255);
+  b3 = transform2(b3 / 255);
+  for (let i2 = 0; i2 < 3; ++i2) {
+    xyz[i2] = matrix[i2][0] * r2 + matrix[i2][1] * g + matrix[i2][2] * b3;
+  }
+  return xyz;
+}
+const delta = 0.20689655172413793;
+const cielabForwardTransform = (t3) => t3 > delta ** 3 ? Math.cbrt(t3) : t3 / (3 * delta ** 2) + 4 / 29;
+const cielabReverseTransform = (t3) => t3 > delta ? t3 ** 3 : 3 * delta ** 2 * (t3 - 4 / 29);
+function fromXYZ(xyz) {
+  const transform2 = cielabForwardTransform;
+  const transformedY = transform2(xyz[1]);
+  return [116 * transformedY - 16, 500 * (transform2(xyz[0] / 0.95047) - transformedY), 200 * (transformedY - transform2(xyz[2] / 1.08883))];
+}
+function toXYZ(lab) {
+  const transform2 = cielabReverseTransform;
+  const Ln = (lab[0] + 16) / 116;
+  return [transform2(Ln + lab[1] / 500) * 0.95047, transform2(Ln), transform2(Ln - lab[2] / 200) * 1.08883];
+}
+function isCssColor(color) {
+  return !!color && /^(#|var\(--|(rgb|hsl)a?\()/.test(color);
+}
+function parseColor(color) {
+  if (typeof color === "number") {
+    if (isNaN(color) || color < 0 || color > 16777215) {
+      consoleWarn(`'${color}' is not a valid hex color`);
+    }
+    return {
+      r: (color & 16711680) >> 16,
+      g: (color & 65280) >> 8,
+      b: color & 255
+    };
+  } else if (typeof color === "string") {
+    let hex = color.startsWith("#") ? color.slice(1) : color;
+    if ([3, 4].includes(hex.length)) {
+      hex = hex.split("").map((char) => char + char).join("");
+    } else if (![6, 8].includes(hex.length)) {
+      consoleWarn(`'${color}' is not a valid hex(a) color`);
+    }
+    const int = parseInt(hex, 16);
+    if (isNaN(int) || int < 0 || int > 4294967295) {
+      consoleWarn(`'${color}' is not a valid hex(a) color`);
+    }
+    return HexToRGB(hex);
+  } else {
+    throw new TypeError(`Colors can only be numbers or strings, recieved ${color == null ? color : color.constructor.name} instead`);
+  }
+}
+function toHex(v) {
+  const h4 = Math.round(v).toString(16);
+  return ("00".substr(0, 2 - h4.length) + h4).toUpperCase();
+}
+function RGBtoHex(_ref2) {
+  let {
+    r: r2,
+    g,
+    b: b3,
+    a: a3
+  } = _ref2;
+  return `#${[toHex(r2), toHex(g), toHex(b3), a3 !== void 0 ? toHex(Math.round(a3 * 255)) : "FF"].join("")}`;
+}
+function HexToRGB(hex) {
+  let [r2, g, b3, a3] = chunk(hex, 2).map((c2) => parseInt(c2, 16));
+  a3 = a3 === void 0 ? a3 : Math.round(a3 / 255 * 100) / 100;
+  return {
+    r: r2,
+    g,
+    b: b3,
+    a: a3
+  };
+}
+function lighten(value, amount) {
+  const lab = fromXYZ(toXYZ$1(value));
+  lab[0] = lab[0] + amount * 10;
+  return fromXYZ$1(toXYZ(lab));
+}
+function darken(value, amount) {
+  const lab = fromXYZ(toXYZ$1(value));
+  lab[0] = lab[0] - amount * 10;
+  return fromXYZ$1(toXYZ(lab));
+}
+function getLuma(color) {
+  const rgb = parseColor(color);
+  return toXYZ$1(rgb)[1];
+}
+function getCurrentInstance(name2, message) {
+  const vm = getCurrentInstance$1();
+  if (!vm) {
+    throw new Error(`[Vuetify] ${name2} ${message || "must be called from inside a setup function"}`);
+  }
+  return vm;
+}
+function getCurrentInstanceName() {
+  let name2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "composables";
+  const vm = getCurrentInstance(name2).type;
+  return toKebabCase((vm == null ? void 0 : vm.aliasName) || (vm == null ? void 0 : vm.name));
+}
+let _uid = 0;
+let _map = /* @__PURE__ */ new WeakMap();
+function getUid() {
+  const vm = getCurrentInstance("getUid");
+  if (_map.has(vm))
+    return _map.get(vm);
+  else {
+    const uid2 = _uid++;
+    _map.set(vm, uid2);
+    return uid2;
+  }
+}
+getUid.reset = () => {
+  _uid = 0;
+  _map = /* @__PURE__ */ new WeakMap();
+};
+function injectSelf(key) {
+  const {
+    provides
+  } = getCurrentInstance("injectSelf");
+  if (provides && key in provides) {
+    return provides[key];
+  }
+}
+const DefaultsSymbol = Symbol.for("vuetify:defaults");
+function createDefaults(options) {
+  return ref(options);
+}
+function useDefaults() {
+  const defaults2 = inject$1(DefaultsSymbol);
+  if (!defaults2)
+    throw new Error("[Vuetify] Could not find defaults instance");
+  return defaults2;
+}
+function provideDefaults(defaults2, options) {
+  const injectedDefaults = useDefaults();
+  const providedDefaults = ref(defaults2);
+  const newDefaults = computed(() => {
+    const scoped = unref(options == null ? void 0 : options.scoped);
+    const reset = unref(options == null ? void 0 : options.reset);
+    const root = unref(options == null ? void 0 : options.root);
+    let properties = mergeDeep(providedDefaults.value, {
+      prev: injectedDefaults.value
+    });
+    if (scoped)
+      return properties;
+    if (reset || root) {
+      const len = Number(reset || Infinity);
+      for (let i2 = 0; i2 <= len; i2++) {
+        if (!properties.prev)
+          break;
+        properties = properties.prev;
+      }
+      return properties;
+    }
+    return mergeDeep(properties.prev, properties);
+  });
+  provide(DefaultsSymbol, newDefaults);
+  return newDefaults;
+}
+function useToggleScope(source, fn2) {
+  let scope;
+  function start() {
+    scope = effectScope();
+    scope.run(() => fn2.length ? fn2(() => {
+      var _scope;
+      (_scope = scope) == null ? void 0 : _scope.stop();
+      start();
+    }) : fn2());
+  }
+  watch(source, (active) => {
+    if (active && !scope) {
+      start();
+    } else if (!active) {
+      var _scope2;
+      (_scope2 = scope) == null ? void 0 : _scope2.stop();
+      scope = void 0;
+    }
+  }, {
+    immediate: true
+  });
+  onScopeDispose(() => {
+    var _scope3;
+    (_scope3 = scope) == null ? void 0 : _scope3.stop();
+  });
+}
+function propsFactory(props, source) {
+  return (defaults2) => {
+    return Object.keys(props).reduce((obj, prop) => {
+      const isObjectDefinition = typeof props[prop] === "object" && props[prop] != null && !Array.isArray(props[prop]);
+      const definition = isObjectDefinition ? props[prop] : {
+        type: props[prop]
+      };
+      if (defaults2 && prop in defaults2) {
+        obj[prop] = {
+          ...definition,
+          default: defaults2[prop]
+        };
+      } else {
+        obj[prop] = definition;
+      }
+      if (source && !obj[prop].source) {
+        obj[prop].source = source;
+      }
+      return obj;
+    }, {});
+  };
+}
+function propIsDefined(vnode, prop) {
+  var _vnode$props, _vnode$props2;
+  return typeof ((_vnode$props = vnode.props) == null ? void 0 : _vnode$props[prop]) !== "undefined" || typeof ((_vnode$props2 = vnode.props) == null ? void 0 : _vnode$props2[toKebabCase(prop)]) !== "undefined";
+}
+const defineComponent = function defineComponent2(options) {
+  var _a2, _b;
+  options._setup = (_a2 = options._setup) != null ? _a2 : options.setup;
+  if (!options.name) {
+    consoleWarn("The component is missing an explicit name, unable to generate default prop value");
+    return options;
+  }
+  if (options._setup) {
+    options.props = (_b = options.props) != null ? _b : {};
+    options.props = propsFactory(options.props, toKebabCase(options.name))();
+    options.props._as = String;
+    options.setup = function setup(props, ctx) {
+      const defaults2 = useDefaults();
+      if (!defaults2.value)
+        return options._setup(props, ctx);
+      const vm = getCurrentInstance$1();
+      const componentDefaults = computed(() => {
+        var _a3;
+        return defaults2.value[(_a3 = props._as) != null ? _a3 : options.name];
+      });
+      const _props = new Proxy(props, {
+        get(target, prop) {
+          var _a3, _b2;
+          if (!propIsDefined(vm.vnode, prop)) {
+            var _componentDefaults$va, _global2;
+            return (_b2 = (_a3 = (_componentDefaults$va = componentDefaults.value) == null ? void 0 : _componentDefaults$va[prop]) != null ? _a3 : (_global2 = defaults2.value.global) == null ? void 0 : _global2[prop]) != null ? _b2 : target[prop];
+          }
+          return Reflect.get(target, prop);
+        }
+      });
+      const _subcomponentDefaults = shallowRef();
+      watchEffect(() => {
+        if (componentDefaults.value) {
+          const subComponents = Object.entries(componentDefaults.value).filter((_ref) => {
+            let [key] = _ref;
+            return key.startsWith(key[0].toUpperCase());
+          });
+          if (subComponents.length)
+            _subcomponentDefaults.value = Object.fromEntries(subComponents);
+        }
+      });
+      const setupBindings = options._setup(_props, ctx);
+      useToggleScope(_subcomponentDefaults, () => {
+        var _a3;
+        var _injectSelf;
+        provideDefaults(mergeDeep((_a3 = (_injectSelf = injectSelf(DefaultsSymbol)) == null ? void 0 : _injectSelf.value) != null ? _a3 : {}, _subcomponentDefaults.value));
+      });
+      return setupBindings;
+    };
+  }
+  return options;
+};
+function genericComponent() {
+  let exposeDefaults = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+  return (options) => (exposeDefaults ? defineComponent : defineComponent$1)(options);
+}
+function createSimpleFunctional(klass) {
+  let tag = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "div";
+  let name2 = arguments.length > 2 ? arguments[2] : void 0;
+  return defineComponent({
+    name: name2 != null ? name2 : capitalize(camelize(klass.replace(/__/g, "-"))),
+    props: {
+      tag: {
+        type: String,
+        default: tag
+      }
+    },
+    setup(props, _ref) {
+      let {
+        slots
+      } = _ref;
+      return () => {
+        var _slots$default;
+        return h(props.tag, {
+          class: klass
+        }, (_slots$default = slots.default) == null ? void 0 : _slots$default.call(slots));
+      };
+    }
+  });
+}
+function attachedRoot(node) {
+  if (typeof node.getRootNode !== "function") {
+    while (node.parentNode)
+      node = node.parentNode;
+    if (node !== document)
+      return null;
+    return document;
+  }
+  const root = node.getRootNode();
+  if (root !== document && root.getRootNode({
+    composed: true
+  }) !== document)
+    return null;
+  return root;
+}
+const standardEasing = "cubic-bezier(0.4, 0, 0.2, 1)";
+const deceleratedEasing = "cubic-bezier(0.0, 0, 0.2, 1)";
+const acceleratedEasing = "cubic-bezier(0.4, 0, 1, 1)";
+function getScrollParent(el2) {
+  while (el2) {
+    if (hasScrollbar(el2))
+      return el2;
+    el2 = el2.parentElement;
+  }
+  return document.scrollingElement;
+}
+function getScrollParents(el2, stopAt) {
+  const elements = [];
+  if (stopAt && el2 && !stopAt.contains(el2))
+    return elements;
+  while (el2) {
+    if (hasScrollbar(el2))
+      elements.push(el2);
+    if (el2 === stopAt)
+      break;
+    el2 = el2.parentElement;
+  }
+  return elements;
+}
+function hasScrollbar(el2) {
+  if (!el2 || el2.nodeType !== Node.ELEMENT_NODE)
+    return false;
+  const style = window.getComputedStyle(el2);
+  return style.overflowY === "scroll" || style.overflowY === "auto" && el2.scrollHeight > el2.clientHeight;
+}
+function isFixedPosition(el2) {
+  while (el2) {
+    if (window.getComputedStyle(el2).position === "fixed") {
+      return true;
+    }
+    el2 = el2.offsetParent;
+  }
+  return false;
+}
+function useRender(render) {
+  const vm = getCurrentInstance("useRender");
+  vm.render = render;
+}
+const VuetifyLayoutKey = Symbol.for("vuetify:layout");
+const VuetifyLayoutItemKey = Symbol.for("vuetify:layout-item");
+const ROOT_ZINDEX = 1e3;
+const makeLayoutProps = propsFactory({
+  overlaps: {
+    type: Array,
+    default: () => []
+  },
+  fullHeight: Boolean
+}, "layout");
+const generateLayers = (layout, positions, layoutSizes, activeItems) => {
+  let previousLayer = {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  };
+  const layers = [{
+    id: "",
+    layer: {
+      ...previousLayer
+    }
+  }];
+  for (const id of layout) {
+    const position = positions.get(id);
+    const amount = layoutSizes.get(id);
+    const active = activeItems.get(id);
+    if (!position || !amount || !active)
+      continue;
+    const layer = {
+      ...previousLayer,
+      [position.value]: parseInt(previousLayer[position.value], 10) + (active.value ? parseInt(amount.value, 10) : 0)
+    };
+    layers.push({
+      id,
+      layer
+    });
+    previousLayer = layer;
+  }
+  return layers;
+};
+function createLayout(props) {
+  const parentLayout = inject$1(VuetifyLayoutKey, null);
+  const rootZIndex = computed(() => parentLayout ? parentLayout.rootZIndex.value - 100 : ROOT_ZINDEX);
+  const registered = ref([]);
+  const positions = reactive(/* @__PURE__ */ new Map());
+  const layoutSizes = reactive(/* @__PURE__ */ new Map());
+  const priorities = reactive(/* @__PURE__ */ new Map());
+  const activeItems = reactive(/* @__PURE__ */ new Map());
+  const disabledTransitions = reactive(/* @__PURE__ */ new Map());
+  const {
+    resizeRef,
+    contentRect: layoutRect
+  } = useResizeObserver();
+  const computedOverlaps = computed(() => {
+    var _a2;
+    const map = /* @__PURE__ */ new Map();
+    const overlaps = (_a2 = props.overlaps) != null ? _a2 : [];
+    for (const overlap of overlaps.filter((item) => item.includes(":"))) {
+      const [top, bottom] = overlap.split(":");
+      if (!registered.value.includes(top) || !registered.value.includes(bottom))
+        continue;
+      const topPosition = positions.get(top);
+      const bottomPosition = positions.get(bottom);
+      const topAmount = layoutSizes.get(top);
+      const bottomAmount = layoutSizes.get(bottom);
+      if (!topPosition || !bottomPosition || !topAmount || !bottomAmount)
+        continue;
+      map.set(bottom, {
+        position: topPosition.value,
+        amount: parseInt(topAmount.value, 10)
+      });
+      map.set(top, {
+        position: bottomPosition.value,
+        amount: -parseInt(bottomAmount.value, 10)
+      });
+    }
+    return map;
+  });
+  const layers = computed(() => {
+    const uniquePriorities = [...new Set([...priorities.values()].map((p2) => p2.value))].sort((a3, b3) => a3 - b3);
+    const layout = [];
+    for (const p2 of uniquePriorities) {
+      const items2 = registered.value.filter((id) => {
+        var _priorities$get;
+        return ((_priorities$get = priorities.get(id)) == null ? void 0 : _priorities$get.value) === p2;
+      });
+      layout.push(...items2);
+    }
+    return generateLayers(layout, positions, layoutSizes, activeItems);
+  });
+  const transitionsEnabled = computed(() => {
+    return !Array.from(disabledTransitions.values()).some((ref2) => ref2.value);
+  });
+  const mainRect = computed(() => {
+    return layers.value[layers.value.length - 1].layer;
+  });
+  const mainStyles = computed(() => {
+    return {
+      "--v-layout-left": convertToUnit(mainRect.value.left),
+      "--v-layout-right": convertToUnit(mainRect.value.right),
+      "--v-layout-top": convertToUnit(mainRect.value.top),
+      "--v-layout-bottom": convertToUnit(mainRect.value.bottom),
+      ...transitionsEnabled.value ? void 0 : {
+        transition: "none"
+      }
+    };
+  });
+  const items = computed(() => {
+    return layers.value.slice(1).map((_ref, index2) => {
+      let {
+        id
+      } = _ref;
+      const {
+        layer
+      } = layers.value[index2];
+      const size2 = layoutSizes.get(id);
+      const position = positions.get(id);
+      return {
+        id,
+        ...layer,
+        size: Number(size2.value),
+        position: position.value
+      };
+    });
+  });
+  const getLayoutItem = (id) => {
+    return items.value.find((item) => item.id === id);
+  };
+  const rootVm = getCurrentInstance("createLayout");
+  const isMounted = ref(false);
+  onMounted(() => {
+    isMounted.value = true;
+  });
+  provide(VuetifyLayoutKey, {
+    register: (vm, _ref2) => {
+      let {
+        id,
+        order,
+        position,
+        layoutSize,
+        elementSize,
+        active,
+        disableTransitions,
+        absolute
+      } = _ref2;
+      priorities.set(id, order);
+      positions.set(id, position);
+      layoutSizes.set(id, layoutSize);
+      activeItems.set(id, active);
+      disableTransitions && disabledTransitions.set(id, disableTransitions);
+      const instances = findChildrenWithProvide(VuetifyLayoutItemKey, rootVm == null ? void 0 : rootVm.vnode);
+      const instanceIndex = instances.indexOf(vm);
+      if (instanceIndex > -1)
+        registered.value.splice(instanceIndex, 0, id);
+      else
+        registered.value.push(id);
+      const index2 = computed(() => items.value.findIndex((i2) => i2.id === id));
+      const zIndex = computed(() => rootZIndex.value + layers.value.length * 2 - index2.value * 2);
+      const layoutItemStyles = computed(() => {
+        const isHorizontal = position.value === "left" || position.value === "right";
+        const isOppositeHorizontal = position.value === "right";
+        const isOppositeVertical = position.value === "bottom";
+        const styles = {
+          [position.value]: 0,
+          zIndex: zIndex.value,
+          transform: `translate${isHorizontal ? "X" : "Y"}(${(active.value ? 0 : -110) * (isOppositeHorizontal || isOppositeVertical ? -1 : 1)}%)`,
+          position: absolute.value || rootZIndex.value !== ROOT_ZINDEX ? "absolute" : "fixed",
+          ...transitionsEnabled.value ? void 0 : {
+            transition: "none"
+          }
+        };
+        if (!isMounted.value)
+          return styles;
+        const item = items.value[index2.value];
+        if (!item)
+          throw new Error(`[Vuetify] Could not find layout item "${id}"`);
+        const overlap = computedOverlaps.value.get(id);
+        if (overlap) {
+          item[overlap.position] += overlap.amount;
+        }
+        return {
+          ...styles,
+          height: isHorizontal ? `calc(100% - ${item.top}px - ${item.bottom}px)` : elementSize.value ? `${elementSize.value}px` : void 0,
+          left: isOppositeHorizontal ? void 0 : `${item.left}px`,
+          right: isOppositeHorizontal ? `${item.right}px` : void 0,
+          top: position.value !== "bottom" ? `${item.top}px` : void 0,
+          bottom: position.value !== "top" ? `${item.bottom}px` : void 0,
+          width: !isHorizontal ? `calc(100% - ${item.left}px - ${item.right}px)` : elementSize.value ? `${elementSize.value}px` : void 0
+        };
+      });
+      const layoutItemScrimStyles = computed(() => ({
+        zIndex: zIndex.value - 1
+      }));
+      return {
+        layoutItemStyles,
+        layoutItemScrimStyles,
+        zIndex
+      };
+    },
+    unregister: (id) => {
+      priorities.delete(id);
+      positions.delete(id);
+      layoutSizes.delete(id);
+      activeItems.delete(id);
+      disabledTransitions.delete(id);
+      registered.value = registered.value.filter((v) => v !== id);
+    },
+    mainRect,
+    mainStyles,
+    getLayoutItem,
+    items,
+    layoutRect,
+    rootZIndex
+  });
+  const layoutClasses = computed(() => ["v-layout", {
+    "v-layout--full-height": props.fullHeight
+  }]);
+  const layoutStyles = computed(() => ({
+    zIndex: rootZIndex.value,
+    position: parentLayout ? "relative" : void 0,
+    overflow: parentLayout ? "hidden" : void 0
+  }));
+  return {
+    layoutClasses,
+    layoutStyles,
+    getLayoutItem,
+    items,
+    layoutRect,
+    layoutRef: resizeRef
+  };
+}
+const mainTRC = 2.4;
+const Rco = 0.2126729;
+const Gco = 0.7151522;
+const Bco = 0.072175;
+const normBG = 0.55;
+const normTXT = 0.58;
+const revTXT = 0.57;
+const revBG = 0.62;
+const blkThrs = 0.03;
+const blkClmp = 1.45;
+const deltaYmin = 5e-4;
+const scaleBoW = 1.25;
+const scaleWoB = 1.25;
+const loConThresh = 0.078;
+const loConFactor = 12.82051282051282;
+const loConOffset = 0.06;
+const loClip = 1e-3;
+function APCAcontrast(text, background) {
+  const Rtxt = (text.r / 255) ** mainTRC;
+  const Gtxt = (text.g / 255) ** mainTRC;
+  const Btxt = (text.b / 255) ** mainTRC;
+  const Rbg = (background.r / 255) ** mainTRC;
+  const Gbg = (background.g / 255) ** mainTRC;
+  const Bbg = (background.b / 255) ** mainTRC;
+  let Ytxt = Rtxt * Rco + Gtxt * Gco + Btxt * Bco;
+  let Ybg = Rbg * Rco + Gbg * Gco + Bbg * Bco;
+  if (Ytxt <= blkThrs)
+    Ytxt += (blkThrs - Ytxt) ** blkClmp;
+  if (Ybg <= blkThrs)
+    Ybg += (blkThrs - Ybg) ** blkClmp;
+  if (Math.abs(Ybg - Ytxt) < deltaYmin)
+    return 0;
+  let outputContrast;
+  if (Ybg > Ytxt) {
+    const SAPC = (Ybg ** normBG - Ytxt ** normTXT) * scaleBoW;
+    outputContrast = SAPC < loClip ? 0 : SAPC < loConThresh ? SAPC - SAPC * loConFactor * loConOffset : SAPC - loConOffset;
+  } else {
+    const SAPC = (Ybg ** revBG - Ytxt ** revTXT) * scaleWoB;
+    outputContrast = SAPC > -loClip ? 0 : SAPC > -loConThresh ? SAPC - SAPC * loConFactor * loConOffset : SAPC + loConOffset;
+  }
+  return outputContrast * 100;
+}
+const ThemeSymbol = Symbol.for("vuetify:theme");
+const makeThemeProps = propsFactory({
+  theme: String
+}, "theme");
+const defaultThemeOptions = {
+  defaultTheme: "light",
+  variations: {
+    colors: [],
+    lighten: 0,
+    darken: 0
+  },
+  themes: {
+    light: {
+      dark: false,
+      colors: {
+        background: "#FFFFFF",
+        surface: "#FFFFFF",
+        "surface-variant": "#424242",
+        "on-surface-variant": "#EEEEEE",
+        primary: "#6200EE",
+        "primary-darken-1": "#3700B3",
+        secondary: "#03DAC6",
+        "secondary-darken-1": "#018786",
+        error: "#B00020",
+        info: "#2196F3",
+        success: "#4CAF50",
+        warning: "#FB8C00"
+      },
+      variables: {
+        "border-color": "#000000",
+        "border-opacity": 0.12,
+        "high-emphasis-opacity": 0.87,
+        "medium-emphasis-opacity": 0.6,
+        "disabled-opacity": 0.38,
+        "idle-opacity": 0.04,
+        "hover-opacity": 0.04,
+        "focus-opacity": 0.12,
+        "selected-opacity": 0.08,
+        "activated-opacity": 0.12,
+        "pressed-opacity": 0.12,
+        "dragged-opacity": 0.08,
+        "theme-kbd": "#212529",
+        "theme-on-kbd": "#FFFFFF",
+        "theme-code": "#F5F5F5",
+        "theme-on-code": "#000000"
+      }
+    },
+    dark: {
+      dark: true,
+      colors: {
+        background: "#121212",
+        surface: "#212121",
+        "surface-variant": "#BDBDBD",
+        "on-surface-variant": "#424242",
+        primary: "#BB86FC",
+        "primary-darken-1": "#3700B3",
+        secondary: "#03DAC5",
+        "secondary-darken-1": "#03DAC5",
+        error: "#CF6679",
+        info: "#2196F3",
+        success: "#4CAF50",
+        warning: "#FB8C00"
+      },
+      variables: {
+        "border-color": "#FFFFFF",
+        "border-opacity": 0.12,
+        "high-emphasis-opacity": 0.87,
+        "medium-emphasis-opacity": 0.6,
+        "disabled-opacity": 0.38,
+        "idle-opacity": 0.1,
+        "hover-opacity": 0.04,
+        "focus-opacity": 0.12,
+        "selected-opacity": 0.08,
+        "activated-opacity": 0.12,
+        "pressed-opacity": 0.16,
+        "dragged-opacity": 0.08,
+        "theme-kbd": "#212529",
+        "theme-on-kbd": "#FFFFFF",
+        "theme-code": "#343434",
+        "theme-on-code": "#CCCCCC"
+      }
+    }
+  }
+};
+function parseThemeOptions() {
+  var _a2;
+  let options = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : defaultThemeOptions;
+  if (!options)
+    return {
+      ...defaultThemeOptions,
+      isDisabled: true
+    };
+  const themes = {};
+  for (const [key, theme] of Object.entries((_a2 = options.themes) != null ? _a2 : {})) {
+    var _defaultThemeOptions$, _defaultThemeOptions$2;
+    const defaultTheme = theme.dark || key === "dark" ? (_defaultThemeOptions$ = defaultThemeOptions.themes) == null ? void 0 : _defaultThemeOptions$.dark : (_defaultThemeOptions$2 = defaultThemeOptions.themes) == null ? void 0 : _defaultThemeOptions$2.light;
+    themes[key] = mergeDeep(defaultTheme, theme);
+  }
+  return mergeDeep(defaultThemeOptions, {
+    ...options,
+    themes
+  });
+}
+function createTheme(options) {
+  const parsedOptions = reactive(parseThemeOptions(options));
+  const name2 = ref(parsedOptions.defaultTheme);
+  const themes = ref(parsedOptions.themes);
+  const computedThemes = computed(() => {
+    const acc = {};
+    for (const [name3, original] of Object.entries(themes.value)) {
+      const theme = acc[name3] = {
+        ...original,
+        colors: {
+          ...original.colors
+        }
+      };
+      if (parsedOptions.variations) {
+        for (const name4 of parsedOptions.variations.colors) {
+          const color = theme.colors[name4];
+          if (!color)
+            continue;
+          for (const variation of ["lighten", "darken"]) {
+            const fn2 = variation === "lighten" ? lighten : darken;
+            for (const amount of createRange(parsedOptions.variations[variation], 1)) {
+              theme.colors[`${name4}-${variation}-${amount}`] = RGBtoHex(fn2(parseColor(color), amount));
+            }
+          }
+        }
+      }
+      for (const color of Object.keys(theme.colors)) {
+        if (/^on-[a-z]/.test(color) || theme.colors[`on-${color}`])
+          continue;
+        const onColor = `on-${color}`;
+        const colorVal = parseColor(theme.colors[color]);
+        const blackContrast = Math.abs(APCAcontrast(parseColor(0), colorVal));
+        const whiteContrast = Math.abs(APCAcontrast(parseColor(16777215), colorVal));
+        theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50) ? "#fff" : "#000";
+      }
+    }
+    return acc;
+  });
+  const current = computed(() => computedThemes.value[name2.value]);
+  const styles = computed(() => {
+    const lines = [];
+    if (current.value.dark) {
+      createCssClass(lines, ":root", ["color-scheme: dark"]);
+    }
+    for (const [themeName, theme] of Object.entries(computedThemes.value)) {
+      const {
+        variables,
+        dark
+      } = theme;
+      createCssClass(lines, `.v-theme--${themeName}`, [`color-scheme: ${dark ? "dark" : "normal"}`, ...genCssVariables(theme), ...Object.keys(variables).map((key) => {
+        const value = variables[key];
+        const color = typeof value === "string" && value.startsWith("#") ? parseColor(value) : void 0;
+        const rgb = color ? `${color.r}, ${color.g}, ${color.b}` : void 0;
+        return `--v-${key}: ${rgb != null ? rgb : value}`;
+      })]);
+    }
+    const bgLines = [];
+    const fgLines = [];
+    const colors = new Set(Object.values(computedThemes.value).flatMap((theme) => Object.keys(theme.colors)));
+    for (const key of colors) {
+      if (/^on-[a-z]/.test(key)) {
+        createCssClass(fgLines, `.${key}`, [`color: rgb(var(--v-theme-${key})) !important`]);
+      } else {
+        createCssClass(bgLines, `.bg-${key}`, [`--v-theme-overlay-multiplier: var(--v-theme-${key}-overlay-multiplier)`, `background: rgb(var(--v-theme-${key})) !important`, `color: rgb(var(--v-theme-on-${key})) !important`]);
+        createCssClass(fgLines, `.text-${key}`, [`color: rgb(var(--v-theme-${key})) !important`]);
+        createCssClass(fgLines, `.border-${key}`, [`--v-border-color: var(--v-theme-${key})`]);
+      }
+    }
+    lines.push(...bgLines, ...fgLines);
+    return lines.map((str, i2) => i2 === 0 ? str : `    ${str}`).join("");
+  });
+  function install2(app2) {
+    const head = app2._context.provides.usehead;
+    if (head) {
+      head.addHeadObjs(computed(() => {
+        const style = {
+          children: styles.value,
+          type: "text/css",
+          id: "vuetify-theme-stylesheet"
+        };
+        if (parsedOptions.cspNonce)
+          style.nonce = parsedOptions.cspNonce;
+        return {
+          style: [style]
+        };
+      }));
+      if (IN_BROWSER) {
+        watchEffect(() => head.updateDOM());
+      }
+    } else {
+      let updateStyles = function() {
+        if (parsedOptions.isDisabled)
+          return;
+        if (typeof document !== "undefined" && !styleEl) {
+          const el2 = document.createElement("style");
+          el2.type = "text/css";
+          el2.id = "vuetify-theme-stylesheet";
+          if (parsedOptions.cspNonce)
+            el2.setAttribute("nonce", parsedOptions.cspNonce);
+          styleEl = el2;
+          document.head.appendChild(styleEl);
+        }
+        if (styleEl)
+          styleEl.innerHTML = styles.value;
+      };
+      let styleEl = IN_BROWSER ? document.getElementById("vuetify-theme-stylesheet") : null;
+      watch(styles, updateStyles, {
+        immediate: true
+      });
+    }
+  }
+  const themeClasses = computed(() => parsedOptions.isDisabled ? void 0 : `v-theme--${name2.value}`);
+  return {
+    install: install2,
+    isDisabled: parsedOptions.isDisabled,
+    name: name2,
+    themes,
+    current,
+    computedThemes,
+    themeClasses,
+    styles,
+    global: {
+      name: name2,
+      current
+    }
+  };
+}
+function provideTheme(props) {
+  getCurrentInstance("provideTheme");
+  const theme = inject$1(ThemeSymbol, null);
+  if (!theme)
+    throw new Error("Could not find Vuetify theme injection");
+  const name2 = computed(() => {
+    var _a2;
+    return (_a2 = props.theme) != null ? _a2 : theme == null ? void 0 : theme.name.value;
+  });
+  const themeClasses = computed(() => theme.isDisabled ? void 0 : `v-theme--${name2.value}`);
+  const newTheme = {
+    ...theme,
+    name: name2,
+    themeClasses
+  };
+  provide(ThemeSymbol, newTheme);
+  return newTheme;
+}
+function createCssClass(lines, selector, content) {
+  lines.push(`${selector} {
+`, ...content.map((line) => `  ${line};
+`), "}\n");
+}
+function genCssVariables(theme) {
+  const lightOverlay = theme.dark ? 2 : 1;
+  const darkOverlay = theme.dark ? 1 : 2;
+  const variables = [];
+  for (const [key, value] of Object.entries(theme.colors)) {
+    const rgb = parseColor(value);
+    variables.push(`--v-theme-${key}: ${rgb.r},${rgb.g},${rgb.b}`);
+    if (!key.startsWith("on-")) {
+      variables.push(`--v-theme-${key}-overlay-multiplier: ${getLuma(value) > 0.18 ? lightOverlay : darkOverlay}`);
+    }
+  }
+  return variables;
+}
+function useProxiedModel(props, prop, defaultValue) {
+  let transformIn = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : (v) => v;
+  let transformOut = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : (v) => v;
+  const vm = getCurrentInstance("useProxiedModel");
+  const internal = ref(props[prop] !== void 0 ? props[prop] : defaultValue);
+  const kebabProp = toKebabCase(prop);
+  const checkKebab = kebabProp !== prop;
+  const isControlled = checkKebab ? computed(() => {
+    var _vm$vnode$props, _vm$vnode$props2, _vm$vnode$props3, _vm$vnode$props4;
+    void props[prop];
+    return !!(((_vm$vnode$props = vm.vnode.props) != null && _vm$vnode$props.hasOwnProperty(prop) || (_vm$vnode$props2 = vm.vnode.props) != null && _vm$vnode$props2.hasOwnProperty(kebabProp)) && ((_vm$vnode$props3 = vm.vnode.props) != null && _vm$vnode$props3.hasOwnProperty(`onUpdate:${prop}`) || (_vm$vnode$props4 = vm.vnode.props) != null && _vm$vnode$props4.hasOwnProperty(`onUpdate:${kebabProp}`)));
+  }) : computed(() => {
+    var _vm$vnode$props5, _vm$vnode$props6;
+    void props[prop];
+    return !!((_vm$vnode$props5 = vm.vnode.props) != null && _vm$vnode$props5.hasOwnProperty(prop) && (_vm$vnode$props6 = vm.vnode.props) != null && _vm$vnode$props6.hasOwnProperty(`onUpdate:${prop}`));
+  });
+  useToggleScope(() => !isControlled.value, () => {
+    watch(() => props[prop], (val) => {
+      internal.value = val;
+    });
+  });
+  const model = computed({
+    get() {
+      return transformIn(isControlled.value ? props[prop] : internal.value);
+    },
+    set(value) {
+      const newValue = transformOut(value);
+      if ((isControlled.value ? props[prop] : internal.value) === newValue || transformIn(isControlled.value ? props[prop] : internal.value) === value) {
+        return;
+      }
+      internal.value = newValue;
+      vm == null ? void 0 : vm.emit(`update:${prop}`, newValue);
+    }
+  });
+  Object.defineProperty(model, "externalValue", {
+    get: () => isControlled.value ? props[prop] : internal.value
+  });
+  return model;
+}
+const en$1 = {
+  badge: "Badge",
+  close: "Close",
+  dataIterator: {
+    noResultsText: "No matching records found",
+    loadingText: "Loading items..."
+  },
+  dataTable: {
+    itemsPerPageText: "Rows per page:",
+    ariaLabel: {
+      sortDescending: "Sorted descending.",
+      sortAscending: "Sorted ascending.",
+      sortNone: "Not sorted.",
+      activateNone: "Activate to remove sorting.",
+      activateDescending: "Activate to sort descending.",
+      activateAscending: "Activate to sort ascending."
+    },
+    sortBy: "Sort by"
+  },
+  dataFooter: {
+    itemsPerPageText: "Items per page:",
+    itemsPerPageAll: "All",
+    nextPage: "Next page",
+    prevPage: "Previous page",
+    firstPage: "First page",
+    lastPage: "Last page",
+    pageText: "{0}-{1} of {2}"
+  },
+  datePicker: {
+    itemsSelected: "{0} selected",
+    nextMonthAriaLabel: "Next month",
+    nextYearAriaLabel: "Next year",
+    prevMonthAriaLabel: "Previous month",
+    prevYearAriaLabel: "Previous year"
+  },
+  noDataText: "No data available",
+  carousel: {
+    prev: "Previous visual",
+    next: "Next visual",
+    ariaLabel: {
+      delimiter: "Carousel slide {0} of {1}"
+    }
+  },
+  calendar: {
+    moreEvents: "{0} more"
+  },
+  input: {
+    clear: "Clear {0}",
+    prependAction: "{0} prepended action",
+    appendAction: "{0} appended action"
+  },
+  fileInput: {
+    counter: "{0} files",
+    counterSize: "{0} files ({1} in total)"
+  },
+  timePicker: {
+    am: "AM",
+    pm: "PM"
+  },
+  pagination: {
+    ariaLabel: {
+      root: "Pagination Navigation",
+      next: "Next page",
+      previous: "Previous page",
+      page: "Go to page {0}",
+      currentPage: "Page {0}, Current page",
+      first: "First page",
+      last: "Last page"
+    }
+  },
+  rating: {
+    ariaLabel: {
+      item: "Rating {0} of {1}"
+    }
+  }
+};
+const LANG_PREFIX = "$vuetify.";
+const replace = (str, params) => {
+  return str.replace(/\{(\d+)\}/g, (match2, index2) => {
+    return String(params[+index2]);
+  });
+};
+const createTranslateFunction = (current, fallback, messages) => {
+  return function(key) {
+    for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      params[_key - 1] = arguments[_key];
+    }
+    if (!key.startsWith(LANG_PREFIX)) {
+      return replace(key, params);
+    }
+    const shortKey = key.replace(LANG_PREFIX, "");
+    const currentLocale = current.value && messages.value[current.value];
+    const fallbackLocale = fallback.value && messages.value[fallback.value];
+    let str = getObjectValueByPath(currentLocale, shortKey, null);
+    if (!str) {
+      consoleWarn(`Translation key "${key}" not found in "${current.value}", trying fallback locale`);
+      str = getObjectValueByPath(fallbackLocale, shortKey, null);
+    }
+    if (!str) {
+      consoleError(`Translation key "${key}" not found in fallback`);
+      str = key;
+    }
+    if (typeof str !== "string") {
+      consoleError(`Translation key "${key}" has a non-string value`);
+      str = key;
+    }
+    return replace(str, params);
+  };
+};
+function createNumberFunction(current, fallback) {
+  return (value, options) => {
+    const numberFormat = new Intl.NumberFormat([current.value, fallback.value], options);
+    return numberFormat.format(value);
+  };
+}
+function useProvided(props, prop, provided) {
+  var _a2, _b;
+  const internal = useProxiedModel(props, prop, (_a2 = props[prop]) != null ? _a2 : provided.value);
+  internal.value = (_b = props[prop]) != null ? _b : provided.value;
+  watch(provided, (v) => {
+    if (props[prop] == null) {
+      internal.value = provided.value;
+    }
+  });
+  return internal;
+}
+function createProvideFunction(state) {
+  return (props) => {
+    const current = useProvided(props, "locale", state.current);
+    const fallback = useProvided(props, "fallback", state.fallback);
+    const messages = useProvided(props, "messages", state.messages);
+    return {
+      name: "vuetify",
+      current,
+      fallback,
+      messages,
+      t: createTranslateFunction(current, fallback, messages),
+      n: createNumberFunction(current, fallback),
+      provide: createProvideFunction({
+        current,
+        fallback,
+        messages
+      })
+    };
+  };
+}
+function createVuetifyAdapter(options) {
+  var _a2, _b;
+  const current = ref((_a2 = options == null ? void 0 : options.locale) != null ? _a2 : "en");
+  const fallback = ref((_b = options == null ? void 0 : options.fallback) != null ? _b : "en");
+  const messages = ref({
+    en: en$1,
+    ...options == null ? void 0 : options.messages
+  });
+  return {
+    name: "vuetify",
+    current,
+    fallback,
+    messages,
+    t: createTranslateFunction(current, fallback, messages),
+    n: createNumberFunction(current, fallback),
+    provide: createProvideFunction({
+      current,
+      fallback,
+      messages
+    })
+  };
+}
+const defaultRtl = {
+  af: false,
+  ar: true,
+  bg: false,
+  ca: false,
+  ckb: false,
+  cs: false,
+  de: false,
+  el: false,
+  en: false,
+  es: false,
+  et: false,
+  fa: false,
+  fi: false,
+  fr: false,
+  hr: false,
+  hu: false,
+  he: true,
+  id: false,
+  it: false,
+  ja: false,
+  ko: false,
+  lv: false,
+  lt: false,
+  nl: false,
+  no: false,
+  pl: false,
+  pt: false,
+  ro: false,
+  ru: false,
+  sk: false,
+  sl: false,
+  srCyrl: false,
+  srLatn: false,
+  sv: false,
+  th: false,
+  tr: false,
+  az: false,
+  uk: false,
+  vi: false,
+  zhHans: false,
+  zhHant: false
+};
+const LocaleSymbol = Symbol.for("vuetify:locale");
+function isLocaleInstance(obj) {
+  return obj.name != null;
+}
+function createLocale(options) {
+  const i18n = options != null && options.adapter && isLocaleInstance(options == null ? void 0 : options.adapter) ? options == null ? void 0 : options.adapter : createVuetifyAdapter(options);
+  const rtl = createRtl(i18n, options);
+  return {
+    ...i18n,
+    ...rtl
+  };
+}
+function useLocale() {
+  const locale2 = inject$1(LocaleSymbol);
+  if (!locale2)
+    throw new Error("[Vuetify] Could not find injected locale instance");
+  return locale2;
+}
+function createRtl(i18n, options) {
+  var _a2;
+  const rtl = ref((_a2 = options == null ? void 0 : options.rtl) != null ? _a2 : defaultRtl);
+  const isRtl = computed(() => {
+    var _a3;
+    return (_a3 = rtl.value[i18n.current.value]) != null ? _a3 : false;
+  });
+  return {
+    isRtl,
+    rtl,
+    rtlClasses: computed(() => `v-locale--is-${isRtl.value ? "rtl" : "ltr"}`)
+  };
+}
+function useRtl() {
+  const locale2 = inject$1(LocaleSymbol);
+  if (!locale2)
+    throw new Error("[Vuetify] Could not find injected rtl instance");
+  return {
+    isRtl: locale2.isRtl,
+    rtlClasses: locale2.rtlClasses
+  };
+}
+const VApp = defineComponent({
+  name: "VApp",
+  props: {
+    ...makeLayoutProps({
+      fullHeight: true
+    }),
+    ...makeThemeProps()
+  },
+  setup(props, _ref) {
+    let {
+      slots
+    } = _ref;
+    const theme = provideTheme(props);
+    const {
+      layoutClasses,
+      layoutStyles,
+      getLayoutItem,
+      items,
+      layoutRef
+    } = createLayout(props);
+    const {
+      rtlClasses
+    } = useRtl();
+    useRender(() => {
+      var _slots$default;
+      return createVNode("div", {
+        "ref": layoutRef,
+        "class": ["v-application", theme.themeClasses.value, layoutClasses.value, rtlClasses.value],
+        "style": layoutStyles.value
+      }, [createVNode("div", {
+        "class": "v-application__wrap"
+      }, [(_slots$default = slots.default) == null ? void 0 : _slots$default.call(slots)])]);
+    });
+    return {
+      getLayoutItem,
+      items,
+      theme
+    };
+  }
+});
 const DESKTOP_SCREEN_MIN_WIDTH_PIXELS = 1440;
 const FAQS_URL = "https://xebiagroup.sharepoint.com/sites/ProjectKearney/Gedeelde%20documenten/Forms/AllItems.aspx?id=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent%2FKearney%5FMS%20Demand%20Dashboard%20FAQ%2Epdf&parent=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FContent&p=true&ct=1684174121283&or=OWA%2DNT&cid=1b364130%2Dcec9%2D447e%2D6e14%2D746cabb41467&ga=1";
 const _sfc_main$p = {
@@ -33656,6 +35381,10 @@ const _sfc_main$p = {
       type: String,
       required: true
     },
+    orgLogoSmall: {
+      type: String,
+      required: true
+    },
     userdata: {
       type: Object,
       required: false
@@ -33666,8 +35395,7 @@ const _sfc_main$p = {
   data() {
     return {
       activePageKey: this.PAGE_KEYS.DEMAND_PLANNER,
-      isSidebarCollapsed: false,
-      orgLogoSmall: "/src/images/orgLogoSmall.svg"
+      isSidebarCollapsed: false
     };
   },
   computed: {
@@ -33731,13 +35459,12 @@ const _sfc_main$p = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-471816f0"), n2 = n2(), popScopeId(), n2);
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-fbbd3e1d"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$m = { class: "screen" };
 const _hoisted_2$k = { class: "main-area" };
 const _hoisted_3$k = { class: "control-container" };
 const _hoisted_4$k = { class: "control-section" };
-const _hoisted_5$h = { class: "content-container" };
-const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
+const _hoisted_5$h = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
   ])
@@ -33752,7 +35479,7 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
       onMouseout: _cache[1] || (_cache[1] = (...args) => $options.collapseSidebarHandler && $options.collapseSidebarHandler(...args))
     }, [
       createVNode(_component_SideBar, {
-        "org-logo": $data.isSidebarCollapsed ? $data.orgLogoSmall : $props.orgLogo,
+        "org-logo": $data.isSidebarCollapsed ? $props.orgLogoSmall : $props.orgLogo,
         isSidebarCollapsed: $data.isSidebarCollapsed,
         PAGES_CONFIG: $props.PAGES_CONFIG,
         PAGE_KEYS: $props.PAGE_KEYS,
@@ -33766,14 +35493,17 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
           createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
         ])
       ]),
-      createBaseVNode("div", _hoisted_5$h, [
-        (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
-      ]),
-      _hoisted_6$g
+      createVNode(VApp, { class: "content-container" }, {
+        default: withCtx(() => [
+          (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
+        ]),
+        _: 1
+      }),
+      _hoisted_5$h
     ])
   ]);
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-471816f0"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-fbbd3e1d"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
 const _sfc_main$o = {
@@ -33884,6 +35614,10 @@ const _sfc_main$m = {
       type: String,
       required: true
     },
+    OrgLogoSmall: {
+      type: String,
+      required: true
+    },
     PAGES_CONFIG: { type: Object, required: true },
     PAGE_KEYS: { type: Object, required: true }
   },
@@ -33931,10 +35665,11 @@ function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
     $data.isLoggedIn && !$data.loading ? (openBlock(), createBlock(_component_TheSckeleton, {
       key: 1,
       "org-logo": $props.OrgLogo,
+      "org-logo-small": $props.OrgLogoSmall,
       userdata: this.loggedInUserData,
       PAGES_CONFIG: $props.PAGES_CONFIG,
       PAGE_KEYS: $props.PAGE_KEYS
-    }, null, 8, ["org-logo", "userdata", "PAGES_CONFIG", "PAGE_KEYS"])) : createCommentVNode("", true)
+    }, null, 8, ["org-logo", "org-logo-small", "userdata", "PAGES_CONFIG", "PAGE_KEYS"])) : createCommentVNode("", true)
   ], 64);
 }
 const App = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$m]]);
@@ -42358,11 +44093,11 @@ const _r = (e3, n2 = 3) => {
     1: []
   },
   monthPicker: []
-}), qt = ref(null), At = ref(false), Jt = ref(false), Qt = ref(false), en$1 = ref(false), Ne = ref(0), Ae = ref(0), et = () => {
+}), qt = ref(null), At = ref(false), Jt = ref(false), Qt = ref(false), en = ref(false), Ne = ref(0), Ae = ref(0), et = () => {
   const e3 = computed(() => At.value ? [...ye.selectionGrid, ye.actionRow].filter((B2) => B2.length) : Jt.value ? [
     ...ye.timePicker[0],
     ...ye.timePicker[1],
-    en$1.value ? [] : [qt.value],
+    en.value ? [] : [qt.value],
     ye.actionRow
   ].filter((B2) => B2.length) : Qt.value ? [...ye.monthPicker, ye.actionRow] : [ye.monthYear, ...ye.calendar, ye.time, ye.actionRow].filter((B2) => B2.length)), n2 = (B2) => {
     Ne.value = B2 ? Ne.value + 1 : Ne.value - 1;
@@ -42400,7 +44135,7 @@ const _r = (e3, n2 = 3) => {
       At.value = B2, F(), B2 || (ye.selectionGrid = []);
     },
     setTimePicker: (B2, E2 = false) => {
-      Jt.value = B2, en$1.value = E2, F(), B2 || (ye.timePicker[0] = [], ye.timePicker[1] = []);
+      Jt.value = B2, en.value = E2, F(), B2 || (ye.timePicker[0] = [], ye.timePicker[1] = []);
     },
     setTimePickerElements: (B2, E2 = 0) => {
       ye.timePicker[E2] = B2;
@@ -42410,7 +44145,7 @@ const _r = (e3, n2 = 3) => {
     arrowUp: p2,
     arrowDown: $,
     clearArrowNav: () => {
-      ye.monthYear = [], ye.calendar = [], ye.time = [], ye.actionRow = [], ye.selectionGrid = [], ye.timePicker[0] = [], ye.timePicker[1] = [], At.value = false, Jt.value = false, en$1.value = false, Qt.value = false, F(), qt.value = null;
+      ye.monthYear = [], ye.calendar = [], ye.time = [], ye.actionRow = [], ye.selectionGrid = [], ye.timePicker[0] = [], ye.timePicker[1] = [], At.value = false, Jt.value = false, en.value = false, Qt.value = false, F(), qt.value = null;
     },
     setMonthPicker: (B2) => {
       Qt.value = B2, F();
@@ -45286,831 +47021,6 @@ async function loadFonts() {
 }
 const materialdesignicons = "";
 const main = "";
-function getNestedValue(obj, path, fallback) {
-  const last = path.length - 1;
-  if (last < 0)
-    return obj === void 0 ? fallback : obj;
-  for (let i2 = 0; i2 < last; i2++) {
-    if (obj == null) {
-      return fallback;
-    }
-    obj = obj[path[i2]];
-  }
-  if (obj == null)
-    return fallback;
-  return obj[path[last]] === void 0 ? fallback : obj[path[last]];
-}
-function deepEqual(a3, b3) {
-  if (a3 === b3)
-    return true;
-  if (a3 instanceof Date && b3 instanceof Date && a3.getTime() !== b3.getTime()) {
-    return false;
-  }
-  if (a3 !== Object(a3) || b3 !== Object(b3)) {
-    return false;
-  }
-  const props = Object.keys(a3);
-  if (props.length !== Object.keys(b3).length) {
-    return false;
-  }
-  return props.every((p2) => deepEqual(a3[p2], b3[p2]));
-}
-function getObjectValueByPath(obj, path, fallback) {
-  if (obj == null || !path || typeof path !== "string")
-    return fallback;
-  if (obj[path] !== void 0)
-    return obj[path];
-  path = path.replace(/\[(\w+)\]/g, ".$1");
-  path = path.replace(/^\./, "");
-  return getNestedValue(obj, path.split("."), fallback);
-}
-function getPropertyFromItem(item, property, fallback) {
-  if (property == null)
-    return item === void 0 ? fallback : item;
-  if (item !== Object(item)) {
-    if (typeof property !== "function")
-      return fallback;
-    const value2 = property(item, fallback);
-    return typeof value2 === "undefined" ? fallback : value2;
-  }
-  if (typeof property === "string")
-    return getObjectValueByPath(item, property, fallback);
-  if (Array.isArray(property))
-    return getNestedValue(item, property, fallback);
-  if (typeof property !== "function")
-    return fallback;
-  const value = property(item, fallback);
-  return typeof value === "undefined" ? fallback : value;
-}
-function createRange(length) {
-  let start = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
-  return Array.from({
-    length
-  }, (v, k2) => start + k2);
-}
-function convertToUnit(str) {
-  let unit = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "px";
-  if (str == null || str === "") {
-    return void 0;
-  } else if (isNaN(+str)) {
-    return String(str);
-  } else if (!isFinite(+str)) {
-    return void 0;
-  } else {
-    return `${Number(str)}${unit}`;
-  }
-}
-function isObject(obj) {
-  return obj !== null && typeof obj === "object" && !Array.isArray(obj);
-}
-function isComponentInstance(obj) {
-  return obj == null ? void 0 : obj.$el;
-}
-const keyCodes = Object.freeze({
-  enter: 13,
-  tab: 9,
-  delete: 46,
-  esc: 27,
-  space: 32,
-  up: 38,
-  down: 40,
-  left: 37,
-  right: 39,
-  end: 35,
-  home: 36,
-  del: 46,
-  backspace: 8,
-  insert: 45,
-  pageup: 33,
-  pagedown: 34,
-  shift: 16
-});
-Object.freeze({
-  enter: "Enter",
-  tab: "Tab",
-  delete: "Delete",
-  esc: "Escape",
-  space: "Space",
-  up: "ArrowUp",
-  down: "ArrowDown",
-  left: "ArrowLeft",
-  right: "ArrowRight",
-  end: "End",
-  home: "Home",
-  del: "Delete",
-  backspace: "Backspace",
-  insert: "Insert",
-  pageup: "PageUp",
-  pagedown: "PageDown",
-  shift: "Shift"
-});
-function pick(obj, paths) {
-  const found = /* @__PURE__ */ Object.create(null);
-  const rest = /* @__PURE__ */ Object.create(null);
-  for (const key in obj) {
-    if (paths.some((path) => path instanceof RegExp ? path.test(key) : path === key)) {
-      found[key] = obj[key];
-    } else {
-      rest[key] = obj[key];
-    }
-  }
-  return [found, rest];
-}
-function omit(obj, exclude) {
-  const clone = {
-    ...obj
-  };
-  exclude.forEach((prop) => delete clone[prop]);
-  return clone;
-}
-function filterInputAttrs(attrs) {
-  return pick(attrs, ["class", "style", "id", /^data-/]);
-}
-function wrapInArray(v) {
-  return v == null ? [] : Array.isArray(v) ? v : [v];
-}
-function clamp(value) {
-  let min = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
-  let max = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 1;
-  return Math.max(min, Math.min(max, value));
-}
-function chunk(str) {
-  let size2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
-  const chunked = [];
-  let index2 = 0;
-  while (index2 < str.length) {
-    chunked.push(str.substr(index2, size2));
-    index2 += size2;
-  }
-  return chunked;
-}
-function mergeDeep() {
-  let source = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-  let target = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-  let arrayFn = arguments.length > 2 ? arguments[2] : void 0;
-  const out = {};
-  for (const key in source) {
-    out[key] = source[key];
-  }
-  for (const key in target) {
-    const sourceProperty = source[key];
-    const targetProperty = target[key];
-    if (isObject(sourceProperty) && isObject(targetProperty)) {
-      out[key] = mergeDeep(sourceProperty, targetProperty, arrayFn);
-      continue;
-    }
-    if (Array.isArray(sourceProperty) && Array.isArray(targetProperty) && arrayFn) {
-      out[key] = arrayFn(sourceProperty, targetProperty);
-      continue;
-    }
-    out[key] = targetProperty;
-  }
-  return out;
-}
-function toKebabCase() {
-  let str = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "";
-  if (toKebabCase.cache.has(str))
-    return toKebabCase.cache.get(str);
-  const kebab = str.replace(/[^a-z]/gi, "-").replace(/\B([A-Z])/g, "-$1").toLowerCase();
-  toKebabCase.cache.set(str, kebab);
-  return kebab;
-}
-toKebabCase.cache = /* @__PURE__ */ new Map();
-function findChildrenWithProvide(key, vnode) {
-  if (!vnode || typeof vnode !== "object")
-    return [];
-  if (Array.isArray(vnode)) {
-    return vnode.map((child) => findChildrenWithProvide(key, child)).flat(1);
-  } else if (Array.isArray(vnode.children)) {
-    return vnode.children.map((child) => findChildrenWithProvide(key, child)).flat(1);
-  } else if (vnode.component) {
-    if (Object.getOwnPropertySymbols(vnode.component.provides).includes(key)) {
-      return [vnode.component];
-    } else if (vnode.component.subTree) {
-      return findChildrenWithProvide(key, vnode.component.subTree).flat(1);
-    }
-  }
-  return [];
-}
-function destructComputed(getter) {
-  const refs = reactive({});
-  const base = computed(getter);
-  watchEffect(() => {
-    for (const key in base.value) {
-      refs[key] = base.value[key];
-    }
-  }, {
-    flush: "sync"
-  });
-  return toRefs(refs);
-}
-function includes(arr, val) {
-  return arr.includes(val);
-}
-const onRE = /^on[^a-z]/;
-const isOn = (key) => onRE.test(key);
-const EventProp = [Function, Array];
-function hasEvent(props, name2) {
-  name2 = "on" + capitalize(name2);
-  return !!(props[name2] || props[`${name2}Once`] || props[`${name2}Capture`] || props[`${name2}OnceCapture`] || props[`${name2}CaptureOnce`]);
-}
-function callEvent(handler) {
-  for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    args[_key2 - 1] = arguments[_key2];
-  }
-  if (Array.isArray(handler)) {
-    for (const h4 of handler) {
-      h4(...args);
-    }
-  } else if (typeof handler === "function") {
-    handler(...args);
-  }
-}
-const block = ["top", "bottom"];
-const inline = ["start", "end", "left", "right"];
-function parseAnchor(anchor, isRtl) {
-  let [side, align] = anchor.split(" ");
-  if (!align) {
-    align = includes(block, side) ? "start" : includes(inline, side) ? "top" : "center";
-  }
-  return {
-    side: toPhysical(side, isRtl),
-    align: toPhysical(align, isRtl)
-  };
-}
-function toPhysical(str, isRtl) {
-  if (str === "start")
-    return isRtl ? "right" : "left";
-  if (str === "end")
-    return isRtl ? "left" : "right";
-  return str;
-}
-function flipSide(anchor) {
-  return {
-    side: {
-      center: "center",
-      top: "bottom",
-      bottom: "top",
-      left: "right",
-      right: "left"
-    }[anchor.side],
-    align: anchor.align
-  };
-}
-function flipAlign(anchor) {
-  return {
-    side: anchor.side,
-    align: {
-      center: "center",
-      top: "bottom",
-      bottom: "top",
-      left: "right",
-      right: "left"
-    }[anchor.align]
-  };
-}
-function flipCorner(anchor) {
-  return {
-    side: anchor.align,
-    align: anchor.side
-  };
-}
-function getAxis(anchor) {
-  return includes(block, anchor.side) ? "y" : "x";
-}
-class Box {
-  constructor(_ref) {
-    let {
-      x: x2,
-      y: y3,
-      width,
-      height
-    } = _ref;
-    this.x = x2;
-    this.y = y3;
-    this.width = width;
-    this.height = height;
-  }
-  get top() {
-    return this.y;
-  }
-  get bottom() {
-    return this.y + this.height;
-  }
-  get left() {
-    return this.x;
-  }
-  get right() {
-    return this.x + this.width;
-  }
-}
-function getOverflow(a3, b3) {
-  return {
-    x: {
-      before: Math.max(0, b3.left - a3.left),
-      after: Math.max(0, a3.right - b3.right)
-    },
-    y: {
-      before: Math.max(0, b3.top - a3.top),
-      after: Math.max(0, a3.bottom - b3.bottom)
-    }
-  };
-}
-function nullifyTransforms(el2) {
-  const rect = el2.getBoundingClientRect();
-  const style = getComputedStyle(el2);
-  const tx = style.transform;
-  if (tx) {
-    let ta, sx, sy, dx, dy;
-    if (tx.startsWith("matrix3d(")) {
-      ta = tx.slice(9, -1).split(/, /);
-      sx = +ta[0];
-      sy = +ta[5];
-      dx = +ta[12];
-      dy = +ta[13];
-    } else if (tx.startsWith("matrix(")) {
-      ta = tx.slice(7, -1).split(/, /);
-      sx = +ta[0];
-      sy = +ta[3];
-      dx = +ta[4];
-      dy = +ta[5];
-    } else {
-      return new Box(rect);
-    }
-    const to = style.transformOrigin;
-    const x2 = rect.x - dx - (1 - sx) * parseFloat(to);
-    const y3 = rect.y - dy - (1 - sy) * parseFloat(to.slice(to.indexOf(" ") + 1));
-    const w2 = sx ? rect.width / sx : el2.offsetWidth + 1;
-    const h4 = sy ? rect.height / sy : el2.offsetHeight + 1;
-    return new Box({
-      x: x2,
-      y: y3,
-      width: w2,
-      height: h4
-    });
-  } else {
-    return new Box(rect);
-  }
-}
-function animate(el2, keyframes, options) {
-  if (typeof el2.animate === "undefined")
-    return {
-      finished: Promise.resolve()
-    };
-  const animation = el2.animate(keyframes, options);
-  if (typeof animation.finished === "undefined") {
-    animation.finished = new Promise((resolve2) => {
-      animation.onfinish = () => {
-        resolve2(animation);
-      };
-    });
-  }
-  return animation;
-}
-function createMessage(message, vm, parent) {
-  if (parent) {
-    vm = {
-      __isVue: true,
-      $parent: parent,
-      $options: vm
-    };
-  }
-  if (vm) {
-    vm.$_alreadyWarned = vm.$_alreadyWarned || [];
-    if (vm.$_alreadyWarned.includes(message))
-      return;
-    vm.$_alreadyWarned.push(message);
-  }
-  return `[Vuetify] ${message}` + (vm ? generateComponentTrace(vm) : "");
-}
-function consoleWarn(message, vm, parent) {
-  const newMessage = createMessage(message, vm, parent);
-  newMessage != null && console.warn(newMessage);
-}
-function consoleError(message, vm, parent) {
-  const newMessage = createMessage(message, vm, parent);
-  newMessage != null && console.error(newMessage);
-}
-const classifyRE = /(?:^|[-_])(\w)/g;
-const classify = (str) => str.replace(classifyRE, (c2) => c2.toUpperCase()).replace(/[-_]/g, "");
-function formatComponentName(vm, includeFile) {
-  if (vm.$root === vm) {
-    return "<Root>";
-  }
-  const options = typeof vm === "function" && vm.cid != null ? vm.options : vm.__isVue ? vm.$options || vm.constructor.options : vm || {};
-  let name2 = options.name || options._componentTag;
-  const file = options.__file;
-  if (!name2 && file) {
-    const match2 = file.match(/([^/\\]+)\.vue$/);
-    name2 = match2 == null ? void 0 : match2[1];
-  }
-  return (name2 ? `<${classify(name2)}>` : `<Anonymous>`) + (file && includeFile !== false ? ` at ${file}` : "");
-}
-function generateComponentTrace(vm) {
-  if (vm.__isVue && vm.$parent) {
-    const tree = [];
-    let currentRecursiveSequence = 0;
-    while (vm) {
-      if (tree.length > 0) {
-        const last = tree[tree.length - 1];
-        if (last.constructor === vm.constructor) {
-          currentRecursiveSequence++;
-          vm = vm.$parent;
-          continue;
-        } else if (currentRecursiveSequence > 0) {
-          tree[tree.length - 1] = [last, currentRecursiveSequence];
-          currentRecursiveSequence = 0;
-        }
-      }
-      tree.push(vm);
-      vm = vm.$parent;
-    }
-    return "\n\nfound in\n\n" + tree.map((vm2, i2) => `${i2 === 0 ? "---> " : " ".repeat(5 + i2 * 2)}${Array.isArray(vm2) ? `${formatComponentName(vm2[0])}... (${vm2[1]} recursive calls)` : formatComponentName(vm2)}`).join("\n");
-  } else {
-    return `
-
-(found in ${formatComponentName(vm)})`;
-  }
-}
-const srgbForwardMatrix = [[3.2406, -1.5372, -0.4986], [-0.9689, 1.8758, 0.0415], [0.0557, -0.204, 1.057]];
-const srgbForwardTransform = (C) => C <= 31308e-7 ? C * 12.92 : 1.055 * C ** (1 / 2.4) - 0.055;
-const srgbReverseMatrix = [[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]];
-const srgbReverseTransform = (C) => C <= 0.04045 ? C / 12.92 : ((C + 0.055) / 1.055) ** 2.4;
-function fromXYZ$1(xyz) {
-  const rgb = Array(3);
-  const transform2 = srgbForwardTransform;
-  const matrix = srgbForwardMatrix;
-  for (let i2 = 0; i2 < 3; ++i2) {
-    rgb[i2] = Math.round(clamp(transform2(matrix[i2][0] * xyz[0] + matrix[i2][1] * xyz[1] + matrix[i2][2] * xyz[2])) * 255);
-  }
-  return {
-    r: rgb[0],
-    g: rgb[1],
-    b: rgb[2]
-  };
-}
-function toXYZ$1(_ref) {
-  let {
-    r: r2,
-    g,
-    b: b3
-  } = _ref;
-  const xyz = [0, 0, 0];
-  const transform2 = srgbReverseTransform;
-  const matrix = srgbReverseMatrix;
-  r2 = transform2(r2 / 255);
-  g = transform2(g / 255);
-  b3 = transform2(b3 / 255);
-  for (let i2 = 0; i2 < 3; ++i2) {
-    xyz[i2] = matrix[i2][0] * r2 + matrix[i2][1] * g + matrix[i2][2] * b3;
-  }
-  return xyz;
-}
-const delta = 0.20689655172413793;
-const cielabForwardTransform = (t3) => t3 > delta ** 3 ? Math.cbrt(t3) : t3 / (3 * delta ** 2) + 4 / 29;
-const cielabReverseTransform = (t3) => t3 > delta ? t3 ** 3 : 3 * delta ** 2 * (t3 - 4 / 29);
-function fromXYZ(xyz) {
-  const transform2 = cielabForwardTransform;
-  const transformedY = transform2(xyz[1]);
-  return [116 * transformedY - 16, 500 * (transform2(xyz[0] / 0.95047) - transformedY), 200 * (transformedY - transform2(xyz[2] / 1.08883))];
-}
-function toXYZ(lab) {
-  const transform2 = cielabReverseTransform;
-  const Ln = (lab[0] + 16) / 116;
-  return [transform2(Ln + lab[1] / 500) * 0.95047, transform2(Ln), transform2(Ln - lab[2] / 200) * 1.08883];
-}
-function isCssColor(color) {
-  return !!color && /^(#|var\(--|(rgb|hsl)a?\()/.test(color);
-}
-function parseColor(color) {
-  if (typeof color === "number") {
-    if (isNaN(color) || color < 0 || color > 16777215) {
-      consoleWarn(`'${color}' is not a valid hex color`);
-    }
-    return {
-      r: (color & 16711680) >> 16,
-      g: (color & 65280) >> 8,
-      b: color & 255
-    };
-  } else if (typeof color === "string") {
-    let hex = color.startsWith("#") ? color.slice(1) : color;
-    if ([3, 4].includes(hex.length)) {
-      hex = hex.split("").map((char) => char + char).join("");
-    } else if (![6, 8].includes(hex.length)) {
-      consoleWarn(`'${color}' is not a valid hex(a) color`);
-    }
-    const int = parseInt(hex, 16);
-    if (isNaN(int) || int < 0 || int > 4294967295) {
-      consoleWarn(`'${color}' is not a valid hex(a) color`);
-    }
-    return HexToRGB(hex);
-  } else {
-    throw new TypeError(`Colors can only be numbers or strings, recieved ${color == null ? color : color.constructor.name} instead`);
-  }
-}
-function toHex(v) {
-  const h4 = Math.round(v).toString(16);
-  return ("00".substr(0, 2 - h4.length) + h4).toUpperCase();
-}
-function RGBtoHex(_ref2) {
-  let {
-    r: r2,
-    g,
-    b: b3,
-    a: a3
-  } = _ref2;
-  return `#${[toHex(r2), toHex(g), toHex(b3), a3 !== void 0 ? toHex(Math.round(a3 * 255)) : "FF"].join("")}`;
-}
-function HexToRGB(hex) {
-  let [r2, g, b3, a3] = chunk(hex, 2).map((c2) => parseInt(c2, 16));
-  a3 = a3 === void 0 ? a3 : Math.round(a3 / 255 * 100) / 100;
-  return {
-    r: r2,
-    g,
-    b: b3,
-    a: a3
-  };
-}
-function lighten(value, amount) {
-  const lab = fromXYZ(toXYZ$1(value));
-  lab[0] = lab[0] + amount * 10;
-  return fromXYZ$1(toXYZ(lab));
-}
-function darken(value, amount) {
-  const lab = fromXYZ(toXYZ$1(value));
-  lab[0] = lab[0] - amount * 10;
-  return fromXYZ$1(toXYZ(lab));
-}
-function getLuma(color) {
-  const rgb = parseColor(color);
-  return toXYZ$1(rgb)[1];
-}
-function getCurrentInstance(name2, message) {
-  const vm = getCurrentInstance$1();
-  if (!vm) {
-    throw new Error(`[Vuetify] ${name2} ${message || "must be called from inside a setup function"}`);
-  }
-  return vm;
-}
-function getCurrentInstanceName() {
-  let name2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "composables";
-  const vm = getCurrentInstance(name2).type;
-  return toKebabCase((vm == null ? void 0 : vm.aliasName) || (vm == null ? void 0 : vm.name));
-}
-let _uid = 0;
-let _map = /* @__PURE__ */ new WeakMap();
-function getUid() {
-  const vm = getCurrentInstance("getUid");
-  if (_map.has(vm))
-    return _map.get(vm);
-  else {
-    const uid2 = _uid++;
-    _map.set(vm, uid2);
-    return uid2;
-  }
-}
-getUid.reset = () => {
-  _uid = 0;
-  _map = /* @__PURE__ */ new WeakMap();
-};
-function injectSelf(key) {
-  const {
-    provides
-  } = getCurrentInstance("injectSelf");
-  if (provides && key in provides) {
-    return provides[key];
-  }
-}
-function useToggleScope(source, fn2) {
-  let scope;
-  function start() {
-    scope = effectScope();
-    scope.run(() => fn2.length ? fn2(() => {
-      var _scope;
-      (_scope = scope) == null ? void 0 : _scope.stop();
-      start();
-    }) : fn2());
-  }
-  watch(source, (active) => {
-    if (active && !scope) {
-      start();
-    } else if (!active) {
-      var _scope2;
-      (_scope2 = scope) == null ? void 0 : _scope2.stop();
-      scope = void 0;
-    }
-  }, {
-    immediate: true
-  });
-  onScopeDispose(() => {
-    var _scope3;
-    (_scope3 = scope) == null ? void 0 : _scope3.stop();
-  });
-}
-function propsFactory(props, source) {
-  return (defaults2) => {
-    return Object.keys(props).reduce((obj, prop) => {
-      const isObjectDefinition = typeof props[prop] === "object" && props[prop] != null && !Array.isArray(props[prop]);
-      const definition = isObjectDefinition ? props[prop] : {
-        type: props[prop]
-      };
-      if (defaults2 && prop in defaults2) {
-        obj[prop] = {
-          ...definition,
-          default: defaults2[prop]
-        };
-      } else {
-        obj[prop] = definition;
-      }
-      if (source && !obj[prop].source) {
-        obj[prop].source = source;
-      }
-      return obj;
-    }, {});
-  };
-}
-function propIsDefined(vnode, prop) {
-  var _vnode$props, _vnode$props2;
-  return typeof ((_vnode$props = vnode.props) == null ? void 0 : _vnode$props[prop]) !== "undefined" || typeof ((_vnode$props2 = vnode.props) == null ? void 0 : _vnode$props2[toKebabCase(prop)]) !== "undefined";
-}
-const defineComponent = function defineComponent2(options) {
-  var _a2, _b;
-  options._setup = (_a2 = options._setup) != null ? _a2 : options.setup;
-  if (!options.name) {
-    consoleWarn("The component is missing an explicit name, unable to generate default prop value");
-    return options;
-  }
-  if (options._setup) {
-    options.props = (_b = options.props) != null ? _b : {};
-    options.props = propsFactory(options.props, toKebabCase(options.name))();
-    options.props._as = String;
-    options.setup = function setup(props, ctx) {
-      const defaults2 = useDefaults();
-      if (!defaults2.value)
-        return options._setup(props, ctx);
-      const vm = getCurrentInstance$1();
-      const componentDefaults = computed(() => {
-        var _a3;
-        return defaults2.value[(_a3 = props._as) != null ? _a3 : options.name];
-      });
-      const _props = new Proxy(props, {
-        get(target, prop) {
-          var _a3, _b2;
-          if (!propIsDefined(vm.vnode, prop)) {
-            var _componentDefaults$va, _global2;
-            return (_b2 = (_a3 = (_componentDefaults$va = componentDefaults.value) == null ? void 0 : _componentDefaults$va[prop]) != null ? _a3 : (_global2 = defaults2.value.global) == null ? void 0 : _global2[prop]) != null ? _b2 : target[prop];
-          }
-          return Reflect.get(target, prop);
-        }
-      });
-      const _subcomponentDefaults = shallowRef();
-      watchEffect(() => {
-        if (componentDefaults.value) {
-          const subComponents = Object.entries(componentDefaults.value).filter((_ref) => {
-            let [key] = _ref;
-            return key.startsWith(key[0].toUpperCase());
-          });
-          if (subComponents.length)
-            _subcomponentDefaults.value = Object.fromEntries(subComponents);
-        }
-      });
-      const setupBindings = options._setup(_props, ctx);
-      useToggleScope(_subcomponentDefaults, () => {
-        var _a3;
-        var _injectSelf;
-        provideDefaults(mergeDeep((_a3 = (_injectSelf = injectSelf(DefaultsSymbol)) == null ? void 0 : _injectSelf.value) != null ? _a3 : {}, _subcomponentDefaults.value));
-      });
-      return setupBindings;
-    };
-  }
-  return options;
-};
-function genericComponent() {
-  let exposeDefaults = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
-  return (options) => (exposeDefaults ? defineComponent : defineComponent$1)(options);
-}
-function createSimpleFunctional(klass) {
-  let tag = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "div";
-  let name2 = arguments.length > 2 ? arguments[2] : void 0;
-  return defineComponent({
-    name: name2 != null ? name2 : capitalize(camelize(klass.replace(/__/g, "-"))),
-    props: {
-      tag: {
-        type: String,
-        default: tag
-      }
-    },
-    setup(props, _ref) {
-      let {
-        slots
-      } = _ref;
-      return () => {
-        var _slots$default;
-        return h(props.tag, {
-          class: klass
-        }, (_slots$default = slots.default) == null ? void 0 : _slots$default.call(slots));
-      };
-    }
-  });
-}
-function attachedRoot(node) {
-  if (typeof node.getRootNode !== "function") {
-    while (node.parentNode)
-      node = node.parentNode;
-    if (node !== document)
-      return null;
-    return document;
-  }
-  const root = node.getRootNode();
-  if (root !== document && root.getRootNode({
-    composed: true
-  }) !== document)
-    return null;
-  return root;
-}
-const standardEasing = "cubic-bezier(0.4, 0, 0.2, 1)";
-const deceleratedEasing = "cubic-bezier(0.0, 0, 0.2, 1)";
-const acceleratedEasing = "cubic-bezier(0.4, 0, 1, 1)";
-function getScrollParent(el2) {
-  while (el2) {
-    if (hasScrollbar(el2))
-      return el2;
-    el2 = el2.parentElement;
-  }
-  return document.scrollingElement;
-}
-function getScrollParents(el2, stopAt) {
-  const elements = [];
-  if (stopAt && el2 && !stopAt.contains(el2))
-    return elements;
-  while (el2) {
-    if (hasScrollbar(el2))
-      elements.push(el2);
-    if (el2 === stopAt)
-      break;
-    el2 = el2.parentElement;
-  }
-  return elements;
-}
-function hasScrollbar(el2) {
-  if (!el2 || el2.nodeType !== Node.ELEMENT_NODE)
-    return false;
-  const style = window.getComputedStyle(el2);
-  return style.overflowY === "scroll" || style.overflowY === "auto" && el2.scrollHeight > el2.clientHeight;
-}
-const IN_BROWSER = typeof window !== "undefined";
-const SUPPORTS_INTERSECTION = IN_BROWSER && "IntersectionObserver" in window;
-const SUPPORTS_TOUCH = IN_BROWSER && ("ontouchstart" in window || window.navigator.maxTouchPoints > 0);
-const SUPPORTS_FOCUS_VISIBLE = IN_BROWSER && typeof CSS !== "undefined" && CSS.supports("selector(:focus-visible)");
-function isFixedPosition(el2) {
-  while (el2) {
-    if (window.getComputedStyle(el2).position === "fixed") {
-      return true;
-    }
-    el2 = el2.offsetParent;
-  }
-  return false;
-}
-function useRender(render) {
-  const vm = getCurrentInstance("useRender");
-  vm.render = render;
-}
-const DefaultsSymbol = Symbol.for("vuetify:defaults");
-function createDefaults(options) {
-  return ref(options);
-}
-function useDefaults() {
-  const defaults2 = inject$1(DefaultsSymbol);
-  if (!defaults2)
-    throw new Error("[Vuetify] Could not find defaults instance");
-  return defaults2;
-}
-function provideDefaults(defaults2, options) {
-  const injectedDefaults = useDefaults();
-  const providedDefaults = ref(defaults2);
-  const newDefaults = computed(() => {
-    const scoped = unref(options == null ? void 0 : options.scoped);
-    const reset = unref(options == null ? void 0 : options.reset);
-    const root = unref(options == null ? void 0 : options.root);
-    let properties = mergeDeep(providedDefaults.value, {
-      prev: injectedDefaults.value
-    });
-    if (scoped)
-      return properties;
-    if (reset || root) {
-      const len = Number(reset || Infinity);
-      for (let i2 = 0; i2 <= len; i2++) {
-        if (!properties.prev)
-          break;
-        properties = properties.prev;
-      }
-      return properties;
-    }
-    return mergeDeep(properties.prev, properties);
-  });
-  provide(DefaultsSymbol, newDefaults);
-  return newDefaults;
-}
 const DisplaySymbol = Symbol.for("vuetify:display");
 const defaultDisplayOptions = {
   mobileBreakpoint: "lg",
@@ -46400,633 +47310,6 @@ const useIcon = (props) => {
     iconData
   };
 };
-function useProxiedModel(props, prop, defaultValue) {
-  let transformIn = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : (v) => v;
-  let transformOut = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : (v) => v;
-  const vm = getCurrentInstance("useProxiedModel");
-  const internal = ref(props[prop] !== void 0 ? props[prop] : defaultValue);
-  const kebabProp = toKebabCase(prop);
-  const checkKebab = kebabProp !== prop;
-  const isControlled = checkKebab ? computed(() => {
-    var _vm$vnode$props, _vm$vnode$props2, _vm$vnode$props3, _vm$vnode$props4;
-    void props[prop];
-    return !!(((_vm$vnode$props = vm.vnode.props) != null && _vm$vnode$props.hasOwnProperty(prop) || (_vm$vnode$props2 = vm.vnode.props) != null && _vm$vnode$props2.hasOwnProperty(kebabProp)) && ((_vm$vnode$props3 = vm.vnode.props) != null && _vm$vnode$props3.hasOwnProperty(`onUpdate:${prop}`) || (_vm$vnode$props4 = vm.vnode.props) != null && _vm$vnode$props4.hasOwnProperty(`onUpdate:${kebabProp}`)));
-  }) : computed(() => {
-    var _vm$vnode$props5, _vm$vnode$props6;
-    void props[prop];
-    return !!((_vm$vnode$props5 = vm.vnode.props) != null && _vm$vnode$props5.hasOwnProperty(prop) && (_vm$vnode$props6 = vm.vnode.props) != null && _vm$vnode$props6.hasOwnProperty(`onUpdate:${prop}`));
-  });
-  useToggleScope(() => !isControlled.value, () => {
-    watch(() => props[prop], (val) => {
-      internal.value = val;
-    });
-  });
-  const model = computed({
-    get() {
-      return transformIn(isControlled.value ? props[prop] : internal.value);
-    },
-    set(value) {
-      const newValue = transformOut(value);
-      if ((isControlled.value ? props[prop] : internal.value) === newValue || transformIn(isControlled.value ? props[prop] : internal.value) === value) {
-        return;
-      }
-      internal.value = newValue;
-      vm == null ? void 0 : vm.emit(`update:${prop}`, newValue);
-    }
-  });
-  Object.defineProperty(model, "externalValue", {
-    get: () => isControlled.value ? props[prop] : internal.value
-  });
-  return model;
-}
-const en = {
-  badge: "Badge",
-  close: "Close",
-  dataIterator: {
-    noResultsText: "No matching records found",
-    loadingText: "Loading items..."
-  },
-  dataTable: {
-    itemsPerPageText: "Rows per page:",
-    ariaLabel: {
-      sortDescending: "Sorted descending.",
-      sortAscending: "Sorted ascending.",
-      sortNone: "Not sorted.",
-      activateNone: "Activate to remove sorting.",
-      activateDescending: "Activate to sort descending.",
-      activateAscending: "Activate to sort ascending."
-    },
-    sortBy: "Sort by"
-  },
-  dataFooter: {
-    itemsPerPageText: "Items per page:",
-    itemsPerPageAll: "All",
-    nextPage: "Next page",
-    prevPage: "Previous page",
-    firstPage: "First page",
-    lastPage: "Last page",
-    pageText: "{0}-{1} of {2}"
-  },
-  datePicker: {
-    itemsSelected: "{0} selected",
-    nextMonthAriaLabel: "Next month",
-    nextYearAriaLabel: "Next year",
-    prevMonthAriaLabel: "Previous month",
-    prevYearAriaLabel: "Previous year"
-  },
-  noDataText: "No data available",
-  carousel: {
-    prev: "Previous visual",
-    next: "Next visual",
-    ariaLabel: {
-      delimiter: "Carousel slide {0} of {1}"
-    }
-  },
-  calendar: {
-    moreEvents: "{0} more"
-  },
-  input: {
-    clear: "Clear {0}",
-    prependAction: "{0} prepended action",
-    appendAction: "{0} appended action"
-  },
-  fileInput: {
-    counter: "{0} files",
-    counterSize: "{0} files ({1} in total)"
-  },
-  timePicker: {
-    am: "AM",
-    pm: "PM"
-  },
-  pagination: {
-    ariaLabel: {
-      root: "Pagination Navigation",
-      next: "Next page",
-      previous: "Previous page",
-      page: "Go to page {0}",
-      currentPage: "Page {0}, Current page",
-      first: "First page",
-      last: "Last page"
-    }
-  },
-  rating: {
-    ariaLabel: {
-      item: "Rating {0} of {1}"
-    }
-  }
-};
-const LANG_PREFIX = "$vuetify.";
-const replace = (str, params) => {
-  return str.replace(/\{(\d+)\}/g, (match2, index2) => {
-    return String(params[+index2]);
-  });
-};
-const createTranslateFunction = (current, fallback, messages) => {
-  return function(key) {
-    for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      params[_key - 1] = arguments[_key];
-    }
-    if (!key.startsWith(LANG_PREFIX)) {
-      return replace(key, params);
-    }
-    const shortKey = key.replace(LANG_PREFIX, "");
-    const currentLocale = current.value && messages.value[current.value];
-    const fallbackLocale = fallback.value && messages.value[fallback.value];
-    let str = getObjectValueByPath(currentLocale, shortKey, null);
-    if (!str) {
-      consoleWarn(`Translation key "${key}" not found in "${current.value}", trying fallback locale`);
-      str = getObjectValueByPath(fallbackLocale, shortKey, null);
-    }
-    if (!str) {
-      consoleError(`Translation key "${key}" not found in fallback`);
-      str = key;
-    }
-    if (typeof str !== "string") {
-      consoleError(`Translation key "${key}" has a non-string value`);
-      str = key;
-    }
-    return replace(str, params);
-  };
-};
-function createNumberFunction(current, fallback) {
-  return (value, options) => {
-    const numberFormat = new Intl.NumberFormat([current.value, fallback.value], options);
-    return numberFormat.format(value);
-  };
-}
-function useProvided(props, prop, provided) {
-  var _a2, _b;
-  const internal = useProxiedModel(props, prop, (_a2 = props[prop]) != null ? _a2 : provided.value);
-  internal.value = (_b = props[prop]) != null ? _b : provided.value;
-  watch(provided, (v) => {
-    if (props[prop] == null) {
-      internal.value = provided.value;
-    }
-  });
-  return internal;
-}
-function createProvideFunction(state) {
-  return (props) => {
-    const current = useProvided(props, "locale", state.current);
-    const fallback = useProvided(props, "fallback", state.fallback);
-    const messages = useProvided(props, "messages", state.messages);
-    return {
-      name: "vuetify",
-      current,
-      fallback,
-      messages,
-      t: createTranslateFunction(current, fallback, messages),
-      n: createNumberFunction(current, fallback),
-      provide: createProvideFunction({
-        current,
-        fallback,
-        messages
-      })
-    };
-  };
-}
-function createVuetifyAdapter(options) {
-  var _a2, _b;
-  const current = ref((_a2 = options == null ? void 0 : options.locale) != null ? _a2 : "en");
-  const fallback = ref((_b = options == null ? void 0 : options.fallback) != null ? _b : "en");
-  const messages = ref({
-    en,
-    ...options == null ? void 0 : options.messages
-  });
-  return {
-    name: "vuetify",
-    current,
-    fallback,
-    messages,
-    t: createTranslateFunction(current, fallback, messages),
-    n: createNumberFunction(current, fallback),
-    provide: createProvideFunction({
-      current,
-      fallback,
-      messages
-    })
-  };
-}
-const defaultRtl = {
-  af: false,
-  ar: true,
-  bg: false,
-  ca: false,
-  ckb: false,
-  cs: false,
-  de: false,
-  el: false,
-  en: false,
-  es: false,
-  et: false,
-  fa: false,
-  fi: false,
-  fr: false,
-  hr: false,
-  hu: false,
-  he: true,
-  id: false,
-  it: false,
-  ja: false,
-  ko: false,
-  lv: false,
-  lt: false,
-  nl: false,
-  no: false,
-  pl: false,
-  pt: false,
-  ro: false,
-  ru: false,
-  sk: false,
-  sl: false,
-  srCyrl: false,
-  srLatn: false,
-  sv: false,
-  th: false,
-  tr: false,
-  az: false,
-  uk: false,
-  vi: false,
-  zhHans: false,
-  zhHant: false
-};
-const LocaleSymbol = Symbol.for("vuetify:locale");
-function isLocaleInstance(obj) {
-  return obj.name != null;
-}
-function createLocale(options) {
-  const i18n = options != null && options.adapter && isLocaleInstance(options == null ? void 0 : options.adapter) ? options == null ? void 0 : options.adapter : createVuetifyAdapter(options);
-  const rtl = createRtl(i18n, options);
-  return {
-    ...i18n,
-    ...rtl
-  };
-}
-function useLocale() {
-  const locale2 = inject$1(LocaleSymbol);
-  if (!locale2)
-    throw new Error("[Vuetify] Could not find injected locale instance");
-  return locale2;
-}
-function createRtl(i18n, options) {
-  var _a2;
-  const rtl = ref((_a2 = options == null ? void 0 : options.rtl) != null ? _a2 : defaultRtl);
-  const isRtl = computed(() => {
-    var _a3;
-    return (_a3 = rtl.value[i18n.current.value]) != null ? _a3 : false;
-  });
-  return {
-    isRtl,
-    rtl,
-    rtlClasses: computed(() => `v-locale--is-${isRtl.value ? "rtl" : "ltr"}`)
-  };
-}
-function useRtl() {
-  const locale2 = inject$1(LocaleSymbol);
-  if (!locale2)
-    throw new Error("[Vuetify] Could not find injected rtl instance");
-  return {
-    isRtl: locale2.isRtl,
-    rtlClasses: locale2.rtlClasses
-  };
-}
-const mainTRC = 2.4;
-const Rco = 0.2126729;
-const Gco = 0.7151522;
-const Bco = 0.072175;
-const normBG = 0.55;
-const normTXT = 0.58;
-const revTXT = 0.57;
-const revBG = 0.62;
-const blkThrs = 0.03;
-const blkClmp = 1.45;
-const deltaYmin = 5e-4;
-const scaleBoW = 1.25;
-const scaleWoB = 1.25;
-const loConThresh = 0.078;
-const loConFactor = 12.82051282051282;
-const loConOffset = 0.06;
-const loClip = 1e-3;
-function APCAcontrast(text, background) {
-  const Rtxt = (text.r / 255) ** mainTRC;
-  const Gtxt = (text.g / 255) ** mainTRC;
-  const Btxt = (text.b / 255) ** mainTRC;
-  const Rbg = (background.r / 255) ** mainTRC;
-  const Gbg = (background.g / 255) ** mainTRC;
-  const Bbg = (background.b / 255) ** mainTRC;
-  let Ytxt = Rtxt * Rco + Gtxt * Gco + Btxt * Bco;
-  let Ybg = Rbg * Rco + Gbg * Gco + Bbg * Bco;
-  if (Ytxt <= blkThrs)
-    Ytxt += (blkThrs - Ytxt) ** blkClmp;
-  if (Ybg <= blkThrs)
-    Ybg += (blkThrs - Ybg) ** blkClmp;
-  if (Math.abs(Ybg - Ytxt) < deltaYmin)
-    return 0;
-  let outputContrast;
-  if (Ybg > Ytxt) {
-    const SAPC = (Ybg ** normBG - Ytxt ** normTXT) * scaleBoW;
-    outputContrast = SAPC < loClip ? 0 : SAPC < loConThresh ? SAPC - SAPC * loConFactor * loConOffset : SAPC - loConOffset;
-  } else {
-    const SAPC = (Ybg ** revBG - Ytxt ** revTXT) * scaleWoB;
-    outputContrast = SAPC > -loClip ? 0 : SAPC > -loConThresh ? SAPC - SAPC * loConFactor * loConOffset : SAPC + loConOffset;
-  }
-  return outputContrast * 100;
-}
-const ThemeSymbol = Symbol.for("vuetify:theme");
-const makeThemeProps = propsFactory({
-  theme: String
-}, "theme");
-const defaultThemeOptions = {
-  defaultTheme: "light",
-  variations: {
-    colors: [],
-    lighten: 0,
-    darken: 0
-  },
-  themes: {
-    light: {
-      dark: false,
-      colors: {
-        background: "#FFFFFF",
-        surface: "#FFFFFF",
-        "surface-variant": "#424242",
-        "on-surface-variant": "#EEEEEE",
-        primary: "#6200EE",
-        "primary-darken-1": "#3700B3",
-        secondary: "#03DAC6",
-        "secondary-darken-1": "#018786",
-        error: "#B00020",
-        info: "#2196F3",
-        success: "#4CAF50",
-        warning: "#FB8C00"
-      },
-      variables: {
-        "border-color": "#000000",
-        "border-opacity": 0.12,
-        "high-emphasis-opacity": 0.87,
-        "medium-emphasis-opacity": 0.6,
-        "disabled-opacity": 0.38,
-        "idle-opacity": 0.04,
-        "hover-opacity": 0.04,
-        "focus-opacity": 0.12,
-        "selected-opacity": 0.08,
-        "activated-opacity": 0.12,
-        "pressed-opacity": 0.12,
-        "dragged-opacity": 0.08,
-        "theme-kbd": "#212529",
-        "theme-on-kbd": "#FFFFFF",
-        "theme-code": "#F5F5F5",
-        "theme-on-code": "#000000"
-      }
-    },
-    dark: {
-      dark: true,
-      colors: {
-        background: "#121212",
-        surface: "#212121",
-        "surface-variant": "#BDBDBD",
-        "on-surface-variant": "#424242",
-        primary: "#BB86FC",
-        "primary-darken-1": "#3700B3",
-        secondary: "#03DAC5",
-        "secondary-darken-1": "#03DAC5",
-        error: "#CF6679",
-        info: "#2196F3",
-        success: "#4CAF50",
-        warning: "#FB8C00"
-      },
-      variables: {
-        "border-color": "#FFFFFF",
-        "border-opacity": 0.12,
-        "high-emphasis-opacity": 0.87,
-        "medium-emphasis-opacity": 0.6,
-        "disabled-opacity": 0.38,
-        "idle-opacity": 0.1,
-        "hover-opacity": 0.04,
-        "focus-opacity": 0.12,
-        "selected-opacity": 0.08,
-        "activated-opacity": 0.12,
-        "pressed-opacity": 0.16,
-        "dragged-opacity": 0.08,
-        "theme-kbd": "#212529",
-        "theme-on-kbd": "#FFFFFF",
-        "theme-code": "#343434",
-        "theme-on-code": "#CCCCCC"
-      }
-    }
-  }
-};
-function parseThemeOptions() {
-  var _a2;
-  let options = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : defaultThemeOptions;
-  if (!options)
-    return {
-      ...defaultThemeOptions,
-      isDisabled: true
-    };
-  const themes = {};
-  for (const [key, theme] of Object.entries((_a2 = options.themes) != null ? _a2 : {})) {
-    var _defaultThemeOptions$, _defaultThemeOptions$2;
-    const defaultTheme = theme.dark || key === "dark" ? (_defaultThemeOptions$ = defaultThemeOptions.themes) == null ? void 0 : _defaultThemeOptions$.dark : (_defaultThemeOptions$2 = defaultThemeOptions.themes) == null ? void 0 : _defaultThemeOptions$2.light;
-    themes[key] = mergeDeep(defaultTheme, theme);
-  }
-  return mergeDeep(defaultThemeOptions, {
-    ...options,
-    themes
-  });
-}
-function createTheme(options) {
-  const parsedOptions = reactive(parseThemeOptions(options));
-  const name2 = ref(parsedOptions.defaultTheme);
-  const themes = ref(parsedOptions.themes);
-  const computedThemes = computed(() => {
-    const acc = {};
-    for (const [name3, original] of Object.entries(themes.value)) {
-      const theme = acc[name3] = {
-        ...original,
-        colors: {
-          ...original.colors
-        }
-      };
-      if (parsedOptions.variations) {
-        for (const name4 of parsedOptions.variations.colors) {
-          const color = theme.colors[name4];
-          if (!color)
-            continue;
-          for (const variation of ["lighten", "darken"]) {
-            const fn2 = variation === "lighten" ? lighten : darken;
-            for (const amount of createRange(parsedOptions.variations[variation], 1)) {
-              theme.colors[`${name4}-${variation}-${amount}`] = RGBtoHex(fn2(parseColor(color), amount));
-            }
-          }
-        }
-      }
-      for (const color of Object.keys(theme.colors)) {
-        if (/^on-[a-z]/.test(color) || theme.colors[`on-${color}`])
-          continue;
-        const onColor = `on-${color}`;
-        const colorVal = parseColor(theme.colors[color]);
-        const blackContrast = Math.abs(APCAcontrast(parseColor(0), colorVal));
-        const whiteContrast = Math.abs(APCAcontrast(parseColor(16777215), colorVal));
-        theme.colors[onColor] = whiteContrast > Math.min(blackContrast, 50) ? "#fff" : "#000";
-      }
-    }
-    return acc;
-  });
-  const current = computed(() => computedThemes.value[name2.value]);
-  const styles = computed(() => {
-    const lines = [];
-    if (current.value.dark) {
-      createCssClass(lines, ":root", ["color-scheme: dark"]);
-    }
-    for (const [themeName, theme] of Object.entries(computedThemes.value)) {
-      const {
-        variables,
-        dark
-      } = theme;
-      createCssClass(lines, `.v-theme--${themeName}`, [`color-scheme: ${dark ? "dark" : "normal"}`, ...genCssVariables(theme), ...Object.keys(variables).map((key) => {
-        const value = variables[key];
-        const color = typeof value === "string" && value.startsWith("#") ? parseColor(value) : void 0;
-        const rgb = color ? `${color.r}, ${color.g}, ${color.b}` : void 0;
-        return `--v-${key}: ${rgb != null ? rgb : value}`;
-      })]);
-    }
-    const bgLines = [];
-    const fgLines = [];
-    const colors = new Set(Object.values(computedThemes.value).flatMap((theme) => Object.keys(theme.colors)));
-    for (const key of colors) {
-      if (/^on-[a-z]/.test(key)) {
-        createCssClass(fgLines, `.${key}`, [`color: rgb(var(--v-theme-${key})) !important`]);
-      } else {
-        createCssClass(bgLines, `.bg-${key}`, [`--v-theme-overlay-multiplier: var(--v-theme-${key}-overlay-multiplier)`, `background: rgb(var(--v-theme-${key})) !important`, `color: rgb(var(--v-theme-on-${key})) !important`]);
-        createCssClass(fgLines, `.text-${key}`, [`color: rgb(var(--v-theme-${key})) !important`]);
-        createCssClass(fgLines, `.border-${key}`, [`--v-border-color: var(--v-theme-${key})`]);
-      }
-    }
-    lines.push(...bgLines, ...fgLines);
-    return lines.map((str, i2) => i2 === 0 ? str : `    ${str}`).join("");
-  });
-  function install2(app2) {
-    const head = app2._context.provides.usehead;
-    if (head) {
-      head.addHeadObjs(computed(() => {
-        const style = {
-          children: styles.value,
-          type: "text/css",
-          id: "vuetify-theme-stylesheet"
-        };
-        if (parsedOptions.cspNonce)
-          style.nonce = parsedOptions.cspNonce;
-        return {
-          style: [style]
-        };
-      }));
-      if (IN_BROWSER) {
-        watchEffect(() => head.updateDOM());
-      }
-    } else {
-      let updateStyles = function() {
-        if (parsedOptions.isDisabled)
-          return;
-        if (typeof document !== "undefined" && !styleEl) {
-          const el2 = document.createElement("style");
-          el2.type = "text/css";
-          el2.id = "vuetify-theme-stylesheet";
-          if (parsedOptions.cspNonce)
-            el2.setAttribute("nonce", parsedOptions.cspNonce);
-          styleEl = el2;
-          document.head.appendChild(styleEl);
-        }
-        if (styleEl)
-          styleEl.innerHTML = styles.value;
-      };
-      let styleEl = IN_BROWSER ? document.getElementById("vuetify-theme-stylesheet") : null;
-      watch(styles, updateStyles, {
-        immediate: true
-      });
-    }
-  }
-  const themeClasses = computed(() => parsedOptions.isDisabled ? void 0 : `v-theme--${name2.value}`);
-  return {
-    install: install2,
-    isDisabled: parsedOptions.isDisabled,
-    name: name2,
-    themes,
-    current,
-    computedThemes,
-    themeClasses,
-    styles,
-    global: {
-      name: name2,
-      current
-    }
-  };
-}
-function provideTheme(props) {
-  getCurrentInstance("provideTheme");
-  const theme = inject$1(ThemeSymbol, null);
-  if (!theme)
-    throw new Error("Could not find Vuetify theme injection");
-  const name2 = computed(() => {
-    var _a2;
-    return (_a2 = props.theme) != null ? _a2 : theme == null ? void 0 : theme.name.value;
-  });
-  const themeClasses = computed(() => theme.isDisabled ? void 0 : `v-theme--${name2.value}`);
-  const newTheme = {
-    ...theme,
-    name: name2,
-    themeClasses
-  };
-  provide(ThemeSymbol, newTheme);
-  return newTheme;
-}
-function createCssClass(lines, selector, content) {
-  lines.push(`${selector} {
-`, ...content.map((line) => `  ${line};
-`), "}\n");
-}
-function genCssVariables(theme) {
-  const lightOverlay = theme.dark ? 2 : 1;
-  const darkOverlay = theme.dark ? 1 : 2;
-  const variables = [];
-  for (const [key, value] of Object.entries(theme.colors)) {
-    const rgb = parseColor(value);
-    variables.push(`--v-theme-${key}: ${rgb.r},${rgb.g},${rgb.b}`);
-    if (!key.startsWith("on-")) {
-      variables.push(`--v-theme-${key}-overlay-multiplier: ${getLuma(value) > 0.18 ? lightOverlay : darkOverlay}`);
-    }
-  }
-  return variables;
-}
-function useResizeObserver(callback) {
-  const resizeRef = ref();
-  const contentRect = ref();
-  if (IN_BROWSER) {
-    const observer = new ResizeObserver((entries) => {
-      callback == null ? void 0 : callback(entries, observer);
-      if (!entries.length)
-        return;
-      contentRect.value = entries[0].contentRect;
-    });
-    onBeforeUnmount(() => {
-      observer.disconnect();
-    });
-    watch(resizeRef, (newValue, oldValue) => {
-      if (oldValue) {
-        observer.unobserve(oldValue);
-        contentRect.value = void 0;
-      }
-      if (newValue)
-        observer.observe(newValue);
-    }, {
-      flush: "post"
-    });
-  }
-  return {
-    resizeRef,
-    contentRect: readonly(contentRect)
-  };
-}
 function createVuetify() {
   let vuetify2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
   const {
@@ -60173,8 +60456,9 @@ const PAGES_CONFIG = {
   }
 };
 const OrgLogo = "/assets/orgLogo.d7e6b17b.svg";
+const OrgLogoSmall = "/assets/orgLogoSmall.85b588fd.svg";
 const index = "";
-const app = createApp(App, { idpConfig: idpData$1, OrgLogo, PAGES_CONFIG, PAGE_KEYS });
+const app = createApp(App, { idpConfig: idpData$1, OrgLogo, OrgLogoSmall, PAGES_CONFIG, PAGE_KEYS });
 app.component("VueDatePicker", Gn);
 registerPlugins(app);
 app.mount("#app");

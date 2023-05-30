@@ -120,7 +120,7 @@
 }
 
 @media screen and (max-width: 1439px) {
-.sidebar[data-v-471816f0] {
+.sidebar[data-v-fbbd3e1d] {
     display: flex;
     flex-direction: column;
     max-width: 48px;
@@ -133,13 +133,13 @@
     box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 16px;
     top: 0px;
 }
-.main-area[data-v-471816f0] {
+.main-area[data-v-fbbd3e1d] {
     flex: 1 1 auto;
     margin-left: 48px;
 }
 }
 @media screen and (min-width: 1440px) {
-.sidebar[data-v-471816f0] {
+.sidebar[data-v-fbbd3e1d] {
     display: flex;
     flex-direction: column;
     min-width: 13rem;
@@ -149,16 +149,16 @@
     overflow-x: hidden;
 }
 }
-.screen[data-v-471816f0] {
+.screen[data-v-fbbd3e1d] {
   display: flex;
   width: 100vw;
   height: 100vh;
-  overflow: scroll;
 }
-.main-area[data-v-471816f0] {
-  flex: 1 1 auto;
+.main-area[data-v-fbbd3e1d] {
+  flex: auto;
+  overflow: auto;
 }
-.control-container[data-v-471816f0] {
+.control-container[data-v-fbbd3e1d] {
   display: flex;
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
@@ -169,19 +169,35 @@
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-.control-section[data-v-471816f0] {
+.control-section[data-v-fbbd3e1d] {
   display: flex;
   width: 100%;
 }
-.content-container[data-v-471816f0] {
-  height: 100%;
+.content-container[data-v-fbbd3e1d] {
+  min-height: 100%;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
   display: flex;
   padding: 1rem;
   flex-direction: column;
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
+.v-application {
+  display: flex;
+  background: rgb(var(--v-theme-background));
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
 
+.v-application__wrap {
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  max-width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
 @media screen and (max-width: 1440px) {
 .kearney-home-logo[data-v-992a43da] {
     height: 550px;
