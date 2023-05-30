@@ -30,14 +30,27 @@ export const getForecastGrowthFigureName = (periodIndex) => `CF_R3mForecastGrowt
 export const getForecastForwardGrowthFigureName = (periodIndex) => `CF_R3mForecastForwardGrowth_${periodIndex}`;
 export const getActualGrowthFigureName = (periodIndex) => `CF_R3mActualGrowth_${periodIndex}`;
 
+const monthToAddFromTimeHorizon = (msTimeHorizon)=>{
+  const s1 = msTimeHorizon.replaceAll("m", "");
+  const s2 = _.split(s1, "_");
+  if (_.size(s2) === 1){
+    return 1
+  }
+  if (_.size(s2) === 2){
+    return _.subtract(_.toNumber(_.get(s2, '[1]')), _.toNumber(_.get(s2, '[0]')))
+  }
+  return 1
+}
+
 export default function (refreshDateP, customers, categories, msTimeHorizon, model, valueOrQuantity) {
   const customersP = _.get(customers, "[0]") === ALL_OPTION ? null : _.join(_.map(customers, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const computedDate = (date, lagConfig) => `${dfns.format(dfns.add(date, lagConfig), DB_DATE_FORMAT)}`
+  const monthToAdd = monthToAddFromTimeHorizon(msTimeHorizon);
 
   const getClientForecastSubQuery = (asOnDate, model, horizon, metricName) => {
     const fStartDate = computedDate(asOnDate, {});
-    const fLastDate = computedDate(asOnDate, {months: 2});
+    const fLastDate = computedDate(asOnDate, {months: monthToAdd});
 
     let aggregateColumnName;
     if (valueOrQuantity === BY_VALUE) {
@@ -68,7 +81,7 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
 
   const getJdaActualSubQuery = (asOnDate, metricName, yago) => {
     const aStartDate = computedDate(asOnDate, {months: (yago ? -12 : 0)});
-    const aLastDate = computedDate(asOnDate, {months: (yago ? -12 : 0) + 2});
+    const aLastDate = computedDate(asOnDate, {months: (yago ? -12 : 0) + monthToAdd});
 
     let aggregateColumnName;
     if (valueOrQuantity === BY_VALUE) {

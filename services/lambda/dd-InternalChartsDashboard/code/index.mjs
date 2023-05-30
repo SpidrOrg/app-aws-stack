@@ -25,7 +25,7 @@ export const handler = async (event) => {
       'statusCode': 200,
       'content-type': 'application/json',
       'body': {
-        result: formatResult(queryResult, marketSensingRefreshDateP)
+        result: formatResult(queryResult, marketSensingRefreshDateP, msTimeHorizon)
       },
       'query': QUERY,
       'rawResult': queryResult

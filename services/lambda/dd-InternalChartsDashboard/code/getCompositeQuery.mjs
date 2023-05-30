@@ -43,10 +43,23 @@ const getFromResult = (rawResult, headerName, isNumber = true) => {
   return val;
 }
 
-export const formatResult = (rawResult, refreshDate) => {
-  const UI_DATE_FORMAT = "MMM yy"
+const monthToAddFromTimeHorizon = (msTimeHorizon)=>{
+  const s1 = msTimeHorizon.replaceAll("m", "");
+  const s2 = _.split(s1, "_");
+  if (_.size(s2) === 1){
+    return 1
+  }
+  if (_.size(s2) === 2){
+    return _.subtract(_.toNumber(_.get(s2, '[1]')), _.toNumber(_.get(s2, '[0]')))
+  }
+  return 1
+}
+
+export const formatResult = (rawResult, refreshDate, msTimeHorizon) => {
+  const UI_DATE_FORMAT = "MMM yy";
   const getPeriodLabel = (periodIndex) =>{
-    return `${dfns.format(dfns.add(refreshDate, {months: periodIndex}), UI_DATE_FORMAT)} - ${dfns.format(dfns.add(refreshDate, {months: periodIndex + 1}), UI_DATE_FORMAT)}`
+    const monthToAdd = monthToAddFromTimeHorizon(msTimeHorizon);
+    return `${dfns.format(dfns.add(refreshDate, {months: periodIndex}), UI_DATE_FORMAT)} - ${dfns.format(dfns.add(refreshDate, {months: periodIndex + monthToAdd}), UI_DATE_FORMAT)}`
   }
 
   const historicalPeriod = 12;

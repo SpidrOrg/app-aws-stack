@@ -16,7 +16,7 @@ export const getPredictedGrowthFigureName = (periodIndex) => `MS_R3mPredictedGro
 const baseQueryOneCustomerByValue = (dateP, msTimeHorizon, metricName, isYago = false, customersP, categoriesP) => `
         SELECT  SUM(${isYago ? 'actual_allocated_volume_share' : 'allocated_predicted_monthly_volume'}) AS ${metricName}
         FROM    market_sensing
-        WHERE   dt_y_start = '${dfns.format(dfns.add(dateP, {months: 1}), DB_DATE_FORMAT)}'
+        WHERE   dt_y_start = '${dfns.format(dateP, DB_DATE_FORMAT)}'
                 ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
                 ${customersP ? `AND split1_final IN (${customersP})` : ''}
                 ${categoriesP ? `AND category IN (${categoriesP})` : ''}
@@ -28,7 +28,7 @@ const baseQueryOneCustomerByQuantity = (dateP, msTimeHorizon, metricName, isYago
         ON          msd.category = pbc.category
                     AND msd.dt_y = pbc.date
                     AND msd.split1 = pbc.retailer
-        WHERE       dt_y_start = '${dfns.format(dfns.add(dateP, {months: 1}), DB_DATE_FORMAT)}'
+        WHERE       dt_y_start = '${dfns.format(dateP, DB_DATE_FORMAT)}'
                     ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
                     ${customersP ? `AND msd.split1_final IN (${customersP})` : ''}
                     ${categoriesP ? `AND msd.category IN (${categoriesP})` : ''}
@@ -36,7 +36,7 @@ const baseQueryOneCustomerByQuantity = (dateP, msTimeHorizon, metricName, isYago
 const baseQueryMultiCustomerByValue = (dateP, msTimeHorizon, metricName, isYago = false, customersP, categoriesP) => `
         SELECT      avg(cast(predicted_growth as double) * 100) AS ${metricName}
         FROM        market_sensing
-        WHERE       dt_y_start = '${dfns.format(dfns.add(dateP, {months: 1}), DB_DATE_FORMAT)}'
+        WHERE       dt_y_start = '${dfns.format(dateP, DB_DATE_FORMAT)}'
                     ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
                     ${customersP ? `AND split1_final IN (${customersP})` : ''}
                     ${categoriesP ? `AND category IN (${categoriesP})` : ''}
@@ -47,7 +47,7 @@ const baseQueryMultiCustomerByQuantity = (dateP, msTimeHorizon, metricName, isYa
         INNER JOIN  client_price_per_unit AS pac
         ON          msd.category = pac.category
                     AND msd.dt_y = pac.date
-        WHERE       msd.dt_y_start = '${dfns.format(dfns.add(dateP, {months: 1}), DB_DATE_FORMAT)}'
+        WHERE       msd.dt_y_start = '${dfns.format(dateP, DB_DATE_FORMAT)}'
                     ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
                     ${customersP ? `AND msd.split1_final IN (${customersP})` : ''}
                     ${categoriesP ? `AND msd.category IN (${categoriesP})` : ''}
@@ -58,8 +58,6 @@ export default function(refreshDateP, customers, categories, msTimeHorizon, valu
 
   const customersP = _.get(customers, "[0]") === ALL_OPTION ? null : _.join(_.map(customers, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",")
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",")
-
-
 
   const getCombinedQuery = () => {
     let combinedWithQuery = "";
