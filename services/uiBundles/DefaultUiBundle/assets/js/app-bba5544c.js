@@ -11118,7 +11118,7 @@ const _hoisted_2$m = { class: "logo" };
 const _hoisted_3$m = ["src"];
 const _hoisted_4$m = { class: "menu-area" };
 const _hoisted_5$j = ["onClick"];
-const _hoisted_6$h = { class: "menu-item-content" };
+const _hoisted_6$i = { class: "menu-item-content" };
 const _hoisted_7$g = { class: "menu-item-content-image" };
 const _hoisted_8$g = ["src"];
 const _hoisted_9$f = ["src"];
@@ -11139,7 +11139,7 @@ function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
           class: normalizeClass(`menu-item ${pageKey === $props.activePageKey ? "menu-item-selected" : ""}`),
           onClick: ($event) => $options.menuItemClickHandler(pageKey)
         }, [
-          createBaseVNode("div", _hoisted_6$h, [
+          createBaseVNode("div", _hoisted_6$i, [
             createBaseVNode("div", _hoisted_7$g, [
               pageKey === $props.activePageKey ? (openBlock(), createElementBlock("img", {
                 key: 0,
@@ -33608,7 +33608,7 @@ const _hoisted_2$l = { class: "control-section" };
 const _hoisted_3$l = { class: "dropdown-container" };
 const _hoisted_4$l = { class: "user-icon" };
 const _hoisted_5$i = ["src"];
-const _hoisted_6$g = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
+const _hoisted_6$h = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
 const _hoisted_7$f = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
 const _hoisted_8$f = {
   key: 0,
@@ -33625,7 +33625,7 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
           createBaseVNode("div", _hoisted_4$l, [
             createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$i)
           ]),
-          _hoisted_6$g,
+          _hoisted_6$h,
           _hoisted_7$f
         ]),
         $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$f, [
@@ -33642,7 +33642,7 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
   ]);
 }
 const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_fbbd3e1d_lang = "";
+const TheSckeleton_vue_vue_type_style_index_0_scoped_262fcb2f_lang = "";
 const VApp$1 = "";
 const IN_BROWSER = typeof window !== "undefined";
 const SUPPORTS_INTERSECTION = IN_BROWSER && "IntersectionObserver" in window;
@@ -35459,12 +35459,13 @@ const _sfc_main$p = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-fbbd3e1d"), n2 = n2(), popScopeId(), n2);
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-262fcb2f"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$m = { class: "screen" };
 const _hoisted_2$k = { class: "main-area" };
 const _hoisted_3$k = { class: "control-container" };
 const _hoisted_4$k = { class: "control-section" };
-const _hoisted_5$h = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
+const _hoisted_5$h = { class: "content-container" };
+const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
   ])
@@ -35472,38 +35473,40 @@ const _hoisted_5$h = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ create
 function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_SideBar = resolveComponent("SideBar");
   const _component_TheHeader = resolveComponent("TheHeader");
-  return openBlock(), createElementBlock("div", _hoisted_1$m, [
-    createBaseVNode("div", {
-      class: "sidebar",
-      onMouseover: _cache[0] || (_cache[0] = (...args) => $options.expandSidebarHandler && $options.expandSidebarHandler(...args)),
-      onMouseout: _cache[1] || (_cache[1] = (...args) => $options.collapseSidebarHandler && $options.collapseSidebarHandler(...args))
-    }, [
-      createVNode(_component_SideBar, {
-        "org-logo": $data.isSidebarCollapsed ? $props.orgLogoSmall : $props.orgLogo,
-        isSidebarCollapsed: $data.isSidebarCollapsed,
-        PAGES_CONFIG: $props.PAGES_CONFIG,
-        PAGE_KEYS: $props.PAGE_KEYS,
-        activePageKey: $data.activePageKey,
-        onPageSelected: $options.pageSelectionHandler
-      }, null, 8, ["org-logo", "isSidebarCollapsed", "PAGES_CONFIG", "PAGE_KEYS", "activePageKey", "onPageSelected"])
-    ], 32),
-    createBaseVNode("div", _hoisted_2$k, [
-      createBaseVNode("div", _hoisted_3$k, [
-        createBaseVNode("div", _hoisted_4$k, [
-          createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
+  return openBlock(), createBlock(VApp, null, {
+    default: withCtx(() => [
+      createBaseVNode("div", _hoisted_1$m, [
+        createBaseVNode("div", {
+          class: "sidebar",
+          onMouseover: _cache[0] || (_cache[0] = (...args) => $options.expandSidebarHandler && $options.expandSidebarHandler(...args)),
+          onMouseout: _cache[1] || (_cache[1] = (...args) => $options.collapseSidebarHandler && $options.collapseSidebarHandler(...args))
+        }, [
+          createVNode(_component_SideBar, {
+            "org-logo": $data.isSidebarCollapsed ? $props.orgLogoSmall : $props.orgLogo,
+            isSidebarCollapsed: $data.isSidebarCollapsed,
+            PAGES_CONFIG: $props.PAGES_CONFIG,
+            PAGE_KEYS: $props.PAGE_KEYS,
+            activePageKey: $data.activePageKey,
+            onPageSelected: $options.pageSelectionHandler
+          }, null, 8, ["org-logo", "isSidebarCollapsed", "PAGES_CONFIG", "PAGE_KEYS", "activePageKey", "onPageSelected"])
+        ], 32),
+        createBaseVNode("div", _hoisted_2$k, [
+          createBaseVNode("div", _hoisted_3$k, [
+            createBaseVNode("div", _hoisted_4$k, [
+              createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
+            ])
+          ]),
+          createBaseVNode("div", _hoisted_5$h, [
+            (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
+          ]),
+          _hoisted_6$g
         ])
-      ]),
-      createVNode(VApp, { class: "content-container" }, {
-        default: withCtx(() => [
-          (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
-        ]),
-        _: 1
-      }),
-      _hoisted_5$h
-    ])
-  ]);
+      ])
+    ]),
+    _: 1
+  });
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-fbbd3e1d"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-262fcb2f"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
 const _sfc_main$o = {
@@ -56415,7 +56418,7 @@ const _hoisted_17$4 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-
 const _hoisted_18$4 = [
   _hoisted_17$4
 ];
-const _hoisted_19$4 = {
+const _hoisted_19$3 = {
   key: 0,
   class: "tw-px-4 tw-py-1 tw-flex tw-items-center tw-gap-x-2 tw-border-2 tw-border-solid tw-border-brand-green-1 tw-rounded-sm tw-bg-brand-green-3"
 };
@@ -56488,7 +56491,7 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
               disabled: $options.isSubmitButtonDisabled(),
               onClick: _cache[2] || (_cache[2] = (...args) => $options.submitHandler && $options.submitHandler(...args))
             }, _hoisted_18$4, 10, _hoisted_16$5),
-            $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$4, [
+            $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$3, [
               createVNode(VIcon, {
                 icon: "mdi-check-circle",
                 color: "#04BB46"
@@ -56693,7 +56696,7 @@ const _hoisted_18$3 = {
   key: 0,
   class: "tw-flex tw-flex-col tw-items-center tw-col-span-2"
 };
-const _hoisted_19$3 = { class: "tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-3 tw-pt-2" };
+const _hoisted_19$2 = { class: "tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-3 tw-pt-2" };
 const _hoisted_20$2 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Variance", -1);
 const _hoisted_21$2 = { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
 const _hoisted_22$2 = { class: "tw-text-sm tw-text-center" };
@@ -56770,7 +56773,7 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8, ["marketSensingRefreshDate", "category", "horizon", "forecastPeriodType"])
       ])) : createCommentVNode("", true)
     ], 2),
-    createBaseVNode("div", _hoisted_19$3, [
+    createBaseVNode("div", _hoisted_19$2, [
       createVNode(VMenu, {
         "open-on-hover": "",
         location: "top"
@@ -57928,7 +57931,7 @@ const _hoisted_15$3 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-lapt
 const _hoisted_16$3 = ["src"];
 const _hoisted_17$2 = { class: "tw-text-sm desktop:tw-text-xs" };
 const _hoisted_18$2 = ["disabled"];
-const _hoisted_19$2 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_19$1 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
 const _hoisted_20$1 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-gap-2.5 tw-w-full tw-py-5"
@@ -58001,7 +58004,7 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleForecastPeriodType && $options.toggleForecastPeriodType(...args)),
               disabled: $data.dataLoading
             }, [
-              createBaseVNode("span", _hoisted_19$2, " Switch to " + toDisplayString($data.forecastPeriodType === $data.R3M_VIEW ? "Fixed/Quarterly" : "Rolling 3 Months") + " View ", 1)
+              createBaseVNode("span", _hoisted_19$1, " Switch to " + toDisplayString($data.forecastPeriodType === $data.R3M_VIEW ? "Fixed/Quarterly" : "Rolling 3 Months") + " View ", 1)
             ], 8, _hoisted_18$2)
           ])
         ])
@@ -60111,7 +60114,7 @@ const _hoisted_17$1 = { key: 1 };
 const _hoisted_18$1 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-center" }, [
   /* @__PURE__ */ createBaseVNode("h3", { class: "tw-pl-2 tw-pt-3 tw-flex tw-h-8 tw-items-center tw-text-lg tw-font-bold" }, "Rolling Test Accuracy")
 ], -1);
-const _hoisted_19$1 = {
+const _hoisted_19 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-p-6 tw-pt-5"
 };
@@ -60237,7 +60240,7 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
                   ])) : createCommentVNode("", true)
                 ])) : (openBlock(), createElementBlock("div", _hoisted_17$1, [
                   _hoisted_18$1,
-                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_19$1, [
+                  !$data.isLoading && !$data.isCVAccuracyLoading ? (openBlock(), createElementBlock("div", _hoisted_19, [
                     createVNode(_component_GChart, {
                       type: "ColumnChart",
                       data: $data.rollingTestAccuracyData,
@@ -60316,8 +60319,14 @@ const _sfc_main = {
   data() {
     return {
       HelpAndSupportImage,
-      supportEmail: "arjun.shyamsundar@kearney.com"
+      supportEmail: "arjun.shyamsundar@kearney.com",
+      userGuideURL: "https://xebiagroup.sharepoint.com/sites/ProjectKearney/Gedeelde%20documenten/Forms/AllItems.aspx?ct=1685352691531&or=OWA%2DNT&cid=53032b96%2D2504%2D1874%2D133d%2D64ef240b56d6&ga=1&WSL=1&id=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FUserGuide%5FKSS%28MVP1%29%2FKSS%5FUser%20Guide%5FV4%2E0%2Epdf&viewid=6270bc2d%2De035%2D4015%2D86c1%2Dedb8f9493642&parent=%2Fsites%2FProjectKearney%2FGedeelde%20documenten%2FGeneral%2FUserGuide%5FKSS%28MVP1%29"
     };
+  },
+  methods: {
+    downloadHandler() {
+      window.open(this.userGuideURL, "_blank");
+    }
   }
 };
 const _hoisted_1 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
@@ -60339,12 +60348,11 @@ const _hoisted_10 = { class: "tw-flex tw-gap-x-4 tw-items-center" };
 const _hoisted_11 = ["href"];
 const _hoisted_12 = { class: "tw-flex tw-flex-col tw-gap-3" };
 const _hoisted_13 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black tw-font-medium" }, "Read through the User Guide to know more:", -1);
-const _hoisted_14 = { class: "tw-px-2 tw-py-1.5 tw-border-2 tw-border-solid tw-border-brand-primary" };
-const _hoisted_15 = { class: "tw-flex tw-gap-x-2 tw-items-center" };
-const _hoisted_16 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black" }, " Download User Guide ", -1);
-const _hoisted_17 = { class: "tw-col-span-1" };
-const _hoisted_18 = { class: "tw-h-full tw-w-full tw-px-4" };
-const _hoisted_19 = ["src"];
+const _hoisted_14 = { class: "tw-flex tw-gap-x-2 tw-items-center" };
+const _hoisted_15 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-base tw-text-black" }, " Download User Guide ", -1);
+const _hoisted_16 = { class: "tw-col-span-1" };
+const _hoisted_17 = { class: "tw-h-full tw-w-full tw-px-4" };
+const _hoisted_18 = ["src"];
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1, [
     _hoisted_2,
@@ -60370,26 +60378,29 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("div", _hoisted_12, [
               _hoisted_13,
               createBaseVNode("div", null, [
-                createBaseVNode("button", _hoisted_14, [
-                  createBaseVNode("div", _hoisted_15, [
+                createBaseVNode("button", {
+                  class: "tw-px-2 tw-py-1.5 tw-border-2 tw-border-solid tw-border-brand-primary",
+                  onClick: _cache[0] || (_cache[0] = (...args) => $options.downloadHandler && $options.downloadHandler(...args))
+                }, [
+                  createBaseVNode("div", _hoisted_14, [
                     createVNode(VIcon, {
                       icon: "mdi-tray-arrow-down",
                       class: "tw-text-brand-primary",
                       size: 24
                     }),
-                    _hoisted_16
+                    _hoisted_15
                   ])
                 ])
               ])
             ])
           ])
         ]),
-        createBaseVNode("div", _hoisted_17, [
-          createBaseVNode("div", _hoisted_18, [
+        createBaseVNode("div", _hoisted_16, [
+          createBaseVNode("div", _hoisted_17, [
             createBaseVNode("img", {
               src: $data.HelpAndSupportImage,
               class: "tw-h-full tw-w-full tw-object-contain"
-            }, null, 8, _hoisted_19)
+            }, null, 8, _hoisted_18)
           ])
         ])
       ])
