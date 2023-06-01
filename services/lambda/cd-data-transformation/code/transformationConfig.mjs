@@ -2,16 +2,6 @@ import dateFns from "date-fns";
 import {DB_DATE_FORMAT, RAW_FOLDER, TRANSFORM_FOLDER} from "./constants.mjs";
 import _ from "lodash";
 
-const MAPPING = {
-  TIME_HORIZION: {
-    "JDA_lag1-3": "1_3m",
-    "JDA_lag4-6": "4_6m"
-  },
-  MODEL: {
-
-  }
-}
-
 export default {
   actuals: {
     rawFileKey: () => `${RAW_FOLDER}/JDA_baseline.csv`,
