@@ -1,10 +1,13 @@
-import dateFns from "date-fns";
-import {DB_DATE_FORMAT, RAW_FOLDER, TRANSFORM_FOLDER} from "./constants.mjs";
 import _ from "lodash";
+import dateFns from "date-fns";
+import {DB_DATE_FORMAT, RAW_FOLDER, TRANSFORM_FOLDER} from "../constants.mjs";
 
 export default {
   actuals: {
-    rawFileKey: () => `${RAW_FOLDER}/JDA_baseline.csv`,
+    rawFileKey: (fileKey) => {
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "client_actual"
+    },
     transformFileKey: () => `${TRANSFORM_FOLDER}/client_actual/client_actuals.csv`,
     primaryKeyIndexes: [1, 2, 6],          //setting primary key for programming struct.
     lineTransformationConfig: [{}, {
@@ -25,7 +28,10 @@ export default {
     }]
   },
   forecast: {
-    rawFileKey: () => `${RAW_FOLDER}/JDA_new.csv`,
+    rawFileKey: (fileKey) => {
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "client_forecast"
+    },
     transformFileKey: () => `${TRANSFORM_FOLDER}/client_forecast/client_forecast.csv`,
     primaryKeyIndexes: [2, 3, 4, 5, 13, 14],      //setting primary key for programming struct.
     lineTransformationConfig: [{},{},{
@@ -71,20 +77,21 @@ export default {
     }]
   },
   pricePerUnit: {
-    rawFileKey: (event)=>{
-      const fileKey = _.get(event, "Records[0].s3.object.key");
-      if (_.includes([`${RAW_FOLDER}/Price_by_customer.csv`, `${RAW_FOLDER}/Price_all_customer.csv`],  fileKey)){
-        return fileKey;
-      }
+    rawFileKey: (fileKey)=>{
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "client_price_per_unit"
     },
     filePreProcessing: (fileKey, fileContents)=>{
-      if (fileKey === `${RAW_FOLDER}/Price_all_customer.csv`){
+      // Identify if file is for 'price_all_customers'
+      const lineZero = _.get(_.split(fileContents, "\n"), '[0]');
+      if (_.size(_.split(lineZero, ",")) === 6) {
+        // If there are 6 columns we will assume that the file uploaded is price_all_customers
         let modifiedFileContent = "";
         const lines = _.split(fileContents, "\n");
         const transformedLines = [];
 
         _.forEach(lines, (line, lineNumber) =>{
-          if (line && line.length > 5){
+          if (line && _.trim(line).length > 1){
             let elements = _.split(line, ",");
             try {
               const jdaDt = elements[1];
@@ -93,7 +100,7 @@ export default {
             } catch (e){
               console.log(e);
             }
-            elements = [..._.slice(elements, 0, 5),lineNumber === 0 ? "retailer" : "all", ..._.slice(elements, 5)];
+            elements = [..._.slice(elements, 0, 5), lineNumber === 0 ? "retailer" : "all", ..._.slice(elements, 5)];
             transformedLines.push(elements.join(","));
           }
         })
@@ -119,7 +126,10 @@ export default {
     },{}, {}]
   },
   marketShare: {
-    rawFileKey: () => `${RAW_FOLDER}/Market_share.csv`,
+    rawFileKey: (fileKey) => {
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "client_market_share"
+    },
     transformFileKey: () => `${TRANSFORM_FOLDER}/client_market_share/client_market_share.csv`,
     primaryKeyIndexes: [2, 15],
     filePreProcessing: (fileKey, fileContents)=>{
@@ -164,26 +174,32 @@ export default {
     },{},{},{},{}]
   },
   ydata: {
-    rawFileKey: () => `${RAW_FOLDER}/y_data.csv`,
+    rawFileKey: (fileKey) => {
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "y_data"
+    },
     transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/y_data/y_data.csv`,
     primaryKeyIndexes: [],
     lineTransformationConfig: []
   },
+  variable_treatment: {
+    rawFileKey: (fileKey) => {
+      const pathSplits = _.split(fileKey, "/");
+      return pathSplits[0] === RAW_FOLDER && pathSplits[1] === "variable_treatment"
+    },
+    transformFileKey: () => `${TRANSFORM_FOLDER}/variable_treatment/variable_treatment.csv`,
+    primaryKeyIndexes: [],
+    lineTransformationConfig: []
+  },
   htas_ope_allocation_split_sanitized: {
-    rawFileKey: () => `${RAW_FOLDER}/htas_ope_allocation_split_sanitized.csv`,
+    rawFileKey: (fileKey) => fileKey === `${RAW_FOLDER}/htas_ope_allocation_split_sanitized.csv`,
     transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/htas_ope_allocation/htas_ope_allocation_split_sanitized.csv`,
     primaryKeyIndexes: [],
     lineTransformationConfig: []
   },
   powertools_pta_allocation: {
-    rawFileKey: () => `${RAW_FOLDER}/powertools_pta_allocation_split_sanitized.csv`,
+    rawFileKey: (fileKey) => fileKey === `${RAW_FOLDER}/powertools_pta_allocation_split_sanitized.csv`,
     transformFileKey: () => `${TRANSFORM_FOLDER}/mlops/powertools_pta_allocation/powertools_pta_allocation_split_sanitized.csv`,
-    primaryKeyIndexes: [],
-    lineTransformationConfig: []
-  },
-  variable_treatment: {
-    rawFileKey: () => `${RAW_FOLDER}/variable_treatment.csv`,
-    transformFileKey: () => `${TRANSFORM_FOLDER}/variable_treatment/variable_treatment.csv`,
     primaryKeyIndexes: [],
     lineTransformationConfig: []
   }

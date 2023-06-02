@@ -2,7 +2,7 @@ import {S3Client} from "@aws-sdk/client-s3"
 import _ from "lodash";
 import {STSClient} from "@aws-sdk/client-sts";
 import {AssumeRoleCommand} from "@aws-sdk/client-sts";
-import transformationConfig from "./transformationConfig.mjs";
+import transformationConfig from "./transformationConfigs/index.mjs";
 import {isFilePresent, readFileAsString, writeFileToS3} from "./s3Utils.mjs";
 import {createProgrammingStruct, findDifference, convertToFileContents} from "./utils.mjs";
 import transformer from "./transformer.mjs";
@@ -20,20 +20,26 @@ function getFileKey(event){
 }
 
 
-function findTransformationFromEvent(event){
+function findTransformationFromEvent(event, tenantId){
   const fileKey = getFileKey(event);
-  return _.reduce(_.values(transformationConfig), (acc, v)=>{
-    if(!acc && v.rawFileKey(event) === fileKey){
+  const config = _.get(transformationConfig, tenantId, _.get(transformationConfig, "default"));
+  return _.reduce(_.values(config), (acc, v)=>{
+    if(!acc && v.rawFileKey(fileKey)){
       return v;
     }
     return acc;
   }, null)
 }
 
+function getTenantIdFromBucketName(bucketName){
+  // bucketName format: krny-spi-1234567890-env
+  return _.get(_.split(bucketName, "-"), '[2]');
+}
+
 export const handler = async (event) => {
   //get the bucket name
   const s3bucket = _.get(event,"Records[0].s3.bucket.name");
-
+  const tenantId = getTenantIdFromBucketName(s3bucket);
   try {
     const command = new AssumeRoleCommand({
       RoleArn: `arn:aws:iam::${ACCOUNT_ID}:role/${EXECUTION_ROLE_NAME}`,
@@ -57,7 +63,7 @@ export const handler = async (event) => {
       }
     });
 
-    const transformationConfiguration = findTransformationFromEvent(event);
+    const transformationConfiguration = findTransformationFromEvent(event, tenantId);
 
     if (_.isEmpty(transformationConfiguration)){
       console.log("No match config found, writing the file as is inside folder named as the file name itself");
@@ -66,12 +72,12 @@ export const handler = async (event) => {
       const folderName = fileName.replaceAll(".", "_").replaceAll("/", "-")
 
       const fileContents = await readFileAsString(s3Client, s3bucket, ()=>fileKey);
-      await writeFileToS3(s3Client, s3bucket, ()=>`${TRANSFORM_FOLDER}/${folderName}/${fileName}`, fileContents);
+      await writeFileToS3(s3Client, s3bucket, ()=>`${TRANSFORM_FOLDER}/unmatched/${folderName}/${fileName}`, fileContents);
       return
     }
-    let {rawFileKey, transformFileKey, primaryKeyIndexes, lineTransformationConfig, addColumns = [], filePreProcessing = null} = transformationConfiguration
+    let {transformFileKey, primaryKeyIndexes, lineTransformationConfig, addColumns = [], filePreProcessing = null} = transformationConfiguration
 
-    const rawFKey = () => rawFileKey(event);
+    const rawFKey = () => getFileKey(event);
     const transformFKey = () => transformFileKey(event);
     // Read file from S3 entirely
     let lhsFileContents = await readFileAsString(s3Client, s3bucket, rawFKey);
