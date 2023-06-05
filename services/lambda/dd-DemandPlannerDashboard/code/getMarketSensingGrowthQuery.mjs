@@ -157,7 +157,7 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
                           ROUND(Sum(key_demand_drivers.feature_importance) * 100, 2) AS imp
               FROM        key_demand_drivers
               LEFT JOIN   variable_treatment
-              ON          key_demand_drivers.feature_name = variable_treatment.columns
+              ON          key_demand_drivers.description = variable_treatment.columns
               WHERE       key_demand_drivers.horizon = '${modelName}'
               AND         key_demand_drivers.date = '${dfns.format(refreshDateP, DB_DATE_FORMAT)}'
               ${categoriesP ? `AND key_demand_drivers.category IN (${categoriesP})` : ''}
