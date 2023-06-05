@@ -60065,8 +60065,6 @@ const _sfc_main$2 = {
       this.filtersCharts.projected_period.items = options.msTimeHorizon;
       this.filtersTestAccuracy.categories.items = options.categories;
     }
-    this.filtersCharts.categories.items = this.filtersCharts.categories.items;
-    this.filtersTestAccuracy.categories.items = this.filtersTestAccuracy.categories.items;
     this.selectFilterUpdated("categories", this.filtersCharts.categories.items[0]);
     this.selectAccuracyFilterUpdated("categories", this.filtersTestAccuracy.categories.items[0]);
     this.selectFilterUpdated("projected_period", this.filtersCharts.projected_period.items[0]);
@@ -60118,7 +60116,7 @@ const _hoisted_19 = {
   key: 0,
   class: "tw-flex tw-justify-center tw-p-6 tw-pt-5"
 };
-const _hoisted_20 = /* @__PURE__ */ createBaseVNode("h3", { class: "tw-font-bold tw-py-2 tw-pl-2 tw-text-lg" }, "Historic Actual vs Predicted Market Value", -1);
+const _hoisted_20 = /* @__PURE__ */ createBaseVNode("h3", { class: "tw-font-bold tw-py-2 tw-pl-2 tw-text-lg" }, "Historic Actual vs Predicted Market Volume", -1);
 const _hoisted_21 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
 const _hoisted_22 = { class: "tw-flex tw-gap-x-4 tw-w-full tw-bg-white tw-px-3" };
 const _hoisted_23 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
@@ -60144,7 +60142,7 @@ const _hoisted_28 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-h-1/6 tw
     /* @__PURE__ */ createBaseVNode("div", {
       style: { "height": "14px" },
       class: "tw-text-xs tw-ml-1"
-    }, "Predicted Values(USD)"),
+    }, "Predicted Values"),
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex" }, [
       /* @__PURE__ */ createBaseVNode("div", {
         style: { "width": "12px", "height": "12px", "background": "#5F5F5F" },
@@ -60153,7 +60151,7 @@ const _hoisted_28 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-h-1/6 tw
       /* @__PURE__ */ createBaseVNode("div", {
         style: { "height": "14px" },
         class: "tw-text-xs tw-ml-1"
-      }, "Actual Values(USD)"),
+      }, "Actual Values"),
       /* @__PURE__ */ createBaseVNode("div", {
         style: { "width": "24px", "height": "3px", "background": "#7823DC" },
         class: "tw-ml-3 tw-mt-1.5"
