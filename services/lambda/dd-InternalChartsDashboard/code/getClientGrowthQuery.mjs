@@ -79,7 +79,7 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
     `
   }
 
-  const getJdaActualSubQuery = (asOnDate, metricName, yago) => {
+  const getClientActualSubQuery = (asOnDate, metricName, yago) => {
     const aStartDate = computedDate(asOnDate, {months: (yago ? -12 : 0)});
     const aLastDate = computedDate(asOnDate, {months: (yago ? -12 : 0) + monthToAdd});
 
@@ -138,9 +138,9 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
     for(let i = 0; i <= historicalPeriod; i++){
       const forecastSubQueryMetricName = getForecastSubQueryMetricName(i);
       const forecastForwardSubQueryMetricName = getForecastForwardSubQueryMetricName(i);
+      const actualSubQueryMetricName = getActualSubQueryMetricName(i);
       const actualYagoSubQueryMetricName = getActualYagoSubQueryMetricName(i);
       const actualForwardYagoSubQueryMetricName = getActualForwardYagoSubQueryMetricName(i);
-      const actualSubQueryMetricName = getActualSubQueryMetricName(i);
 
       const forecastGrowthFigureName = getForecastGrowthFigureName(i);
       const forecastForwardGrowthFigureName = getForecastForwardGrowthFigureName(i);
@@ -175,7 +175,7 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
 
       combinedFrom += `
           ${
-        getJdaActualSubQuery(
+        getClientActualSubQuery(
           dfns.add(refreshDateP, {months: -i}),
           actualSubQueryMetricName,
           false
@@ -185,7 +185,7 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
 
       combinedFrom += `
           ${
-        getJdaActualSubQuery(
+        getClientActualSubQuery(
           dfns.add(refreshDateP, {months: -i}),
           actualYagoSubQueryMetricName,
           true
@@ -195,7 +195,7 @@ export default function (refreshDateP, customers, categories, msTimeHorizon, mod
 
       combinedFrom += `
           ${
-        getJdaActualSubQuery(
+        getClientActualSubQuery(
           dfns.add(refreshDateP, {months: i+1}),
           actualForwardYagoSubQueryMetricName,
           true

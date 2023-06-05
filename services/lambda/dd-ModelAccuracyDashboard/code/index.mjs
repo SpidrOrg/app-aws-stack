@@ -36,8 +36,7 @@ export const handler = async (event) => {
                Round(Avg(cv_accuracy) * 100, 0) as cv_accuracy,
                Round(Avg(rolling_test_accuracy) * 100, 0) as rolling_test_accuracy
         FROM   market_sensing_model_accuracy
-        WHERE  Cast(date AS DATE) IN (SELECT Max(Cast(date AS DATE))
-                                      FROM   market_sensing_model_accuracy)
+        WHERE  Cast(date AS DATE) IN (SELECT Max(Cast(date AS DATE)) FROM   market_sensing_model_accuracy)
         AND    category = '${category}'
         GROUP  BY date, horizon 
       `
@@ -79,25 +78,11 @@ export const handler = async (event) => {
           return _.isNaN(_.toNumber(val)) ? 0 : _.round(_.toNumber(val))
         },
         query: `
-          WITH t1 AS (
-            SELECT      "demand forecast (gsv)",
-                        Rank()  OVER (
-                            PARTITION BY    category,
-                                            dt_of_forecast_making,
-                                            forecast_start_dt,
-                                            forecast_end_dt,
-                                            model,
-                                            retailer
-                            ORDER BY        Cast(ts AS DATE) ASC ) AS rank
-            FROM        client_forecast
-            WHERE       Cast(forecast_start_dt AS DATE) >= Cast('${quarterStartDate}' AS DATE)
-            AND         Cast(forecast_end_dt AS DATE) <= Cast('${quarterEndDate}' AS DATE)
-            AND         category = '${category}'
-            ${horizon ? "AND time_horizon_mapping = '${horizon}'": ''}
-          )
-            SELECT      Sum("demand forecast (gsv)") AS value
-            FROM        t1
-            WHERE       rank = 1 
+          SELECT    Sum(predicted_volume)
+          FROM      market_sensing
+          WHERE     Cast(dt_y_start AS DATE) >= Cast('${quarterStartDate}' AS DATE)
+          AND       ms_time_horizon = '${horizon}'
+          AND       category = '${category}' 
         `
       });
 
@@ -109,11 +94,11 @@ export const handler = async (event) => {
           return _.isNaN(_.toNumber(val)) ? 0 : _.round(_.toNumber(val))
         },
         query: `
-            SELECT  Sum(net_gsv) AS value
-            FROM    client_actual
-            WHERE   Cast(date AS DATE) >= Cast('${quarterStartDate}' AS DATE)
-            AND     Cast(date AS DATE) <= Cast('${quarterEndDate}' AS DATE)
-            AND     category = '${category}'
+          SELECT    Sum(actual_volume)
+          FROM      market_sensing
+          WHERE     Cast(dt_y_start AS DATE) >= Cast('${quarterStartDate}' AS DATE)
+          AND       ms_time_horizon = '${horizon}'
+          AND       category = '${category}' 
         `
       });
     }
