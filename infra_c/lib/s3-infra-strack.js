@@ -60,7 +60,8 @@ class S3InfraStack extends Stack {
       // Create Client Bucket
       const clientBucket = new s3.Bucket(this, `client-bucket-${clientBucketName}`, {
         bucketName: clientBucketName,
-        removalPolicy: RemovalPolicy.RETAIN
+        removalPolicy: RemovalPolicy.RETAIN,
+        versioned: true
       });
 
       Object.keys(clientBucketNotificationConfig).forEach(notificationName => {
