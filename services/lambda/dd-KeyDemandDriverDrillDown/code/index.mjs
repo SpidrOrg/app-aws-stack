@@ -26,7 +26,7 @@ export const handler = async (event) => {
                     Sum(feature_importance) AS imp
         FROM        key_demand_drivers
         LEFT JOIN   variable_treatment
-        ON          key_demand_drivers.feature_name = variable_treatment.columns
+        ON          key_demand_drivers.description = variable_treatment.columns
         WHERE       key_demand_drivers.horizon = '${horizon}'
         AND         key_demand_drivers.date = '${marketSensingRefreshDate}'
         AND         key_demand_drivers.category = '${category}'
