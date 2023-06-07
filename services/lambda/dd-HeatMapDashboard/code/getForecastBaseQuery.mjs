@@ -59,12 +59,12 @@ const getClientForecastSubQuery = (asOnDate, customerP, categoryP, valueOrQuanti
 
   return `
       SELECT    Sum("${aggregateColumnName}") AS forecast
-      FROM      t_client_forecast
+      FROM      t_client_forecast ${customerP === ALL_OPTION ? "" : ", t_retailers"}
       WHERE     t_client_forecast.model = '${clientModel}'
       AND       t_client_forecast.comparison_version = '${clientTimeHorizon}'
       AND       Cast(t_client_forecast.forecast_start_dt AS DATE) >= Cast('${fStartDate}' AS DATE)
       AND       Cast(t_client_forecast.forecast_end_dt AS   DATE) <= Cast('${fLastDate}' AS DATE)
-      ${customerP === ALL_OPTION ? "" : `AND       t_client_forecast.retailer = '${customerP}'`}
+      ${customerP === ALL_OPTION ? "" : `AND       t_client_forecast.retailer IN (t_retailers.split1)`}
       AND       t_client_forecast.category = '${categoryP}'
     `
 }
@@ -82,10 +82,10 @@ const getJdaActualSubQuery = (asOnDate, customerP, categoryP, valueOrQuantity, l
   }
   return `
       SELECT    Sum("${aggregateColumnName}") AS actual
-      FROM      client_actual
+      FROM      client_actual ${customerP === ALL_OPTION ? "" : ", t_retailers"}
       WHERE     Cast(client_actual.date AS DATE) >= Cast('${aStartDate}' AS DATE)
       AND       Cast(client_actual.date AS   DATE) <= Cast('${aLastDate}' AS DATE)
-      ${customerP === ALL_OPTION ? "" : `AND       client_actual.retailer = '${customerP}'`}
+      ${customerP === ALL_OPTION ? "" : `AND       client_actual.retailer IN (t_retailers.split1)`}
       AND       client_actual.category = '${categoryP}'
     `
 }
@@ -105,7 +105,14 @@ export default function(refreshDateP, customer, category, valueOrQuantity, lag, 
              FROM client_forecast
            )
         WHERE rank = 1
-    )
+    ) ${customerP === ALL_OPTION ? '' : `,
+      t_retailers AS (
+         SELECT   split1
+         FROM     market_sensing
+         WHERE    split1_final = '${customerP}'
+      )
+     `
+    }
     SELECT  ROUND(((forecast / actual - 1) * 100), 2)
     FROM (
         ${getClientForecastSubQuery(refreshDateP, customerP, categoryP, valueOrQuantity, lag, forecastPeriodType)}

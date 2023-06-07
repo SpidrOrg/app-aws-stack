@@ -33,7 +33,7 @@ const baseQueryOneCustomerByValue = (dtYStart, msTimeHorizon, isYago = false, cu
         FROM    market_sensing
         WHERE   dt_y_start = '${dtYStart}'
                 ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
-                ${customerP === ALL_OPTION ? '' : `AND split1 = '${customerP}'`}
+                ${customerP === ALL_OPTION ? '' : `AND split1_final = '${customerP}'`}
                 ${categoryP ? `AND category = '${categoryP}'` : ''}
       `;
 const baseQueryOneCustomerByQuantity = (dtYStart, msTimeHorizon, isYago = false, customerP, categoryP) => `
@@ -45,7 +45,7 @@ const baseQueryOneCustomerByQuantity = (dtYStart, msTimeHorizon, isYago = false,
                     AND msd.split1 = pbc.retailer
         WHERE       dt_y_start = '${dtYStart}'
                     ${isYago ? '' : `AND     ms_time_horizon = '${msTimeHorizon}'`}
-                    ${customerP === ALL_OPTION ? '' : `AND split1 = '${customerP}'`}
+                    ${customerP === ALL_OPTION ? '' : `AND split1_final = '${customerP}'`}
                     ${categoryP ? `AND msd.category = '${categoryP}'` : ''}
       `;
 const baseQueryMultiCustomerByValue = (dtYStart, msTimeHorizon, isYago = false, customersP, categoryP) => `
