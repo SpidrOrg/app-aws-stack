@@ -16,12 +16,12 @@ export const handler = async (event) => {
     const driverCategory = _.get(event, "driver");
 
     QUERIES.push({
-      resultPath: ``,
+      resultPath: `data`,
       resultFormatter:(result)=>{
         return _.get(result, "data", [])
       },
       query: `
-        SELECT      feature_name as data_point,
+        SELECT      key_demand_drivers.description as data_point,
                     variable_treatment.dataset as source,
                     Sum(feature_importance) AS imp
         FROM        key_demand_drivers
@@ -31,7 +31,7 @@ export const handler = async (event) => {
         AND         key_demand_drivers.date = '${marketSensingRefreshDate}'
         AND         key_demand_drivers.category = '${category}'
         AND         variable_treatment.category = '${driverCategory}'
-        GROUP  BY   feature_name,
+        GROUP  BY   key_demand_drivers.description,
                     variable_treatment.dataset
         ORDER  BY   variable_treatment.dataset,
                     imp DESC 
