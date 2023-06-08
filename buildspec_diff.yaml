@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOMAIN_NAME: "domainName"
+    ENV_NAME: "envNameApp"
+    CERTIFICATE_ARN: "certificateArn"
+    LOCALHOST_PORT: "envLocalHostPortMapping"
+
+phases:
+  build:
+    commands:
+      - cd "$CODEBUILD_SRC_DIR"
+      - cd infra_c
+      - npm ci
+      - node scanClientsTable.js
+      - npm i -g cdk
+      - cdk bootstrap
+      - cdk diff --all
