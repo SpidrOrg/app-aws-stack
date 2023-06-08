@@ -23,7 +23,7 @@ export const handler = async (event) => {
       query: `
         SELECT      key_demand_drivers.description as data_point,
                     variable_treatment.dataset as source,
-                    Sum(feature_importance) AS imp
+                    ROUND(Sum(feature_importance) * 100, 2) AS imp
         FROM        key_demand_drivers
         LEFT JOIN   variable_treatment
         ON          key_demand_drivers.description = variable_treatment.columns
