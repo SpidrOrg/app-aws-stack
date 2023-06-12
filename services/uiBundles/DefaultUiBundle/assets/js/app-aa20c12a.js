@@ -56977,7 +56977,7 @@ const _sfc_main$e = {
         (accumulator, currentEl) => accumulator + _.toNumber(_.values(currentEl)[0]),
         0
       );
-      return [
+      const result = [
         ["X", "Y", { role: "annotation" }],
         ..._.map(_.slice(this.data, 0, OTHERS_START_INDEX), (v) => {
           return [
@@ -56985,9 +56985,16 @@ const _sfc_main$e = {
             _.values(v)[0],
             `${_.round(_.values(v)[0], 1)}%`
           ];
-        }),
-        [OTHER_DRIVERS, otherDriversValue, `${_.round(otherDriversValue, 1)}%`]
+        })
       ];
+      if (otherDriversValue > 0) {
+        result.push([
+          OTHER_DRIVERS,
+          otherDriversValue,
+          `${_.round(otherDriversValue, 1)}%`
+        ]);
+      }
+      return result;
     },
     dataValues() {
       return _.map(this.data, (v) => {
@@ -57177,7 +57184,8 @@ const _sfc_main$d = {
     impliedVal: {
       type: [Number, String],
       required: true
-    }
+    },
+    chartsScale: { type: Object, required: true }
   },
   data() {
     return {
@@ -57226,7 +57234,11 @@ const _sfc_main$d = {
           gridlines: {
             count: 0
           },
-          textPosition: "none"
+          textPosition: "none",
+          viewWindow: {
+            max: _.get(this.chartsScale, "max"),
+            min: _.get(this.chartsScale, "min")
+          }
         },
         hAxis: {
           textStyle: {
@@ -57326,7 +57338,8 @@ const _sfc_main$c = {
     data: {
       type: Object,
       required: true
-    }
+    },
+    chartsScale: { type: Object, required: true }
   },
   computed: {
     chartColumns() {
@@ -57386,7 +57399,11 @@ const _sfc_main$c = {
           gridlines: {
             count: 0
           },
-          textPosition: "none"
+          textPosition: "none",
+          viewWindow: {
+            max: _.get(this.chartsScale, "max"),
+            min: _.get(this.chartsScale, "min")
+          }
         },
         chartArea: {
           top: "6%",
@@ -57469,6 +57486,38 @@ const _sfc_main$b = {
         return _.get(this.activePeriodData, "formattedHorizon");
       }
       return "";
+    },
+    chartsScale() {
+      const pyValNumeric = this.getNumericValue(
+        _.get(this.metrics, "pyGrowth")
+      );
+      const impliedValNumeric = this.getNumericValue(
+        _.get(this.metrics, "impliedGrowth")
+      );
+      const numericValuesOfHistoricalChart = _.flatMap(
+        _.get(this.metrics, "historical"),
+        (el2) => {
+          const values = _.values(el2);
+          return _.map(values, (v) => this.getNumericValue(v));
+        }
+      );
+      const numericValuesOfAllCharts = [
+        pyValNumeric,
+        impliedValNumeric,
+        ...numericValuesOfHistoricalChart
+      ];
+      return {
+        max: _.add(_.max(numericValuesOfAllCharts), 5),
+        min: _.subtract(_.min(numericValuesOfAllCharts), 5)
+      };
+    }
+  },
+  methods: {
+    getNumericValue(value) {
+      if (value === null || _.isNaN(_.toNumber(value))) {
+        return 0;
+      }
+      return _.toNumber(value);
     }
   }
 };
@@ -57511,13 +57560,15 @@ function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
           createVNode(_component_ChartPYandImpliedGrowth, {
             projectedPeriod: $options.periodLabel,
             pyVal: $options.metrics.pyGrowth,
-            impliedVal: $options.metrics.impliedGrowth
-          }, null, 8, ["projectedPeriod", "pyVal", "impliedVal"])
+            impliedVal: $options.metrics.impliedGrowth,
+            chartsScale: $options.chartsScale
+          }, null, 8, ["projectedPeriod", "pyVal", "impliedVal", "chartsScale"])
         ]),
         createBaseVNode("div", _hoisted_9$9, [
           createVNode(_component_ChartHistoricalAndActual, {
-            data: $options.metrics.historical
-          }, null, 8, ["data"])
+            data: $options.metrics.historical,
+            chartsScale: $options.chartsScale
+          }, null, 8, ["data", "chartsScale"])
         ])
       ])) : createCommentVNode("", true)
     ])
