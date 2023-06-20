@@ -24,9 +24,15 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",");
   const computedDate = (date, lagConfig) => `${dfns.format(dfns.add(date, lagConfig), DB_DATE_FORMAT)}`
 
-  const getClientForecastSubQuery = (asOnDate, model, lag, metricName, isForForecastAdjusted) => {
-    const fStartDate = computedDate(asOnDate, {months: lag});
-    const fLastDate = computedDate(asOnDate, {months: lag + 2});
+  const getClientForecastSubQuery = (asOnDate, periodIndex, model, lag, metricName, isForForecastAdjusted) => {
+    let fStartDate, fLastDate;
+    if (periodIndex === 0){
+      fStartDate = computedDate(asOnDate, {months: lag});
+      fLastDate = computedDate(asOnDate, {months: lag + 2});
+    } else {
+      fStartDate = computedDate(asOnDate, {months: -periodIndex-2});
+      fLastDate = computedDate(asOnDate, {months: -periodIndex});
+    }
 
     let aggregateColumnName;
     if (valueOrQuantity === BY_VALUE) {
@@ -54,9 +60,15 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
     `
   }
 
-  const getClientActualSubQuery = (asOnDate, lag, metricName, yago) => {
-    const aStartDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0)});
-    const aLastDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0) + 2});
+  const getClientActualSubQuery = (asOnDate, periodIndex, lag, metricName, yago) => {
+    let aStartDate, aLastDate;
+    if (periodIndex === 0){
+      aStartDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0)});
+      aLastDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0) + 2});
+    } else {
+      aStartDate = computedDate(asOnDate, {months: -periodIndex -2 - (yago ? 12 : 0)});
+      aLastDate = computedDate(asOnDate, {months: -periodIndex - (yago ? 12 : 0)});
+    }
 
     let aggregateColumnName;
     if (valueOrQuantity === BY_VALUE) {
@@ -144,7 +156,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
         combinedFrom += `
           ${
           getClientForecastSubQuery(
-            dfns.add(refreshDateP, {months: -historicIndex}),
+            refreshDateP,
+            historicIndex,
             v.client_model,
             v.lag,
             forecastSubQueryMetricName,
@@ -156,7 +169,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
         combinedFrom += `
           ${
           getClientForecastSubQuery(
-            dfns.add(refreshDateP, {months: -historicIndex}),
+            refreshDateP,
+            historicIndex,
             v.client_model,
             v.lag,
             adjustedForecastSubQueryMetricName,
@@ -168,7 +182,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
         combinedFrom += `
           ${
           getClientActualSubQuery(
-            dfns.add(refreshDateP, {months: -historicIndex}),
+            refreshDateP,
+            historicIndex,
             v.lag,
             actualSubQueryMetricName,
             false
@@ -179,7 +194,8 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
         combinedFrom += `
           ${
           getClientActualSubQuery(
-            dfns.add(refreshDateP, {months: -historicIndex}),
+            refreshDateP,
+            historicIndex,
             v.lag,
             actualYagoSubQueryMetricName,
             true

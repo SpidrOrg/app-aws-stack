@@ -77,7 +77,7 @@ export const formatResult = (rawResult, refreshDate, periodConfig, isFixedQuarte
         historicIndex = j * 3;
       }
       historicProjectionsData.push({
-        "period": getPeriodLabel(1-historicIndex, (1-historicIndex) + 2),
+        "period": getPeriodLabel(-historicIndex-2, -historicIndex),
         "Market Sensing": getFromResult(rawResult, `${getPredictedGrowthFigureName(periodConfig[i].lag, periodConfig[i].ms_model, historicIndex)}`),
         "Internal": getFromResult(rawResult, `${getForecastGrowthFigureName(periodConfig[i].lag, historicIndex)}`),
         "Actual": getFromResult(rawResult, `${getActualGrowthFigureName(periodConfig[i].lag, historicIndex)}`),

@@ -83,7 +83,8 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
       if (periodIndex === 0){
         dtYStartP = dfns.add(refreshDate, {months: lagConfig.lag})
       } else {
-        dtYStartP = dfns.add(refreshDate, {months: 1-periodIndex})
+        const dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        dtYStartP = dfns.add(dtYEndP, {months: -2})
       }
       dtYStart = dfns.format(dtYStartP, DB_DATE_FORMAT)
       dtYStartYago = dfns.format(dfns.add(dtYStartP, {years: -1}), DB_DATE_FORMAT)
@@ -123,7 +124,8 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
       if (periodIndex === 0){
         dtYStart = dfns.format(dfns.add(refreshDate, {months: lagConfig.lag}), DB_DATE_FORMAT)
       } else {
-        dtYStart = dfns.format(dfns.add(refreshDate, {months: 1-periodIndex}), DB_DATE_FORMAT)
+        const dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        dtYStart = dfns.format(dfns.add(dtYEndP, {months: -2}), DB_DATE_FORMAT)
       }
       combinedWithQuery += `${predictedSubQueryName} AS (
               ${baseQueryFun(
