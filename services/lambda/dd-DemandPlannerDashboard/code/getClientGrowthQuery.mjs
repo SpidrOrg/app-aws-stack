@@ -30,8 +30,13 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
       fStartDate = computedDate(asOnDate, {months: lag});
       fLastDate = computedDate(asOnDate, {months: lag + 2});
     } else {
-      fStartDate = computedDate(asOnDate, {months: -periodIndex-2});
-      fLastDate = computedDate(asOnDate, {months: -periodIndex});
+      if (isFixedQuarterView){
+        fLastDate = computedDate(asOnDate, {months: -(periodIndex - 3)});
+        fStartDate = computedDate(asOnDate, {months: -(periodIndex - 3) -2 });
+      } else {
+        fStartDate = computedDate(asOnDate, {months: -periodIndex-2});
+        fLastDate = computedDate(asOnDate, {months: -periodIndex});
+      }
     }
 
     let aggregateColumnName;
@@ -66,8 +71,13 @@ export default function(refreshDateP, customers, categories, valueOrQuantity, pe
       aStartDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0)});
       aLastDate = computedDate(asOnDate, {months: lag - (yago ? 12 : 0) + 2});
     } else {
-      aStartDate = computedDate(asOnDate, {months: -periodIndex -2 - (yago ? 12 : 0)});
-      aLastDate = computedDate(asOnDate, {months: -periodIndex - (yago ? 12 : 0)});
+      if (isFixedQuarterView){
+        aStartDate = computedDate(asOnDate, {months: -(periodIndex - 3) -2 - (yago ? 12 : 0)});
+        aLastDate = computedDate(asOnDate, {months: -(periodIndex - 3) - (yago ? 12 : 0)});
+      } else {
+        aStartDate = computedDate(asOnDate, {months: -periodIndex -2 - (yago ? 12 : 0)});
+        aLastDate = computedDate(asOnDate, {months: -periodIndex - (yago ? 12 : 0)});
+      }
     }
 
     let aggregateColumnName;

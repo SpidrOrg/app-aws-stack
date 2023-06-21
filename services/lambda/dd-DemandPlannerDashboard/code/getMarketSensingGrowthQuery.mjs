@@ -65,8 +65,6 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
   const customersP = _.get(customers, "[0]") === ALL_OPTION ? null : _.join(_.map(customers, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",")
   const categoriesP = _.get(categories, "[0]") === ALL_OPTION ? null : _.join(_.map(categories, v => `'${_.trim(escapeSqlSingleQuote(v))}'`), ",")
 
-
-
   const getCombinedQuery = () => {
     let combinedWithQuery = "";
     let combinedSelect = "";
@@ -83,7 +81,12 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
       if (periodIndex === 0){
         dtYStartP = dfns.add(refreshDate, {months: lagConfig.lag})
       } else {
-        const dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        let dtYEndP;
+        if (isFixedQuarterView){
+          dtYEndP = dfns.add(refreshDate, {months: -(periodIndex - 3)});
+        } else {
+          dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        }
         dtYStartP = dfns.add(dtYEndP, {months: -2})
       }
       dtYStart = dfns.format(dtYStartP, DB_DATE_FORMAT)
@@ -124,7 +127,12 @@ export default function (refreshDateP, customers, categories, valueOrQuantity, p
       if (periodIndex === 0){
         dtYStart = dfns.format(dfns.add(refreshDate, {months: lagConfig.lag}), DB_DATE_FORMAT)
       } else {
-        const dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        let dtYEndP;
+        if (isFixedQuarterView){
+          dtYEndP = dfns.add(refreshDate, {months: -(periodIndex - 3)});
+        } else {
+          dtYEndP = dfns.add(refreshDate, {months: -periodIndex});
+        }
         dtYStart = dfns.format(dfns.add(dtYEndP, {months: -2}), DB_DATE_FORMAT)
       }
       combinedWithQuery += `${predictedSubQueryName} AS (

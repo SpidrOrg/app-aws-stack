@@ -74,7 +74,7 @@ export const formatResult = (rawResult, refreshDate, periodConfig, isFixedQuarte
     for (let j = 1; j <= numberOfHistoricPeriods; j++){
       let historicIndex = j;
       if (isFixedQuarterView){
-        historicIndex = j * 3;
+        historicIndex = (j - 1) * 3;
       }
       historicProjectionsData.push({
         "period": getPeriodLabel(-historicIndex-2, -historicIndex),
