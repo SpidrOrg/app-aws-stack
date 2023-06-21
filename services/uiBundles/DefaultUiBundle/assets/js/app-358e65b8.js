@@ -11119,7 +11119,7 @@ const _hoisted_3$m = ["src"];
 const _hoisted_4$m = { class: "menu-area" };
 const _hoisted_5$j = ["onClick"];
 const _hoisted_6$i = { class: "menu-item-content" };
-const _hoisted_7$g = { class: "menu-item-content-image" };
+const _hoisted_7$h = { class: "menu-item-content-image" };
 const _hoisted_8$g = ["src"];
 const _hoisted_9$f = ["src"];
 function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
@@ -11140,7 +11140,7 @@ function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
           onClick: ($event) => $options.menuItemClickHandler(pageKey)
         }, [
           createBaseVNode("div", _hoisted_6$i, [
-            createBaseVNode("div", _hoisted_7$g, [
+            createBaseVNode("div", _hoisted_7$h, [
               pageKey === $props.activePageKey ? (openBlock(), createElementBlock("img", {
                 key: 0,
                 src: $props.PAGES_CONFIG[pageKey].icon_active
@@ -33609,7 +33609,7 @@ const _hoisted_3$l = { class: "dropdown-container" };
 const _hoisted_4$l = { class: "user-icon" };
 const _hoisted_5$i = ["src"];
 const _hoisted_6$h = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
-const _hoisted_7$f = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
+const _hoisted_7$g = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
 const _hoisted_8$f = {
   key: 0,
   class: "dropdown-menu"
@@ -33626,7 +33626,7 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$i)
           ]),
           _hoisted_6$h,
-          _hoisted_7$f
+          _hoisted_7$g
         ]),
         $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$f, [
           createBaseVNode("a", {
@@ -33642,7 +33642,7 @@ function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
   ]);
 }
 const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
-const TheSckeleton_vue_vue_type_style_index_0_scoped_262fcb2f_lang = "";
+const TheSckeleton_vue_vue_type_style_index_0_scoped_79f8cd7c_lang = "";
 const VApp$1 = "";
 const IN_BROWSER = typeof window !== "undefined";
 const SUPPORTS_INTERSECTION = IN_BROWSER && "IntersectionObserver" in window;
@@ -35413,7 +35413,7 @@ const _sfc_main$p = {
       sessionStorage.setItem("pageKey", key);
     },
     expandSidebarHandler() {
-      if (window.screen.availWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
+      if (window.innerWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
         const sidebar = document.querySelector(".sidebar");
         sidebar.style.minWidth = "13rem";
         sidebar.style.maxWidth = "10%";
@@ -35422,7 +35422,7 @@ const _sfc_main$p = {
       }
     },
     collapseSidebarHandler() {
-      if (window.screen.availWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
+      if (window.innerWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
         const sidebar = document.querySelector(".sidebar");
         sidebar.style.minWidth = "0px";
         sidebar.style.maxWidth = "48px";
@@ -35441,13 +35441,13 @@ const _sfc_main$p = {
     }
   },
   mounted() {
-    if (window.screen.availWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
+    if (window.innerWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
       this.isSidebarCollapsed = true;
     } else {
       this.isSidebarCollapsed = false;
     }
     const resizeObserver = new ResizeObserver(() => {
-      if (window.screen.availWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
+      if (window.innerWidth < DESKTOP_SCREEN_MIN_WIDTH_PIXELS) {
         this.collapseSidebarHandler();
       } else {
         const sidebar = document.querySelector(".sidebar");
@@ -35459,13 +35459,14 @@ const _sfc_main$p = {
     resizeObserver.observe(document.querySelector(".screen"));
   }
 };
-const _withScopeId$1 = (n2) => (pushScopeId("data-v-262fcb2f"), n2 = n2(), popScopeId(), n2);
+const _withScopeId$1 = (n2) => (pushScopeId("data-v-79f8cd7c"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$m = { class: "screen" };
 const _hoisted_2$k = { class: "main-area" };
-const _hoisted_3$k = { class: "control-container" };
-const _hoisted_4$k = { class: "control-section" };
-const _hoisted_5$h = { class: "content-container" };
-const _hoisted_6$g = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
+const _hoisted_3$k = { class: "main-content-wrapper" };
+const _hoisted_4$k = { class: "control-container" };
+const _hoisted_5$h = { class: "control-section" };
+const _hoisted_6$g = { class: "content-container" };
+const _hoisted_7$f = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
   ])
@@ -35493,20 +35494,22 @@ function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("div", _hoisted_2$k, [
           createBaseVNode("div", _hoisted_3$k, [
             createBaseVNode("div", _hoisted_4$k, [
-              createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
-            ])
-          ]),
-          createBaseVNode("div", _hoisted_5$h, [
-            (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
-          ]),
-          _hoisted_6$g
+              createBaseVNode("div", _hoisted_5$h, [
+                createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
+              ])
+            ]),
+            createBaseVNode("div", _hoisted_6$g, [
+              (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
+            ]),
+            _hoisted_7$f
+          ])
         ])
       ])
     ]),
     _: 1
   });
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-262fcb2f"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-79f8cd7c"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
 const _sfc_main$o = {
@@ -48357,7 +48360,7 @@ const hash = object_hash.exports;
 let cachedData = {};
 async function apiBase(enpoint, payload) {
   const cacheKeyHash = hash({ enpoint, payload });
-  if (cachedData[`cacheKeyHash`]) {
+  if (cachedData[cacheKeyHash]) {
     return cachedData[cacheKeyHash];
   }
   const data = await invokeGetApi(enpoint, payload);

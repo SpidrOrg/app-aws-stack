@@ -119,46 +119,24 @@
   background-color: #ededed;
 }
 
-@media screen and (max-width: 1439px) {
-.sidebar[data-v-262fcb2f] {
-    display: flex;
-    flex-direction: column;
-    max-width: 48px;
-    white-space: nowrap;
-    overflow-x: hidden;
-    transition: 0.5s;
-    position: fixed;
-    height: 100%;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 16px;
-    top: 0px;
-}
-.main-area[data-v-262fcb2f] {
-    flex: auto;
-    margin-left: 48px;
-}
-}
-@media screen and (min-width: 1440px) {
-.sidebar[data-v-262fcb2f] {
-    display: flex;
-    flex-direction: column;
-    min-width: 13rem;
-    width: 10%;
-    max-width: 10%;
-    white-space: nowrap;
-    overflow-x: hidden;
-}
-}
-.screen[data-v-262fcb2f] {
+.screen[data-v-79f8cd7c] {
   display: flex;
   width: 100%;
   height: 100%;
 }
-.main-area[data-v-262fcb2f] {
+.main-area[data-v-79f8cd7c] {
   flex: auto;
   overflow: auto;
 }
-.control-container[data-v-262fcb2f] {
+.main-content-wrapper[data-v-79f8cd7c] {
+  width: 100%;
+  height: 100%;
+  min-width: 1160px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.control-container[data-v-79f8cd7c] {
   display: flex;
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
@@ -169,17 +147,48 @@
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-.control-section[data-v-262fcb2f] {
+.control-section[data-v-79f8cd7c] {
   display: flex;
   width: 100%;
 }
-.content-container[data-v-262fcb2f] {
+.content-container[data-v-79f8cd7c] {
   height: 100%;
   display: flex;
   padding: 1rem;
   flex-direction: column;
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+}
+@media screen and (max-width: 1439px) {
+.sidebar[data-v-79f8cd7c] {
+    display: flex;
+    flex-direction: column;
+    max-width: 48px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    transition: 0.5s;
+    position: fixed;
+    height: 100%;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 16px;
+    top: 0;
+    left: 0;
+}
+.main-area[data-v-79f8cd7c] {
+    flex: auto;
+    margin-left: 48px;
+}
+}
+@media screen and (min-width: 1440px) {
+.sidebar[data-v-79f8cd7c] {
+    display: flex;
+    flex-direction: column;
+    min-width: 13rem;
+    width: 10%;
+    max-width: 10%;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
 }
 .v-application {
   display: flex;
