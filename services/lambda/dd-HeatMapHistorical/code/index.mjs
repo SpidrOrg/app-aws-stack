@@ -1,89 +1,113 @@
 import _ from "lodash";
-import dfns from "date-fns";
+import dfns from 'date-fns';
 import ServicesConnector from "/opt/ServicesConnector.mjs";
-import getMarketSensingBaseQuery from "./getMarketSensingBaseQuery.mjs";
-import getForecastBaseQuery from "./getForecastBaseQuery.mjs";
 
-// Constants
-const UI_DATE_FORMAT = "MMM yy";
-const ALL_OPTION = "*";
-//
 const servicesConnector = new ServicesConnector(process.env.awsAccountId, process.env.region);
+const ALL = "ALL";
+const ALL_MARK = "*";
+const UI_DATE_FORMAT = "MMM yy"
+const DB_DATE_FORMAT = 'yyyy-MM-dd'
+const BY_VALUE = "BY_VALUE";
+const BY_QUANTITY = "BY_QUANTITY";
+const numberOfHistoricPeriods = 12;
+
+const lagToModelNameMapping = {
+  1: "1_3m",
+  4: "4_6m",
+  7: "7_9m",
+  10: "10_12m"
+}
+
+const getPeriodLabel = (asOnDateP, month1Add, month2Add) =>{
+  return `${dfns.format(dfns.add(asOnDateP, {months: month1Add}), UI_DATE_FORMAT)} - ${dfns.format(dfns.add(asOnDateP, {months: month2Add}), UI_DATE_FORMAT)}`
+}
+
+const sanitizeNumeric = (val)=>{
+  const number = _.toNumber(val);
+  if ( (!(val === 0) && !_.trim(val)) || _.isNaN(number) || _.isFinite(number) === false || _.isNumber(number) === false){
+    return null;
+  }
+  return number;
+}
+
+const formatResultForDashboard = (queryResult, marketSensingRefreshDateP, category, retailer, valueOrQuantity, lag, headerIndexes)=>{
+  const result = {};
+  const lookbackMonths = 8;
+  for(let i = 0; i < numberOfHistoricPeriods; i++){
+    const startDateP = dfns.add(marketSensingRefreshDateP, {months: i - lookbackMonths});
+    const endDateP = dfns.add(startDateP, {months: 2});
+    const refreshDateP = dfns.add(startDateP, {months: -lag});
+    const refreshDate = dfns.format(refreshDateP, DB_DATE_FORMAT);
+
+    const startDate = dfns.format(startDateP, UI_DATE_FORMAT)
+    const endDate = dfns.format(endDateP, UI_DATE_FORMAT)
+
+    const relevantResultExtract = _.find(queryResult, v => {
+      return _.get(v, `[${_.get(headerIndexes, 'as_on')}]`) === refreshDate
+        && _.get(v, `[${_.get(headerIndexes, 'model')}]`) === lagToModelNameMapping[lag]
+        && _.get(v, `[${_.get(headerIndexes, 'category')}]`) === category
+        && _.get(v, `[${_.get(headerIndexes, 'retailer')}]`) === retailer
+    });
+    const indexOfMsGrowth = valueOrQuantity === BY_VALUE ? _.get(headerIndexes, 'ms_growth_by_val') : _.get(headerIndexes, 'ms_growth_by_qty')
+    const indexOfClientGrowth = valueOrQuantity === BY_VALUE ? _.get(headerIndexes, 'original_client_forecast_by_val') : _.get(headerIndexes, 'original_client_forecast_by_qty')
+    const indexOfActualGrowth = valueOrQuantity === BY_VALUE ? _.get(headerIndexes, 'actual_growth_by_val') : _.get(headerIndexes, 'actual_growth_by_qty')
+    const msForecastGrwoth = _.get(relevantResultExtract, `[${indexOfMsGrowth}]`);
+    const internalForecastGrowth = _.get(relevantResultExtract, `[${indexOfClientGrowth}]`);
+    const actualGrowth = _.get(relevantResultExtract, `[${indexOfActualGrowth}]`);
+    result[`${startDate} - ${endDate}`] = {
+      msForecastGrwoth: sanitizeNumeric(msForecastGrwoth),
+      internalForecastGrowth: sanitizeNumeric(internalForecastGrowth),
+      actualGrowth: sanitizeNumeric(actualGrowth),
+    }
+  }
+  return result;
+}
 
 export const handler = async (event) => {
-  let QUERIES = [];
+  let QUERY = "";
   try {
     await servicesConnector.init(event);
 
-    const marketSensingRefreshDateP = dfns.parse(_.get(event, "marketSensingRefreshDate"), 'yyyy-MM-dd', new Date());
-    const category = _.get(event, "category");
-    const customer = _.get(event, "customer");
+    const marketSensingRefreshDate = _.get(event, "marketSensingRefreshDate");
+    const category = _.get(event, "category") === ALL_MARK ? ALL : _.get(event, "category");
+    const customer = _.get(event, "customer") === ALL_MARK ? ALL : _.get(event, "customer");
     const valueOrQuantity = _.get(event, "valueORvolume");
-    const lag = _.toNumber(_.get(event, "lag"));
+    const lag = _.get(event, "lag");
 
-    const lookbackMonths = 8;
-    const numberOfPeriods = 12;
+    const marketSensingRefreshDateP = dfns.parse(marketSensingRefreshDate, DB_DATE_FORMAT, new Date());
 
-    for(let i = 0; i < numberOfPeriods; i++){
-      const startDateP = dfns.add(marketSensingRefreshDateP, {months: i - lookbackMonths});
-      const endDateP = dfns.add(startDateP, {months: 2});
-      const refreshDateP = dfns.add(startDateP, {months: -1});
-
-      const startDate = dfns.format(startDateP, UI_DATE_FORMAT)
-      const endDate = dfns.format(endDateP, UI_DATE_FORMAT)
-      QUERIES.push({
-        resultPath: `[${startDate} - ${endDate}].msForecastGrwoth`,
-        resultFormatter:(result)=>{
-          const val = _.get(result, "data[0][0]", "NA")
-          return _.isNaN(_.toNumber(val)) || _.trim(val) === "" ? null : _.toNumber(val)
-        },
-        query: getMarketSensingBaseQuery(refreshDateP, customer, category, valueOrQuantity, lag)
-      });
-
-      QUERIES.push({
-        resultPath: `[${startDate} - ${endDate}].internalForecastGrowth`,
-        resultFormatter:(result)=>{
-          const vals = _.get(result, "data[0]", "NA")
-          return _.map(vals, val => {
-            return _.isNaN(_.toNumber(val)) || _.trim(val) === "" ? null : _.toNumber(val)
-          })
-
-        },
-        query: getForecastBaseQuery(refreshDateP, customer, category, valueOrQuantity, lag)
-      });
+    let requiredHistoricalAsOnValues = [];
+    for (let j = 1; j <= numberOfHistoricPeriods; j++){
+      requiredHistoricalAsOnValues.push(dfns.format(dfns.add(marketSensingRefreshDateP, {months: -j + 3 -(lag - 1)}), DB_DATE_FORMAT))
     }
+    const asOnDateInCaluseString = requiredHistoricalAsOnValues.map(v => `'${v}'`).join(",");
+    QUERY = `
+      select * from growth_rollups
+      where as_on IN (${asOnDateInCaluseString})
+      and category = '${category}'
+      and retailer = '${customer}'
+      and model = '${lagToModelNameMapping[lag]}'
+    `
+    const queryResult = await servicesConnector.makeAthenQuery(QUERY);
 
-    const promises = QUERIES.map(query => servicesConnector.makeAthenQuery(query.query));
-    const results = await Promise.all(promises).then(_results =>{
-      console.log("_results", _results);
-      const resultsWithName = {};
-      _.forEach(_results, (_result, i) => {
-        _.set(resultsWithName, QUERIES[i].resultPath , QUERIES[i].resultFormatter ? QUERIES[i].resultFormatter(_result) : _result);
-      });
-      return resultsWithName;
-    });
+    const headerIndexes = _.reduce(_.get(queryResult, "headers", []), (acc, v, i)=>{
+      acc[v] = i;
+      return acc;
+    }, {});
 
-    // Further processing
-    _.forOwn(results, (v, k)=>{
-      results[k].msForecastGrwoth = v.msForecastGrwoth;
-      const internalForecastGrowth = v.internalForecastGrowth;
-      results[k].internalForecastGrowth = internalForecastGrowth[0]
-      results[k].actualGrowth = internalForecastGrowth[1]
-    })
-
+    const result = formatResultForDashboard(_.get(queryResult, "data", []), marketSensingRefreshDateP, category, customer, valueOrQuantity, lag, headerIndexes);
     return {
       'statusCode': 200,
       'content-type': 'application/json',
-      'body': results,
-      'query': QUERIES
-    };
-
+      'body': result,
+      'query': QUERY,
+    }
   } catch (err) {
     return {
       'statusCode': 500,
       'content-type': 'application/json',
       'body': err,
-      'query': QUERIES,
-    };
+      'query': QUERY,
+    }
   }
 };
