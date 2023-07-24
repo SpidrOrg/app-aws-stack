@@ -43,9 +43,23 @@ export default async function makeAthenaQuery(athenaClient, tenantId, env, query
   };
 
   if (queryState === ATHENA_QUERY_STATES.SUCCEEDED) {
-    const queryOutput = await athenaClient.send(new GetQueryResultsCommand({QueryExecutionId: queryId}));
-    logs.push(`queryOutput: ${queryOutput}`)
-    const rows = _.get(queryOutput, "ResultSet.Rows", []);
+    let rows = [];
+    let nextToken = null;
+    while (true){
+      const getQueryResultsCommandInput = {
+        QueryExecutionId: queryId
+      }
+      if (nextToken){
+        getQueryResultsCommandInput.NextToken = nextToken;
+      }
+      const queryOutput = await athenaClient.send(new GetQueryResultsCommand(getQueryResultsCommandInput));
+      rows.push(..._.get(queryOutput, "ResultSet.Rows", []));
+      if (!(queryOutput && queryOutput.NextToken)){
+        break;
+      } else {
+        nextToken = queryOutput.NextToken;
+      }
+    }
 
     const headers = _.reduce(_.get(rows[0], "Data", []), (acc, v) => {
       acc.push(_.values(v)[0]);
