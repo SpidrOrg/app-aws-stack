@@ -10,28 +10,22 @@ const DB_DATE_FORMAT = 'yyyy-MM-dd';
 const servicesConnector = new ServicesConnector(process.env.awsAccountId, process.env.region);
 
 export const handler = async (event) => {
-  let QUERIES = [];
   try {
     await servicesConnector.init(event);
 
     const category = _.get(event, "category");
     const horizon = _.get(event, "horizon");
+    const marketSensingRefreshDate = _.get(event, "marketSensingRefreshDate");
+    const marketSensingRefreshDateP = dfns.parse(marketSensingRefreshDate, DB_DATE_FORMAT, new Date());
+    const results = {
+      actual: {},
+      forecast: {},
+      performance: {}
+    };
+    const pastClientForecastAccuracy = {};
 
-    // Accuracy performance data query
-    QUERIES.push({
-      resultPath: "performance.current",
-      resultFormatter:(result)=>{
-        return _.map( _.get(result, "data", []), row => {
-          return _.map(row, (col, index)=>{
-            if (index !== 0){
-              const numeric = _.toNumber(col);
-              return _.isNaN(numeric) ? 0 : numeric
-            }
-            return col;
-          })
-        })
-      },
-      query: `
+    if (!_.trim(horizon)) {
+      const Query = `
         SELECT horizon,
                Round(Avg(cv_accuracy) * 100, 0) as cv_accuracy,
                Round(Avg(rolling_test_accuracy) * 100, 0) as rolling_test_accuracy
@@ -40,77 +34,55 @@ export const handler = async (event) => {
         AND    category = '${category}'
         GROUP  BY date, horizon 
       `
-    });
+      const res = await servicesConnector.makeAthenQuery(Query);
 
-    const pastClientForecastAccuracy = {};
+      _.set(results, "performance.current", _.map( _.get(res, "data", []), row => {
+        return _.map(row, (col, index)=>{
+          if (index !== 0){
+            const numeric = _.toNumber(col);
+            return _.isNaN(numeric) ? 0 : numeric
+          }
+          return col;
+        })
+      }))
+    } else {
+      // Historical Prediction Accuracy
+      const PREVIOUS_QUARTERS = 8;
+      const currentQuaterMaxDateP = dfns.startOfQuarter(marketSensingRefreshDateP);
+      const beginQuaterFirstDateP = dfns.add(currentQuaterMaxDateP, {months: -(PREVIOUS_QUARTERS - 1)  * 3});
+      const currentQuaterMaxDate = dfns.format(currentQuaterMaxDateP, DB_DATE_FORMAT);
+      const beginQuaterFirstDate = dfns.format(beginQuaterFirstDateP, DB_DATE_FORMAT);
+      const Query = `
+        select model, prediction_start, category, ms_predicted_volume, ms_actual_volume
+        from growth_rollups
+        where cast(prediction_start as date) >= cast('${beginQuaterFirstDate}' as date)
+        and cast(prediction_start as date) <= cast('${currentQuaterMaxDate}' as date)
+        and model = '${horizon}'
+        and category = '${category}'
+        and retailer = 'ALL' 
+      `;
+      const res = await servicesConnector.makeAthenQuery(Query);
 
-    // Historical Prediction Accuracy
-    const PREVIOUS_QUARTERS = 8;
-    for (let i = PREVIOUS_QUARTERS; i >= 1; i--){
-      const quarterDate = dfns.add(new Date(), {months: -3 * i});
-      const quarterStartDate = dfns.format(dfns.startOfQuarter(quarterDate), DB_DATE_FORMAT);
-      const quarterEndDate = dfns.format(dfns.startOfMonth(dfns.endOfQuarter(quarterDate)), DB_DATE_FORMAT);
+      const indexOfPredictionStart = _.indexOf(_.get(res, "headers"), "prediction_start");
+      const indexOfPredictedVolume = _.indexOf(_.get(res, "headers"), "ms_predicted_volume");
+      const indexOfActualVolume = _.indexOf(_.get(res, "headers"), "ms_actual_volume");
+      for (let i = PREVIOUS_QUARTERS; i >= 1; i--){
+        const quarterDate = dfns.add(currentQuaterMaxDateP, {months: -(i - 1)  * 3});
+        const quarterStartDate = dfns.format(dfns.startOfQuarter(quarterDate), DB_DATE_FORMAT);
+        // const quarterEndDate = dfns.format(dfns.startOfMonth(dfns.endOfQuarter(quarterDate)), DB_DATE_FORMAT);
 
-      const quarterName = `Q${dfns.getQuarter(quarterDate)}-${dfns.getYear(quarterDate)}`;
+        const quarterName = `Q${dfns.getQuarter(quarterDate)}-${dfns.getYear(quarterDate)}`;
 
-      pastClientForecastAccuracy[quarterName] = 0;
-      // QUERIES.push({
-      //   resultPath: `performance.past.${quarterName}`,
-      //   resultFormatter:(result)=>{
-      //     return _.get(result, "data[0][0]", "")
-      //   },
-      //   query: `
-      //     SELECT  Round(Avg(rolling_test_accuracy) * 100, 0) as rolling_test_accuracy,
-      //             Round(Avg(cv_accuracy) * 100, 0) as cv_accuracy
-      //     FROM    market_sensing_model_accuracy
-      //     WHERE   Cast(date AS DATE) >= Cast('${quarterStartDate}' AS DATE)
-      //     AND     Cast(date AS DATE) <= Cast('${quarterEndDate}' AS DATE)
-      //     AND     category = '${category}'
-      //     AND     horizon = '${horizon}'
-      //   `
-      // });
+        pastClientForecastAccuracy[quarterName] = 0;
 
-      // Predicted Value
-      QUERIES.push({
-        resultPath: `forecast.${quarterName}`,
-        resultFormatter:(result)=>{
-          const val = _.get(result, "data[0][0]", "0")
-          return _.isNaN(_.toNumber(val)) ? 0 : _.round(_.toNumber(val))
-        },
-        query: `
-          SELECT    Sum(predicted_volume)
-          FROM      market_sensing
-          WHERE     Cast(dt_y_start AS DATE) >= Cast('${quarterStartDate}' AS DATE)
-          AND       ms_time_horizon = '${horizon}'
-          AND       category = '${category}' 
-        `
-      });
-
-      // Actual
-      QUERIES.push({
-        resultPath: `actual.${quarterName}`,
-        resultFormatter:(result)=>{
-          const val = _.get(result, "data[0][0]", "0")
-          return _.isNaN(_.toNumber(val)) ? 0 : _.round(_.toNumber(val))
-        },
-        query: `
-          SELECT    Sum(actual_volume)
-          FROM      market_sensing
-          WHERE     Cast(dt_y_start AS DATE) >= Cast('${quarterStartDate}' AS DATE)
-          AND       ms_time_horizon = '${horizon}'
-          AND       category = '${category}' 
-        `
-      });
+        const relevantRow = _.find(_.get(res, "data"), row => {
+          return row[indexOfPredictionStart] === quarterStartDate;
+        })
+        results.actual[quarterName] = _.isNaN(_.toNumber(relevantRow[indexOfActualVolume])) ? 0 : _.round(_.toNumber(relevantRow[indexOfActualVolume]));
+        results.forecast[quarterName] = _.isNaN(_.toNumber(relevantRow[indexOfPredictedVolume])) ? 0 : _.round(_.toNumber(relevantRow[indexOfPredictedVolume]));
+      }
     }
 
-    const promises = QUERIES.map(query => servicesConnector.makeAthenQuery(query.query));
-    const results = await Promise.all(promises).then(_results =>{
-      const resultsWithName = {};
-      _.forEach(_results, (_result, i) => {
-        _.set(resultsWithName, QUERIES[i].resultPath , QUERIES[i].resultFormatter ? QUERIES[i].resultFormatter(_result) : _result);
-      });
-      return resultsWithName;
-    });
 
 
     // Further processing
@@ -143,16 +115,14 @@ export const handler = async (event) => {
     return {
       'statusCode': 200,
       'content-type': 'application/json',
-      'body': results,
-      'query': QUERIES
+      'body': results
     };
 
   } catch (err) {
     return {
       'statusCode': 500,
       'content-type': 'application/json',
-      'body': err,
-      'query': QUERIES,
+      'body': err
     };
   }
 };
