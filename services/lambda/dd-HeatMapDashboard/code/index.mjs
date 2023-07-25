@@ -1,90 +1,92 @@
 import _ from "lodash";
-import dfns from "date-fns";
 import ServicesConnector from "/opt/ServicesConnector.mjs";
-import getMarketSensingBaseQuery from "./getMarketSensingBaseQuery.mjs";
-import getForecastBaseQuery from "./getForecastBaseQuery.mjs";
-
-// Constants
-const ALL_OPTION = "*";
-//
 
 const servicesConnector = new ServicesConnector(process.env.awsAccountId, process.env.region);
+const ALL = "ALL";
+const ALL_MARK = "*";
+const BY_VALUE = "BY_VALUE";
+const BY_QUANTITY = "BY_QUANTITY";
+
+const sanitizeNumeric = (val, roundDigits = 0)=>{
+  const number = _.toNumber(val);
+  if ( (!(val === 0) && !_.trim(val)) || _.isNaN(number) || _.isFinite(number) === false || _.isNumber(number) === false){
+    return null;
+  }
+  return _.round(number, roundDigits);
+}
+
+const formatResultForDashboard = (queryResult, valueOrQuantity, categories, customers)=>{
+  const varianceArray = _.map(categories, () =>{
+    return _.map(customers, () =>{
+      return null;
+    })
+  })
+  const variances = _.reduce(queryResult, (acc, v)=>{
+    const category = v[2] === ALL ? "*" : v[2];
+    const retailer = v[3] === ALL ? "*" : v[3];
+
+    const indexOfCategory = _.indexOf(categories, category);
+    const indexOfCustomer = _.indexOf(customers, retailer);
+    if (indexOfCategory === -1 || indexOfCustomer === -1){
+      return acc;
+    }
+    let msGrowth = valueOrQuantity === BY_VALUE ? v[6] : v[7];
+    let clientGrowth = valueOrQuantity === BY_VALUE ? v[8] : v[9];
+    msGrowth = sanitizeNumeric(msGrowth);
+    clientGrowth = sanitizeNumeric(clientGrowth);
+    let growthVariance = null;
+    if (msGrowth !== null && clientGrowth !== null){
+      growthVariance = sanitizeNumeric(msGrowth - clientGrowth);
+    }
+
+    _.set(acc, `[${indexOfCategory}][${indexOfCustomer}]`, growthVariance);
+
+    return acc;
+  }, varianceArray);
+  return {
+    categories: categories,
+    customers: customers,
+    variance: variances
+  }
+}
+
+const lagToModelName = (lag)=>{
+  const lagNum = _.toNumber(lag);
+  return `${lagNum}_${lagNum + 2}m`
+}
 
 export const handler = async (event) => {
-  let QUERIES = [];
+  let QUERY = "";
   try {
     await servicesConnector.init(event);
 
-    const marketSensingRefreshDateP = dfns.parse(_.get(event, "marketSensingRefreshDate"), 'yyyy-MM-dd', new Date());
-    const categories = _.split(_.get(event, "categories"), ",");
-    const customers = [ALL_OPTION, ..._.split(_.get(event, "customers"), ",")];
+    const marketSensingRefreshDate = _.get(event, "marketSensingRefreshDate");
     const valueOrQuantity = _.get(event, "valueORvolume");
-    const lags = [_.toNumber(_.get(event, "lag"))];
+    const lag = _.toNumber(_.get(event, "lag"));
+    const categories = _.split(_.get(event, "categories"), ",");
+    const customers = [ALL_MARK, ..._.split(_.get(event, "customers"), ",")];
 
-    _.forEach(lags, lag => {
-      _.forEach(categories, (category, i) => {
-        _.forEach(customers, (customer, j) => {
-          QUERIES.push({
-            resultPath: `values.msForecastGrwoth[${i}][${j}]`,
-            resultFormatter:(result)=>{
-              const val = _.get(result, "data[0][0]", "NA")
-              return _.isNaN(_.toNumber(val)) || _.trim(val) === "" ? null : _.toNumber(val)
-            },
-            query: getMarketSensingBaseQuery(marketSensingRefreshDateP, customer, category, valueOrQuantity, lag)
-          });
-          QUERIES.push({
-            resultPath: `values.internalForecastGrowth[${i}][${j}]`,
-            resultFormatter:(result)=>{
-              const val = _.get(result, "data[0][0]", "NA")
-              return _.isNaN(_.toNumber(val)) || _.trim(val) === "" ? null : _.toNumber(val)
-            },
-            query: getForecastBaseQuery(marketSensingRefreshDateP, customer, category, valueOrQuantity, lag)
-          });
-        })
-      })
-    })
+    const model = lagToModelName(lag);
 
-    console.log("QUERIES", QUERIES)
-    const promises = QUERIES.map(query => servicesConnector.makeAthenQuery(query.query));
-    const results = await Promise.all(promises).then(_results =>{
-      console.log("_results", _results);
-      const resultsWithName = {};
-      _.forEach(_results, (_result, i) => {
-        _.set(resultsWithName, QUERIES[i].resultPath , QUERIES[i].resultFormatter ? QUERIES[i].resultFormatter(_result) : _result);
-      });
-      return resultsWithName;
-    });
+    QUERY = `
+      select * from growth_rollups
+      where as_on = '${marketSensingRefreshDate}'
+      and model = '${model}'
+    `
+    const queryResult = await servicesConnector.makeAthenQuery(QUERY);
 
-    // Further Processing
-    const finalResult = {
-      categories,
-      customers
-    }
-    _.forEach(categories, (category, i) => {
-      _.forEach(customers, (customer, j) => {
-        const msGrowth = _.get(results, `values.msForecastGrwoth[${i}][${j}]`);
-        const internalGrowth = _.get(results, `values.internalForecastGrowth[${i}][${j}]`)
-        let variance = null;
-        if (msGrowth && internalGrowth){
-          variance = _.round(_.subtract(msGrowth, internalGrowth))
-        }
-        _.set(finalResult, `variance[${i}][${j}]`, variance);
-      })
-    })
-
+    const re = formatResultForDashboard(_.get(queryResult, "data", []), valueOrQuantity, categories, customers)
     return {
       'statusCode': 200,
       'content-type': 'application/json',
-      'body': finalResult,
-      'query': QUERIES,
-    };
-
+      'body': re
+    }
   } catch (err) {
     return {
       'statusCode': 500,
       'content-type': 'application/json',
       'body': err,
-      'query': QUERIES,
-    };
+      'query': QUERY,
+    }
   }
 };
