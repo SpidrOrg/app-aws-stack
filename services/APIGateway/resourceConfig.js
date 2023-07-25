@@ -122,7 +122,8 @@ module.exports = {
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "category": "$input.params('category')",
-          "horizon": "$input.params('horizon')"
+          "horizon": "$input.params('horizon')",
+          "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')"
         }`
       }
     }
