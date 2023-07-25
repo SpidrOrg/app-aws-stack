@@ -69,7 +69,7 @@ export const handler = async (event) => {
     const model = lagToModelName(lag);
 
     QUERY = `
-      select * from growth_rollups
+      select * from growth_rollup
       where as_on = '${marketSensingRefreshDate}'
       and model = '${model}'
     `

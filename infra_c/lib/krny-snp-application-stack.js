@@ -1,12 +1,12 @@
 const {Stack} = require("aws-cdk-lib");
 const {S3InfraStack} = require("./s3-infra-strack");
 const {IamInfraStack} = require("./iam-infra-stack");
-const {LambdaEdgeInfraStack} = require("./lambdaEdge-infra-stack");
+// const {LambdaEdgeInfraStack} = require("./lambdaEdge-infra-stack");
 const {CloudfrontInfraStack} = require("./cloudfront-infra-stack");
 const {GlueInfraStack} = require("./glue-infra-stack");
 const {AthenaInfraStack} = require("./athena-infra-stack");
 const {CognitoInfraStack} = require("./cognito-infra-stack");
-const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
+// const {LambdaLayerInfraStack} = require("./lambdaLayer-infra-stack");
 const {LambdaInfraStack} = require("./lambda-infra-stack");
 const {ApiGatewayInfraStack} = require("./apigateway-infra-stack");
 const {Route53InfraStack} = require("./route53-infra-stack");

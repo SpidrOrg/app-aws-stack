@@ -61,6 +61,7 @@ class LambdaInfraStack extends Stack {
         role: iam.Role.fromRoleName(this, `lambdaRole${lambdaFolder}`, lambdaRoleName),
         environment: config.environment,
         timeout: Duration.seconds(config.configuration.timeout),
+        memorySize: config.configuration.memory || 128,
         layers: config.layers.map(layerConfig =>{
           const lambdaLayerARN = lambdaLayerVersionArnByName[`lambdaLayerARN${layerConfig.name}`] //Fn.importValue(`lambdaLayerARN${layerConfig.name}`);
           return lambda.LayerVersion.fromLayerVersionArn(this, `lambdaFunctionLayer${lambdaFolder}`, lambdaLayerARN);

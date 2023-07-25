@@ -63,6 +63,11 @@
       ]
     },
     {
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::krny-spi-${aws:PrincipalTag/TenantID}${aws:PrincipalTag/EnvSuffix}/rollups/*",
+      "Effect": "Allow"
+    },
+    {
       "Effect": "Allow",
       "Action": [
         "s3:GetBucketLocation",

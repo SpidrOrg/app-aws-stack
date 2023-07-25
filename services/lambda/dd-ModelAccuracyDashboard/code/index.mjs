@@ -54,7 +54,7 @@ export const handler = async (event) => {
       const beginQuaterFirstDate = dfns.format(beginQuaterFirstDateP, DB_DATE_FORMAT);
       const Query = `
         select model, prediction_start, category, ms_predicted_volume, ms_actual_volume
-        from growth_rollups
+        from growth_rollup
         where cast(prediction_start as date) >= cast('${beginQuaterFirstDate}' as date)
         and cast(prediction_start as date) <= cast('${currentQuaterMaxDate}' as date)
         and model = '${horizon}'

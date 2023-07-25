@@ -82,7 +82,7 @@ export const handler = async (event) => {
     }
     const asOnDateInCaluseString = requiredHistoricalAsOnValues.map(v => `'${v}'`).join(",");
     QUERY = `
-      select * from growth_rollups
+      select * from growth_rollup
       where as_on IN (${asOnDateInCaluseString})
       and category = '${category}'
       and retailer = '${customer}'

@@ -108,7 +108,7 @@ export const handler = async (event) => {
     requiredHistoricalAsOnValues = Array.from(requiredHistoricalAsOnValues);
     const asOnDateInCaluseString = [marketSensingRefreshDate, ...requiredHistoricalAsOnValues].map(v => `'${v}'`).join(",");
     QUERY = `
-      select * from growth_rollups
+      select * from growth_rollup
       where as_on IN (${asOnDateInCaluseString})
       and category = '${category === ALL_MARK ? ALL : category}'
       and retailer = '${customer === ALL_MARK ? ALL : customer}'

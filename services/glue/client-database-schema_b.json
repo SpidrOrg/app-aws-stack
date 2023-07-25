@@ -830,5 +830,176 @@
         "Comment": ""
       }
     ]
+  },
+  "growth_rollup": {
+    "prefix": "rollups/growth/",
+    "serdeParameters": {
+      "separatorChar": "|"
+    },
+    "columns": [
+      {
+        "Name": "as_on",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "category",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailer",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "prediction_start",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "prediction_end",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_growth_by_val",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_growth_by_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "original_client_forecast_by_val",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "original_client_forecast_by_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "adj_client_forecast_by_val",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "adj_client_forecast_by_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_growth_by_val",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_growth_by_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_market_share_pct",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "implied_market_share_pct_by_val",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "implied_market_share_pct_by_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "total_forecast_gsv",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "total_forecast_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_gsv",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "actual_qty",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "client_model",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "key_demand_drivers",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_predicted_volume",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "ms_actual_volume",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
+  },
+  "filter_rollup": {
+    "prefix": "rollups/filters/",
+    "serdeParameters": {
+      "separatorChar": "|"
+    },
+    "columns": [
+      {
+        "Name": "categories",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "retailers",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "horizons",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "msmodel",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "dtxs",
+        "Type": "string",
+        "Comment": ""
+      },
+      {
+        "Name": "client_models",
+        "Type": "string",
+        "Comment": ""
+      }
+    ]
   }
 }

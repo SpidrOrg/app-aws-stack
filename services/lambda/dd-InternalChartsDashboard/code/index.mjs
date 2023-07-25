@@ -99,7 +99,7 @@ export const handler = async (event) => {
     const predictionStartDate = dfns.format(dfns.add(marketSensingRefreshDateP, {years: -1}), DB_DATE_FORMAT);
     const predictionEndDate = dfns.format(dfns.add(marketSensingRefreshDateP, {years: 1}), DB_DATE_FORMAT);
     QUERY = `
-      select * from growth_rollups
+      select * from growth_rollup
       where model = '${msTimeHorizon}'
       and category = '${category}'
       and retailer = '${customer === ALL_MARK ? ALL : customer}'
