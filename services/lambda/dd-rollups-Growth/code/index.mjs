@@ -21,8 +21,6 @@ const msModelToClientModelMapping = {
   "7_9m": "7-9 Months",
   "10_12m": "10-12 Months"
 }
-const asOfStart = '2018-01-01';
-const asOfEnd = '2018-12-01';
 
 const sanitizeRow = (row)=>{
   // Index 6 to 20 are numeric fields
@@ -39,6 +37,8 @@ const sanitizeRow = (row)=>{
 const servicesConnector = new ServicesConnector(process.env.awsAccountId, process.env.region);
 
 export const handler = async (event) => {
+  const asOfStart = _.get(event, "asOfStart");
+  const asOfEnd = _.get(event, "asOfEnd");
   let QUERIES = [];
   try {
     await servicesConnector.init(event);

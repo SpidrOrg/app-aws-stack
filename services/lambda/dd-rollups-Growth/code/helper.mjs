@@ -91,12 +91,12 @@ const getAllRetailersMsGrowthByQuantity = (msDataRows, dtYStart, yAgoDtYStart, h
   const averageActualVolume = actualVolume.sum / actualVolume.count;
   const averageActualVolumeRetailPrice = actualVolume.retailPrice.sum / actualVolume.retailPrice.count;
 
-  if (isNumeric(averagePredictedVolume)
-    && isNumeric(averagePredictedVolumeRetailPrice)
-    && isNumeric(averageActualVolume)
-    && isNumeric(averageActualVolumeRetailPrice)
+  if (isNumeric(averagePredictedVolume) && _.toNumber(averagePredictedVolume) !== 0
+    && isNumeric(averagePredictedVolumeRetailPrice) && _.toNumber(averagePredictedVolumeRetailPrice) !== 0
+    && isNumeric(averageActualVolume) && _.toNumber(averageActualVolume) !== 0
+    && isNumeric(averageActualVolumeRetailPrice) && _.toNumber(averageActualVolumeRetailPrice) !== 0
   ){
-    growthByQuantity = _.round(((averagePredictedVolume / averagePredictedVolumeRetailPrice) / (averageActualVolume / averageActualVolumeRetailPrice) - 1) * 100, 2);
+    growthByQuantity = getPercentage((averagePredictedVolume / averagePredictedVolumeRetailPrice), (averageActualVolume / averageActualVolumeRetailPrice));
   }
 
   return growthByQuantity;
@@ -284,5 +284,3 @@ export {
   getActualMarketSharePct,
   getPredictedAndActualVolume
 }
-
-
