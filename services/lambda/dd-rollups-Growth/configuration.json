@@ -4,7 +4,7 @@
   "configuration": {
     "iamRole": "data-fetch-lambda-service-role",
     "timeout": 900,
-    "memory": 10240
+    "memory": 3008
   },
   "environment": {
     "awsAccountId": ":123456789012:",
