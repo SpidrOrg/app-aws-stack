@@ -104,6 +104,8 @@ export const handler = async (event) => {
       requiredHistoricalAsOnValues.add(dfns.format(dfns.add(marketSensingRefreshDateP, {months: -(j + 6 + 3)}), DB_DATE_FORMAT));
       // 10_12m
       requiredHistoricalAsOnValues.add(dfns.format(dfns.add(marketSensingRefreshDateP, {months: -(j + 9 + 3)}), DB_DATE_FORMAT));
+      // // 13_15m
+      // requiredHistoricalAsOnValues.add(dfns.format(dfns.add(marketSensingRefreshDateP, {months: -(j + 12 + 3)}), DB_DATE_FORMAT));
     }
     requiredHistoricalAsOnValues = Array.from(requiredHistoricalAsOnValues);
     const asOnDateInCaluseString = [marketSensingRefreshDate, ...requiredHistoricalAsOnValues].map(v => `'${v}'`).join(",");

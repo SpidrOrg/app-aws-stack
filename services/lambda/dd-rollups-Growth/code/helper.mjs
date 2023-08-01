@@ -139,7 +139,9 @@ const getOneRetailersMsGrowthByValueAndQuantity = (msDataRows, dtYStart, yAgoDtY
   growthByValue = getPercentage(sumOfAllocatedPredictedMonthlyVolume, sumOfActualAllocatedVolumeShare);
   const a = sumOfAllocatedPredictedMonthlyVolume/averageRetailPrice;
   const b = sumOfActualAllocatedVolumeShare/averageRetailPrice;
-  growthByQuantity = getPercentage(a, b);
+  if (a !== 0 && b !== 0){
+    growthByQuantity = getPercentage(a, b);
+  }
 
   return {growthByValue, growthByQuantity}
 }
@@ -221,10 +223,17 @@ const getGrowthPerClientDataValues = (
 
   const originalClientForecastGrowthByValue = getPercentage(sumOfOriginalForecaseGsv, sumOfActualYagoNetGsv);
   const originalClientForecastGrowthByQty = getPercentage(sumOfOriginalForecaseQty, sumOfActualYagoNetQty);
-  const adjClientForecastGrowthByValue = getPercentage(sumOfAdjForecaseGsv, sumOfActualYagoNetGsv);
-  const adjClientForecastGrowthByQty = getPercentage(sumOfAdjForecaseQty, sumOfActualYagoNetQty);
+  let adjClientForecastGrowthByValue = getPercentage(sumOfAdjForecaseGsv, sumOfActualYagoNetGsv);
+  let adjClientForecastGrowthByQty = getPercentage(sumOfAdjForecaseQty, sumOfActualYagoNetQty);
   const actualGrowthByValue = getPercentage(sumOfActualNetGsv, sumOfActualYagoNetGsv);
   const actualGrowthByQty = getPercentage(sumOfActualNetQty, sumOfActualYagoNetQty);
+
+  if (sumOfOriginalForecaseGsv === adjClientForecastGrowthByValue){
+    adjClientForecastGrowthByValue = null;
+  }
+  if (sumOfOriginalForecaseQty === adjClientForecastGrowthByQty){
+    adjClientForecastGrowthByQty = null;
+  }
 
   return {
     sumOfOriginalForecaseGsv,

@@ -11089,7 +11089,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$p = {
+const _sfc_main$r = {
   name: "SideBar",
   props: {
     orgLogo: {
@@ -11113,50 +11113,50 @@ const _sfc_main$p = {
     }
   }
 };
-const _hoisted_1$m = { class: "logo-area" };
-const _hoisted_2$k = { class: "logo" };
-const _hoisted_3$k = ["src"];
-const _hoisted_4$k = { class: "menu-area" };
-const _hoisted_5$h = ["onClick"];
-const _hoisted_6$g = { class: "menu-item-content" };
-const _hoisted_7$f = { class: "menu-item-content-image" };
-const _hoisted_8$e = ["src"];
-const _hoisted_9$d = ["src"];
-function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_1$o = { class: "logo-area" };
+const _hoisted_2$m = { class: "logo" };
+const _hoisted_3$m = ["src"];
+const _hoisted_4$m = { class: "menu-area" };
+const _hoisted_5$j = ["onClick"];
+const _hoisted_6$i = { class: "menu-item-content" };
+const _hoisted_7$h = { class: "menu-item-content-image" };
+const _hoisted_8$g = ["src"];
+const _hoisted_9$f = ["src"];
+function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$m, [
-      createBaseVNode("div", _hoisted_2$k, [
+    createBaseVNode("div", _hoisted_1$o, [
+      createBaseVNode("div", _hoisted_2$m, [
         createBaseVNode("img", {
           class: normalizeClass($props.isSidebarCollapsed ? "logoImageSmall" : "logoImageLarge"),
           src: $props.orgLogo
-        }, null, 10, _hoisted_3$k)
+        }, null, 10, _hoisted_3$m)
       ])
     ]),
-    createBaseVNode("div", _hoisted_4$k, [
+    createBaseVNode("div", _hoisted_4$m, [
       (openBlock(true), createElementBlock(Fragment, null, renderList($props.PAGE_KEYS, (pageKey) => {
         return openBlock(), createElementBlock("div", {
           key: pageKey,
           class: normalizeClass(`menu-item ${pageKey === $props.activePageKey ? "menu-item-selected" : ""}`),
           onClick: ($event) => $options.menuItemClickHandler(pageKey)
         }, [
-          createBaseVNode("div", _hoisted_6$g, [
-            createBaseVNode("div", _hoisted_7$f, [
+          createBaseVNode("div", _hoisted_6$i, [
+            createBaseVNode("div", _hoisted_7$h, [
               pageKey === $props.activePageKey ? (openBlock(), createElementBlock("img", {
                 key: 0,
                 src: $props.PAGES_CONFIG[pageKey].icon_active
-              }, null, 8, _hoisted_8$e)) : (openBlock(), createElementBlock("img", {
+              }, null, 8, _hoisted_8$g)) : (openBlock(), createElementBlock("img", {
                 key: 1,
                 src: $props.PAGES_CONFIG[pageKey].icon
-              }, null, 8, _hoisted_9$d))
+              }, null, 8, _hoisted_9$f))
             ]),
             createBaseVNode("div", null, toDisplayString($props.PAGES_CONFIG[pageKey].label), 1)
           ])
-        ], 10, _hoisted_5$h);
+        ], 10, _hoisted_5$j);
       }), 128))
     ])
   ], 64);
 }
-const SideBar = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-cd244289"]]);
+const SideBar = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$r], ["__scopeId", "data-v-cd244289"]]);
 const AnyUser = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAhCAYAAAC803lsAAAKNGlDQ1BJQ0MgUHJvZmlsZQAASImVlgdQU+kWx7970xuBJIQOoXekE0B6jYAgVRCVkECoMYQqYEMWV3AtqEizgasgCq4uRdaKBQsioICKuiCLgLIuFkAFzV5k1y1v5r15/5lvzm/O/e655ysz9w8A6RBXJEqCpQFIFqaJA71cWcvDI1i454AIaIABpIEll5cqcgkI8AWI/oz/1HQfgObjPeP5Wv/5/L+Kxo9J5QEARSKcwE/lJSN8A2E7nkicBgCMRlgzM000z3oIM8RIgwgvnmfBAgfMc/QC87/MCQ50QzgLADyZyxULACDmI3lWBk+A1CEeQdhUyI8XInwfYUdeHBd5j8RA2Cg5ec08OyOsh8wXIRyHMDv6bzUF/6gf/bU+lyv4ygvr+iJpb3c/DsuNmxQfLeamxfD/zy3630pOSv/zW/MnQY4RhgQhURUZysAbuAM/wAEs4Aa4IAnEg2ggRigNxACklbSYrLT5F93WiNaK4wVxaSwX5BRjWBwhz8SIZW5qbg7A/J1YKP824MsXIOaFv3JrqpDtmQIAteuvXHQJAM1bAJB/9FdO6wAAVGRvmtp46eKMhdz88QIMctuoyG1TQDrWBHrAGJgDa2APnIEHWAL8QTAIB6sAD8SBZKTzTJALNoECUAR2gr2gHBwE1aAGnASnQTM4By6D6+A26AK9YAAMghHwEkyCaTALQRAOokB0SAFSg7QhQ8gcYkOOkAfkCwVC4VAUJICEUDqUC22GiqBiqBw6DNVCP0BnocvQTagbeggNQePQG+gjjILJMANWgXXgRTAbdoF94GB4JSyAU+BsOB/eDpfCVfAJuAm+DN+Ge+FB+CU8hQIoEoqJUkcZo9goN5Q/KgIVixKj1qMKUSWoKlQ9qhXVjrqHGkRNoD6gsWg6moU2RtujvdEhaB46Bb0evQ1djq5BN6Gvou+hh9CT6M8YCkYZY4ixw3AwyzECTCamAFOCOYppxFzD9GJGMNNYLJaJ1cXaYL2x4dgEbA52G3Y/tgF7CduNHcZO4XA4BZwhzgHnj+Pi0nAFuDLcCdxFXA9uBPceT8Kr4c3xnvgIvBCfhy/BH8dfwPfgR/GzBGmCNsGO4E/gE9YSdhCOEFoJdwkjhFmiDFGX6EAMJiYQNxFLifXEa8THxLckEkmDZEtaRoonbSSVkk6RbpCGSB/INLIB2Y0cSU4nbycfI18iPyS/pVAoOhRnSgQljbKdUku5QnlKeS9FlzKR4kjxpTZIVUg1SfVIvaISqNpUF+oqaja1hHqGepc6IU2Q1pF2k+ZKr5eukD4r3S89JUOXMZPxl0mW2SZzXOamzBgNR9OhedD4tHxaNe0KbZiOomvS3eg8+mb6Efo1+ggDy9BlcBgJjCLGSUYnY1KWJmspGyqbJVshe152kIli6jA5zCTmDuZpZh/zo5yKnItcjNxWuXq5HrkZeSV5Z/kY+UL5Bvle+Y8KLAUPhUSFXQrNCk8U0YoGissUMxUPKF5TnFBiKNkr8ZQKlU4rPVKGlQ2UA5VzlKuVO5SnVFRVvFREKmUqV1QmVJmqzqoJqntUL6iOq9HVHNXi1faoXVR7wZJlubCSWKWsq6xJdWV1b/V09cPqneqzGroaIRp5Gg0aTzSJmmzNWM09mm2ak1pqWn5auVp1Wo+0Cdps7Tjtfdrt2jM6ujphOlt0mnXGdOV1ObrZunW6j/Uoek56KXpVevf1sfps/UT9/fpdBrCBlUGcQYXBXUPY0Now3nC/YbcRxsjWSGhUZdRvTDZ2Mc4wrjMeMmGa+JrkmTSbvFqktShi0a5F7Ys+m1qZJpkeMR0wo5ktMcszazV7Y25gzjOvML9vQbHwtNhg0WLx2tLQMsbygOUDK7qVn9UWqzarT9Y21mLreutxGy2bKJtKm342gx3A3sa+YYuxdbXdYHvO9oOdtV2a3Wm73+yN7RPtj9uPLdZdHLP4yOJhBw0HrsNhh0FHlmOU4yHHQSd1J65TldMzZ01nvvNR51EXfZcElxMur1xNXcWuja4zbnZu69wuuaPcvdwL3Ts9aB4hHuUeTz01PAWedZ6TXlZeOV6XvDHePt67vPs5Khwep5YzucRmybolV33IPkE+5T7PfA18xb6tfrDfEr/dfo+Xai8VLm32B/4c/93+TwJ0A1ICflqGXRawrGLZ80CzwNzA9iB60Oqg40HTwa7BO4IHQvRC0kPaQqmhkaG1oTNh7mHFYYPLFy1ft/x2uGJ4fHhLBC4iNOJoxNQKjxV7V4xEWkUWRPat1F2ZtfLmKsVVSavOr6au5q4+E4WJCos6HjXH9edWcaeiOdGV0ZM8N94+3ku+M38PfzzGIaY4ZjTWIbY4dkzgINgtGI9ziiuJm4h3iy+Pf53gnXAwYSbRP/FYoiQpLKkhGZ8clXxWSBMmCq+uUV2TtaZbZCgqEA2m2KXsTZkU+4iPpkKpK1Nb0hjIz7cjXS/9m/ShDMeMioz3maGZZ7JksoRZHWsN1m5dO5rtmf19DjqHl9OWq567KXdoncu6w+uh9dHr2zZobsjfMLLRa2PNJuKmxE138kzzivPebQ7b3Jqvkr8xf/gbr2/qCqQKxAX9W+y3HPwW/W38t51bLbaWbf1cyC+8VWRaVFI0t4237dZ3Zt+VfifZHru9c4f1jgM7sTuFO/t2Oe2qKZYpzi4e3u23u2kPa0/hnnd7V++9WWJZcnAfcV/6vsFS39KWMq2ynWVz5XHlvRWuFQ2VypVbK2f28/f3HHA+UH9Q5WDRwY+H4g89OOx1uKlKp6qkGludUf38SOiR9u/Z39ceVTxadPTTMeGxwZrAmqu1NrW1x5WP76iD69Lrxk9Enug66X6ypd64/nADs6HoFDiVfurFD1E/9J32Od12hn2m/kftHysb6Y2FTVDT2qbJ5rjmwZbwlu6zS862tdq3Nv5k8tOxc+rnKs7Lnt9xgXgh/4LkYvbFqUuiSxOXBZeH21a3DVxZfuX+1WVXO6/5XLtx3fP6lXaX9os3HG6cu2l38+wt9q3m29a3mzqsOhrvWN1p7LTubLprc7ely7artXtx94Uep57L99zvXb/PuX+7d2lvd19I34P+yP7BB/wHYw+THr5+lPFodmDjY8zjwifST0qeKj+t+ln/54ZB68HzQ+5DHc+Cng0M84Zf/pL6y9xI/nPK85JRtdHaMfOxc+Oe410vVrwYeSl6OTtR8KvMr5Wv9F79+Jvzbx2TyydHXotfS95se6vw9tg7y3dtUwFTT6eTp2dnCt8rvK/5wP7Q/jHs4+hs5hxurvST/qfWzz6fH0uSJRIRV8z9YgVQyIBjYwF4cwwASjgA9C7ES61Y8Gx/eBtIzWIBJXNf+Ysf+ZqXLPi6L7IGoLofgOAcAHzvAFBWDoAOUp+KeM0AKpK3B9A0+uv4Q6mxFuYLdckuiDV5IpG8RXwnrhiATzslktkqieRTNdLsAACXsha84rx83wGgrTNPA8O+r/7tzxZ85N/W+O8Ivnbwj/g7oifQY3gB+70AAAA4ZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAKgAgAEAAAAAQAAACKgAwAEAAAAAQAAACEAAAAAZhL5vgAAAwdJREFUWAnNl0ty2kAQhnnErHjIO6qMiXIDfILADbzNynADbhD7BKmcIOQEjk8ANwjZZZcJ9oKsgl1eucom3x8krBIjaSSSKnfVMDM93T2feloju1R6IVIuwuEh9Xq9V6lU+qH/er2eX19ffwnnefvcIN1u9z2bjGmeZTODbrJYLC4sa6kqZxBlodFoXJbL5b4ikoEZ428MVzRBvaX1aJL53d3dYIVsptm/r7JNNhYRCPP09DS6ubmZxX2Pj49PgfuAvtdqtS7hGMRtkuaVpIWong2GQSYMdTGwQcheNaJ1hoaM9TnGcTRO2tgJBAjVheTcIH9HCT9aV8aC5dAvwfpZnVkjR0dHvWq1+hUXQxG+eXZNH5GN31h4ZOgEtnm6damUmREC+UEQFWYeuZLx4+NjWMCpvpkgeHtBBD3hfxMXkJV2p0589a5Csb6WLb1x8ckEoT5mCqS3QHeJS9B2u+0Hb1np/v5+7uKTCUKhrYCYKRh3idNbcHBwcC57ZOJ6qWWCKBpZGdGteMpxcMVLbRWtY3emRQr9wmpkUVYtuh2VnqrZbP5ig1MW+4x92i3XuAmNO51On9v0EzZD6cjiiNd9prGLlF2MQpvIFe6HOnpD82mh6ChHeb/EThkJdyAD3w8PD6/Y6Ce6dtDCAjbMP3Ic78iEU4Fiv5VtRoLvgscmhvT6snh4eJgsl0ujcZL4CGsrFXWSjd6iWq021Ho0PsDn0kmiID+Y+xRmj9twwrhHM8AMsmCwS5QAYoqBT5uTsRHfIn0ySoBs9995ayC+xXggJ5qeZKpgjHOLBUJxrZnbAdFuSvO+MDaItOOzguwLkxdC+yWCJMHozwKtJUkRCMVKBZFB/Jgo5mkSjPSqKdx8mgpzkHYc2GwlE0SWMRjPBhP8AVUIQns4gWTBRCA8bHNlQrElziAytmWGi/BMGWK5MIRi5wKRQxwG1YS2FwT++UHkJBhuxRMuv8+aI4WOY+O6+XX+ByvqFI75wg75Is/oJ6GuaJ/7aOIb/QsIxdwbJA5WdP5iQP4ABFJSR4UL5eYAAAAASUVORK5CYII=";
 var runtime = { exports: {} };
 (function(module2) {
@@ -33573,7 +33573,7 @@ async function invokePostApi(apiName, payload) {
   return (_a2 = response == null ? void 0 : response.data) == null ? void 0 : _a2.body;
 }
 const TheHeader_vue_vue_type_style_index_0_lang = "";
-const _sfc_main$o = {
+const _sfc_main$q = {
   name: "TheHeader",
   data() {
     return {
@@ -33603,32 +33603,32 @@ const _sfc_main$o = {
     }
   }
 };
-const _hoisted_1$l = { class: "account-control" };
-const _hoisted_2$j = { class: "control-section" };
-const _hoisted_3$j = { class: "dropdown-container" };
-const _hoisted_4$j = { class: "user-icon" };
-const _hoisted_5$g = ["src"];
-const _hoisted_6$f = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
-const _hoisted_7$e = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
-const _hoisted_8$d = {
+const _hoisted_1$n = { class: "account-control" };
+const _hoisted_2$l = { class: "control-section" };
+const _hoisted_3$l = { class: "dropdown-container" };
+const _hoisted_4$l = { class: "user-icon" };
+const _hoisted_5$i = ["src"];
+const _hoisted_6$h = /* @__PURE__ */ createBaseVNode("span", { class: "dropdown-text" }, "My Account", -1);
+const _hoisted_7$g = /* @__PURE__ */ createBaseVNode("div", { class: "down-arrow" }, null, -1);
+const _hoisted_8$f = {
   key: 0,
   class: "dropdown-menu"
 };
-function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("div", _hoisted_1$l, [
-    createBaseVNode("div", _hoisted_2$j, [
-      createBaseVNode("div", _hoisted_3$j, [
+function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", _hoisted_1$n, [
+    createBaseVNode("div", _hoisted_2$l, [
+      createBaseVNode("div", _hoisted_3$l, [
         createBaseVNode("button", {
           class: "dropdown-button",
           onClick: _cache[0] || (_cache[0] = (...args) => $options.dropdownClickHandler && $options.dropdownClickHandler(...args))
         }, [
-          createBaseVNode("div", _hoisted_4$j, [
-            createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$g)
+          createBaseVNode("div", _hoisted_4$l, [
+            createBaseVNode("img", { src: $data.AnyUser }, null, 8, _hoisted_5$i)
           ]),
-          _hoisted_6$f,
-          _hoisted_7$e
+          _hoisted_6$h,
+          _hoisted_7$g
         ]),
-        $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$d, [
+        $data.dropdownMenuIsShown ? (openBlock(), createElementBlock("div", _hoisted_8$f, [
           createBaseVNode("a", {
             class: normalizeClass($data.selectedOption === 1 ? "selected" : "menu-option")
           }, " Hello! " + toDisplayString($props.userdata.userName) + toDisplayString($props.userdata.isAdmin ? "(Admin)" : ""), 3),
@@ -33641,7 +33641,7 @@ function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$o]]);
+const TheHeader = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$q]]);
 const TheSckeleton_vue_vue_type_style_index_0_scoped_f22ce4db_lang = "";
 const VApp$1 = "";
 const IN_BROWSER = typeof window !== "undefined";
@@ -35370,7 +35370,7 @@ const VApp = defineComponent({
 });
 const DESKTOP_SCREEN_MIN_WIDTH_PIXELS = 1440;
 const FAQS_URL = "https://atkearney.sharepoint.com/:b:/s/SensingSolution/ESW_yfK8RxJEtfWR2Uv-UpsBeESf21lYRT_6XYFLC38B9w?e=1RW4dU";
-const _sfc_main$n = {
+const _sfc_main$p = {
   name: "TheSckeleton",
   components: {
     SideBar,
@@ -35460,23 +35460,23 @@ const _sfc_main$n = {
   }
 };
 const _withScopeId$1 = (n2) => (pushScopeId("data-v-f22ce4db"), n2 = n2(), popScopeId(), n2);
-const _hoisted_1$k = { class: "screen" };
-const _hoisted_2$i = { class: "main-area" };
-const _hoisted_3$i = { class: "main-content-wrapper" };
-const _hoisted_4$i = { class: "control-container" };
-const _hoisted_5$f = { class: "control-section" };
-const _hoisted_6$e = { class: "content-container" };
-const _hoisted_7$d = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
+const _hoisted_1$m = { class: "screen" };
+const _hoisted_2$k = { class: "main-area" };
+const _hoisted_3$k = { class: "main-content-wrapper" };
+const _hoisted_4$k = { class: "control-container" };
+const _hoisted_5$h = { class: "control-section" };
+const _hoisted_6$g = { class: "content-container" };
+const _hoisted_7$f = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
   ])
 ], -1));
-function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_SideBar = resolveComponent("SideBar");
   const _component_TheHeader = resolveComponent("TheHeader");
   return openBlock(), createBlock(VApp, null, {
     default: withCtx(() => [
-      createBaseVNode("div", _hoisted_1$k, [
+      createBaseVNode("div", _hoisted_1$m, [
         createBaseVNode("div", {
           class: "sidebar",
           onMouseover: _cache[0] || (_cache[0] = (...args) => $options.expandSidebarHandler && $options.expandSidebarHandler(...args)),
@@ -35491,17 +35491,17 @@ function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
             onPageSelected: $options.pageSelectionHandler
           }, null, 8, ["org-logo", "isSidebarCollapsed", "PAGES_CONFIG", "PAGE_KEYS", "activePageKey", "onPageSelected"])
         ], 32),
-        createBaseVNode("div", _hoisted_2$i, [
-          createBaseVNode("div", _hoisted_3$i, [
-            createBaseVNode("div", _hoisted_4$i, [
-              createBaseVNode("div", _hoisted_5$f, [
+        createBaseVNode("div", _hoisted_2$k, [
+          createBaseVNode("div", _hoisted_3$k, [
+            createBaseVNode("div", _hoisted_4$k, [
+              createBaseVNode("div", _hoisted_5$h, [
                 createVNode(_component_TheHeader, { userdata: $props.userdata }, null, 8, ["userdata"])
               ])
             ]),
-            createBaseVNode("div", _hoisted_6$e, [
+            createBaseVNode("div", _hoisted_6$g, [
               (openBlock(), createBlock(resolveDynamicComponent($options.ActiveComponent), normalizeProps(guardReactiveProps({ userdata: $props.userdata })), null, 16))
             ]),
-            _hoisted_7$d
+            _hoisted_7$f
           ])
         ])
       ])
@@ -35509,10 +35509,10 @@ function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
   });
 }
-const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n], ["__scopeId", "data-v-f22ce4db"]]);
+const TheSckeleton = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$p], ["__scopeId", "data-v-f22ce4db"]]);
 const KearneyHomeLogo = "/assets/kearneyHomeLogo.844c6fa2.png";
 const kearneyInfographicImage = "/assets/kearneyInfographic.040bba2c.png";
-const _sfc_main$m = {
+const _sfc_main$o = {
   name: "LoginButton",
   props: {
     label: {
@@ -35530,14 +35530,14 @@ const _sfc_main$m = {
     }
   }
 };
-function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("button", {
     class: normalizeClass(`tw-px-4 tw-py-2 tw-text-white ${$props.type === "primary" ? "tw-bg-brand-primary" : ""}`)
   }, toDisplayString($props.label), 3);
 }
-const LoginButton = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$m]]);
+const LoginButton = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$o]]);
 const LoginPage_vue_vue_type_style_index_0_scoped_992a43da_lang = "";
-const _sfc_main$l = {
+const _sfc_main$n = {
   name: "LoginPage",
   components: {
     LoginButton
@@ -35555,43 +35555,43 @@ const _sfc_main$l = {
   }
 };
 const _withScopeId = (n2) => (pushScopeId("data-v-992a43da"), n2 = n2(), popScopeId(), n2);
-const _hoisted_1$j = { class: "tw-flex tw-h-screen tw-flex-col" };
-const _hoisted_2$h = { class: "tw-grid tw-grid-cols-12 tw-my-auto" };
-const _hoisted_3$h = { class: "tw-col-span-6 tw-col-start-1 tw-self-center tw-justify-self-center" };
-const _hoisted_4$h = ["src"];
-const _hoisted_5$e = { class: "tw-col-span-6 tw-col-start-7 tw-px-20 desktop:tw-px-10 small-laptop:tw-px-10" };
-const _hoisted_6$d = { class: "tw-flex tw-flex-col tw-justify-center tw-h-full" };
-const _hoisted_7$c = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-4xl desktop:tw-text-3xl small-laptop:tw-text-xl tw-text-black tw-font-medium" }, " Kearney\u2019s Sensing Solution ", -1));
-const _hoisted_8$c = { class: "tw-py-6 desktop:tw-py-2 small-laptop:tw-py-1" };
-const _hoisted_9$c = ["src"];
-const _hoisted_10$a = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-lg desktop:tw-text-base small-laptop:tw-text-sm tw-text-black tw-break-words" }, " Demand Dashboard uses rigorous analytics to project demand growth and compare against internal forecasts. The goal is to help users identify \u201Ctriggers\u201D to review projection calibration. ", -1));
-const _hoisted_11$9 = { class: "tw-pt-8 small-laptop:tw-pt-5 small-laptop:tw-pb-2" };
-const _hoisted_12$8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5" }, [
+const _hoisted_1$l = { class: "tw-flex tw-h-screen tw-flex-col" };
+const _hoisted_2$j = { class: "tw-grid tw-grid-cols-12 tw-my-auto" };
+const _hoisted_3$j = { class: "tw-col-span-6 tw-col-start-1 tw-self-center tw-justify-self-center" };
+const _hoisted_4$j = ["src"];
+const _hoisted_5$g = { class: "tw-col-span-6 tw-col-start-7 tw-px-20 desktop:tw-px-10 small-laptop:tw-px-10" };
+const _hoisted_6$f = { class: "tw-flex tw-flex-col tw-justify-center tw-h-full" };
+const _hoisted_7$e = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-4xl desktop:tw-text-3xl small-laptop:tw-text-xl tw-text-black tw-font-medium" }, " Kearney\u2019s Sensing Solution ", -1));
+const _hoisted_8$e = { class: "tw-py-6 desktop:tw-py-2 small-laptop:tw-py-1" };
+const _hoisted_9$e = ["src"];
+const _hoisted_10$c = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-lg desktop:tw-text-base small-laptop:tw-text-sm tw-text-black tw-break-words" }, " Demand Dashboard uses rigorous analytics to project demand growth and compare against internal forecasts. The goal is to help users identify \u201Ctriggers\u201D to review projection calibration. ", -1));
+const _hoisted_11$b = { class: "tw-pt-8 small-laptop:tw-pt-5 small-laptop:tw-pb-2" };
+const _hoisted_12$9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "tw-px-5" }, [
   /* @__PURE__ */ createBaseVNode("footer", { class: "tw-w-full tw-flex tw-p-4 tw-border-t tw-border-solid tw-border-brand-gray-2" }, [
     /* @__PURE__ */ createBaseVNode("div", { class: "tw-ml-auto tw-flex tw-items-center" }, " Copyright @ Kearney 2023 ")
   ])
 ], -1));
-function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_LoginButton = resolveComponent("LoginButton");
-  return openBlock(), createElementBlock("section", _hoisted_1$j, [
-    createBaseVNode("div", _hoisted_2$h, [
-      createBaseVNode("div", _hoisted_3$h, [
+  return openBlock(), createElementBlock("section", _hoisted_1$l, [
+    createBaseVNode("div", _hoisted_2$j, [
+      createBaseVNode("div", _hoisted_3$j, [
         createBaseVNode("img", {
           class: "kearney-home-logo",
           src: $data.KearneyHomeLogo
-        }, null, 8, _hoisted_4$h)
+        }, null, 8, _hoisted_4$j)
       ]),
-      createBaseVNode("div", _hoisted_5$e, [
-        createBaseVNode("div", _hoisted_6$d, [
-          _hoisted_7$c,
-          createBaseVNode("div", _hoisted_8$c, [
+      createBaseVNode("div", _hoisted_5$g, [
+        createBaseVNode("div", _hoisted_6$f, [
+          _hoisted_7$e,
+          createBaseVNode("div", _hoisted_8$e, [
             createBaseVNode("img", {
               class: "kearney-infographic-image",
               src: $data.kearneyInfographicImage
-            }, null, 8, _hoisted_9$c)
+            }, null, 8, _hoisted_9$e)
           ]),
-          _hoisted_10$a,
-          createBaseVNode("div", _hoisted_11$9, [
+          _hoisted_10$c,
+          createBaseVNode("div", _hoisted_11$b, [
             createVNode(_component_LoginButton, {
               label: "Proceed to Sign In",
               type: "primary",
@@ -35601,11 +35601,11 @@ function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
         ])
       ])
     ]),
-    _hoisted_12$8
+    _hoisted_12$9
   ]);
 }
-const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$l], ["__scopeId", "data-v-992a43da"]]);
-const _sfc_main$k = {
+const LoginPage = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$n], ["__scopeId", "data-v-992a43da"]]);
+const _sfc_main$m = {
   name: "App",
   components: {
     LoginPage,
@@ -35663,7 +35663,7 @@ const _sfc_main$k = {
     }
   }
 };
-function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_LoginPage = resolveComponent("LoginPage");
   const _component_TheSckeleton = resolveComponent("TheSckeleton");
   return openBlock(), createElementBlock(Fragment, null, [
@@ -35678,7 +35678,7 @@ function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8, ["org-logo", "org-logo-small", "userdata", "PAGES_CONFIG", "PAGE_KEYS"])) : createCommentVNode("", true)
   ], 64);
 }
-const App = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$k]]);
+const App = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$m]]);
 function toInteger(dirtyNumber) {
   if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
     return NaN;
@@ -55038,10 +55038,10 @@ const VSwitch = defineComponent({
     return {};
   }
 });
-const BY_VALUE$1 = "BY_VALUE";
-const BY_QUANTITY$1 = "BY_QUANTITY";
-const ALL_OPTION$1 = "All";
-const _sfc_main$j = {
+const BY_VALUE$2 = "BY_VALUE";
+const BY_QUANTITY$2 = "BY_QUANTITY";
+const ALL_OPTION$2 = "All";
+const _sfc_main$l = {
   name: "FilterSelection",
   props: {
     isDataLoading: { type: Boolean, default: false }
@@ -55063,13 +55063,13 @@ const _sfc_main$j = {
           selected: null,
           filterlabel: "Customers"
         },
-        valueOrQuantity: BY_QUANTITY$1
+        valueOrQuantity: BY_QUANTITY$2
       },
       currency: "USD",
       dataLoaded: false,
-      BY_VALUE: BY_VALUE$1,
-      BY_QUANTITY: BY_QUANTITY$1,
-      ALL_OPTION: ALL_OPTION$1,
+      BY_VALUE: BY_VALUE$2,
+      BY_QUANTITY: BY_QUANTITY$2,
+      ALL_OPTION: ALL_OPTION$2,
       includes: _.includes
     };
   },
@@ -55081,7 +55081,7 @@ const _sfc_main$j = {
       this.filters.refreshDates.items = _.get(options, "updateDates");
     }
     this.filters.customers.items = _.concat(
-      ALL_OPTION$1,
+      ALL_OPTION$2,
       this.filters.customers.items
     );
     let earliestRefreshDate = null;
@@ -55147,7 +55147,7 @@ const _sfc_main$j = {
       isInstant ? this.filterUpdatedInstant() : this.filtersUpdated();
     },
     valueOrQuantityUpdate(event, isInstant = false) {
-      this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE$1 ? BY_QUANTITY$1 : BY_VALUE$1;
+      this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE$2 ? BY_QUANTITY$2 : BY_VALUE$2;
       isInstant ? this.filterUpdatedInstant() : this.filtersUpdated();
     },
     filtersUpdated() {
@@ -55158,30 +55158,30 @@ const _sfc_main$j = {
     }
   }
 };
-const _hoisted_1$i = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_2$g = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_3$g = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$k = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$i = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$i = /* @__PURE__ */ createBaseVNode("label", {
   for: "date-picker",
   class: "tw-text-sm"
 }, "Month & Year", -1);
-const _hoisted_4$g = { class: "tw-text-base" };
-const _hoisted_5$d = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_6$c = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_4$i = { class: "tw-text-base" };
+const _hoisted_5$f = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_6$e = /* @__PURE__ */ createBaseVNode("label", {
   for: "category",
   class: "tw-text-sm"
 }, "Category", -1);
-const _hoisted_7$b = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_8$b = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_7$d = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_8$d = /* @__PURE__ */ createBaseVNode("label", {
   for: "customers",
   class: "tw-text-sm"
 }, "Customer(s)", -1);
-const _hoisted_9$b = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
-const _hoisted_10$9 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
-function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_9$d = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_10$b = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
+function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_VueDatePicker = resolveComponent("VueDatePicker");
-  return openBlock(), createElementBlock("div", _hoisted_1$i, [
-    createBaseVNode("div", _hoisted_2$g, [
-      _hoisted_3$g,
+  return openBlock(), createElementBlock("div", _hoisted_1$k, [
+    createBaseVNode("div", _hoisted_2$i, [
+      _hoisted_3$i,
       createVNode(_component_VueDatePicker, {
         id: "date-picker",
         modelValue: $data.filters.refreshDates.selected,
@@ -55203,7 +55203,7 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
             class: normalizeClass(`tw-flex tw-items-center tw-justify-between tw-py-2 tw-px-3 tw-bg-brand-gray-1
             ${$props.isDataLoading ? "tw-opacity-40" : "tw-cursor-pointer"}`)
           }, [
-            createBaseVNode("span", _hoisted_4$g, toDisplayString(value), 1),
+            createBaseVNode("span", _hoisted_4$i, toDisplayString(value), 1),
             createVNode(VIcon, {
               icon: "mdi-calendar-month",
               class: "tw-text-brand-primary",
@@ -55214,8 +55214,8 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }, 8, ["modelValue", "onUpdate:modelValue", "format", "min-date", "max-date", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_5$d, [
-      _hoisted_6$c,
+    createBaseVNode("div", _hoisted_5$f, [
+      _hoisted_6$e,
       createVNode(VSelect, {
         id: "category",
         items: $data.filters.categories.items,
@@ -55225,8 +55225,8 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $props.isDataLoading
       }, null, 8, ["items", "model-value", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_7$b, [
-      _hoisted_8$b,
+    createBaseVNode("div", _hoisted_7$d, [
+      _hoisted_8$d,
       createVNode(VSelect, {
         id: "customers",
         items: $data.filters.customers.items,
@@ -55236,11 +55236,11 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $props.isDataLoading
       }, null, 8, ["items", "model-value", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_9$b, [
+    createBaseVNode("div", _hoisted_9$d, [
       createBaseVNode("span", {
         class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
       }, " Value (" + toDisplayString($data.currency) + ") ", 3),
-      createBaseVNode("div", _hoisted_10$9, [
+      createBaseVNode("div", _hoisted_10$b, [
         createVNode(VSwitch, {
           "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
           inset: "",
@@ -55255,7 +55255,7 @@ function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const FiltersSection$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$j]]);
+const FiltersSection$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$l]]);
 async function getReviews({
   refreshDate,
   customer,
@@ -55572,7 +55572,7 @@ async function fetchHistoricalModelAccuracyData({
   return data;
 }
 const _imports_0 = "/assets/model-accuracy-scale.9965a99a.svg";
-const _sfc_main$i = {
+const _sfc_main$k = {
   name: "ModelAccuracyChart",
   components: {
     GChart
@@ -55608,18 +55608,18 @@ const _sfc_main$i = {
     }
   }
 };
-const _hoisted_1$h = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
-const _hoisted_2$f = /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-xl tw-font-medium" }, " Model Accuracy (Rolling Test) for past 6 months ", -1);
-const _hoisted_3$f = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_4$f = { class: "tw-w-full tw-py-3 tw-px-5 tw-flex tw-justify-center" };
-const _hoisted_5$c = ["src"];
-function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_1$j = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
+const _hoisted_2$h = /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-xl tw-font-medium" }, " Model Accuracy (Rolling Test) for past 6 months ", -1);
+const _hoisted_3$h = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_4$h = { class: "tw-w-full tw-py-3 tw-px-5 tw-flex tw-justify-center" };
+const _hoisted_5$e = ["src"];
+function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$h, [
-    _hoisted_2$f,
-    _hoisted_3$f,
-    createBaseVNode("div", _hoisted_4$f, [
-      createBaseVNode("img", { src: $data.ModelAccuracyScaleIcon }, null, 8, _hoisted_5$c)
+  return openBlock(), createElementBlock("div", _hoisted_1$j, [
+    _hoisted_2$h,
+    _hoisted_3$h,
+    createBaseVNode("div", _hoisted_4$h, [
+      createBaseVNode("img", { src: $data.ModelAccuracyScaleIcon }, null, 8, _hoisted_5$e)
     ]),
     createVNode(_component_GChart, {
       type: "ColumnChart",
@@ -55662,8 +55662,8 @@ function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8, ["data"])
   ]);
 }
-const ModelAccuracyChart = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$i]]);
-const _sfc_main$h = {
+const ModelAccuracyChart = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$k]]);
+const _sfc_main$j = {
   name: "ModelAccuracySection",
   components: {
     GChart,
@@ -55722,16 +55722,16 @@ const _sfc_main$h = {
     this.fetchData();
   }
 };
-const _hoisted_1$g = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$i = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " ML Model accuracy is the percentage of correctness of prediction by ML Model for the given dataset. ")
 ], -1);
-const _hoisted_2$e = { id: "modelAccuracyPieChart" };
-const _hoisted_3$e = {
+const _hoisted_2$g = { id: "modelAccuracyPieChart" };
+const _hoisted_3$g = {
   key: 0,
   class: "tw-w-full tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_4$e = { class: "tw-absolute tw-z-10 tw-h-full tw-w-full tw-flex tw-items-center tw-justify-center tw-text-xl tw-font-semibold" };
-function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_4$g = { class: "tw-absolute tw-z-10 tw-h-full tw-w-full tw-flex tw-items-center tw-justify-center tw-text-xl tw-font-semibold" };
+function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
   const _component_ModelAccuracyChart = resolveComponent("ModelAccuracyChart");
   return openBlock(), createElementBlock(Fragment, null, [
@@ -55743,12 +55743,12 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("p", mergeProps(props, { class: "tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-font-medium tw-text-center tw-pb-2" }), " ML Model Accuracy ", 16)
       ]),
       default: withCtx(() => [
-        _hoisted_1$g
+        _hoisted_1$i
       ]),
       _: 1
     }),
-    createBaseVNode("div", _hoisted_2$e, [
-      $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_3$e, [
+    createBaseVNode("div", _hoisted_2$g, [
+      $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_3$g, [
         createVNode(VProgressCircular, {
           indeterminate: "",
           color: "#7823DC",
@@ -55766,7 +55766,7 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
             key: 0,
             class: "tw-relative tw-flex tw-items-center"
           }, props), [
-            createBaseVNode("div", _hoisted_4$e, toDisplayString(Math.round($data.modelAccuracy, 0)) + "% ", 1),
+            createBaseVNode("div", _hoisted_4$g, toDisplayString(Math.round($data.modelAccuracy, 0)) + "% ", 1),
             createVNode(_component_GChart, {
               type: "PieChart",
               data: [
@@ -55811,7 +55811,7 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ], 64);
 }
-const ModelAccuracySection = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$h]]);
+const ModelAccuracySection = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$j]]);
 const VBtn$1 = "";
 const VBtnToggle = "";
 const VBtnGroup$1 = "";
@@ -56143,7 +56143,7 @@ const VBtn = defineComponent({
     return {};
   }
 });
-const _sfc_main$g = {
+const _sfc_main$i = {
   name: "ActionButton",
   props: {
     variance: {
@@ -56191,8 +56191,8 @@ const _sfc_main$g = {
     }
   }
 };
-const _hoisted_1$f = { class: "tw-text-black tw-normal-case tw-font-medium desktop:tw-text-xs small-laptop:xs tw-text-base" };
-function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_1$h = { class: "tw-text-black tw-normal-case tw-font-medium desktop:tw-text-xs small-laptop:xs tw-text-base" };
+function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createBlock(VBtn, {
     variant: "outlined",
     rounded: "pill",
@@ -56208,7 +56208,7 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
         color: $options.getColorCode($props.variance),
         size: 24
       }, null, 8, ["icon", "color"]),
-      createBaseVNode("span", _hoisted_1$f, toDisplayString($options.getActionButtonLabel($props.variance)), 1),
+      createBaseVNode("span", _hoisted_1$h, toDisplayString($options.getActionButtonLabel($props.variance)), 1),
       createVNode(VIcon, {
         icon: "mdi-chevron-right",
         end: "",
@@ -56219,7 +56219,7 @@ function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
   }, 8, ["color", "disabled"]);
 }
-const ActionButton = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$g]]);
+const ActionButton = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$i]]);
 const VDialog$1 = "";
 const VDialog = genericComponent()({
   name: "VDialog",
@@ -56335,7 +56335,7 @@ const ACTION_STATUS_LIST = [
   REVIEWED_AND_ACTION_TAKEN$1,
   REVIEWED_AND_ACTION_NOT_TAKEN$1
 ];
-const _sfc_main$f = {
+const _sfc_main$h = {
   name: "ActionForm",
   props: {
     actionFormIsShown: {
@@ -56404,28 +56404,28 @@ const _sfc_main$f = {
     }
   }
 };
-const _hoisted_1$e = { class: "tw-w-[80vw] tw-h-[80vh] tw-overflow-auto tw-bg-white tw-p-3" };
-const _hoisted_2$d = { class: "tw-w-full tw-h-full tw-min-w-[800px] tw-min-h-[450px] tw-flex tw-flex-col" };
-const _hoisted_3$d = { class: "tw-text-lg tw-font-bold tw-pb-3" };
-const _hoisted_4$d = { class: "tw-grid tw-grid-cols-2 tw-grow" };
-const _hoisted_5$b = { class: "tw-col-span-1 tw-py-3 tw-px-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10 tw-overflow-auto" };
-const _hoisted_6$b = {
+const _hoisted_1$g = { class: "tw-w-[80vw] tw-h-[80vh] tw-overflow-auto tw-bg-white tw-p-3" };
+const _hoisted_2$f = { class: "tw-w-full tw-h-full tw-min-w-[800px] tw-min-h-[450px] tw-flex tw-flex-col" };
+const _hoisted_3$f = { class: "tw-text-lg tw-font-bold tw-pb-3" };
+const _hoisted_4$f = { class: "tw-grid tw-grid-cols-2 tw-grow" };
+const _hoisted_5$d = { class: "tw-col-span-1 tw-py-3 tw-px-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10 tw-overflow-auto" };
+const _hoisted_6$d = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_7$a = {
+const _hoisted_7$c = {
   key: 1,
   class: "tw-flex tw-flex-col tw-gap-y-7"
 };
-const _hoisted_8$a = { class: "tw-flex tw-justify-between" };
-const _hoisted_9$a = { class: "tw-text-base tw-font-medium tw-text-black" };
-const _hoisted_10$8 = { class: "tw-text-base tw-text-brand-gray-3" };
-const _hoisted_11$8 = { class: "tw-col-span-1 tw-p-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10" };
-const _hoisted_12$7 = { class: "tw-w-full tw-h-3/5 small-laptop:tw-h-2/4 tw-overflow-auto tw-mb-4" };
-const _hoisted_13$6 = /* @__PURE__ */ createBaseVNode("label", { for: "review" }, "Add Your Response", -1);
-const _hoisted_14$5 = /* @__PURE__ */ createBaseVNode("label", { for: "status" }, "Recommended Action Status", -1);
-const _hoisted_15$5 = { class: "tw-flex tw-items-center tw-gap-x-4 tw-pt-4" };
-const _hoisted_16$4 = ["disabled"];
+const _hoisted_8$c = { class: "tw-flex tw-justify-between" };
+const _hoisted_9$c = { class: "tw-text-base tw-font-medium tw-text-black" };
+const _hoisted_10$a = { class: "tw-text-base tw-text-brand-gray-3" };
+const _hoisted_11$a = { class: "tw-col-span-1 tw-p-4 tw-border-2 tw-border-solid tw-border-brand-secondary-10" };
+const _hoisted_12$8 = { class: "tw-w-full tw-h-3/5 small-laptop:tw-h-2/4 tw-overflow-auto tw-mb-4" };
+const _hoisted_13$7 = /* @__PURE__ */ createBaseVNode("label", { for: "review" }, "Add Your Response", -1);
+const _hoisted_14$6 = /* @__PURE__ */ createBaseVNode("label", { for: "status" }, "Recommended Action Status", -1);
+const _hoisted_15$6 = { class: "tw-flex tw-items-center tw-gap-x-4 tw-pt-4" };
+const _hoisted_16$5 = ["disabled"];
 const _hoisted_17$4 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-white tw-text-base" }, "Save Updates", -1);
 const _hoisted_18$4 = [
   _hoisted_17$4
@@ -56439,43 +56439,43 @@ const _hoisted_21$3 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-
 const _hoisted_22$3 = [
   _hoisted_21$3
 ];
-function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createBlock(VDialog, {
     "model-value": $props.actionFormIsShown,
     width: "auto",
     persistent: ""
   }, {
     default: withCtx(() => [
-      createBaseVNode("div", _hoisted_1$e, [
-        createBaseVNode("div", _hoisted_2$d, [
-          createBaseVNode("h1", _hoisted_3$d, " Recommended Action - " + toDisplayString($options.getStatus($props.variance)) + " Status ", 1),
-          createBaseVNode("div", _hoisted_4$d, [
-            createBaseVNode("div", _hoisted_5$b, [
-              $props.isFetching ? (openBlock(), createElementBlock("div", _hoisted_6$b, [
+      createBaseVNode("div", _hoisted_1$g, [
+        createBaseVNode("div", _hoisted_2$f, [
+          createBaseVNode("h1", _hoisted_3$f, " Recommended Action - " + toDisplayString($options.getStatus($props.variance)) + " Status ", 1),
+          createBaseVNode("div", _hoisted_4$f, [
+            createBaseVNode("div", _hoisted_5$d, [
+              $props.isFetching ? (openBlock(), createElementBlock("div", _hoisted_6$d, [
                 createVNode(VProgressCircular, {
                   indeterminate: "",
                   color: "#7823DC",
                   size: 60,
                   width: 10
                 })
-              ])) : (openBlock(), createElementBlock("div", _hoisted_7$a, [
+              ])) : (openBlock(), createElementBlock("div", _hoisted_7$c, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList($props.reviews, (review) => {
                   return openBlock(), createElementBlock("div", {
                     key: $data.lodGet(review, "id"),
                     class: "tw-flex tw-flex-col tw-gap-y-2"
                   }, [
-                    createBaseVNode("div", _hoisted_8$a, [
-                      createBaseVNode("span", _hoisted_9$a, toDisplayString($data.lodGet(review, "user_display_name")), 1),
-                      createBaseVNode("span", _hoisted_10$8, toDisplayString($options.formatDate($data.lodGet(review, "date"), "MMM dd, yyyy")), 1)
+                    createBaseVNode("div", _hoisted_8$c, [
+                      createBaseVNode("span", _hoisted_9$c, toDisplayString($data.lodGet(review, "user_display_name")), 1),
+                      createBaseVNode("span", _hoisted_10$a, toDisplayString($options.formatDate($data.lodGet(review, "date"), "MMM dd, yyyy")), 1)
                     ]),
                     createBaseVNode("p", null, toDisplayString($data.lodGet(review, "comment")), 1)
                   ]);
                 }), 128))
               ]))
             ]),
-            createBaseVNode("div", _hoisted_11$8, [
-              createBaseVNode("div", _hoisted_12$7, [
-                _hoisted_13$6,
+            createBaseVNode("div", _hoisted_11$a, [
+              createBaseVNode("div", _hoisted_12$8, [
+                _hoisted_13$7,
                 withDirectives(createBaseVNode("textarea", {
                   id: "review",
                   "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userResponse = $event),
@@ -56486,7 +56486,7 @@ function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
                 ])
               ]),
               createBaseVNode("div", null, [
-                _hoisted_14$5,
+                _hoisted_14$6,
                 createVNode(VSelect, {
                   id: "status",
                   "model-value": $data.selectedAction,
@@ -56497,12 +56497,12 @@ function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
               ])
             ])
           ]),
-          createBaseVNode("div", _hoisted_15$5, [
+          createBaseVNode("div", _hoisted_15$6, [
             createBaseVNode("button", {
               class: normalizeClass(`tw-px-6 tw-py-2 ${$options.isSubmitButtonDisabled() ? "tw-bg-brand-primary-disabled" : "tw-bg-brand-primary"}`),
               disabled: $options.isSubmitButtonDisabled(),
               onClick: _cache[2] || (_cache[2] = (...args) => $options.submitHandler && $options.submitHandler(...args))
-            }, _hoisted_18$4, 10, _hoisted_16$4),
+            }, _hoisted_18$4, 10, _hoisted_16$5),
             $props.responseSubmitted ? (openBlock(), createElementBlock("div", _hoisted_19$3, [
               createVNode(VIcon, {
                 icon: "mdi-check-circle",
@@ -56521,13 +56521,13 @@ function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
   }, 8, ["model-value"]);
 }
-const ActionForm = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$f]]);
+const ActionForm = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$h]]);
 const {
   PENDING_ACTION,
   REVIEWED_AND_ACTION_TAKEN,
   REVIEWED_AND_ACTION_NOT_TAKEN
 } = ACTION_STATUS_LABELS;
-const _sfc_main$e = {
+const _sfc_main$g = {
   name: "CardsListItem",
   components: {
     ModelAccuracySection,
@@ -56675,32 +56675,32 @@ const _sfc_main$e = {
     this.fetchReviews();
   }
 };
-const _hoisted_1$d = { class: "tw-w-full tw-h-full tw-px-3 tw-py-4" };
-const _hoisted_2$c = { class: "tw-flex tw-flex-col tw-py-2" };
-const _hoisted_3$c = /* @__PURE__ */ createBaseVNode("p", {
+const _hoisted_1$f = { class: "tw-w-full tw-h-full tw-px-3 tw-py-4" };
+const _hoisted_2$e = { class: "tw-flex tw-flex-col tw-py-2" };
+const _hoisted_3$e = /* @__PURE__ */ createBaseVNode("p", {
   style: { "color": "#9291a5" },
   class: "desktop:tw-text-sm small-laptop:tw-text-xs"
 }, "Projected Period", -1);
-const _hoisted_4$c = { class: "tw-flex tw-gap-x-4 desktop:tw-gap-x-3 tw-items-center tw-w-full" };
-const _hoisted_5$a = { class: "tw-text-lg desktop:tw-text-sm small-laptop:tw-text-sm tw-font-medium" };
-const _hoisted_6$a = {
+const _hoisted_4$e = { class: "tw-flex tw-gap-x-4 desktop:tw-gap-x-3 tw-items-center tw-w-full" };
+const _hoisted_5$c = { class: "tw-text-lg desktop:tw-text-sm small-laptop:tw-text-sm tw-font-medium" };
+const _hoisted_6$c = {
   key: 0,
   class: "tw-bg-brand-gray-4 tw-rounded tw-text-center"
 };
-const _hoisted_7$9 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_8$9 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_9$9 = { class: "tw-col-span-3" };
-const _hoisted_10$7 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-52 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_7$b = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_8$b = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_9$b = { class: "tw-col-span-3" };
+const _hoisted_10$9 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-52 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " The % increase in demand the company expects. ")
 ], -1);
-const _hoisted_11$7 = { class: "tw-grid tw-grid-cols-2 tw-pt-4" };
-const _hoisted_12$6 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
-const _hoisted_13$5 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Planned Internal Forecast", -1);
-const _hoisted_14$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_11$9 = { class: "tw-grid tw-grid-cols-2 tw-pt-4" };
+const _hoisted_12$7 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
+const _hoisted_13$6 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Planned Internal Forecast", -1);
+const _hoisted_14$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Internal market demands at a category level determined by internal historical data. ")
 ], -1);
-const _hoisted_15$4 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
-const _hoisted_16$3 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
+const _hoisted_15$5 = { class: "tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg tw-font-semibold" };
+const _hoisted_16$4 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Market Sensing Model Forecast", -1);
 const _hoisted_17$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Highly accurate market demand projections at a category level based on ML models that analyze and learn from internal and external data feeds ")
 ], -1);
@@ -56712,25 +56712,25 @@ const _hoisted_19$2 = { class: "tw-w-full tw-flex tw-justify-center tw-items-cen
 const _hoisted_20$2 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-xs desktop:tw-text-xxs small-laptop:tw-text-xxs" }, "Variance", -1);
 const _hoisted_21$2 = { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" };
 const _hoisted_22$2 = { class: "tw-text-sm tw-text-center" };
-function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ModelAccuracySection = resolveComponent("ModelAccuracySection");
   const _component_ActionButton = resolveComponent("ActionButton");
   const _component_ActionForm = resolveComponent("ActionForm");
-  return openBlock(), createElementBlock("div", _hoisted_1$d, [
-    createBaseVNode("div", _hoisted_2$c, [
-      _hoisted_3$c,
-      createBaseVNode("div", _hoisted_4$c, [
-        createBaseVNode("p", _hoisted_5$a, toDisplayString($options.periodLabel), 1),
-        $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_6$a, [
-          createBaseVNode("p", _hoisted_7$9, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
+  return openBlock(), createElementBlock("div", _hoisted_1$f, [
+    createBaseVNode("div", _hoisted_2$e, [
+      _hoisted_3$e,
+      createBaseVNode("div", _hoisted_4$e, [
+        createBaseVNode("p", _hoisted_5$c, toDisplayString($options.periodLabel), 1),
+        $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_6$c, [
+          createBaseVNode("p", _hoisted_7$b, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
         ])) : createCommentVNode("", true)
       ])
     ]),
-    _hoisted_8$9,
+    _hoisted_8$b,
     createBaseVNode("div", {
       class: normalizeClass(`tw-grid tw-py-2 small-laptop:tw-py-1 ${$options.isModelAccuracyHidden ? "tw-grid-cols-3" : "tw-grid-cols-5"}`)
     }, [
-      createBaseVNode("div", _hoisted_9$9, [
+      createBaseVNode("div", _hoisted_9$b, [
         createVNode(VMenu, {
           "open-on-hover": "",
           location: "top"
@@ -56739,23 +56739,23 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("p", mergeProps(props, { class: "tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-font-medium" }), " Projected Growth (%YoY) ", 16)
           ]),
           default: withCtx(() => [
-            _hoisted_10$7
+            _hoisted_10$9
           ]),
           _: 1
         }),
-        createBaseVNode("div", _hoisted_11$7, [
+        createBaseVNode("div", _hoisted_11$9, [
           createVNode(VMenu, {
             "open-on-hover": "",
             location: "top"
           }, {
             activator: withCtx(({ props }) => [
               createBaseVNode("div", mergeProps(props, { class: "tw-text-center" }), [
-                createBaseVNode("p", _hoisted_12$6, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.jdaGrowth")}`), 1),
-                _hoisted_13$5
+                createBaseVNode("p", _hoisted_12$7, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.jdaGrowth")}`), 1),
+                _hoisted_13$6
               ], 16)
             ]),
             default: withCtx(() => [
-              _hoisted_14$4
+              _hoisted_14$5
             ]),
             _: 1
           }),
@@ -56765,8 +56765,8 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
           }, {
             activator: withCtx(({ props }) => [
               createBaseVNode("div", mergeProps(props, { class: "tw-text-center" }), [
-                createBaseVNode("p", _hoisted_15$4, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.marketSensingGrowth")}`), 1),
-                _hoisted_16$3
+                createBaseVNode("p", _hoisted_15$5, toDisplayString(`${$options.lodGetNumeric($props.data, "metrics.marketSensingGrowth")}`), 1),
+                _hoisted_16$4
               ], 16)
             ]),
             default: withCtx(() => [
@@ -56831,8 +56831,8 @@ function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8, ["actionFormIsShown", "variance", "reviews", "actionStatus", "isFetching", "isSubmitting", "responseSubmitted", "onCloseForm", "onFetchReviews", "onSubmitReview"])) : createCommentVNode("", true)
   ]);
 }
-const CardsListItem$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$e]]);
-const _sfc_main$d = {
+const CardsListItem$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$g]]);
+const _sfc_main$f = {
   name: "CardsList",
   components: {
     CardsListItem: CardsListItem$1
@@ -56846,19 +56846,19 @@ const _sfc_main$d = {
   },
   emits: ["setActiveCard"]
 };
-const _hoisted_1$c = ["onClick"];
-const _hoisted_2$b = {
+const _hoisted_1$e = ["onClick"];
+const _hoisted_2$d = {
   key: 0,
   class: "tw-flex tw-w-full tw-justify-center"
 };
-const _hoisted_3$b = /* @__PURE__ */ createBaseVNode("div", {
+const _hoisted_3$d = /* @__PURE__ */ createBaseVNode("div", {
   class: "tw-w-0 tw-h-0 tw-border-solid tw-border-t-brand-primary",
   style: { "border-left-width": "16px", "border-left-color": "transparent", "border-right-width": "16px", "border-right-color": "transparent", "border-top-width": "16px" }
 }, null, -1);
-const _hoisted_4$b = [
-  _hoisted_3$b
+const _hoisted_4$d = [
+  _hoisted_3$d
 ];
-function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CardsListItem = resolveComponent("CardsListItem");
   return openBlock(true), createElementBlock(Fragment, null, renderList($props.data, (cardData, index2) => {
     return openBlock(), createElementBlock("div", {
@@ -56870,11 +56870,11 @@ function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
         data: cardData,
         options: $props.options
       }, null, 8, ["data", "options"]),
-      cardData.isActive ? (openBlock(), createElementBlock("div", _hoisted_2$b, _hoisted_4$b)) : createCommentVNode("", true)
-    ], 10, _hoisted_1$c);
+      cardData.isActive ? (openBlock(), createElementBlock("div", _hoisted_2$d, _hoisted_4$d)) : createCommentVNode("", true)
+    ], 10, _hoisted_1$e);
   }), 128);
 }
-const CardsList$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$d]]);
+const CardsList$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$f]]);
 const dataKeys$3 = ["dataPoint", "source", "value"];
 async function fetchKeyDemandDriverDetails({
   marketSensingRefreshDate,
@@ -56900,7 +56900,7 @@ async function fetchKeyDemandDriverDetails({
 }
 const OTHERS_START_INDEX = 5;
 const OTHER_DRIVERS = "Others";
-const _sfc_main$c = {
+const _sfc_main$e = {
   name: "ChartKeyDemandDrivers",
   components: {
     GChart
@@ -57064,38 +57064,38 @@ const _sfc_main$c = {
     }
   }
 };
-const _hoisted_1$b = { class: "tw-flex tw-flex-col tw-justify-between tw-h-full" };
-const _hoisted_2$a = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$d = { class: "tw-flex tw-flex-col tw-justify-between tw-h-full" };
+const _hoisted_2$c = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Most impactful types of data for the select projected period of demand predictions. These factors are accounting the most for the demand forecast. ")
 ], -1);
-const _hoisted_3$a = { class: "tw-w-full tw-max-h-[80vh] tw-min-h-[590px] tw-bg-white tw-px-5 tw-py-4 tw-overflow-auto" };
-const _hoisted_4$a = { class: "tw-flex tw-justify-between tw-gap-x-2" };
-const _hoisted_5$9 = { class: "tw-flex tw-flex-col tw-items-start" };
-const _hoisted_6$9 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-text-brand-gray-3" }, " Key Demand Driver(s) ", -1);
-const _hoisted_7$8 = { class: "tw-text-2xl tw-font-medium tw-text-black" };
-const _hoisted_8$8 = {
+const _hoisted_3$c = { class: "tw-w-full tw-max-h-[80vh] tw-min-h-[590px] tw-bg-white tw-px-5 tw-py-4 tw-overflow-auto" };
+const _hoisted_4$c = { class: "tw-flex tw-justify-between tw-gap-x-2" };
+const _hoisted_5$b = { class: "tw-flex tw-flex-col tw-items-start" };
+const _hoisted_6$b = /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-text-brand-gray-3" }, " Key Demand Driver(s) ", -1);
+const _hoisted_7$a = { class: "tw-text-2xl tw-font-medium tw-text-black" };
+const _hoisted_8$a = {
   key: 0,
   class: "tw-w-full tw-mt-32 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_9$8 = {
+const _hoisted_9$a = {
   key: 1,
   class: "tw-py-4"
 };
-const _hoisted_10$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 tw-bg-brand-gray-1" }, [
+const _hoisted_10$8 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 tw-bg-brand-gray-1" }, [
   /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black" }, " Data point(s) "),
   /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-gap-x-1" }, [
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black tw-text-left tw-w-44" }, " Source(s) "),
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-text-lg tw-font-medium tw-text-black tw-text-right tw-w-24 tw-pr-1" }, " Value ")
   ])
 ], -1);
-const _hoisted_11$6 = { class: "tw-max-h-[420px] tw-overflow-scroll" };
-const _hoisted_12$5 = { class: "tw-text-base tw-text-black" };
-const _hoisted_13$4 = { class: "tw-flex tw-gap-x-1" };
-const _hoisted_14$3 = { class: "tw-text-base tw-text-black tw-text-left tw-w-44" };
-const _hoisted_15$3 = { class: "tw-text-base tw-text-black tw-text-right tw-w-24 tw-pr-1" };
-function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_11$8 = { class: "tw-max-h-[420px] tw-overflow-scroll" };
+const _hoisted_12$6 = { class: "tw-text-base tw-text-black" };
+const _hoisted_13$5 = { class: "tw-flex tw-gap-x-1" };
+const _hoisted_14$4 = { class: "tw-text-base tw-text-black tw-text-left tw-w-44" };
+const _hoisted_15$4 = { class: "tw-text-base tw-text-black tw-text-right tw-w-24 tw-pr-1" };
+function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$b, [
+  return openBlock(), createElementBlock("div", _hoisted_1$d, [
     createVNode(VMenu, {
       "open-on-hover": "",
       location: "top"
@@ -57104,7 +57104,7 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
         createBaseVNode("span", mergeProps(props, { class: "tw-font-medium tw-text-lg small-laptop:tw-text-base desktop:tw-text-base tw-cursor-default" }), " Key Demand Drivers ", 16)
       ]),
       default: withCtx(() => [
-        _hoisted_2$a
+        _hoisted_2$c
       ]),
       _: 1
     }),
@@ -57122,11 +57122,11 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.dialogIsShown = $event)
     }, {
       default: withCtx(() => [
-        createBaseVNode("div", _hoisted_3$a, [
-          createBaseVNode("div", _hoisted_4$a, [
-            createBaseVNode("div", _hoisted_5$9, [
-              _hoisted_6$9,
-              createBaseVNode("span", _hoisted_7$8, toDisplayString($options.getSelectedDriverLabel()), 1)
+        createBaseVNode("div", _hoisted_3$c, [
+          createBaseVNode("div", _hoisted_4$c, [
+            createBaseVNode("div", _hoisted_5$b, [
+              _hoisted_6$b,
+              createBaseVNode("span", _hoisted_7$a, toDisplayString($options.getSelectedDriverLabel()), 1)
             ]),
             createVNode(VBtn, {
               variant: "plain",
@@ -57134,7 +57134,7 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: $options.closeDialog
             }, null, 8, ["onClick"])
           ]),
-          $data.isFetchingDriverDetails ? (openBlock(), createElementBlock("div", _hoisted_8$8, [
+          $data.isFetchingDriverDetails ? (openBlock(), createElementBlock("div", _hoisted_8$a, [
             createVNode(VProgressCircular, {
               indeterminate: "",
               color: "#7823DC",
@@ -57142,18 +57142,18 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
               width: 10
             })
           ])) : createCommentVNode("", true),
-          !$data.isFetchingDriverDetails && $data.lodSize($data.selectedDriverDetails) > 0 ? (openBlock(), createElementBlock("div", _hoisted_9$8, [
-            _hoisted_10$6,
-            createBaseVNode("ul", _hoisted_11$6, [
+          !$data.isFetchingDriverDetails && $data.lodSize($data.selectedDriverDetails) > 0 ? (openBlock(), createElementBlock("div", _hoisted_9$a, [
+            _hoisted_10$8,
+            createBaseVNode("ul", _hoisted_11$8, [
               (openBlock(true), createElementBlock(Fragment, null, renderList($data.selectedDriverDetails, (item, index2) => {
                 return openBlock(), createElementBlock("li", {
                   key: item.dataPoint,
                   class: normalizeClass(`tw-flex tw-justify-between tw-gap-x-3 tw-items-center tw-p-3 ${index2 % 2 === 0 ? "tw-bg-white" : "tw-bg-brand-gray-1"}`)
                 }, [
-                  createBaseVNode("span", _hoisted_12$5, toDisplayString(item.dataPoint), 1),
-                  createBaseVNode("div", _hoisted_13$4, [
-                    createBaseVNode("span", _hoisted_14$3, toDisplayString(item.source), 1),
-                    createBaseVNode("span", _hoisted_15$3, toDisplayString($options.getPercentValue(item.value)), 1)
+                  createBaseVNode("span", _hoisted_12$6, toDisplayString(item.dataPoint), 1),
+                  createBaseVNode("div", _hoisted_13$5, [
+                    createBaseVNode("span", _hoisted_14$4, toDisplayString(item.source), 1),
+                    createBaseVNode("span", _hoisted_15$4, toDisplayString($options.getPercentValue(item.value)), 1)
                   ])
                 ], 2);
               }), 128))
@@ -57165,7 +57165,7 @@ function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     }, 8, ["modelValue"])
   ]);
 }
-const ChartKeyDemandDrivers = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$c]]);
+const ChartKeyDemandDrivers = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$e]]);
 const DATA_CONFIG$2 = [
   {
     key: "pyVal",
@@ -57179,7 +57179,7 @@ const DATA_CONFIG$2 = [
   }
 ];
 const dataKeys$2 = _.map(DATA_CONFIG$2, (el2) => el2.key);
-const _sfc_main$b = {
+const _sfc_main$d = {
   name: "ChartPYandImpliedGrowth",
   components: {
     GChart
@@ -57269,13 +57269,13 @@ const _sfc_main$b = {
     }
   }
 };
-const _hoisted_1$a = { class: "tw-flex tw-flex-col tw-gap-y-2 desktop:tw-items-center small-laptop:tw-items-center" };
-const _hoisted_2$9 = { class: "tw-flex tw-items-center tw-gap-x-3" };
-const _hoisted_3$9 = { class: "tw-text-xs" };
-const _hoisted_4$9 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_1$c = { class: "tw-flex tw-flex-col tw-gap-y-2 desktop:tw-items-center small-laptop:tw-items-center" };
+const _hoisted_2$b = { class: "tw-flex tw-items-center tw-gap-x-3" };
+const _hoisted_3$b = { class: "tw-text-xs" };
+const _hoisted_4$b = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-96 tw-h-14 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, " Size of the company in relation to its market and its competitors based on demand projections ")
 ], -1);
-function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
   return openBlock(), createElementBlock(Fragment, null, [
     createVNode(VMenu, {
@@ -57283,9 +57283,9 @@ function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
       location: "top"
     }, {
       activator: withCtx(({ props }) => [
-        createBaseVNode("div", _hoisted_1$a, [
+        createBaseVNode("div", _hoisted_1$c, [
           createBaseVNode("span", mergeProps(props, { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }), " Implied Market Share ", 16),
-          createBaseVNode("div", _hoisted_2$9, [
+          createBaseVNode("div", _hoisted_2$b, [
             (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
               return openBlock(), createElementBlock("div", {
                 key: item.key,
@@ -57294,14 +57294,14 @@ function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
                 createBaseVNode("span", {
                   style: normalizeStyle(`height: 12px; width: 12px; background: ${item.color}`)
                 }, null, 4),
-                createBaseVNode("span", _hoisted_3$9, toDisplayString(item.label), 1)
+                createBaseVNode("span", _hoisted_3$b, toDisplayString(item.label), 1)
               ]);
             }), 128))
           ])
         ])
       ]),
       default: withCtx(() => [
-        _hoisted_4$9
+        _hoisted_4$b
       ]),
       _: 1
     }),
@@ -57312,7 +57312,7 @@ function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8, ["data", "options"])
   ], 64);
 }
-const ChartPYandImpliedGrowth = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$b]]);
+const ChartPYandImpliedGrowth = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$d]]);
 const DATA_CONFIG$1 = [
   {
     key: "period",
@@ -57341,7 +57341,7 @@ const DATA_CONFIG$1 = [
   }
 ];
 const dataKeys$1 = _.map(DATA_CONFIG$1, (el2) => el2.key);
-const _sfc_main$a = {
+const _sfc_main$c = {
   name: "ChartHistoricalAndActual",
   components: {
     GChart
@@ -57426,18 +57426,18 @@ const _sfc_main$a = {
     };
   }
 };
-const _hoisted_1$9 = { class: "tw-flex tw-flex-col tw-gap-y-2 small-laptop:tw-overflow-auto" };
-const _hoisted_2$8 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }, " Market Sensing Forecast vs Sales (%, YoY) \u2013 Historical Period ", -1);
-const _hoisted_3$8 = { class: "tw-flex tw-items-center tw-gap-x-3" };
-const _hoisted_4$8 = { class: "tw-text-xs" };
-const _hoisted_5$8 = { class: "tw-overflow-x-auto tw-overflow-y-hidden" };
-const _hoisted_6$8 = { class: "tw-min-w-[800px]" };
-function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_1$b = { class: "tw-flex tw-flex-col tw-gap-y-2 small-laptop:tw-overflow-auto" };
+const _hoisted_2$a = /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-medium tw-text-lg desktop:tw-text-base small-laptop:tw-text-base tw-cursor-default" }, " Market Sensing Forecast vs Sales (%, YoY) \u2013 Historical Period ", -1);
+const _hoisted_3$a = { class: "tw-flex tw-items-center tw-gap-x-3" };
+const _hoisted_4$a = { class: "tw-text-xs" };
+const _hoisted_5$a = { class: "tw-overflow-x-auto tw-overflow-y-hidden" };
+const _hoisted_6$a = { class: "tw-min-w-[800px]" };
+function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GChart = resolveComponent("GChart");
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$9, [
-      _hoisted_2$8,
-      createBaseVNode("div", _hoisted_3$8, [
+    createBaseVNode("div", _hoisted_1$b, [
+      _hoisted_2$a,
+      createBaseVNode("div", _hoisted_3$a, [
         (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
           return openBlock(), createElementBlock("div", {
             key: item.key,
@@ -57446,13 +57446,13 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("span", {
               style: normalizeStyle(`height: 12px; width: 12px; background: ${item.color}`)
             }, null, 4),
-            createBaseVNode("span", _hoisted_4$8, toDisplayString(item.label), 1)
+            createBaseVNode("span", _hoisted_4$a, toDisplayString(item.label), 1)
           ]);
         }), 128))
       ])
     ]),
-    createBaseVNode("div", _hoisted_5$8, [
-      createBaseVNode("div", _hoisted_6$8, [
+    createBaseVNode("div", _hoisted_5$a, [
+      createBaseVNode("div", _hoisted_6$a, [
         createVNode(_component_GChart, {
           type: "ColumnChart",
           data: $options.chartData,
@@ -57462,8 +57462,8 @@ function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ], 64);
 }
-const ChartHistoricalAndActual = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$a]]);
-const _sfc_main$9 = {
+const ChartHistoricalAndActual = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$c]]);
+const _sfc_main$b = {
   name: "ChartsSection",
   components: {
     ChartKeyDemandDrivers,
@@ -57533,42 +57533,42 @@ const _sfc_main$9 = {
     }
   }
 };
-const _hoisted_1$8 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full tw-py-2" };
-const _hoisted_2$7 = { class: "tw-font-medium tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg" };
-const _hoisted_3$7 = {
+const _hoisted_1$a = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full tw-py-2" };
+const _hoisted_2$9 = { class: "tw-font-medium tw-text-2xl desktop:tw-text-xl small-laptop:tw-text-lg" };
+const _hoisted_3$9 = {
   key: 0,
   class: "tw-bg-brand-gray-4 tw-rounded"
 };
-const _hoisted_4$7 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_5$7 = { class: "tw-py-3 tw-w-full" };
-const _hoisted_6$7 = {
+const _hoisted_4$9 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_5$9 = { class: "tw-py-3 tw-w-full" };
+const _hoisted_6$9 = {
   key: 0,
   class: "tw-grid tw-grid-cols-7 desktop:tw-grid-cols-12 small-laptop:tw-grid-cols-12 tw-gap-4"
 };
-const _hoisted_7$7 = { class: "tw-col-span-2 desktop:tw-col-span-4 small-laptop:tw-col-span-4" };
-const _hoisted_8$7 = { class: "tw-col-span-1 desktop:tw-col-span-2 small-laptop:tw-col-span-2" };
-const _hoisted_9$7 = { class: "tw-col-span-4 desktop:tw-col-span-6 small-laptop:tw-col-span-6" };
-function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_7$9 = { class: "tw-col-span-2 desktop:tw-col-span-4 small-laptop:tw-col-span-4" };
+const _hoisted_8$9 = { class: "tw-col-span-1 desktop:tw-col-span-2 small-laptop:tw-col-span-2" };
+const _hoisted_9$9 = { class: "tw-col-span-4 desktop:tw-col-span-6 small-laptop:tw-col-span-6" };
+function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ChartKeyDemandDrivers = resolveComponent("ChartKeyDemandDrivers");
   const _component_ChartPYandImpliedGrowth = resolveComponent("ChartPYandImpliedGrowth");
   const _component_ChartHistoricalAndActual = resolveComponent("ChartHistoricalAndActual");
   return openBlock(), createElementBlock(Fragment, null, [
-    createBaseVNode("div", _hoisted_1$8, [
-      createBaseVNode("p", _hoisted_2$7, " More details for " + toDisplayString($options.periodLabel), 1),
-      $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_3$7, [
-        createBaseVNode("p", _hoisted_4$7, " Future " + toDisplayString($options.formattedHorizon) + " months ", 1)
+    createBaseVNode("div", _hoisted_1$a, [
+      createBaseVNode("p", _hoisted_2$9, " More details for " + toDisplayString($options.periodLabel), 1),
+      $options.formattedHorizon ? (openBlock(), createElementBlock("div", _hoisted_3$9, [
+        createBaseVNode("p", _hoisted_4$9, " Future " + toDisplayString($options.formattedHorizon) + " months ", 1)
       ])) : createCommentVNode("", true)
     ]),
-    createBaseVNode("div", _hoisted_5$7, [
-      $options.metrics ? (openBlock(), createElementBlock("div", _hoisted_6$7, [
-        createBaseVNode("div", _hoisted_7$7, [
+    createBaseVNode("div", _hoisted_5$9, [
+      $options.metrics ? (openBlock(), createElementBlock("div", _hoisted_6$9, [
+        createBaseVNode("div", _hoisted_7$9, [
           createVNode(_component_ChartKeyDemandDrivers, {
             data: $options.metrics.keyDemandDrivers,
             horizon: $options.horizon,
             selectedFilters: $options.selectedFilters
           }, null, 8, ["data", "horizon", "selectedFilters"])
         ]),
-        createBaseVNode("div", _hoisted_8$7, [
+        createBaseVNode("div", _hoisted_8$9, [
           createVNode(_component_ChartPYandImpliedGrowth, {
             projectedPeriod: $options.periodLabel,
             pyVal: $options.metrics.pyGrowth,
@@ -57576,7 +57576,7 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
             chartsScale: $options.chartsScale
           }, null, 8, ["projectedPeriod", "pyVal", "impliedVal", "chartsScale"])
         ]),
-        createBaseVNode("div", _hoisted_9$7, [
+        createBaseVNode("div", _hoisted_9$9, [
           createVNode(_component_ChartHistoricalAndActual, {
             data: $options.metrics.historical,
             chartsScale: $options.chartsScale
@@ -57586,7 +57586,7 @@ function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ], 64);
 }
-const ChartsSection = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]);
+const ChartsSection = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$b]]);
 const VAlert$1 = "";
 const VAlertTitle = createSimpleFunctional("v-alert-title");
 const allowedTypes = ["success", "info", "warning", "error"];
@@ -57764,12 +57764,12 @@ const VAlert = defineComponent({
   }
 });
 const { R3M_VIEW, QUARTERLY_VIEW } = FORECAST_PERIOD_TYPES;
-const FILTER_UPDATE_GAP_MS$1 = 300;
+const FILTER_UPDATE_GAP_MS$2 = 300;
 const FILTER_INSTANT_UPDATE_GAP_MS$1 = 500;
-const _sfc_main$8 = {
+const _sfc_main$a = {
   name: "DemandPlanner",
   components: {
-    FiltersSection: FiltersSection$1,
+    FiltersSection: FiltersSection$2,
     CardsList: CardsList$1,
     ChartsSection
   },
@@ -57785,7 +57785,7 @@ const _sfc_main$8 = {
       error: null,
       debounceUpdateFilters: _.debounce(
         this.updateFilters,
-        FILTER_UPDATE_GAP_MS$1
+        FILTER_UPDATE_GAP_MS$2
       ),
       debounceUpdateFiltersInstant: _.debounce(
         this.updateFilters,
@@ -57956,7 +57956,7 @@ const _sfc_main$8 = {
         this.selectedFilters = {
           marketSensingRefreshDate,
           category: selectedCategories,
-          customer: selectedCustomers === ALL_OPTION$1 ? "*" : selectedCustomers,
+          customer: selectedCustomers === ALL_OPTION$2 ? "*" : selectedCustomers,
           valueOrQuantity: selectedValueORvolume
         };
         this.fetchDashboardData();
@@ -57967,31 +57967,31 @@ const _sfc_main$8 = {
     }
   }
 };
-const _hoisted_1$7 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
-const _hoisted_2$6 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
-const _hoisted_3$6 = { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" };
-const _hoisted_4$6 = {
+const _hoisted_1$9 = { class: "tw-h-full tw-w-full tw-bg-brand-gray-1" };
+const _hoisted_2$8 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$8 = { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" };
+const _hoisted_4$8 = {
   key: 0,
   class: "tw-ml-auto tw-h-full tw-flex tw-items-center"
 };
-const _hoisted_5$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_6$6 = { class: "tw-py-5" };
-const _hoisted_7$6 = {
+const _hoisted_5$8 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$8 = { class: "tw-py-5" };
+const _hoisted_7$8 = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_8$6 = {
+const _hoisted_8$8 = {
   key: 1,
   class: "tw-w-full tw-p-4 tw-bg-white"
 };
-const _hoisted_9$6 = { class: "tw-flex tw-flex-col tw-w-full tw-border-b tw-border-solid tw-border-brand-gray-2" };
-const _hoisted_10$5 = /* @__PURE__ */ createBaseVNode("h1", { class: "desktop:tw-text-2xl small-laptop:tw-text-2xl tw-text-3xl tw-font-bold" }, " Future Demand Forecasting ", -1);
-const _hoisted_11$5 = { class: "tw-flex tw-items-center tw-w-full" };
-const _hoisted_12$4 = /* @__PURE__ */ createBaseVNode("p", { class: "desktop:tw-text-sm small-laptop:tw-text-sm" }, " Show demand projections for: ", -1);
-const _hoisted_13$3 = ["for"];
-const _hoisted_14$2 = { class: "tw-flex tw-gap-x-3 tw-ml-auto small-laptop:tw-ml-3" };
-const _hoisted_15$2 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-laptop:tw-gap-x-0" };
-const _hoisted_16$2 = ["src"];
+const _hoisted_9$8 = { class: "tw-flex tw-flex-col tw-w-full tw-border-b tw-border-solid tw-border-brand-gray-2" };
+const _hoisted_10$7 = /* @__PURE__ */ createBaseVNode("h1", { class: "desktop:tw-text-2xl small-laptop:tw-text-2xl tw-text-3xl tw-font-bold" }, " Future Demand Forecasting ", -1);
+const _hoisted_11$7 = { class: "tw-flex tw-items-center tw-w-full" };
+const _hoisted_12$5 = /* @__PURE__ */ createBaseVNode("p", { class: "desktop:tw-text-sm small-laptop:tw-text-sm" }, " Show demand projections for: ", -1);
+const _hoisted_13$4 = ["for"];
+const _hoisted_14$3 = { class: "tw-flex tw-gap-x-3 tw-ml-auto small-laptop:tw-ml-3" };
+const _hoisted_15$3 = { class: "tw-flex tw-gap-x-2 desktop:tw-gap-x-1 small-laptop:tw-gap-x-0" };
+const _hoisted_16$3 = ["src"];
 const _hoisted_17$2 = { class: "tw-text-sm desktop:tw-text-xs" };
 const _hoisted_18$2 = ["disabled"];
 const _hoisted_19$1 = { class: "tw-text-white tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
@@ -58001,17 +58001,17 @@ const _hoisted_20$1 = {
 };
 const _hoisted_21$1 = { class: "tw-p-4 desktop:tw-p-1 tw-border tw-border-solid tw-border-brand-primary" };
 const _hoisted_22$1 = { key: 2 };
-function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_FiltersSection = resolveComponent("FiltersSection");
   const _component_CardsList = resolveComponent("CardsList");
   const _component_ChartsSection = resolveComponent("ChartsSection");
-  return openBlock(), createElementBlock("div", _hoisted_1$7, [
-    createBaseVNode("div", _hoisted_2$6, [
-      createBaseVNode("h1", _hoisted_3$6, " Demand Planner Dashboard " + toDisplayString($data.selectedRefreshDate ? `as of ${$data.selectedRefreshDate}` : ""), 1),
-      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$6, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
+  return openBlock(), createElementBlock("div", _hoisted_1$9, [
+    createBaseVNode("div", _hoisted_2$8, [
+      createBaseVNode("h1", _hoisted_3$8, " Demand Planner Dashboard " + toDisplayString($data.selectedRefreshDate ? `as of ${$data.selectedRefreshDate}` : ""), 1),
+      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$8, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
     ]),
-    _hoisted_5$6,
-    createBaseVNode("div", _hoisted_6$6, [
+    _hoisted_5$8,
+    createBaseVNode("div", _hoisted_6$8, [
       createVNode(_component_FiltersSection, {
         onUpdateFilters: $data.debounceUpdateFilters,
         onUpdateFiltersInstant: $data.debounceUpdateFiltersInstant,
@@ -58019,7 +58019,7 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
         isDataLoading: $data.dataLoading
       }, null, 8, ["onUpdateFilters", "onUpdateFiltersInstant", "onLatestRefreshDateUpdate", "isDataLoading"])
     ]),
-    $data.dataLoading ? (openBlock(), createElementBlock("div", _hoisted_7$6, [
+    $data.dataLoading ? (openBlock(), createElementBlock("div", _hoisted_7$8, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -58027,11 +58027,11 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.dataLoading && !$data.error && $options.isApiDataAvailable ? (openBlock(), createElementBlock("div", _hoisted_8$6, [
-      createBaseVNode("div", _hoisted_9$6, [
-        _hoisted_10$5,
-        createBaseVNode("div", _hoisted_11$5, [
-          _hoisted_12$4,
+    !$data.dataLoading && !$data.error && $options.isApiDataAvailable ? (openBlock(), createElementBlock("div", _hoisted_8$8, [
+      createBaseVNode("div", _hoisted_9$8, [
+        _hoisted_10$7,
+        createBaseVNode("div", _hoisted_11$7, [
+          _hoisted_12$5,
           (openBlock(true), createElementBlock(Fragment, null, renderList($data.dashboardData.periodsData, (periodData) => {
             return openBlock(), createElementBlock("div", {
               key: periodData.label,
@@ -58047,18 +58047,18 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
               createBaseVNode("label", {
                 for: `period${periodData.checkboxLabel}`,
                 class: "tw-text-black desktop:tw-text-sm small-laptop:tw-text-sm"
-              }, toDisplayString(periodData.checkboxLabel), 9, _hoisted_13$3)
+              }, toDisplayString(periodData.checkboxLabel), 9, _hoisted_13$4)
             ]);
           }), 128)),
-          createBaseVNode("div", _hoisted_14$2, [
+          createBaseVNode("div", _hoisted_14$3, [
             createBaseVNode("button", {
               class: "small-laptop:tw-hidden tw-px-2 tw-py-1.5 tw-border tw-border-solid tw-border-brand-primary",
               onClick: _cache[0] || (_cache[0] = ($event) => $data.isModelAccuracyHidden = !$data.isModelAccuracyHidden)
             }, [
-              createBaseVNode("div", _hoisted_15$2, [
+              createBaseVNode("div", _hoisted_15$3, [
                 createBaseVNode("img", {
                   src: $data.isModelAccuracyHidden ? $data.EyeIcon : $data.EyeOffIcon
-                }, null, 8, _hoisted_16$2),
+                }, null, 8, _hoisted_16$3),
                 createBaseVNode("span", _hoisted_17$2, toDisplayString($data.isModelAccuracyHidden ? "Show" : "Hide") + " Model Accuracy ", 1)
               ])
             ]),
@@ -58103,13 +58103,13 @@ function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     ])) : createCommentVNode("", true)
   ]);
 }
-const DemandPlanner = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$8]]);
+const DemandPlanner = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$a]]);
 const InfoIcon = "/assets/info-icon.ae33a7d8.svg";
 const HeatMapScaleIcon = "/assets/heatmap-scale.cf4e8548.svg";
 const FiltersSection_vue_vue_type_style_index_0_lang = "";
-const BY_VALUE = "BY_VALUE";
-const BY_QUANTITY = "BY_QUANTITY";
-const _sfc_main$7 = {
+const BY_VALUE$1 = "BY_VALUE";
+const BY_QUANTITY$1 = "BY_QUANTITY";
+const _sfc_main$9 = {
   name: "FiltersSection",
   props: {
     isDataLoading: { type: Boolean, default: false }
@@ -58121,14 +58121,14 @@ const _sfc_main$7 = {
           items: [],
           selected: null
         },
-        valueOrQuantity: BY_QUANTITY
+        valueOrQuantity: BY_QUANTITY$1
       },
       customers: [],
       categories: [],
       dataLoaded: false,
       currency: "USD",
-      BY_VALUE,
-      BY_QUANTITY,
+      BY_VALUE: BY_VALUE$1,
+      BY_QUANTITY: BY_QUANTITY$1,
       InfoIcon,
       HeatMapScaleIcon
     };
@@ -58191,7 +58191,7 @@ const _sfc_main$7 = {
       isInstant ? this.filterUpdatedInstant() : this.filtersUpdated();
     },
     valueOrQuantityUpdate(event, isInstant = false) {
-      this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE ? BY_QUANTITY : BY_VALUE;
+      this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE$1 ? BY_QUANTITY$1 : BY_VALUE$1;
       isInstant ? this.filterUpdatedInstant() : this.filtersUpdated();
     },
     filtersUpdated() {
@@ -58208,19 +58208,19 @@ const _sfc_main$7 = {
     }
   }
 };
-const _hoisted_1$6 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
-const _hoisted_2$5 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
-const _hoisted_3$5 = /* @__PURE__ */ createBaseVNode("label", {
+const _hoisted_1$8 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$7 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$7 = /* @__PURE__ */ createBaseVNode("label", {
   for: "date-picker",
   class: "tw-text-sm"
 }, "Month & Year", -1);
-const _hoisted_4$5 = { class: "tw-text-base" };
-const _hoisted_5$5 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
-const _hoisted_6$5 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
-const _hoisted_7$5 = { class: "tw-flex tw-justify-end tw-items-end tw-ml-auto tw-py-2" };
-const _hoisted_8$5 = { class: "tw-flex tw-gap-1" };
-const _hoisted_9$5 = ["src"];
-const _hoisted_10$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
+const _hoisted_4$7 = { class: "tw-text-base" };
+const _hoisted_5$7 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_6$7 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
+const _hoisted_7$7 = { class: "tw-flex tw-justify-end tw-items-end tw-ml-auto tw-py-2" };
+const _hoisted_8$7 = { class: "tw-flex tw-gap-1" };
+const _hoisted_9$7 = ["src"];
+const _hoisted_10$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 tw-h-20 tw-p-2 tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl" }, [
   /* @__PURE__ */ createBaseVNode("p", { class: "tw-text-sm tw-text-center" }, [
     /* @__PURE__ */ createTextVNode(" Value = Market Sensing - Internal Prediction"),
     /* @__PURE__ */ createBaseVNode("br"),
@@ -58229,14 +58229,14 @@ const _hoisted_10$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-80 t
     /* @__PURE__ */ createTextVNode("+ = Market Higher than Internal ")
   ])
 ], -1);
-const _hoisted_11$4 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-flex tw-items-center" }, "Abs value scale:", -1);
-const _hoisted_12$3 = { class: "tw-w-8/12 tw-pb-2 tw-pl-3" };
-const _hoisted_13$2 = ["src"];
-function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_11$6 = /* @__PURE__ */ createBaseVNode("span", { class: "tw-flex tw-items-center" }, "Abs value scale:", -1);
+const _hoisted_12$4 = { class: "tw-w-8/12 tw-pb-2 tw-pl-3" };
+const _hoisted_13$3 = ["src"];
+function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_VueDatePicker = resolveComponent("VueDatePicker");
-  return openBlock(), createElementBlock("div", _hoisted_1$6, [
-    createBaseVNode("div", _hoisted_2$5, [
-      _hoisted_3$5,
+  return openBlock(), createElementBlock("div", _hoisted_1$8, [
+    createBaseVNode("div", _hoisted_2$7, [
+      _hoisted_3$7,
       createVNode(_component_VueDatePicker, {
         id: "date-picker",
         modelValue: $data.filters.refreshDates.selected,
@@ -58258,7 +58258,7 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
             class: normalizeClass(`tw-flex tw-items-center tw-justify-between tw-py-2 tw-px-3 tw-bg-brand-gray-1
             ${$props.isDataLoading ? "tw-opacity-40" : "tw-cursor-pointer"}`)
           }, [
-            createBaseVNode("span", _hoisted_4$5, toDisplayString(value), 1),
+            createBaseVNode("span", _hoisted_4$7, toDisplayString(value), 1),
             createVNode(VIcon, {
               icon: "mdi-calendar-month",
               class: "tw-text-brand-primary",
@@ -58269,11 +58269,11 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
       }, 8, ["modelValue", "onUpdate:modelValue", "format", "min-date", "max-date", "disabled"])
     ]),
-    createBaseVNode("div", _hoisted_5$5, [
+    createBaseVNode("div", _hoisted_5$7, [
       createBaseVNode("span", {
         class: normalizeClass(`tw-pt-10 desktop:tw-text-sm ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
       }, " Value (" + toDisplayString($data.currency) + ") ", 3),
-      createBaseVNode("div", _hoisted_6$5, [
+      createBaseVNode("div", _hoisted_6$7, [
         createVNode(VSwitch, {
           "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
           inset: "",
@@ -58286,8 +58286,8 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
         class: normalizeClass(`tw-pt-10 desktop:tw-text-sm ${$data.filters.valueOrQuantity === $data.BY_QUANTITY ? "tw-font-medium" : ""}`)
       }, " Volume ", 2)
     ]),
-    createBaseVNode("div", _hoisted_7$5, [
-      createBaseVNode("div", _hoisted_8$5, [
+    createBaseVNode("div", _hoisted_7$7, [
+      createBaseVNode("div", _hoisted_8$7, [
         createVNode(VMenu, {
           "open-on-hover": "",
           location: "top"
@@ -58296,25 +58296,25 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("img", mergeProps(props, {
               src: $data.InfoIcon,
               class: "tw-h-6 tw-m-2"
-            }), null, 16, _hoisted_9$5)
+            }), null, 16, _hoisted_9$7)
           ]),
           default: withCtx(() => [
-            _hoisted_10$4
+            _hoisted_10$6
           ]),
           _: 1
         }),
-        _hoisted_11$4
+        _hoisted_11$6
       ]),
-      createBaseVNode("div", _hoisted_12$3, [
+      createBaseVNode("div", _hoisted_12$4, [
         createBaseVNode("img", {
           src: $data.HeatMapScaleIcon,
           class: "tw-h-full"
-        }, null, 8, _hoisted_13$2)
+        }, null, 8, _hoisted_13$3)
       ])
     ])
   ]);
 }
-const FiltersSection = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$7]]);
+const FiltersSection$1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]);
 const VALUE = "Value (USD)";
 const VOLUME = "Volume";
 const NAME = "Name";
@@ -58334,9 +58334,9 @@ function getPeriodLabel(dateString, lag) {
 }
 function getCustomerName(customer, valueORvolume) {
   if (customer === "*") {
-    if (valueORvolume === BY_VALUE)
+    if (valueORvolume === BY_VALUE$1)
       return VALUE;
-    if (valueORvolume === BY_QUANTITY)
+    if (valueORvolume === BY_QUANTITY$1)
       return VOLUME;
   }
   return customer;
@@ -58463,7 +58463,7 @@ const DATA_CONFIG = [
   }
 ];
 const dataKeys = _.map(DATA_CONFIG, (el2) => el2.key);
-const _sfc_main$6 = {
+const _sfc_main$8 = {
   name: "TooltipChart",
   props: {
     marketSensingRefreshDate: { type: String, required: true },
@@ -58593,24 +58593,24 @@ const _sfc_main$6 = {
     }
   }
 };
-const _hoisted_1$5 = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border-2 tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl tw-z-10" };
-const _hoisted_2$4 = {
+const _hoisted_1$7 = { class: "tw-w-full tw-h-full tw-p-3 tw-bg-white tw-border-2 tw-rounded tw-border-[#D9D9D9] tw-shadow-2xl tw-z-10" };
+const _hoisted_2$6 = {
   key: 0,
   class: "tw-w-60 tw-h-60 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_3$4 = { key: 1 };
-const _hoisted_4$4 = { class: "tw-flex tw-items-center tw-w-full" };
-const _hoisted_5$4 = { class: "tw-text-xl tw-font-medium" };
-const _hoisted_6$4 = { class: "tw-flex tw-items-center tw-ml-auto" };
-const _hoisted_7$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_8$4 = { class: "tw-flex tw-items-center tw-pt-3 tw-px-4" };
-const _hoisted_9$4 = { class: "tw-text-xs tw-text-black" };
-const _hoisted_10$3 = { class: "tw-w-full tw-flex tw-justify-center tw-pt-4" };
-const _hoisted_11$3 = { key: 2 };
-function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_3$6 = { key: 1 };
+const _hoisted_4$6 = { class: "tw-flex tw-items-center tw-w-full" };
+const _hoisted_5$6 = { class: "tw-text-xl tw-font-medium" };
+const _hoisted_6$6 = { class: "tw-flex tw-items-center tw-ml-auto" };
+const _hoisted_7$6 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_8$6 = { class: "tw-flex tw-items-center tw-pt-3 tw-px-4" };
+const _hoisted_9$6 = { class: "tw-text-xs tw-text-black" };
+const _hoisted_10$5 = { class: "tw-w-full tw-flex tw-justify-center tw-pt-4" };
+const _hoisted_11$5 = { key: 2 };
+function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_GoogleChart = resolveComponent("GoogleChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$5, [
-    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_2$4, [
+  return openBlock(), createElementBlock("div", _hoisted_1$7, [
+    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_2$6, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -58618,10 +58618,10 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.isLoading && $data.apiData.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3$4, [
-      createBaseVNode("div", _hoisted_4$4, [
-        createBaseVNode("h1", _hoisted_5$4, " Demand Forecast : " + toDisplayString($props.category) + " / " + toDisplayString($props.customer), 1),
-        createBaseVNode("div", _hoisted_6$4, [
+    !$data.isLoading && $data.apiData.length > 0 ? (openBlock(), createElementBlock("div", _hoisted_3$6, [
+      createBaseVNode("div", _hoisted_4$6, [
+        createBaseVNode("h1", _hoisted_5$6, " Demand Forecast : " + toDisplayString($props.category) + " / " + toDisplayString($props.customer), 1),
+        createBaseVNode("div", _hoisted_6$6, [
           createVNode(VBtn, {
             variant: "plain",
             icon: "mdi-close",
@@ -58629,8 +58629,8 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8, ["onClick"])
         ])
       ]),
-      _hoisted_7$4,
-      createBaseVNode("div", _hoisted_8$4, [
+      _hoisted_7$6,
+      createBaseVNode("div", _hoisted_8$6, [
         (openBlock(true), createElementBlock(Fragment, null, renderList($data.legendData, (item) => {
           return openBlock(), createElementBlock("div", {
             key: item.key,
@@ -58639,11 +58639,11 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
             createBaseVNode("span", {
               style: normalizeStyle(`width: 24px; border: 2px ${item.legendStyle} ${item.color}`)
             }, null, 4),
-            createBaseVNode("span", _hoisted_9$4, toDisplayString(item.label), 1)
+            createBaseVNode("span", _hoisted_9$6, toDisplayString(item.label), 1)
           ]);
         }), 128))
       ]),
-      createBaseVNode("div", _hoisted_10$3, [
+      createBaseVNode("div", _hoisted_10$5, [
         createVNode(_component_GoogleChart, {
           type: "LineChart",
           options: $options.chartOptions,
@@ -58651,7 +58651,7 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8, ["options", "data"])
       ])
     ])) : createCommentVNode("", true),
-    !$data.isLoading && $data.error ? (openBlock(), createElementBlock("div", _hoisted_11$3, [
+    !$data.isLoading && $data.error ? (openBlock(), createElementBlock("div", _hoisted_11$5, [
       createVNode(VAlert, {
         type: "error",
         text: $data.error.toString()
@@ -58659,8 +58659,8 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     ])) : createCommentVNode("", true)
   ]);
 }
-const TooltipChart = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$6]]);
-const _sfc_main$5 = {
+const TooltipChart = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$8]]);
+const _sfc_main$7 = {
   name: "CardsListItem",
   props: {
     data: {
@@ -58735,32 +58735,32 @@ const _sfc_main$5 = {
     }
   }
 };
-const _hoisted_1$4 = { class: "tw-flex tw-flex-col tw-gap-3 tw-w-full tw-h-full tw-bg-white tw-p-4 desktop:tw-p-2 small-laptop:tw-p-2" };
-const _hoisted_2$3 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full" };
-const _hoisted_3$3 = { class: "tw-text-xl desktop:tw-text-base small-laptop:tw-text-base tw-font-medium" };
-const _hoisted_4$3 = { class: "tw-bg-brand-gray-4 tw-rounded tw-text-center" };
-const _hoisted_5$3 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
-const _hoisted_6$3 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_7$3 = { class: "tw-w-full tw-h-full tw-overflow-auto" };
-const _hoisted_8$3 = { key: 0 };
-const _hoisted_9$3 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
-const _hoisted_10$2 = ["onClick"];
-const _hoisted_11$2 = {
+const _hoisted_1$6 = { class: "tw-flex tw-flex-col tw-gap-3 tw-w-full tw-h-full tw-bg-white tw-p-4 desktop:tw-p-2 small-laptop:tw-p-2" };
+const _hoisted_2$5 = { class: "tw-flex tw-gap-x-4 tw-items-center tw-w-full" };
+const _hoisted_3$5 = { class: "tw-text-xl desktop:tw-text-base small-laptop:tw-text-base tw-font-medium" };
+const _hoisted_4$5 = { class: "tw-bg-brand-gray-4 tw-rounded tw-text-center" };
+const _hoisted_5$5 = { class: "tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs" };
+const _hoisted_6$5 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-w-full tw-border tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_7$5 = { class: "tw-w-full tw-h-full tw-overflow-auto" };
+const _hoisted_8$5 = { key: 0 };
+const _hoisted_9$5 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
+const _hoisted_10$4 = ["onClick"];
+const _hoisted_11$4 = {
   key: 0,
   class: "desktop:tw-text-xs small-laptop:tw-text-xs"
 };
-const _hoisted_12$2 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
-function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_12$3 = { class: "tw-w-auto tw-h-auto tw-flex tw-items-center tw-p-1 tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-bg-white tw-border tw-rounded tw-border-[#D9D9D9] tw-shadow-xl" };
+function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_TooltipChart = resolveComponent("TooltipChart");
-  return openBlock(), createElementBlock("div", _hoisted_1$4, [
-    createBaseVNode("div", _hoisted_2$3, [
-      createBaseVNode("p", _hoisted_3$3, toDisplayString($props.data.period), 1),
-      createBaseVNode("div", _hoisted_4$3, [
-        createBaseVNode("p", _hoisted_5$3, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
+  return openBlock(), createElementBlock("div", _hoisted_1$6, [
+    createBaseVNode("div", _hoisted_2$5, [
+      createBaseVNode("p", _hoisted_3$5, toDisplayString($props.data.period), 1),
+      createBaseVNode("div", _hoisted_4$5, [
+        createBaseVNode("p", _hoisted_5$5, "Future " + toDisplayString($options.formattedHorizon) + " months", 1)
       ])
     ]),
-    _hoisted_6$3,
-    createBaseVNode("div", _hoisted_7$3, [
+    _hoisted_6$5,
+    createBaseVNode("div", _hoisted_7$5, [
       createBaseVNode("div", {
         class: normalizeClass(`tw-grid tw-grid-cols-${$data.lodSize(
           $data.lodGet($props.data, "columnHeaders", [])
@@ -58771,7 +58771,7 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
             key: columnHeader,
             class: normalizeClass(`tw-font-medium tw-text-sm desktop:tw-text-xs small-laptop:tw-text-xs tw-cursor-default ${index2 > 0 ? "tw-text-center" : "tw-text-left"}`)
           }, [
-            index2 === 0 ? (openBlock(), createElementBlock("span", _hoisted_8$3, toDisplayString(columnHeader), 1)) : createCommentVNode("", true),
+            index2 === 0 ? (openBlock(), createElementBlock("span", _hoisted_8$5, toDisplayString(columnHeader), 1)) : createCommentVNode("", true),
             index2 > 0 ? (openBlock(), createBlock(VMenu, {
               key: 1,
               "open-on-hover": "",
@@ -58781,7 +58781,7 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
                 createBaseVNode("span", normalizeProps(guardReactiveProps(props)), toDisplayString(columnHeader), 17)
               ]),
               default: withCtx(() => [
-                createBaseVNode("div", _hoisted_9$3, toDisplayString(columnHeader), 1)
+                createBaseVNode("div", _hoisted_9$5, toDisplayString(columnHeader), 1)
               ]),
               _: 2
             }, 1024)) : createCommentVNode("", true)
@@ -58815,7 +58815,7 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
                       onClick: ($event) => $options.handleCellClick(`${rowData[0]}${index2}`, index2 === 0),
                       class: $options.getCellStyling(cellValue, index2 === 0)
                     }), [
-                      index2 > 0 ? (openBlock(), createElementBlock("span", _hoisted_11$2, toDisplayString($options.getCellLabel(cellValue)), 1)) : createCommentVNode("", true),
+                      index2 > 0 ? (openBlock(), createElementBlock("span", _hoisted_11$4, toDisplayString($options.getCellLabel(cellValue)), 1)) : createCommentVNode("", true),
                       index2 === 0 ? (openBlock(), createBlock(VMenu, {
                         key: 1,
                         "open-on-hover": "",
@@ -58825,11 +58825,11 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
                           createBaseVNode("span", mergeProps(props2, { class: "desktop:tw-text-xs small-laptop:tw-text-xs" }), toDisplayString(cellValue), 17)
                         ]),
                         default: withCtx(() => [
-                          createBaseVNode("div", _hoisted_12$2, toDisplayString(cellValue), 1)
+                          createBaseVNode("div", _hoisted_12$3, toDisplayString(cellValue), 1)
                         ]),
                         _: 2
                       }, 1024)) : createCommentVNode("", true)
-                    ], 16, _hoisted_10$2)
+                    ], 16, _hoisted_10$4)
                   ]),
                   default: withCtx(() => [
                     createVNode(_component_TooltipChart, {
@@ -58851,8 +58851,8 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     ])
   ]);
 }
-const CardsListItem = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
-const _sfc_main$4 = {
+const CardsListItem = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$7]]);
+const _sfc_main$6 = {
   name: "CardsList",
   components: {
     CardsListItem
@@ -58873,10 +58873,10 @@ const _sfc_main$4 = {
     };
   }
 };
-const _hoisted_1$3 = { class: "tw-grid tw-grid-cols-2 tw-gap-5 tw-w-full tw-h-full" };
-function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_1$5 = { class: "tw-grid tw-grid-cols-2 tw-gap-5 tw-w-full tw-h-full" };
+function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CardsListItem = resolveComponent("CardsListItem");
-  return openBlock(), createElementBlock("div", _hoisted_1$3, [
+  return openBlock(), createElementBlock("div", _hoisted_1$5, [
     (openBlock(true), createElementBlock(Fragment, null, renderList($props.data, (cardData, index2) => {
       return openBlock(), createElementBlock("div", {
         key: cardData.period
@@ -58890,14 +58890,14 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     }), 128))
   ]);
 }
-const CardsList = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+const CardsList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$6]]);
 const LAG_VALUES = [1, 4, 7, 10];
-const FILTER_UPDATE_GAP_MS = 300;
+const FILTER_UPDATE_GAP_MS$1 = 300;
 const FILTER_INSTANT_UPDATE_GAP_MS = 500;
-const _sfc_main$3 = {
+const _sfc_main$5 = {
   name: "HeatMap",
   components: {
-    FiltersSection,
+    FiltersSection: FiltersSection$1,
     CardsList
   },
   data() {
@@ -58911,7 +58911,7 @@ const _sfc_main$3 = {
       },
       debounceUpdateFilters: _.debounce(
         this.updateFilters,
-        FILTER_UPDATE_GAP_MS
+        FILTER_UPDATE_GAP_MS$1
       ),
       debounceUpdateFiltersInstant: _.debounce(
         this.updateFilters,
@@ -58977,36 +58977,36 @@ const _sfc_main$3 = {
     }
   }
 };
-const _hoisted_1$2 = { class: "tw-h-full tw-w-full tw-pb-10 tw-bg-brand-gray-1" };
-const _hoisted_2$2 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
-const _hoisted_3$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center" }, [
+const _hoisted_1$4 = { class: "tw-h-full tw-w-full tw-pb-10 tw-bg-brand-gray-1" };
+const _hoisted_2$4 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center" }, [
   /* @__PURE__ */ createBaseVNode("h1", { class: "tw-text-lg" }, [
     /* @__PURE__ */ createBaseVNode("span", { class: "tw-font-bold" }, "Heat-map View -"),
     /* @__PURE__ */ createTextVNode(" Representation of variance across categories and stores ")
   ])
 ], -1);
-const _hoisted_4$2 = {
+const _hoisted_4$4 = {
   key: 0,
   class: "tw-ml-auto tw-h-full tw-flex tw-items-center"
 };
-const _hoisted_5$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
-const _hoisted_6$2 = { class: "tw-py-5" };
-const _hoisted_7$2 = {
+const _hoisted_5$4 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$4 = { class: "tw-py-5" };
+const _hoisted_7$4 = {
   key: 0,
   class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
 };
-const _hoisted_8$2 = { key: 1 };
-const _hoisted_9$2 = { key: 2 };
-function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+const _hoisted_8$4 = { key: 1 };
+const _hoisted_9$4 = { key: 2 };
+function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_FiltersSection = resolveComponent("FiltersSection");
   const _component_CardsList = resolveComponent("CardsList");
-  return openBlock(), createElementBlock("div", _hoisted_1$2, [
-    createBaseVNode("div", _hoisted_2$2, [
-      _hoisted_3$2,
-      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$2, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
+  return openBlock(), createElementBlock("div", _hoisted_1$4, [
+    createBaseVNode("div", _hoisted_2$4, [
+      _hoisted_3$4,
+      $data.latestRefreshDate ? (openBlock(), createElementBlock("div", _hoisted_4$4, " Last refreshed on " + toDisplayString($data.latestRefreshDate), 1)) : createCommentVNode("", true)
     ]),
-    _hoisted_5$2,
-    createBaseVNode("div", _hoisted_6$2, [
+    _hoisted_5$4,
+    createBaseVNode("div", _hoisted_6$4, [
       createVNode(_component_FiltersSection, {
         onUpdateFilters: $data.debounceUpdateFilters,
         onUpdateFiltersInstant: $data.debounceUpdateFiltersInstant,
@@ -59014,7 +59014,7 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
         isDataLoading: $data.isFetchingData
       }, null, 8, ["onUpdateFilters", "onUpdateFiltersInstant", "onLatestRefreshDateUpdate", "isDataLoading"])
     ]),
-    $data.isFetchingData ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
+    $data.isFetchingData ? (openBlock(), createElementBlock("div", _hoisted_7$4, [
       createVNode(VProgressCircular, {
         indeterminate: "",
         color: "#7823DC",
@@ -59022,13 +59022,13 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
         width: 10
       })
     ])) : createCommentVNode("", true),
-    !$data.isFetchingData && !$data.error ? (openBlock(), createElementBlock("div", _hoisted_8$2, [
+    !$data.isFetchingData && !$data.error ? (openBlock(), createElementBlock("div", _hoisted_8$4, [
       createVNode(_component_CardsList, {
         data: $data.apiData,
         selectedFilters: $data.selectedFilters
       }, null, 8, ["data", "selectedFilters"])
     ])) : createCommentVNode("", true),
-    !$data.isFetchingData && $data.error ? (openBlock(), createElementBlock("div", _hoisted_9$2, [
+    !$data.isFetchingData && $data.error ? (openBlock(), createElementBlock("div", _hoisted_9$4, [
       createVNode(VAlert, {
         type: "error",
         text: $data.error.toString()
@@ -59036,7 +59036,195 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     ])) : createCommentVNode("", true)
   ]);
 }
-const HeatMap = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]);
+const HeatMap = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
+const BY_VALUE = "BY_VALUE";
+const BY_QUANTITY = "BY_QUANTITY";
+const ALL_OPTION$1 = "All";
+const _sfc_main$4 = {
+  name: "FiltersSection",
+  props: {
+    filtersDisabled: { type: Boolean, default: false }
+  },
+  data() {
+    return {
+      filters: {
+        categories: {
+          items: [],
+          selected: null,
+          filterlabel: "Categories"
+        },
+        customers: {
+          items: [],
+          selected: null,
+          filterlabel: "Customers"
+        },
+        time_horizon: {
+          items: [],
+          selected: null,
+          filterlabel: "Time Horizon"
+        },
+        internal_model: {
+          items: [],
+          selected: null,
+          filterlabel: "Internal Model"
+        },
+        refreshDate: null,
+        valueOrQuantity: BY_QUANTITY
+      },
+      currency: "USD",
+      BY_VALUE,
+      BY_QUANTITY,
+      ALL_OPTION: ALL_OPTION$1
+    };
+  },
+  async created() {
+    const options = await fetchModelAccuracyOptions().catch(() => null);
+    if (options) {
+      this.filters.categories.items = options.ms.categories;
+      this.filters.customers.items = options.ms.customers;
+      this.filters.customers.items = _.concat(
+        ALL_OPTION$1,
+        this.filters.customers.items
+      );
+      this.filters.time_horizon.items = options.ms.msTimeHorizon;
+      this.filters.internal_model.items = options.clientData.models;
+    }
+    this.filters.refreshDate = options.updateDates[0];
+    this.selectFilterUpdated("categories", this.filters.categories.items[0]);
+    this.selectFilterUpdated(
+      "time_horizon",
+      this.filters.time_horizon.items[0]
+    );
+    this.selectFilterUpdated(
+      "internal_model",
+      this.filters.internal_model.items[0]
+    );
+    this.selectFilterUpdated("customers", this.filters.customers.items[0]);
+  },
+  emits: ["updateFilters"],
+  methods: {
+    selectFilterUpdated(filterName, currentSelection) {
+      this.filters[filterName].selected = currentSelection;
+      this.filtersUpdated();
+    },
+    valueOrQuantityUpdate() {
+      this.filters.valueOrQuantity = this.filters.valueOrQuantity === BY_VALUE ? BY_QUANTITY : BY_VALUE;
+      this.filtersUpdated();
+    },
+    filtersUpdated() {
+      this.$emit("updateFilters", this.filters);
+    }
+  }
+};
+const _hoisted_1$3 = { class: "tw-flex tw-gap-x-3 tw-w-full tw-bg-white tw-px-3" };
+const _hoisted_2$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_3$3 = /* @__PURE__ */ createBaseVNode("label", {
+  for: "category",
+  class: "tw-text-sm"
+}, "Category", -1);
+const _hoisted_4$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_5$3 = /* @__PURE__ */ createBaseVNode("label", {
+  for: "customer",
+  class: "tw-text-sm"
+}, "Customer(s)", -1);
+const _hoisted_6$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_7$3 = /* @__PURE__ */ createBaseVNode("label", {
+  for: "mstimehorizon",
+  class: "tw-text-sm"
+}, "MS Time Horizon", -1);
+const _hoisted_8$3 = { class: "tw-pt-3 tw-min-w-[14%] tw--mb-3" };
+const _hoisted_9$3 = /* @__PURE__ */ createBaseVNode("label", {
+  for: "model",
+  class: "tw-text-sm"
+}, "Model", -1);
+const _hoisted_10$3 = { class: "tw-flex tw-gap-1.5 tw-pt-3 tw-pl-3 tw--mb-3" };
+const _hoisted_11$3 = { class: "tw-flex tw-pt-8 tw-text-brand-primary" };
+function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", _hoisted_1$3, [
+    createBaseVNode("div", _hoisted_2$3, [
+      _hoisted_3$3,
+      createVNode(VSelect, {
+        disabled: $props.filtersDisabled,
+        items: $data.filters.categories.items,
+        "model-value": $data.filters.categories.selected,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = (value) => $options.selectFilterUpdated("categories", value)),
+        density: "comfortable"
+      }, null, 8, ["disabled", "items", "model-value"])
+    ]),
+    createBaseVNode("div", _hoisted_4$3, [
+      _hoisted_5$3,
+      createVNode(VSelect, {
+        disabled: $props.filtersDisabled,
+        items: $data.filters.customers.items,
+        "model-value": $data.filters.customers.selected,
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = (value) => $options.selectFilterUpdated("customers", value)),
+        density: "comfortable"
+      }, null, 8, ["disabled", "items", "model-value"])
+    ]),
+    createBaseVNode("div", _hoisted_6$3, [
+      _hoisted_7$3,
+      createVNode(VSelect, {
+        disabled: $props.filtersDisabled,
+        items: $data.filters.time_horizon.items,
+        "model-value": $data.filters.time_horizon.selected,
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = (value) => $options.selectFilterUpdated("time_horizon", value)),
+        density: "comfortable"
+      }, null, 8, ["disabled", "items", "model-value"])
+    ]),
+    createBaseVNode("div", _hoisted_8$3, [
+      _hoisted_9$3,
+      createVNode(VSelect, {
+        disabled: $props.filtersDisabled,
+        items: $data.filters.internal_model.items,
+        "model-value": $data.filters.internal_model.selected,
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = (value) => $options.selectFilterUpdated("internal_model", value)),
+        density: "comfortable"
+      }, null, 8, ["disabled", "items", "model-value"])
+    ]),
+    createBaseVNode("div", _hoisted_10$3, [
+      createBaseVNode("span", {
+        class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_VALUE ? "tw-font-medium" : ""}`)
+      }, " Value (" + toDisplayString($data.currency) + ") ", 3),
+      createBaseVNode("div", _hoisted_11$3, [
+        createVNode(VSwitch, {
+          "model-value": $data.filters.valueOrQuantity === $data.BY_QUANTITY,
+          inset: "",
+          density: "compact",
+          onClick: $options.valueOrQuantityUpdate,
+          disabled: $props.filtersDisabled
+        }, null, 8, ["model-value", "onClick", "disabled"])
+      ]),
+      createBaseVNode("span", {
+        class: normalizeClass(`tw-pt-10 ${$data.filters.valueOrQuantity === $data.BY_QUANTITY ? "tw-font-medium" : ""}`)
+      }, " Volume ", 2)
+    ])
+  ]);
+}
+const FiltersSection = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+async function fetchInternalChartsData({ categories, customers, valueORvolume, msTimeHorizon, internalModel, refreshDate }) {
+  const data = await getApiBase("internalcharts", {
+    marketSensingRefreshDate: refreshDate,
+    categories,
+    customers,
+    valueORvolume,
+    msTimeHorizon,
+    internalModel
+  });
+  let dataForUi = _.get(data, "result.data", {});
+  let unit = _.get(data, "result.unit", {});
+  dataForUi = _.map(dataForUi, (v, k2) => ({
+    ...v,
+    timeline: k2,
+    actualGrowth: v.actualGrowth == null || v.actualGrowth == "" ? 0 : v.actualGrowth,
+    forecastSales: v.forecastSales == null || v.forecastSales == "" ? 0 : v.forecastSales,
+    forecastGrowth: v.forecastGrowth == null || v.forecastGrowth == "" ? 0 : v.forecastGrowth,
+    msProjectedGrowth: v.msProjectedGrowth == null || v.msProjectedGrowth == "" ? 0 : v.msProjectedGrowth,
+    actualSales: v.actualSales == null || v.actualSales == "" ? 0 : v.actualSales,
+    unit
+  }));
+  console.log(dataForUi);
+  return dataForUi;
+}
 const VCard$1 = "";
 const VCardActions = defineComponent({
   name: "VCardActions",
@@ -59298,6 +59486,281 @@ const VCard = defineComponent({
     return {};
   }
 });
+const FILTER_UPDATE_GAP_MS = 300;
+const _sfc_main$3 = {
+  name: "InternalCharts",
+  components: {
+    GChart,
+    FiltersSection
+  },
+  data() {
+    return {
+      isLoading: true,
+      refreshDate: null,
+      apiData: [],
+      columnChartData: [],
+      debounceUpdateFilters: _.debounce(
+        this.updateFilters,
+        FILTER_UPDATE_GAP_MS
+      ),
+      filtersDisabled: false,
+      columnChartOptions: {
+        height: 320,
+        explorer: {
+          axis: "horizontal"
+        },
+        legend: { position: "none" },
+        tooltip: { trigger: "none" },
+        colors: ["#787878", "#B991EB"],
+        hAxis: {
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        vAxis: {
+          minorGridlines: { color: "none" },
+          gridlines: {
+            count: 0
+          },
+          textPosition: "none"
+        },
+        chartArea: {
+          left: "1%",
+          width: "100%"
+        },
+        annotations: {
+          textStyle: {
+            color: "#000000",
+            fontSize: 12
+          },
+          datum: { stem: { length: 0 } },
+          alwaysOutside: true
+        }
+      },
+      lineChartData: [],
+      lineChartOptions: {
+        curveType: "none",
+        explorer: {
+          axis: "horizontal"
+        },
+        tooltip: { trigger: "none" },
+        vAxis: {
+          minorGridlines: { color: "none" },
+          gridlines: {
+            count: 0
+          },
+          textPosition: "none"
+        },
+        annotations: {
+          textStyle: {
+            color: "#000000",
+            fontSize: 12
+          },
+          datum: { stem: { length: 0 } },
+          alwaysOutside: true
+        },
+        legend: { position: "top", textStyle: { fontSize: 12 } },
+        colors: ["#570EAA", "#787878", "#C8A5F0"],
+        height: 370,
+        series: {
+          1: { lineDashStyle: [4, 4] }
+        },
+        hAxis: {
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        chartArea: {
+          left: "1%",
+          width: "100%"
+        }
+      }
+    };
+  },
+  methods: {
+    async updateFilters(filtersData) {
+      try {
+        this.columnChartData = [];
+        this.lineChartData = [];
+        this.isLoading = true;
+        this.filtersDisabled = true;
+        const selectedCategories = _.get(filtersData, "categories.selected");
+        const selectedCustomers = _.get(filtersData, "customers.selected");
+        const selectedValueORvolume = _.get(filtersData, "valueOrQuantity");
+        const selectedTimeHorizon = _.get(filtersData, "time_horizon.selected");
+        const selectedInternalModel = _.get(
+          filtersData,
+          "internal_model.selected"
+        );
+        const refreshDate = _.get(filtersData, "refreshDate");
+        this.refreshDate = format(
+          new Date(_.get(filtersData, "refreshDate")),
+          "MMM dd,yyyy"
+        );
+        const response = await fetchInternalChartsData({
+          categories: selectedCategories === ALL_OPTION$1 ? "*" : selectedCategories,
+          customers: selectedCustomers === ALL_OPTION$1 ? "*" : selectedCustomers,
+          valueORvolume: selectedValueORvolume,
+          msTimeHorizon: selectedTimeHorizon,
+          internalModel: selectedInternalModel,
+          refreshDate
+        });
+        if (!_.isEmpty(response)) {
+          this.apiData = response;
+          this.isLoading = false;
+          this.filtersDisabled = false;
+          let v = this;
+          if (!this.columnChartData.length) {
+            this.columnChartData.push([
+              "period",
+              "Internal",
+              { role: "annotation" },
+              "Actual",
+              { role: "annotation" }
+            ]);
+            _.forEach(this.apiData, function(data) {
+              v.columnChartData.push([
+                data.timeline,
+                data.forecastSales,
+                data.forecastSales + data.unit,
+                data.actualSales,
+                data.actualSales + data.unit
+              ]);
+            });
+          }
+          if (!this.lineChartData.length) {
+            this.lineChartData.push([
+              "period",
+              "Market Sensing Forecast",
+              { role: "annotation" },
+              "Internal Forecast",
+              { role: "annotation" },
+              "Sales",
+              { role: "annotation" }
+            ]);
+            _.forEach(this.apiData, function(data) {
+              v.lineChartData.push([
+                data.timeline,
+                data.msProjectedGrowth,
+                data.msProjectedGrowth + "%",
+                data.forecastGrowth,
+                data.forecastGrowth + "%",
+                data.actualGrowth,
+                data.actualGrowth + "%"
+              ]);
+            });
+          }
+        }
+      } catch (e3) {
+        console.log(e3);
+        this.isLoading = false;
+        alert("There was an error while fetching data");
+      }
+      this.isLoading = false;
+    }
+  }
+};
+const _hoisted_1$2 = { class: "tw-w-full tw-h-full tw-bg-brand-gray-1" };
+const _hoisted_2$2 = { class: "tw-flex tw-w-full tw-h-8 tw-bg-brand-gray-1" };
+const _hoisted_3$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-h-full tw-items-center tw-font-bold tw-text-lg" }, " Internal Charts ", -1);
+const _hoisted_4$2 = { class: "tw-ml-auto tw-h-full tw-flex tw-items-center" };
+const _hoisted_5$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_6$2 = { class: "tw-py-5 tw-bg-brand-gray-1" };
+const _hoisted_7$2 = {
+  key: 0,
+  class: "tw-w-full tw-h-3/4 tw-flex tw-justify-center tw-items-center"
+};
+const _hoisted_8$2 = {
+  key: 1,
+  class: "tw-w-full tw-border-t tw-border-solid tw-border-brand-gray-2"
+};
+const _hoisted_9$2 = { class: "tw-grid tw-grid-rows-2 tw-gap-6" };
+const _hoisted_10$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_11$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, " Internal Forecast vs Sales ", -1);
+const _hoisted_12$2 = /* @__PURE__ */ createBaseVNode("div", { class: "overflow-x-auto tw-w-full tw-items-left tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+const _hoisted_13$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-mt-3" }, [
+  /* @__PURE__ */ createBaseVNode("div", {
+    style: { "width": "12px", "height": "12px", "background": "#787878" },
+    class: "tw-ml-3 tw-mt-px"
+  }),
+  /* @__PURE__ */ createBaseVNode("div", {
+    style: { "height": "12px" },
+    class: "tw-text-xs tw-ml-1"
+  }, " Internal Forecast "),
+  /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex" }, [
+    /* @__PURE__ */ createBaseVNode("div", {
+      style: { "width": "12px", "height": "12px", "background": "#b991eb" },
+      class: "tw-ml-3 tw-mt-px"
+    }),
+    /* @__PURE__ */ createBaseVNode("div", {
+      style: { "height": "12px" },
+      class: "tw-text-xs tw-ml-1"
+    }, "Sales")
+  ])
+], -1);
+const _hoisted_14$2 = { style: { "overflow-x": "auto !important" } };
+const _hoisted_15$2 = /* @__PURE__ */ createBaseVNode("p", { class: "tw-font-medium tw-text-xl tw-pl-2 tw-pt-2 tw-mb-2" }, " Projections of Market Sensing Forecast vs Internal Forecast vs Sales ", -1);
+const _hoisted_16$2 = /* @__PURE__ */ createBaseVNode("div", { class: "tw-flex tw-w-full tw-flex-auto tw-border-t tw-border-solid tw-border-brand-gray-2" }, null, -1);
+function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_FiltersSection = resolveComponent("FiltersSection");
+  const _component_GChart = resolveComponent("GChart");
+  return openBlock(), createElementBlock("div", _hoisted_1$2, [
+    createBaseVNode("div", _hoisted_2$2, [
+      _hoisted_3$2,
+      createBaseVNode("div", _hoisted_4$2, " Last refreshed on " + toDisplayString($data.refreshDate), 1)
+    ]),
+    _hoisted_5$2,
+    createBaseVNode("div", _hoisted_6$2, [
+      createVNode(_component_FiltersSection, {
+        onUpdateFilters: $data.debounceUpdateFilters,
+        filtersDisabled: $data.filtersDisabled
+      }, null, 8, ["onUpdateFilters", "filtersDisabled"])
+    ]),
+    $data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_7$2, [
+      createVNode(VProgressCircular, {
+        indeterminate: "",
+        color: "#7823DC",
+        size: 80,
+        width: 10
+      })
+    ])) : createCommentVNode("", true),
+    !$data.isLoading ? (openBlock(), createElementBlock("div", _hoisted_8$2, [
+      createBaseVNode("div", _hoisted_9$2, [
+        createBaseVNode("div", _hoisted_10$2, [
+          createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
+            default: withCtx(() => [
+              _hoisted_11$2,
+              _hoisted_12$2,
+              _hoisted_13$2,
+              createVNode(_component_GChart, {
+                type: "ColumnChart",
+                data: $data.columnChartData,
+                options: $data.columnChartOptions,
+                height: "370"
+              }, null, 8, ["data", "options"])
+            ]),
+            _: 1
+          })
+        ]),
+        createBaseVNode("div", _hoisted_14$2, [
+          createVNode(VCard, { style: { "width": "3500px", "height": "370px" } }, {
+            default: withCtx(() => [
+              _hoisted_15$2,
+              _hoisted_16$2,
+              createVNode(_component_GChart, {
+                type: "LineChart",
+                options: $data.lineChartOptions,
+                data: $data.lineChartData
+              }, null, 8, ["options", "data"])
+            ]),
+            _: 1
+          })
+        ])
+      ])
+    ])) : createCommentVNode("", true)
+  ]);
+}
+const InternalCharts = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]);
 async function fetchModelAccuracyData({ msRefreshDate, categoriesHistoric, projected_period }) {
   const data = await getApiBase("modelaccuracy", {
     category: categoriesHistoric,
@@ -60010,6 +60473,8 @@ const DemandPlannerIcon = "/assets/demand-planner-icon.baaa7b65.svg";
 const DemandPlannerIconActive = "/assets/demand-planner-icon-active.d3fc6985.svg";
 const HeatMapIcon = "/assets/heat-map-icon.1d0fe80a.svg";
 const HeatMapIconActive = "/assets/heat-map-icon-active.7e0ef2a8.svg";
+const InternalChartsIcon = "/assets/internal-charts-icon.ed193c46.svg";
+const InternalChartsIconActive = "/assets/internal-charts-icon-active.cecfcdc9.svg";
 const ModelAccuracyIcon = "/assets/model-accuracy-icon.4a109f25.svg";
 const ModelAccuracyIconActive = "/assets/model-accuracy-icon-active.25192545.svg";
 const FaqIcon = "/assets/faq-icon.b9cecf90.svg";
@@ -60019,6 +60484,7 @@ const HelpSupportIconActive = "/assets/help-support-icon-active.dd73ac77.svg";
 const PAGE_KEYS = {
   DEMAND_PLANNER: "demandPlanner",
   HEAT_MAP: "heatMap",
+  INTERNAL_CHARTS: "internalCharts",
   MODEL_ACCURACY: "modelAccuracy",
   FAQS: "faqs",
   HELP: "help"
@@ -60035,6 +60501,12 @@ const PAGES_CONFIG = {
     icon: HeatMapIcon,
     icon_active: HeatMapIconActive,
     component: HeatMap
+  },
+  internalCharts: {
+    label: "Internal Charts",
+    icon: InternalChartsIcon,
+    icon_active: InternalChartsIconActive,
+    component: InternalCharts
   },
   modelAccuracy: {
     label: "Accuracy",

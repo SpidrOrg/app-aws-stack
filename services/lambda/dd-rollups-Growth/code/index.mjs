@@ -155,8 +155,8 @@ export const handler = async (event) => {
           const clientModel = _.get(_.find(periodConfig, v => v.ms_model === model), "client_model");
           const lagStart = _.get(horizonToLagStartLagEndMapping, `${model}.lagStart`);
           const lagEnd = _.get(horizonToLagStartLagEndMapping, `${model}.lagEnd`);
-          const predictionStartDtP = dfns.add(dfns.parse(dtX, DB_DATE_FORMAT, new Date()), {months: lagStart});
-          const predictionEndDtP = dfns.add(dfns.parse(dtX, DB_DATE_FORMAT, new Date()), {months: lagEnd});
+          const predictionStartDtP = dfns.add(dfns.parse(dtX, DB_DATE_FORMAT, new Date()), {months: lagStart + 1});
+          const predictionEndDtP = dfns.add(dfns.parse(dtX, DB_DATE_FORMAT, new Date()), {months: lagEnd + 1});
 
           const predictionStartDt = dfns.format(predictionStartDtP, DB_DATE_FORMAT);
           const predictionEndDt = dfns.format(predictionEndDtP, DB_DATE_FORMAT);

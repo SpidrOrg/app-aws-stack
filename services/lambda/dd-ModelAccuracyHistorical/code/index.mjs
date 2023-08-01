@@ -71,7 +71,8 @@ export const handler = async (event) => {
     return {
       'statusCode': 200,
       'content-type': 'application/json',
-      'body': results
+      'body': results,
+      'query': QUERIES,
     };
 
   } catch (err) {
