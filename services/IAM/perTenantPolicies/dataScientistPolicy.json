@@ -1,0 +1,120 @@
+{
+  "policyName": ":TENANT_ID:-datascientist-policy",
+  "policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [
+          "glue:StartCrawler",
+          "glue:GetCrawler",
+          "glue:ListCrawls"
+        ],
+        "Resource": "arn:aws:glue::AWS_REGION::123456789012:crawler/crawler-:TENANT_ID:",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "glue:BatchGetCrawlers",
+          "glue:ListCrawlers",
+          "glue:GetDatabases",
+          "glue:GetTables",
+          "glue:GetTable"
+        ],
+        "Resource": "*",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "glue:GetDatabase",
+          "glue:GetDatabases",
+          "glue:GetTable",
+          "glue:GetPartitions",
+          "glue:GetPartition",
+          "glue:GetTables"
+        ],
+        "Resource": [
+          "arn:aws:glue::AWS_REGION::123456789012:catalog",
+          "arn:aws:glue::AWS_REGION::123456789012:database/:TENANT_ID:-database-:ENV_NAME:",
+          "arn:aws:glue::AWS_REGION::123456789012:table/:TENANT_ID:-database-:ENV_NAME:/*",
+          "arn:aws:glue::AWS_REGION::123456789012:database/aws_athena",
+          "arn:aws:glue::AWS_REGION::123456789012:table/aws_athena/*"
+        ],
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "Athena:GetQueryExecution",
+          "Athena:GetQueryResults",
+          "Athena:StartQueryExecution"
+        ],
+        "Resource": "arn:aws:athena::AWS_REGION::123456789012:workgroup/:TENANT_ID:-athena-workgroup-:ENV_NAME:",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "Athena:GetWorkGroup",
+          "Athena:ListWorkGroups"
+        ],
+        "Resource": "*",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+        ],
+        "Resource": [
+          "arn:aws:s3:::krny-spi-:TENANT_ID:-:ENV_NAME:",
+          "arn:aws:s3:::krny-spi-123456789012-ext-sources-:ENV_NAME:",
+          "arn:aws:s3:::krny-spi-:TENANT_ID:-:ENV_NAME:/*",
+          "arn:aws:s3:::krny-spi-123456789012-ext-sources-:ENV_NAME:/*"
+        ],
+        "Effect": "Allow"
+      },
+      {
+        "Action": "s3:ListAllMyBuckets",
+        "Resource": "arn:aws:s3:::*",
+        "Effect": "Allow"
+      },
+      {
+        "Action": "s3:DeleteObject",
+        "Resource": "arn:aws:s3:::krny-spi-:TENANT_ID:-:ENV_NAME:/*",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "lambda:GetAccountSettings",
+          "lambda:ListFunctions"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Action": [
+          "lambda:InvokeFunction",
+          "lambda:GetFunction"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:lambda::AWS_REGION::123456789012:function:ingestion-googletrends-client"
+      },
+      {
+        "Action": [
+          "sagemaker:ListDomains",
+          "sagemaker:ListUserProfiles",
+          "sagemaker:ListSpaces",
+          "sagemaker:DescribeDomain"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
+      },
+      {
+        "Action": "sagemaker:*",
+        "Effect": "Allow",
+        "Resource": "arn:aws:sagemaker::AWS_REGION::123456789012:user-profile/*/:TENANT_ID:"
+      }
+    ]
+  }
+
+}

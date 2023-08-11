@@ -61,7 +61,7 @@ class ApiGatewayInfraStack extends Stack {
       const pathToLambdaFolder = path.join(__dirname, "../../services/lambda");
       const lambdaFolders = fs.readdirSync(pathToLambdaFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
       lambdaFolders.forEach(lambdaFolder => {
-        if (lambdaFolder.startsWith("dd-")){
+        if (lambdaFolder.startsWith("dd-") && !lambdaFolder.startsWith("dd-rollups")){
           const fnArn = lambdaInfraStack[`lambdaARN${lambdaFolder}`]; //Fn.importValue(`lambdaARN${lambdaFolder}`);
           new lambda.CfnPermission(this, `PermitAPIG${suffix}Invocation${lambdaFolder}refarn`, {
             action: 'lambda:InvokeFunction',
