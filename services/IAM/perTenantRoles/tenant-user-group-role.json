@@ -2,7 +2,7 @@
   "roleName": "user-group-role-:TENANT_ID:",
   "roleConfig": {
     "policies": [
-      ":TENANT_ID:-datascientist-policy"
+      "datascientist-policy-:TENANT_ID:"
     ],
     "description": "",
     "trustRelationship": {
