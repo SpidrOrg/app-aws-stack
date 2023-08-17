@@ -83,16 +83,43 @@ clientsToOnboardConfigs.forEach((entity, iter) => {
     if (!exists){
       // Create lake permission command json file from template and call the permission command
       let commandJsonContent = fs.readFileSync("./dataLakePermissionTemplate.json", "utf-8");
+      let commandUserGroupJsonContent = fs.readFileSync("./dataLakePermissionUserGroupTemplate.json", "utf-8");
       commandJsonContent = commandJsonContent.replaceAll(":123456789012:", awsAccount);
+      commandUserGroupJsonContent = commandUserGroupJsonContent.replaceAll(":123456789012:", awsAccount);
+      commandUserGroupJsonContent = commandUserGroupJsonContent.replaceAll(":TENANT_ID:", clientId);
+      let commandUserGroupExternalDatabaseJsonContent = `${commandUserGroupJsonContent}`;
+
       const databaseName = `${clientId}-database-${envName}`;
+      const extDatabaseName = `aws_athena`;
       commandJsonContent = commandJsonContent.replaceAll(":DATABASENAME:", databaseName);
+      commandUserGroupJsonContent = commandUserGroupJsonContent.replaceAll(":DATABASENAME:", databaseName);
+      commandUserGroupExternalDatabaseJsonContent = commandUserGroupExternalDatabaseJsonContent.replaceAll(":DATABASENAME:", extDatabaseName);
+
       const commandJSONFileName = `dataLakePermissionTemplate${clientId}.json`;
+      const commandUserGroupJSONFileName = `dataLakePermissionTemplateUserGroup${clientId}.json`;
+      const commandUserGroupExtDbJSONFileName = `dataLakePermissionTemplateUserGroupExtDB.json`;
+
       fs.writeFileSync(`./${commandJSONFileName}`, commandJsonContent);
+      fs.writeFileSync(`./${commandUserGroupJSONFileName}`, commandUserGroupJsonContent);
+      fs.writeFileSync(`./${commandUserGroupExtDbJSONFileName}`, commandUserGroupExternalDatabaseJsonContent);
+
       exec(`aws lakeformation grant-permissions --cli-input-json file://${commandJSONFileName}`, (err, output)=>{
         if (err){
           console.log(`Error in granting permssion to role on database ${databaseName}`, err);
         }
         console.log(`Successfully granted permission to database ${databaseName}`, output);
+      });
+      exec(`aws lakeformation grant-permissions --cli-input-json file://${commandUserGroupJSONFileName}`, (err, output)=>{
+        if (err){
+          console.log(`Error in granting User group permssion to role on database ${databaseName}`, err);
+        }
+        console.log(`Successfully granted User group role permission to database ${databaseName}`, output);
+      });
+      exec(`aws lakeformation grant-permissions --cli-input-json file://${commandUserGroupExtDbJSONFileName}`, (err, output)=>{
+        if (err){
+          console.log(`Error in granting User group permssion to role on database ${extDatabaseName}`, err);
+        }
+        console.log(`Successfully granted User group role permission to database ${extDatabaseName}`, output);
       });
       ///
       ///

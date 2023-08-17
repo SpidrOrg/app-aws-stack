@@ -1,0 +1,19 @@
+{
+  "CatalogId": ":123456789012:",
+  "Principal": {
+    "DataLakePrincipalIdentifier": "arn:aws:iam:::123456789012::role/user-group-role-:TENANT_ID:"
+  },
+  "Resource": {
+    "Table": {
+      "CatalogId": ":123456789012:",
+      "DatabaseName": ":DATABASENAME:",
+      "TableWildcard": {}
+    }
+  },
+  "Permissions": [
+    "ALL"
+  ],
+  "PermissionsWithGrantOption": [
+    "ALL"
+  ]
+}
