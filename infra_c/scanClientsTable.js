@@ -45,7 +45,7 @@ function listDirRecursively(dir) {
 
           // Create Per client Roles and Policies
           // Create Per client Policies
-          const pathToDynamicPoliciesFolder = path.join(__dirname, pathToIamDefinitions, "perTenantPolicies");
+          const pathToDynamicPoliciesFolder = path.join(pathToIamDefinitions, "perTenantPolicies");
           const perClientPolicyNames = fs.readdirSync(pathToDynamicPoliciesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
           perClientPolicyNames.forEach(policyConfigFileName =>{
             let policyConfig = fs.readFileSync(path.join(pathToDynamicPoliciesFolder, policyConfigFileName), "utf-8");
@@ -78,7 +78,7 @@ function listDirRecursively(dir) {
           });
 
           // Create per client roles
-          const pathToDynamicRolesFolder = path.join(__dirname, pathToIamDefinitions, "perTenantRoles");
+          const pathToDynamicRolesFolder = path.join(pathToIamDefinitions, "perTenantRoles");
           const perClientRoleConfigFileNames = fs.readdirSync(pathToDynamicRolesFolder).filter(item => !/(^|\/)\.[^/.]/g.test(item));
           perClientRoleConfigFileNames.forEach(perClientRoleConfigFileName =>{
             let roleConfig = fs.readFileSync(path.join(pathToDynamicRolesFolder, perClientRoleConfigFileName), "utf-8");
