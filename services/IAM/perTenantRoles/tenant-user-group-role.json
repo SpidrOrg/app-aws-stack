@@ -1,5 +1,5 @@
 {
-  "roleName": ":TENANT_ID:-user-group-role",
+  "roleName": "user-group-role-:TENANT_ID:",
   "roleConfig": {
     "policies": [
       ":TENANT_ID:-datascientist-policy"
