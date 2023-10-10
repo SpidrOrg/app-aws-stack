@@ -167,97 +167,97 @@
       {
         "Name": "ts",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "category",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "monthly_date",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "year",
         "Type": "int",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "month",
         "Type": "int",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "quarter",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "hh_monthly_spend",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "monthly_weight",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "qtrly_market_share",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "monthly_pos_sales",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "qtrly_pos_sales",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "total_qtrly_market_size",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "scaledown_total_monthly_market_size",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "monthly_market_share",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "total_monthly_market_size",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "date",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "category join",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "scaling factor calc",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "scaling factor",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       }
     ]
   },
@@ -271,37 +271,37 @@
       {
         "Name": "ts",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "category",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "date",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "gsv_per_unit",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "retail_markup_coeff",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "retail_price",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "retailer",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       }
     ]
   },
@@ -359,132 +359,157 @@
       {
         "Name": "idx",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "ms_time_horizon",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "category",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "geography",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "model",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "dt_y_start",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "dt_y_end",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "period_type",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "dt_x",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_volume",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_growth",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "predicted_volume",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "predicted_growth",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "retailer",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "full_quarter",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "dt_y",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "month",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "monthly_share",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "pct_mnth_allocation",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "predicted_monthly_volume",
         "Type": "double",
-        "Comment": ""
-      },
-      {
-        "Name": "split1",
-        "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "estimated_share",
         "Type": "float",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "allocated_predicted_monthly_volume",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_share",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_allocated_volume_share",
         "Type": "double",
-        "Comment": ""
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split_name",
+        "Type": "string",
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split1",
+        "Type": "string",
+        "Comment": "Created by CDK"
       },
       {
         "Name": "split1_final",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split2",
+        "Type": "string",
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split2_final",
+        "Type": "string",
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split3",
+        "Type": "string",
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "split3_final",
+        "Type": "string",
+        "Comment": "Created by CDK"
       }
     ]
   },
@@ -840,127 +865,127 @@
       {
         "Name": "as_on",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "model",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "category",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
-        "Name": "retailer",
+        "Name": "splits",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "prediction_start",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "prediction_end",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "ms_growth_by_val",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "ms_growth_by_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "original_client_forecast_by_val",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "original_client_forecast_by_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "adj_client_forecast_by_val",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "adj_client_forecast_by_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_growth_by_val",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_growth_by_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_market_share_pct",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "implied_market_share_pct_by_val",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "implied_market_share_pct_by_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "total_forecast_gsv",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "total_forecast_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_gsv",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "actual_qty",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "client_model",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "key_demand_drivers",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "ms_predicted_volume",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "ms_actual_volume",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       }
     ]
   },
@@ -973,32 +998,32 @@
       {
         "Name": "categories",
         "Type": "string",
-        "Comment": ""
-      },
-      {
-        "Name": "retailers",
-        "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "horizons",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "msmodel",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
+      },
+      {
+        "Name": "pivots",
+        "Type": "string",
+        "Comment": "Created by CDK"
       },
       {
         "Name": "dtxs",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       },
       {
         "Name": "client_models",
         "Type": "string",
-        "Comment": ""
+        "Comment": "Created by CDK"
       }
     ]
   }

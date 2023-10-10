@@ -1,26 +1,29 @@
-const defaultPeriodConfig = [{
-  lag: 1,
-  ms_model: "1_3m",
-  client_model: "1-3 Months"
-}, {
-  lag: 4,
-  ms_model: "4_6m",
-  client_model: "4-6 Months"
-}, {
-  lag: 7,
-  ms_model: "7_9m",
-  client_model: "1-3 Months"
-}, {
-  lag: 10,
-  ms_model: "10_12m",
-  client_model: "4-6 Months"
-}];
-
-const envPeriodConfig = process.env.PERIOD_CONFIG ?? {};
-
-export const getPeriodConfig = () =>({
-  default: defaultPeriodConfig,
-  ...envPeriodConfig
-});
-
 export const numberOfHistoricPeriods = 6;
+
+export const growthRollupIdx = {
+  as_on: 0,
+  model: 1,
+  category: 2,
+  splits: 3,
+  prediction_start: 4,
+  prediction_end: 5,
+  ms_growth_by_val: 6,
+  ms_growth_by_qty: 7,
+  original_client_forecast_by_val: 8,
+  original_client_forecast_by_qty: 9,
+  adj_client_forecast_by_val: 10,
+  adj_client_forecast_by_qty: 11,
+  actual_growth_by_val: 12,
+  actual_growth_by_qty: 13,
+  actual_market_share_pct: 14,
+  implied_market_share_pct_by_val: 15,
+  implied_market_share_pct_by_qty: 16,
+  total_forecast_gsv: 17,
+  total_forecast_qty: 18,
+  actual_gsv: 19,
+  actual_qty: 20,
+  client_model: 21,
+  key_demand_drivers: 22,
+  ms_predicted_volume: 23,
+  ms_actual_volume: 24
+}

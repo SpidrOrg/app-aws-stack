@@ -1,0 +1,177 @@
+{
+  "availableDashboards": [
+    {
+      "key": "DEMAND_PLANNER",
+      "value": "demandPlanner",
+      "label": "Demand Planner",
+      "etc": {
+        "orderedHorizons": [
+          "1_3m",
+          "4_6m",
+          "7_9m",
+          "10_12m"
+        ]
+      },
+      "pageConfiguration": {
+        "headings": {
+          "mainHeading": "Demand Planner Dashboard",
+          "subHeading1": "Future Demand Forecasting"
+        },
+        "filters": {
+          "asOn": {
+            "label": "",
+            "control": "datePicker"
+          },
+          "category": {
+            "label": "Category",
+            "control": "dropDown"
+          },
+          "gtyGsv": {
+            "label": "",
+            "control": "switch",
+            "values": [
+              "Value (USD)",
+              "Volume"
+            ],
+            "defaultValue": "Volume"
+          },
+          "split1": {
+            "label": "Channel(s)",
+            "control": "dropDown"
+          },
+          "split2": {
+            "label": "Region",
+            "control": "dropDown",
+            "multiSelect": true
+          }
+        }
+      }
+    },
+    {
+      "key": "DEMAND_PLANNER_MONTHLY",
+      "value": "demandPlannerMonthly",
+      "label": "Demand Planner (M)",
+      "etc": {
+        "orderedHorizons": [
+          "1m",
+          "2m",
+          "3m",
+          "4m",
+          "5m",
+          "6m"
+        ]
+      },
+      "pageConfiguration": {
+        "headings": {
+          "mainHeading": "Demand Planner Dashboard",
+          "subHeading1": "Demand Forecast For Next Six Months",
+          "subHeading2": "Additional Details Of The Forecast Model"
+        },
+        "filters": {
+          "asOn": {
+            "label": "",
+            "control": "datePicker"
+          },
+          "category": {
+            "label": "Category",
+            "control": "dropDown"
+          },
+          "gtyGsv": {
+            "label": "",
+            "control": "switch",
+            "values": [
+              "Value (USD)",
+              "Volume"
+            ],
+            "defaultValue": "Volume"
+          },
+          "split1": {
+            "label": "Channel(s)",
+            "control": "dropDown"
+          }
+        }
+      }
+    },
+    {
+      "key": "HEAT_MAP",
+      "value": "heatMap",
+      "label": "Heat-map View",
+      "pageConfiguration": {
+        "filters": {
+          "asOn": {},
+          "qtyGsv": {
+            "label": "",
+            "control": "switch",
+            "values": [
+              "Value (USD)",
+              "Volume"
+            ],
+            "defaultValue": "Volume"
+          }
+        }
+      }
+    },
+    {
+      "key": "INTERNAL_CHARTS",
+      "value": "internalCharts",
+      "label": "Internal Charts",
+      "pageConfiguration": {
+        "filters": {
+          "category": {
+            "label": "Category",
+            "control": "dropDown"
+          },
+          "qtyGsv": {
+            "label": "",
+            "control": "switch",
+            "values": [
+              "Value (USD)",
+              "Volume"
+            ],
+            "defaultValue": "Volume"
+          },
+          "split1": {
+            "label": "Channel(s)",
+            "control": "dropDown"
+          }
+        }
+      }
+    },
+    {
+      "key": "MODEL_ACCURACY",
+      "value": "modelAccuracy",
+      "label": "Accuracy"
+    },
+    {
+      "key": "FAQS",
+      "value": "faqs",
+      "label": "FAQs"
+    },
+    {
+      "key": "HELP",
+      "value": "help",
+      "label": "Help & Support"
+    }
+  ],
+  "splits": [
+    {
+      "dataName": "Retailer Final",
+      "uiOptions": {
+        "multiSelect": false
+      }
+    },
+    {
+      "dataName": "Region Final",
+      "uiOptions": {
+        "multiSelect": true
+      }
+    },
+    {
+      "dataName": "Portfolio Final",
+      "uiOptions": {
+        "multiSelect": true
+      }
+    }
+  ],
+  "currency": "USD"
+}

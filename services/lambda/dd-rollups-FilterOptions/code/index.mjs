@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {writeFileToS3} from "/opt/s3Utils.mjs";
+import {writeFileToS3, readFileAsString} from "/opt/s3Utils.mjs";
 import ServicesConnector from "/opt/ServicesConnector.mjs";
 
 const servicesConnector = new ServicesConnector(process.env.awsAccountId, process.env.region);
@@ -9,12 +9,29 @@ export const handler = async (event) => {
   try {
     await servicesConnector.init(event);
 
+    // Client Bucket Name
+    const bucketName = `krny-spi-${servicesConnector.eventTenantId}${servicesConnector.envSuffix}`;
+
+    // Read configuration file stored in client bucket
+    const reviewsFileKey = () => "rollups/uiSettings.json"
+    const configurationString = await readFileAsString(servicesConnector.getS3Client(), bucketName, reviewsFileKey).catch(() => "");
+    const configuration = JSON.parse(configurationString);
+
+    const PIVOT = _.map(configuration.splits, v => v.dataName);
+
+
     const QUERY1 = `
       SELECT      Array_join(Array_agg(DISTINCT( category )), '___'),
-                  Array_join(Array_agg(DISTINCT( split1_final )), '___'),
                   Array_join(Array_agg(DISTINCT( ms_time_horizon )), '___'),
                   Array_join(Array_agg(DISTINCT( model )), '___')
       FROM        market_sensing 
+    `;
+
+    const QUERY1a = `
+      SELECT    Array_join(Array_agg(DISTINCT( split1_final )), '___'),
+                Array_join(Array_agg(DISTINCT( split2_final )), '___'),
+                Array_join(Array_agg(DISTINCT( split3_final )), '___')
+      FROM      market_sensing 
     `;
 
     const QUERY2 = `
@@ -26,20 +43,26 @@ export const handler = async (event) => {
     const QUERY3 = `
       SELECT DISTINCT( model )
       FROM   client_forecast 
-    `
-    let [msDistincts, msDtXs, clientModels] = [
+    `;
+
+    let [msDistincts, splitDistincts, msDtXs, clientModels] = [
       await servicesConnector.makeAthenQuery(QUERY1),
+      await servicesConnector.makeAthenQuery(QUERY1a),
       await servicesConnector.makeAthenQuery(QUERY2),
       await servicesConnector.makeAthenQuery(QUERY3)
     ]
 
     msDtXs = _.join(_.get(msDtXs, "data"), ",");
     clientModels = _.join(_.get(clientModels, "data"), ",");
+    const splitDistinctsColVal = _.reduce(_.get(splitDistincts, "data[0]"), (acc, v, i)=>{
+      const VAL_SEP = "___";
+      const values = _.filter(_.split(v, VAL_SEP), k => _.size(_.trim(k)) > 0);
+      return `${acc}${PIVOT[i]}&^${_.join(values, VAL_SEP)}%^`
+    }, "")
 
-    const row = [..._.get(msDistincts, "data[0]"), msDtXs, clientModels];
+    const row = [..._.get(msDistincts, "data[0]"), splitDistinctsColVal, msDtXs, clientModels];
 
     const csvOutput = _.join(row, "|");
-    const bucketName = `krny-spi-${servicesConnector.eventTenantId}${servicesConnector.envSuffix}`;
     console.log("bucketName", bucketName)
     const rollupFileKey = () => "rollups/filters/filters.csv"
     const s3Res = await writeFileToS3(servicesConnector.getS3Client(), bucketName, rollupFileKey, csvOutput).then(()=>true).catch((e)=>{

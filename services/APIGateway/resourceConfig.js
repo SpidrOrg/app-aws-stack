@@ -105,10 +105,12 @@ module.exports = {
           "scope" : "$context.authorizer.claims.scope",
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "marketSensingRefreshDate": "$input.params('marketSensingRefreshDate')",
-          "customers": "$input.params('customers')",
           "categories": "$input.params('categories')",
+          "msModels": "$input.params('msModels')",
+          "splits": "$input.params('splits')",
           "valueORvolume": "$input.params('valueORvolume')",
-          "isFixed": "$input.params('isFixed')"
+          "isFixed": "$input.params('isFixed')",
+          "isMonthlyMode": "$input.params('isMonthlyMode')"
         }`
       }
     }
@@ -156,6 +158,19 @@ module.exports = {
           "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
           "params": $input.json('$'),
           "handling": "ADD_REVIEW"
+        }`
+      }
+    }
+  },
+  "uiconfig": {
+    "POST": {
+      "integrationRequest": {
+        "lambda": "dd-ui-config",
+        "proxy": false,
+        "mappingTemplate": `{
+          "scope" : "$context.authorizer.claims.scope",
+          "origin": "$util.escapeJavaScript($input.params().header.get('origin'))",
+          "params": $input.json('$')
         }`
       }
     }
