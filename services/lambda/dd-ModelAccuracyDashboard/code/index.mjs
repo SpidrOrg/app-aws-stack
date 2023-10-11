@@ -59,7 +59,7 @@ export const handler = async (event) => {
         and cast(prediction_start as date) <= cast('${currentQuaterMaxDate}' as date)
         and model = '${horizon}'
         and category = '${category}'
-        and retailer = 'ALL' 
+        and splits = 'ALL___ALL___ALL' 
       `;
       const res = await servicesConnector.makeAthenQuery(Query);
 
@@ -78,8 +78,8 @@ export const handler = async (event) => {
         const relevantRow = _.find(_.get(res, "data"), row => {
           return row[indexOfPredictionStart] === quarterStartDate;
         })
-        results.actual[quarterName] = _.isNaN(_.toNumber(relevantRow[indexOfActualVolume])) ? 0 : _.round(_.toNumber(relevantRow[indexOfActualVolume]));
-        results.forecast[quarterName] = _.isNaN(_.toNumber(relevantRow[indexOfPredictedVolume])) ? 0 : _.round(_.toNumber(relevantRow[indexOfPredictedVolume]));
+        results.actual[quarterName] = _.isNaN(_.toNumber(_.get(relevantRow, `[${indexOfActualVolume}]`))) ? 0 : _.round(_.toNumber(relevantRow[indexOfActualVolume]));
+        results.forecast[quarterName] = _.isNaN(_.toNumber(_.get(relevantRow, `[${indexOfPredictedVolume}]`))) ? 0 : _.round(_.toNumber(relevantRow[indexOfPredictedVolume]));
       }
     }
 

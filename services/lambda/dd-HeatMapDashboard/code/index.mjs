@@ -7,6 +7,34 @@ const ALL_MARK = "*";
 const BY_VALUE = "BY_VALUE";
 const BY_QUANTITY = "BY_QUANTITY";
 
+const growthRollupIdx = {
+  as_on: 0,
+  model: 1,
+  category: 2,
+  splits: 3,
+  prediction_start: 4,
+  prediction_end: 5,
+  ms_growth_by_val: 6,
+  ms_growth_by_qty: 7,
+  original_client_forecast_by_val: 8,
+  original_client_forecast_by_qty: 9,
+  adj_client_forecast_by_val: 10,
+  adj_client_forecast_by_qty: 11,
+  actual_growth_by_val: 12,
+  actual_growth_by_qty: 13,
+  actual_market_share_pct: 14,
+  implied_market_share_pct_by_val: 15,
+  implied_market_share_pct_by_qty: 16,
+  total_forecast_gsv: 17,
+  total_forecast_qty: 18,
+  actual_gsv: 19,
+  actual_qty: 20,
+  client_model: 21,
+  key_demand_drivers: 22,
+  ms_predicted_volume: 23,
+  ms_actual_volume: 24
+}
+
 const sanitizeNumeric = (val, roundDigits = 0)=>{
   const number = _.toNumber(val);
   if ( (!(val === 0) && !_.trim(val)) || _.isNaN(number) || _.isFinite(number) === false || _.isNumber(number) === false){
@@ -22,16 +50,17 @@ const formatResultForDashboard = (queryResult, valueOrQuantity, categories, cust
     })
   })
   const variances = _.reduce(queryResult, (acc, v)=>{
-    const category = v[2] === ALL ? "*" : v[2];
-    const retailer = v[3] === ALL ? "*" : v[3];
+    const queryResultRetailerVal = _.get(_.split(v[growthRollupIdx.splits], '___'), '[0]');
+    const category = v[growthRollupIdx.category] === ALL ? "*" : v[growthRollupIdx.category];
+    const retailer = queryResultRetailerVal === ALL ? "*" : queryResultRetailerVal;
 
     const indexOfCategory = _.indexOf(categories, category);
     const indexOfCustomer = _.indexOf(customers, retailer);
     if (indexOfCategory === -1 || indexOfCustomer === -1){
       return acc;
     }
-    let msGrowth = valueOrQuantity === BY_VALUE ? v[6] : v[7];
-    let clientGrowth = valueOrQuantity === BY_VALUE ? v[8] : v[9];
+    let msGrowth = valueOrQuantity === BY_VALUE ? v[growthRollupIdx.ms_growth_by_val] : v[growthRollupIdx.ms_growth_by_qty];
+    let clientGrowth = valueOrQuantity === BY_VALUE ? v[growthRollupIdx.original_client_forecast_by_val] : v[growthRollupIdx.original_client_forecast_by_qty];
     msGrowth = sanitizeNumeric(msGrowth);
     clientGrowth = sanitizeNumeric(clientGrowth);
     let growthVariance = null;

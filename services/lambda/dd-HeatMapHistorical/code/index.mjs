@@ -32,6 +32,7 @@ const sanitizeNumeric = (val)=>{
 
 const formatResultForDashboard = (queryResult, marketSensingRefreshDateP, category, retailer, valueOrQuantity, lag, headerIndexes)=>{
   const result = {};
+  const splitDbVal = `${retailer}___ALL___ALL}`;
   const lookbackMonths = 8;
   for(let i = 0; i < numberOfHistoricPeriods; i++){
     const startDateP = dfns.add(marketSensingRefreshDateP, {months: i - lookbackMonths});
@@ -46,7 +47,7 @@ const formatResultForDashboard = (queryResult, marketSensingRefreshDateP, catego
       return _.get(v, `[${_.get(headerIndexes, 'as_on')}]`) === refreshDate
         && _.get(v, `[${_.get(headerIndexes, 'model')}]`) === lagToModelNameMapping[lag]
         && _.get(v, `[${_.get(headerIndexes, 'category')}]`) === category
-        && _.get(v, `[${_.get(headerIndexes, 'retailer')}]`) === retailer
+        && _.get(v, `[${_.get(headerIndexes, 'splits')}]`) === splitDbVal
     });
     const indexOfMsGrowth = valueOrQuantity === BY_VALUE ? _.get(headerIndexes, 'ms_growth_by_val') : _.get(headerIndexes, 'ms_growth_by_qty')
     const indexOfClientGrowth = valueOrQuantity === BY_VALUE ? _.get(headerIndexes, 'original_client_forecast_by_val') : _.get(headerIndexes, 'original_client_forecast_by_qty')
@@ -71,6 +72,7 @@ export const handler = async (event) => {
     const marketSensingRefreshDate = _.get(event, "marketSensingRefreshDate");
     const category = _.get(event, "category") === ALL_MARK ? ALL : _.get(event, "category");
     const customer = _.get(event, "customer") === ALL_MARK ? ALL : _.get(event, "customer");
+    const splitDbVal = `${customer}___ALL___ALL`;
     const valueOrQuantity = _.get(event, "valueORvolume");
     const lag = _.get(event, "lag");
 
@@ -85,7 +87,7 @@ export const handler = async (event) => {
       select * from growth_rollup
       where as_on IN (${asOnDateInCaluseString})
       and category = '${category}'
-      and retailer = '${customer}'
+      and splits = '${splitDbVal}'
       and model = '${lagToModelNameMapping[lag]}'
     `
     const queryResult = await servicesConnector.makeAthenQuery(QUERY);

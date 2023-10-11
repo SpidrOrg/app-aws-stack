@@ -166,15 +166,15 @@ export const handler = async (event) => {
         split3_final: ALL
       }
 
-      if (_.indexOf(distinctRetailers, v[0]) !== -1){
+      if (_.indexOf(distinctRetailers, v[0]) !== -1 && !_.isEmpty(_.trim(v[0]))){
         combination.retailer = v[0]
       }
 
-      if (_.indexOf(distinctSplit2, v[1]) !== -1){
+      if (_.indexOf(distinctSplit2, v[1]) !== -1 && !_.isEmpty(_.trim(v[1]))){
         combination.split2_final = v[1]
       }
 
-      if (_.indexOf(distinctSplit3, v[2]) !== -1){
+      if (_.indexOf(distinctSplit3, v[2]) !== -1 && !_.isEmpty(_.trim(v[1]))){
         combination.split3_final = v[2]
       }
 

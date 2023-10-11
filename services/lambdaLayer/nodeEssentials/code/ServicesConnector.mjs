@@ -27,7 +27,7 @@ function getenvSuffixFromOriginUrl(originUrl){
     if (`${hostName}`.indexOf(DEV_LOCALHOST_PORT) !== -1){
       env = "dev"
     } else if (`${hostName}`.indexOf(QA_LOCALHOST_PORT) !== -1){
-      env = "qa"
+      env = "test"
     } else if (`${hostName}`.indexOf(UAT_LOCALHOST_PORT) !== -1){
       env = "uat"
     } else if (`${hostName}`.indexOf(PROD_LOCALHOST_PORT) !== -1){
