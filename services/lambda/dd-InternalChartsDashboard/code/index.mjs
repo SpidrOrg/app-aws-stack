@@ -102,9 +102,9 @@ export const handler = async (event) => {
       select * from growth_rollup
       where model = '${msTimeHorizon}'
       and category = '${category}'
-      and retailer = '${customer === ALL_MARK ? ALL : customer}'
+      and splits = '${customer === ALL_MARK ? `${ALL}___${ALL}___${ALL}` : `${customer}___${ALL}___${ALL}`}'
       and cast(prediction_start as date) >= cast('${predictionStartDate}' as date)
-      and cast(prediction_start as date) <= cast('${predictionEndDate}' as date)
+      and cast(prediction_end as date) <= cast('${predictionEndDate}' as date)
     `
     const queryResult = await servicesConnector.makeAthenQuery(QUERY);
 

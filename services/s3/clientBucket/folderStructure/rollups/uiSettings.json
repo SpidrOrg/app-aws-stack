@@ -26,7 +26,7 @@
             "label": "Category",
             "control": "dropDown"
           },
-          "gtyGsv": {
+          "qtyGsv": {
             "label": "",
             "control": "switch",
             "values": [
@@ -76,7 +76,7 @@
             "label": "Category",
             "control": "dropDown"
           },
-          "gtyGsv": {
+          "qtyGsv": {
             "label": "",
             "control": "switch",
             "values": [

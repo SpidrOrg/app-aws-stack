@@ -55,7 +55,7 @@ const formatResultForDashboard = (queryResult, asOnDateP, valueOrQuantity, avail
           "Internal": sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.original_client_forecast_by_val : growthRollupIdx.original_client_forecast_by_qty}]`)),
           "Actual": sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.actual_growth_by_val : growthRollupIdx.actual_growth_by_qty}]`)),
           "Adjusted": sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.adj_client_forecast_by_val : growthRollupIdx.adj_client_forecast_by_qty}]`)),
-        })
+        });
       }
     }
 
@@ -126,7 +126,7 @@ export const handler = async (event) => {
 
     const valueOrQuantity = _.get(event, "valueORvolume");
     const isFixedQuarterView = _.get(event, "isFixed", false);
-    const isMonthlyMode = _.get(event, "isMonthlyMode", false);
+    const isMonthlyMode = _.get(event, "isMonthlyMode") === 'true' || _.get(event, "isMonthlyMode") === true;
 
     const marketSensingRefreshDateP = dfns.parse(marketSensingRefreshDate, DB_DATE_FORMAT, new Date());
 
