@@ -18,6 +18,7 @@ const DEV_LOCALHOST_PORT = "3000";
 const QA_LOCALHOST_PORT = "3001";
 const UAT_LOCALHOST_PORT = "3011";
 const PROD_LOCALHOST_PORT = "3111";
+const STAGE_LOCALHOST_PORT = "3010";
 
 function getenvSuffixFromOriginUrl(originUrl){
   const originUrlParsed = url.parse(originUrl);
@@ -30,9 +31,11 @@ function getenvSuffixFromOriginUrl(originUrl){
       env = "test"
     } else if (`${hostName}`.indexOf(UAT_LOCALHOST_PORT) !== -1){
       env = "uat"
+    } else if (`${hostName}`.indexOf(STAGE_LOCALHOST_PORT) !== -1){
+      env = "stage"
     } else if (`${hostName}`.indexOf(PROD_LOCALHOST_PORT) !== -1){
       env = ""
-    } else {
+    }  else {
       env = "dev"
     }
   } else {

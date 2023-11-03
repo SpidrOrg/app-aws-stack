@@ -70,6 +70,12 @@ const formatResultForDashboard = (queryResult, asOnDateP, valueOrQuantity, avail
       [periodLabel]: {
         metrics: {
           marketSensingGrowth: sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.ms_growth_by_val : growthRollupIdx.ms_growth_by_qty}]`)),
+          "confMarketSensingValues": {
+            msGrowthByValueConfLower: _.get(queryResultExtract, `[${growthRollupIdx.msGrowthByValueConfLower}]`),
+            msGrowthByValueConfUpper: _.get(queryResultExtract, `[${growthRollupIdx.msGrowthByValueConfUpper}]`),
+            msGrowthByQuantityConfLower: _.get(queryResultExtract, `[${growthRollupIdx.msGrowthByQuantityConfLower}]`),
+            msGrowthByQuantityConfUpper: _.get(queryResultExtract, `[${growthRollupIdx.msGrowthByQuantityConfUpper}]`),
+          },
           jdaGrowth: sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.original_client_forecast_by_val : growthRollupIdx.original_client_forecast_by_qty}]`)),
           pyGrowth: sanitizeNumeric(_.get(queryResultExtract, `[${growthRollupIdx.actual_market_share_pct}]`)),
           impliedGrowth: sanitizeNumeric(_.get(queryResultExtract, `[${valueOrQuantity === BY_VALUE ? growthRollupIdx.implied_market_share_pct_by_val : growthRollupIdx.implied_market_share_pct_by_qty}]`)),

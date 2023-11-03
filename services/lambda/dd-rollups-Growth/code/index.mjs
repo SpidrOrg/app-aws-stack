@@ -5,8 +5,11 @@ import {writeFileToS3, readFileAsString} from "/opt/s3Utils.mjs";
 import {horizonToLagStartLagEndMapping, getPeriodConfig} from "./config.mjs";
 import {
   getAllRetailersMsGrowthByValue,
+  getAllRetailersMsGrowthByValueConfValues,
   getAllRetailersMsGrowthByQuantity,
+  getAllRetailersMsGrowthByQuantityConfValues,
   getOneRetailersMsGrowthByValueAndQuantity,
+  getOneRetailersMsGrowthByValueAndQuantityConfValues,
   getGrowthPerClientDataValues,
   getActualMarketSharePct,
   getPredictedAndActualVolume,
@@ -227,14 +230,31 @@ export const handler = async (event) => {
 
           // console.log(category, retailer, split2_final, split3_final)
           let msGrowthByValue = null;
+          let msGrowthByValueConfLower = [];
+          let msGrowthByValueConfUpper = [];
+
           let msGrowthByQuantity = null;
+          let msGrowthByQuantityConfLower = [];
+          let msGrowthByQuantityConfUpper = [];
+
           if (retailer === ALL) {
             msGrowthByValue = getAllRetailersMsGrowthByValue(_.get(marketSensingData, "data", []), predictionStartDt, model, category, split2_final, split3_final);
+            msGrowthByValueConfLower = getAllRetailersMsGrowthByValueConfValues(_.get(marketSensingData, "data", []), predictionStartDt, model, category, split2_final, split3_final, true);
+            msGrowthByValueConfUpper = getAllRetailersMsGrowthByValueConfValues(_.get(marketSensingData, "data", []), predictionStartDt, model, category, split2_final, split3_final, false);
+
             msGrowthByQuantity = getAllRetailersMsGrowthByQuantity(_.get(marketSensingData, "data", []), predictionStartDt, yAgoStart, model, category, split2_final, split3_final)
+            msGrowthByQuantityConfLower = getAllRetailersMsGrowthByQuantityConfValues(_.get(marketSensingData, "data", []), predictionStartDt, yAgoStart, model, category, split2_final, split3_final, true)
+            msGrowthByQuantityConfUpper = getAllRetailersMsGrowthByQuantityConfValues(_.get(marketSensingData, "data", []), predictionStartDt, yAgoStart, model, category, split2_final, split3_final, false)
           } else {
             const growthByValueAndQuantity = getOneRetailersMsGrowthByValueAndQuantity(_.get(marketSensingData, "data", []), predictionStartDt, yAgoStart, model, category, retailer, split2_final, split3_final);
             msGrowthByValue = growthByValueAndQuantity.growthByValue;
             msGrowthByQuantity = growthByValueAndQuantity.growthByQuantity;
+
+            const growthByValueAndQuantityConfValue = getOneRetailersMsGrowthByValueAndQuantityConfValues(_.get(marketSensingData, "data", []), predictionStartDt, yAgoStart, model, category, retailer, split2_final, split3_final);
+            msGrowthByValueConfLower = growthByValueAndQuantityConfValue.msGrowthByValueConfLower;
+            msGrowthByValueConfUpper = growthByValueAndQuantityConfValue.msGrowthByValueConfUpper;
+            msGrowthByQuantityConfLower = growthByValueAndQuantityConfValue.msGrowthByQuantityConfLower;
+            msGrowthByQuantityConfUpper = growthByValueAndQuantityConfValue.msGrowthByQuantityConfUpper;
           }
           msGrowthByValue = isFinite(msGrowthByValue) ? msGrowthByValue : NaN
           msGrowthByQuantity = isFinite(msGrowthByQuantity) ? msGrowthByQuantity : NaN
@@ -322,7 +342,11 @@ export const handler = async (event) => {
             msModelToClientModelMapping[model],
             JSON.stringify(orderedKeyDemandDrivers),
             predictedVolume,
-            actualVolume
+            actualVolume,
+            msGrowthByValueConfLower,
+            msGrowthByValueConfUpper,
+            msGrowthByQuantityConfLower,
+            msGrowthByQuantityConfUpper
           ]
           const numericSanitizedRow = sanitizeRow(row);
           growthMatrix.push(numericSanitizedRow);

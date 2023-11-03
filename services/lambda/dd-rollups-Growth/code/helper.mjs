@@ -36,14 +36,37 @@ const msIdx = {
   split2_final: 28,
   split3: 29,
   split3_final: 30,
-  cpp_ts:31,
-  cpp_category:32,
-  cpp_date:33,
-  cpp_gsv_per_unit:34,
-  cpp_retail_markup_coeff:35,
-  cpp_retail_price:36,
-  cpp_retailer:37
+  confidence_1: 31,
+  predicted_growth_lower_1: 32,
+  predicted_growth_upper_1: 33,
+  predicted_volume_lower_1: 34,
+  predicted_volume_upper_1: 35,
+  allocated_predicted_monthly_volume_lower_1: 36,
+  allocated_predicted_monthly_volume_upper_1: 37,
+  confidence_2: 38,
+  predicted_growth_lower_2: 39,
+  predicted_growth_upper_2: 40,
+  predicted_volume_lower_2: 41,
+  predicted_volume_upper_2: 42,
+  allocated_predicted_monthly_volume_lower_2: 43,
+  allocated_predicted_monthly_volume_upper_2: 44,
+  confidence_3: 45,
+  predicted_growth_lower_3: 46,
+  predicted_growth_upper_3: 47,
+  predicted_volume_lower_3: 48,
+  predicted_volume_upper_3: 49,
+  allocated_predicted_monthly_volume_lower_3: 50,
+  allocated_predicted_monthly_volume_upper_3: 51,
+  cpp_ts: 52,
+  cpp_category: 53,
+  cpp_date: 54,
+  cpp_gsv_per_unit: 55,
+  cpp_retail_markup_coeff: 56,
+  cpp_retail_price: 57,
+  cpp_retailer: 58
 }
+
+const NUM_OF_CONFIDENCE = 3;
 
 const customLog = (dtYStart, horizon, category, text)=>{
   if (dtYStart === '2021-02-01'
@@ -65,7 +88,7 @@ const getPercentage = (a, b, round = 2)=>{
 }
 
 
-const getAllRetailersMsGrowthByValue = (msDataRows, dtYStart, horizon, category, split2, split3)=>{
+const getAllRetailersMsGrowthByValue = (msDataRows, dtYStart, horizon, category, split2, split3, predictedGrowthIdx = null)=>{
   let growthByValue = null;
   // const logger = _.partial(customLog, dtYStart, horizon, category);
   // logger(`rowscount: ${_.size(msDataRows)}`);
@@ -78,7 +101,7 @@ const getAllRetailersMsGrowthByValue = (msDataRows, dtYStart, horizon, category,
         && (split3 === ALL ? true : v[msIdx.split3_final] === split3)
     ){
       // logger(`inside:${v[5]},${v[1]}, ${v[2]}, ${v[12]}`)
-      acc.preGrowth.sum = _.add(acc.preGrowth.sum, _.toNumber(v[msIdx.predicted_growth]));
+      acc.preGrowth.sum = _.add(acc.preGrowth.sum, _.toNumber(v[predictedGrowthIdx ? predictedGrowthIdx : msIdx.predicted_growth]));
       acc.preGrowth.count = _.add(acc.preGrowth.count, 1);
     }
     // logger(`Acc: ${acc.preGrowth.sum}, ${acc.preGrowth.count}`)
@@ -97,7 +120,19 @@ const getAllRetailersMsGrowthByValue = (msDataRows, dtYStart, horizon, category,
   return growthByValue;
 }
 
-const getAllRetailersMsGrowthByQuantity = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, split2, split3) => {
+const getAllRetailersMsGrowthByValueConfValues = (msDataRows, dtYStart, horizon, category, split2, split3, isLower) => {
+  const result = [];
+
+  for (let i = 1; i <= NUM_OF_CONFIDENCE; i++){
+    const idx = msIdx[`predicted_growth_${isLower ? 'lower' : 'upper'}_${i}`];
+    const growthVal = getAllRetailersMsGrowthByValue(msDataRows, dtYStart, horizon, category, split2, split3, idx);
+    result.push(growthVal);
+  }
+
+  return result;
+}
+
+const getAllRetailersMsGrowthByQuantity = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, split2, split3, predictedVolumeIdx = null) => {
   let growthByQuantity = null;
   const {predictedVolume, actualVolume} = _.reduce(msDataRows, (acc, v) => {
     if (v[msIdx.dt_y_start] === dtYStart
@@ -106,7 +141,7 @@ const getAllRetailersMsGrowthByQuantity = (msDataRows, dtYStart, yAgoDtYStart, h
         && (split2 === ALL ? true : v[msIdx.split2_final] === split2)
         && (split3 === ALL ? true : v[msIdx.split3_final] === split3)
     ){
-      acc.predictedVolume.sum = _.add(acc.predictedVolume.sum, _.toNumber(v[msIdx.predicted_volume]));
+      acc.predictedVolume.sum = _.add(acc.predictedVolume.sum, _.toNumber(v[predictedVolumeIdx ? predictedVolumeIdx : msIdx.predicted_volume]));
       acc.predictedVolume.count = _.add(acc.predictedVolume.count, 1);
       acc.predictedVolume.retailPrice.sum = _.add(acc.predictedVolume.retailPrice.sum, _.toNumber(v[msIdx.cpp_retail_price]));
       acc.predictedVolume.retailPrice.count = _.add(acc.predictedVolume.retailPrice.count, 1);
@@ -157,7 +192,19 @@ const getAllRetailersMsGrowthByQuantity = (msDataRows, dtYStart, yAgoDtYStart, h
   return growthByQuantity;
 }
 
-const getOneRetailersMsGrowthByValueAndQuantity = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, retailer, split2, split3) => {
+const getAllRetailersMsGrowthByQuantityConfValues = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, split2, split3, isLower)=>{
+  const result = [];
+
+  for (let i = 1; i <= NUM_OF_CONFIDENCE; i++){
+    const idx = msIdx[`predicted_volume_${isLower ? 'lower' : 'upper'}_${i}`];
+    const growthVal = getAllRetailersMsGrowthByQuantity(msDataRows, dtYStart, yAgoDtYStart, horizon, category, split2, split3, idx);
+    result.push(growthVal);
+  }
+
+  return result;
+}
+
+const getOneRetailersMsGrowthByValueAndQuantity = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, retailer, split2, split3, allocatedPredictedMonthlyVolumeIdx) => {
   let growthByValue = null;
   let growthByQuantity = null;
 
@@ -169,10 +216,10 @@ const getOneRetailersMsGrowthByValueAndQuantity = (msDataRows, dtYStart, yAgoDtY
         && (split3 === ALL ? true : v[msIdx.split3_final] === split3)
     ){
       if (v[msIdx.dt_y_start] === dtYStart && v[msIdx.ms_time_horizon] === horizon){
-        acc.sumOfAllocatedPredictedMonthlyVolume = _.add(acc.sumOfAllocatedPredictedMonthlyVolume, _.toNumber(v[msIdx.allocated_predicted_monthly_volume]))
+        acc.sumOfAllocatedPredictedMonthlyVolume = _.add(acc.sumOfAllocatedPredictedMonthlyVolume, _.toNumber(v[allocatedPredictedMonthlyVolumeIdx ? allocatedPredictedMonthlyVolumeIdx : msIdx.allocated_predicted_monthly_volume]))
       }
       if (v[msIdx.dt_y_start] === yAgoDtYStart){
-        acc.sumOfActualAllocatedVolumeShare = _.add(acc.sumOfAllocatedPredictedMonthlyVolume, _.toNumber(v[msIdx.actual_allocated_volume_share]))
+        acc.sumOfActualAllocatedVolumeShare = _.add(acc.sumOfActualAllocatedVolumeShare, _.toNumber(v[msIdx.actual_allocated_volume_share]))
       }
     }
 
@@ -201,6 +248,32 @@ const getOneRetailersMsGrowthByValueAndQuantity = (msDataRows, dtYStart, yAgoDtY
   }
 
   return {growthByValue, growthByQuantity}
+}
+
+const getOneRetailersMsGrowthByValueAndQuantityConfValues = (msDataRows, dtYStart, yAgoDtYStart, horizon, category, retailer, split2, split3)=>{
+  const result = {
+    msGrowthByValueConfLower: [],
+    msGrowthByValueConfUpper: [],
+    msGrowthByQuantityConfLower: [],
+    msGrowthByQuantityConfUpper: []
+  };
+
+  for (let i = 1; i <= NUM_OF_CONFIDENCE; i++){
+    // Lower
+    let idx = msIdx[`allocated_predicted_monthly_volume_lower_${i}`];
+    let growthVal = getOneRetailersMsGrowthByValueAndQuantity(msDataRows, dtYStart, horizon, category, split2, split3, idx);
+    result.msGrowthByValueConfLower.push(growthVal.growthByValue);
+    result.msGrowthByQuantityConfLower.push(growthVal.growthByQuantity);
+
+
+    // Upper
+    idx = msIdx[`allocated_predicted_monthly_volume_upper_${i}`];
+    growthVal = getOneRetailersMsGrowthByValueAndQuantity(msDataRows, dtYStart, horizon, category, split2, split3, idx);
+    result.msGrowthByValueConfUpper.push(growthVal.growthByValue);
+    result.msGrowthByQuantityConfUpper.push(growthVal.growthByQuantity);
+  }
+
+  return result;
 }
 
 const getPredictedAndActualVolume = (msDataRows, dtYStart, horizon, category, split2, split3) => {
@@ -409,8 +482,11 @@ const getActualMarketSharePct = (marketShareData, category, yAgoStartP, yAgoEndP
 
 export {
   getAllRetailersMsGrowthByValue,
+  getAllRetailersMsGrowthByValueConfValues,
   getAllRetailersMsGrowthByQuantity,
+  getAllRetailersMsGrowthByQuantityConfValues,
   getOneRetailersMsGrowthByValueAndQuantity,
+  getOneRetailersMsGrowthByValueAndQuantityConfValues,
   getGrowthPerClientDataValues,
   getActualMarketSharePct,
   getPredictedAndActualVolume

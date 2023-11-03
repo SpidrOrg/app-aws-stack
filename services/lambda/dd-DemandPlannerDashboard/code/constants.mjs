@@ -25,5 +25,9 @@ export const growthRollupIdx = {
   client_model: 21,
   key_demand_drivers: 22,
   ms_predicted_volume: 23,
-  ms_actual_volume: 24
+  ms_actual_volume: 24,
+  msGrowthByValueConfLower: 25,
+  msGrowthByValueConfUpper:26,
+  msGrowthByQuantityConfLower:27,
+  msGrowthByQuantityConfUpper:28
 }
